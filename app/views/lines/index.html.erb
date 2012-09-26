@@ -1,0 +1,31 @@
+<h1>Listing lines</h1>
+
+<table>
+  <tr>
+    <th>Line</th>
+    <th>No</th>
+    <th>Stanza No</th>
+    <th>Canto (No) Name</th>
+    <th></th>
+  </tr>
+
+<% @lines.each do |line| %>
+  <tr>
+    <td><%= line.line %></td>
+    <td><%= line.no %></td>
+    <td><%= line.stanza_id %></td>
+    <td>
+      <% @canto = Stanza.find(line.stanza_id).canto_id %>
+      (<%= Canto.find(@canto).cantono %>)<%= Canto.find(@canto).title  %>
+    </td>
+    <!--TODO FIll In to show canto Id -->
+    <td><%= link_to 'Show', line %></td>
+    <td><%= link_to 'Edit', edit_line_path(line) %></td>
+    <td><%= link_to 'Destroy', line, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Line', new_line_path %>

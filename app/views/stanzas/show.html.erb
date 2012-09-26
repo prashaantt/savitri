@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Stanzno:</b>
+  <%= @stanza.stanzno %>
+</p>
+
+<p>
+	<b>Lines in this Stanza</b>
+	<br/>
+	<% @stanza.lines.each do |stan| %>
+		<%= stan.line %><br/>
+	<% end %>
+</p>
+
+
+<%= link_to 'Edit', edit_stanza_path(@stanza) %> |
+<%= link_to 'Back', stanzas_path %>

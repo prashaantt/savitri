@@ -1,0 +1,27 @@
+<h1>Listing cantos</h1>
+
+<table>
+  <tr>
+    <th>Cantono</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cantos.each do |canto| %>
+  <tr>
+    <td><%= canto.cantono %></td>
+    <td><%= canto.title %></td>
+    <td><%= canto.description %></td>
+    <td><%= link_to 'Show', canto %></td>
+    <td><%= link_to 'Edit', edit_canto_path(canto) %></td>
+    <td><%= link_to 'Destroy', canto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Canto', new_canto_path %>

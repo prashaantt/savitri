@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Cantono:</b>
+  <%= @canto.cantono %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @canto.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @canto.description %>
+</p>
+
+<p>
+	<b>Lines in this Canto</b>
+	<br/>
+	<% @canto.stanzas.each do |stanz| %>
+		<br/>Stanza <%= stanz.stanzno %><br/>
+		<% stanz.lines.each do |lin| %>
+			<%= lin.line %><br/>
+		<% end %>
+	<% end %>
+	<br/>
+</p>
+<p>
+	
+	<!-- New Test <% @canto.lines %> <br/> -->
+</p>
+
+<%= link_to 'Edit', edit_canto_path(@canto) %> |
+<%= link_to 'Back', cantos_path %>

@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>No:</b>
+  <%= @line.no %>
+</p>
+
+
+<p>
+  <b>Line:</b>
+  <%= @line.line %>
+</p>
+
+<p>
+  <b>StanzNo:</b>
+  <%= @line.stanza_id %>
+</p>
+
+
+
+
+<%= link_to 'Edit', edit_line_path(@line) %> |
+<%= link_to 'Back', lines_path %>
