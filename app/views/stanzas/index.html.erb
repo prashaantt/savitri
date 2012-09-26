@@ -1,0 +1,26 @@
+<h1>Listing stanzas</h1>
+
+<table>
+  <tr>
+    <th>Stanzno</th>
+    <th>Canto (No) Name</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @stanzas.each do |stanza| %>
+  <tr>
+    <td><%= stanza.stanzno %></td>
+    <td>(<%= stanza.canto_id %>)
+      <%= Canto.find(stanza.canto_id).title %>
+    </td>
+    <td><%= link_to 'Show', stanza %></td>
+    <td><%= link_to 'Edit', edit_stanza_path(stanza) %></td>
+    <td><%= link_to 'Destroy', stanza, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Stanza', new_stanza_path %>
