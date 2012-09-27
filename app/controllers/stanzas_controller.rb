@@ -2,7 +2,7 @@ class StanzasController < ApplicationController
   # GET /stanzas
   # GET /stanzas.json
   def index
-    @stanzas = Stanza.all
+    @stanzas = Stanza.order(:stanzno)
 
     respond_to do |format|
       format.html # index.html.erb
