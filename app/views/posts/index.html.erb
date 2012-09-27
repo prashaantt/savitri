@@ -1,18 +1,20 @@
 <h1>Listing posts</h1>
 
-<table>
+<table id="posts">
   <tr>
     <th>Title</th>
     <th>Content</th>
-    <th></th>
-    <th></th>
+    <th>Tags</th>
+    <th>Comments</th>
     <th></th>
   </tr>
 
 <% @posts.each do |post| %>
-  <tr>
+  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
     <td><%= post.title %></td>
-    <td><%= post.content %></td>
+    <td><%= simple_format post.content %></td>
+    <td><%= raw post.tag_list.map { |t| link_to t,tag_path(t)}.join(',') %></td>
+    <td><%= link_to post.comments.count, post %></td>
     <td><%= link_to 'Show', post %></td>
     <td><%= link_to 'Edit', edit_post_path(post) %></td>
     <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -21,5 +23,13 @@
 </table>
 
 <br />
+<h2> Tag Cloud </h2>
+<div id="tag_cloud">
+<% tag_cloud Post.tag_counts, %w[s m l] do |tag, css_class| %>
+  <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+<% end %>
+</div>
 
-<%= link_to 'New Post', new_post_path %>
+<br/><br/>
+<%= link_to 'New Post', new_post_path %> | 
+<%= link_to 'All Posts', posts_path %>

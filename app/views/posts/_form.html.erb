@@ -1,4 +1,3 @@
-<% @post.tags.build %>
 <%= form_for(@post) do |post_form| %>
   <% if @post.errors.any? %>
   <div id="errorExplanation">
@@ -21,8 +20,10 @@
   </div>
 
   <h2>Tags</h2>
-  <%= render :partial => 'tags/form',
-             :locals => {:form => post_form} %>
+  <div class="field">
+    <%= post_form.label :tag_list, "Tags (Separated by Commas)" %><br />
+    <%= post_form.text_field :tag_list %>
+  </div>
 
   <div class="actions">
     <%= post_form.submit %>

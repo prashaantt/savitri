@@ -2,7 +2,12 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    if params[:tag]
+      @posts = Post.tagged_with(params[:tag])
+    else
+      @posts = Post.all  
+    end
+    
 
     respond_to do |format|
       format.html # index.html.erb
