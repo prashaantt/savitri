@@ -1,3 +1,4 @@
+<div class="form-actions">
 <p>
   <b>Commenter:</b>
   <%= comment.commenter %>
@@ -9,7 +10,11 @@
 </p>
 
 <p>
+
   <%= link_to 'Destroy Comment', [comment.post, comment],
                :confirm => 'Are you sure?',
-               :method => :delete %>
+               :method => :delete %>  
+  </div>
+  
+
 </p>
