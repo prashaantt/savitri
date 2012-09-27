@@ -6,6 +6,7 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+ 
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -24,7 +25,9 @@
             <ul class="nav">
               <li class="active"><a href="/">Home</a></li>
 			  <li><a href="#about">About</a></li>			 
-			  <li><a href="#about">The Book</a></li>
+			  <li><a href="/cantos">Cantos</a></li>
+			  <li><a href="/stanzas">Stanzas</a></li>
+			  <li><a href="/lines">Lines</a></li>
 			  <li><a href="/posts">Blogs</a></li>
 			  <li class="dropdown" id="Resources">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Resources
@@ -57,11 +60,8 @@
 <body>
 <div class="container">
 	<div class="row">
-		<div class="span9"><%= yield %></div>
-		<div class="span3">About
-			<p>@NM</p>
-			<br/>
-			lorem ipsum</div>
+		<%= yield %>
+		
 	</div>
 </div>
 

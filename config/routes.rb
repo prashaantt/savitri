@@ -1,4 +1,6 @@
 Savitri::Application.routes.draw do
+  get "savitri/index"
+
   get 'tags/:tag' , to: 'posts#index' , as: :tag
   resources :posts do
     resources :comments
@@ -59,7 +61,7 @@ Savitri::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'savitri#index', :as => 'savitri'
 
   # See how all your routes lay out with "rake routes"
 
