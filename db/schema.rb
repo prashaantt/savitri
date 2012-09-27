@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(:version => 20120927071105) do
     t.integer  "no"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "stanza_id"
+    t.integer  "stanzno"
   end
 
   create_table "posts", :force => true do |t|
