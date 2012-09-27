@@ -2,7 +2,7 @@ class LinesController < ApplicationController
   # GET /lines
   # GET /lines.json
   def index
-    @lines = Line.all
+    @lines = Line.order(:no)
 
     respond_to do |format|
       format.html # index.html.erb
