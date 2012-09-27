@@ -18,7 +18,7 @@
 <p>
 	<b>Lines in this Canto</b>
 	<br/>
-	<% @canto.stanzas.each do |stanz| %>
+	<% @canto.stanzas.order(:stanzno).each do |stanz| %>
 		<br/>Stanza <%= stanz.stanzno %><br/>
 		<% stanz.lines.each do |lin| %>
 			<%= lin.line %><br/>
