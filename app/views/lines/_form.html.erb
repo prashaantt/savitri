@@ -22,7 +22,7 @@
   
   <div class="field">
     <%= f.label :stanza_id %><br/>
-    <%= f.collection_select(:stanza_id, Stanza.all, :id, :stanzno) %>
+    <%= f.collection_select(:stanza_id, Stanza.order(:stanzno), :id, :stanzno) %>
   </div>
 
   <br/>
