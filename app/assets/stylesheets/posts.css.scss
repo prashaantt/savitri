@@ -1,3 +1,24 @@
 // Place all the styles related to the Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#posts{
+	width: 1000px;
+	
+	.list_line_even {
+    	background:   #e0f5f5;
+  	}
+  	.list_line_odd {
+	    background:   #f8b0f8;
+   	}
+	color: blue;
+}
+
+#tag_cloud {
+	width: 400px;
+	line-height: 1.6em;
+	.s {font-size: 0.8em};
+	.m {font-size: 1.2em};
+	.l {font-size: 1.6em; text: bold;};
+
+
+}
