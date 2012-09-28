@@ -11,46 +11,48 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120927071105) do
+ActiveRecord::Schema.define(:version => 20120928133504) do
 
   create_table "cantos", :force => true do |t|
-    t.integer  "cantono"
-    t.string   "title"
-    t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer   "cantono"
+    t.string    "title"
+    t.string    "description"
+    t.timestamp "created_at",  :null => false
+    t.timestamp "updated_at",  :null => false
   end
 
   create_table "comments", :force => true do |t|
-    t.string   "commenter"
-    t.text     "body"
-    t.integer  "post_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string    "commenter"
+    t.text      "body"
+    t.integer   "post_id"
+    t.timestamp "created_at", :null => false
+    t.timestamp "updated_at", :null => false
   end
 
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
 
   create_table "lines", :force => true do |t|
-    t.string   "line"
-    t.integer  "no"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.integer  "stanzno"
+    t.string    "line"
+    t.integer   "no"
+    t.timestamp "created_at", :null => false
+    t.timestamp "updated_at", :null => false
+    t.integer   "stanzno"
+    t.integer   "stanza_id"
   end
 
   create_table "posts", :force => true do |t|
-    t.string   "title"
-    t.text     "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string    "title"
+    t.text      "content"
+    t.timestamp "created_at", :null => false
+    t.timestamp "updated_at", :null => false
+    t.integer   "user_id"
   end
 
   create_table "stanzas", :force => true do |t|
-    t.integer  "stanzno"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.integer  "canto_id"
+    t.integer   "stanzno"
+    t.timestamp "created_at", :null => false
+    t.timestamp "updated_at", :null => false
+    t.integer   "canto_id"
   end
 
   create_table "taggings", :force => true do |t|
@@ -68,6 +70,13 @@ ActiveRecord::Schema.define(:version => 20120927071105) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
