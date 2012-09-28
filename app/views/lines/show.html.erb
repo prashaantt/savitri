@@ -17,7 +17,12 @@
 </p>
 
 
-
+ <p>
+ 	<b>Canto Detail </b>
+      <% @canto = Stanza.find(@line.stanza_id).canto_id %>
+      <%= Canto.find(@canto).cantono %>---<%= Canto.find(@canto).title  %>
+    </b>
+</p>
 
 <%= link_to 'Edit', edit_line_path(@line) %> |
 <%= link_to 'Back', lines_path %>
