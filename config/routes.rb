@@ -1,4 +1,6 @@
 Savitri::Application.routes.draw do
+  resources :users
+
   get "savitri/index"
 
   get 'tags/:tag' , to: 'posts#index' , as: :tag
