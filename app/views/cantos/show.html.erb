@@ -1,15 +1,21 @@
 <%- model_class = Canto -%>
+<% content_for :head do %>
 <link href='http://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
+<% end %>
 
-<div class="container-fluid">  <div class="pagination pagination-centered ">
+<div class="container-fluid"> 
+        <div class="pagination pagination-centered ">
         <ul>
           <li class="previous"><a href="#">← Prev</a></li>
           <li class="next"><a href="#">Next→</a></li>
         </ul>
       </div>
-      <div class="row-fluid">
-        <div class="span4">Content</div>
+       <div class="row-fluid">
+        <div class="span4">
+           lorem ipsum
+
+        </div>
 <!--<div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
@@ -35,9 +41,18 @@
           </div>
         </div>
       -->
+
 <div class=" span6">
-  <div class="hero unit">
-    <div class="row">
+  <ul class="breadcrumb">
+  <li>
+    <a href="#">Home</a> <span class="divider">></span>
+  </li>
+  <li>
+    <a href="#">Canto I</a> <span class="divider">></span>
+  </li>
+  <li class="active">Section I</li>
+</ul>
+
   <!--<dt><strong><%= model_class.human_attribute_name(:cantono) %>:</strong></dt>
   <dd><%= @canto.cantono %></dd>
   <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
@@ -45,10 +60,9 @@
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @canto.description %></dd>
 -->
- <h2><a href="http://savitri.in" title="Reference: Canto I Book 5">The Destined Meeting-Place</a></h2>
+ <h2><a href="http://savitri.in" title="Reference: Canto <%= @canto.cantono %> "><%= @canto.title %></a></h2>
 <p class="readsavitri">
   <!--<b>Lines in this Canto</b>-->
-  <br/>
   <% @canto.stanzas.order(:stanzno).each do |stanz| %>
     <!--<br/>Stanza <%= stanz.stanzno %>--><br/>
     <% stanz.lines.each do |lin| %>
@@ -57,8 +71,8 @@
   <% end %>
   <br/>
 </p>
-</div>
-</div>
+
+
 </div>
 <div class="span2">
       <div class="well sidebar-nav">
@@ -84,5 +98,12 @@
               :class => 'btn btn-danger' %>
             -->
 </div>
+ <div class="pagination pagination-centered ">
+        <ul>
+          <li class="previous"><a href="#">← Prev</a></li>
+          <li class="next"><a href="#">Next→</a></li>
+        </ul>
+      </div>
+
 </div>
 </div>
