@@ -1,4 +1,6 @@
 Savitri::Application.routes.draw do
+  get "read/index"
+
   resources :users
 
   get "savitri/index"
