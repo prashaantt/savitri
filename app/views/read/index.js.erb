@@ -1,0 +1,2 @@
+$("#poem").html("<%= escape_javascript render(@stanzas) %>"); 
+$("#paginator").html('<%= escape_javascript(paginate(@stanzas, :param_name => :stanzas , :remote => true).to_s) %>');
