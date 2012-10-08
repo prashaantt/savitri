@@ -1,6 +1,6 @@
-
-<%= paginate @stanzas, :param_name => :stanzas %>
-
+<div id="paginator">
+<%= paginate @stanzas, :param_name => :stanzas , :remote => true%>
+</div>
 <% content_for :head do %>
 <link href='http://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
@@ -13,18 +13,12 @@
         </div>
         <div class="span6">
 			<div id="cantos">
-				<h2><%= Canto.find(@stanzas.first.canto_id).title %>
-				</h2> 
-				<% @stanzas.each do |stan| %>
-				<p class="readsavitri">
-			  			<% stan.lines.each do |lin| %> 
-			  				<%= lin.line %><br/>
-			  		<% end %>
-			  		<br/>
-				</p>
-				<% end %>
-
-
+				<h2><%= Canto.find(@stanzas.first.canto_id).title %></h2> 
+				
+					<div id="poem" class="readsavitri">
+						<%= render @stanzas %>
+					</div>
+				
 			</div>
 		</div>
 	</div>
