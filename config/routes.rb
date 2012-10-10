@@ -10,6 +10,8 @@ Savitri::Application.routes.draw do
     resources :comments
   end
 
+  resources :books
+  
   resources :cantos
 
   resources :stanzas
