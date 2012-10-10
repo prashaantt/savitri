@@ -22,7 +22,7 @@
   
   <div class="field" id="stanza">
     <%= f.label :stanza_id %><br/>
-    <%= f.collection_select(:stanza_id, Stanza.order(:stanzno), :id, :stanzno) %>
+    <%= f.collection_select(:stanza_id, Stanza.order(:stanzno), :stanzno, :stanzno) %>
     <%= f.label "Canto"  %>  
     <%= text_field 'Canto', 'cantono', :size => 5 ,'readonly' => 'true' ,:id => "cantono"%>
     <%= text_field 'Canto', 'name', :size => 20, 'readonly' => 'true' ,:id => "cantoname"%>
