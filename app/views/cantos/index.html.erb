@@ -8,6 +8,8 @@
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:cantono) %></th>
       <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:book_id) %></th>
+      <th>Book Name</th>
       <th><%= model_class.human_attribute_name(:description) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -19,6 +21,9 @@
         <td><%= link_to canto.id, canto_path(canto) %></td>
         <td><%= canto.cantono %></td>
         <td><%= canto.title %></td>
+        <td><%= canto.book_id %></td>
+        <% @bk = Book.find(canto.book_id) %>
+        <td><%= link_to  @bk.name , book_path(@bk) %></td>
         <td><%= canto.description %></td>
         <td><%=l canto.created_at %></td>
         <td>
