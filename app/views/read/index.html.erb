@@ -1,5 +1,5 @@
 <div id="paginator">
-<%= paginate @stanzas, :param_name => :stanzas , :remote => true, :window => 2 %>
+<%= paginate @stanzas, :param_name => :stanzas , :remote => true, :window => 1 %>
 </div>
 <% content_for :head do %>
 <link href='http://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css'>
@@ -10,63 +10,27 @@
        <div class="row-fluid">
         <div class="span3">
           <div class="accordion" id="accordion2">
-                <div class="accordion-group">
+            <% Book.all.each do |book| %>
+            <div class="accordion-group">
                   <div class="accordion-heading">
-                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                      Book I : The Book of Beginnings
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= book.id %>">
+                    <%= book.name %>
                     </a>
                   </div>
-                  <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+                  <div id="collapse<%= book.id %>" class="accordion-body collapse" style="height: 0px; ">
                     <div class="accordion-inner">
                        <ul class="nav nav-tabs nav-stacked">
-                        <li>
-                          <a href="/read/1">Canto I: The Symbol Dawn</a>
-                        </li>
-                        <li>
-                          <a href="/read/2">Canto II: The Issue</a>
-                        </li>
-                        <li>
-                          <a href="/read/3">Canto III: The Yoga of the King: The Yoga of the Soul’s Release</a>
-                        </li>
-                      </ul>
+                        <% book.cantos.each do |canto| %>
+                          <li>
+                            <%= link_to canto.title, read_path(canto.id) %>
+                          </li>
+                        <% end %>
+                       </ul>
                     </div>
                   </div>
                 </div>
-                <div class="accordion-group">
-                  <div class="accordion-heading">
-                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                      Collapsible Group Item #2
-                    </a>
-                  </div>
-                  <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
-                    <div class="accordion-inner">
-                     <ul class="nav nav-tabs nav-stacked">
-                        <li>
-                          <a href="/read/1">Sub Nav</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-group">
-                  <div class="accordion-heading">
-                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
-                      Collapsible Group Item #3
-                    </a>
-                  </div>
-                  <div id="collapseThree" class="accordion-body collapse" style="height: 0px; ">
-                    <div class="accordion-inner">
-                     <ul class="nav nav-tabs nav-stacked">
-                        <li>
-                          <a href="/read/1">Sub Nav</a>
-                        </li>
-                      </ul>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-         
+              <% end %>
+          </div>
         </div>
         <div class="span6 offset1">
 			<div id="cantos">
