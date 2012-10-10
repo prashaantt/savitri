@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :no %><br />
-    <%= f.number_field :no %>
+    <%= f.number_field :no  %>
   </div>
   <div class="field">
     <%= f.label :line %><br />
-    <%= f.text_field :line %>
+    <%= f.text_area :line, :cols => 30, :rows => 10 %>
   </div>
   
   <div class="field" id="stanza">
@@ -28,10 +28,7 @@
     <%= text_field 'Canto', 'name', :size => 20, 'readonly' => 'true' ,:id => "cantoname"%>
   </div>
 
-  <div class="field" id="canto">
-    
-  </div>
-  <div class="actions">
+   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>

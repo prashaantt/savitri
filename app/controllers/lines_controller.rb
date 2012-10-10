@@ -2,8 +2,11 @@ class LinesController < ApplicationController
   # GET /lines
   # GET /lines.json
   def index
-    @lines = Line.order(:no)
+    @lines = Line.order(:no).page(params[:lines]).per(10)
 
+    text = "this is a text containing no new-line
+             this contains a new line nism"
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @lines }
@@ -40,8 +43,23 @@ class LinesController < ApplicationController
   # POST /lines
   # POST /lines.json
   def create
-    @line = Line.new(params[:line])
-
+    #--edit
+    if params[:line][:no].blank?
+      num=0
+    else
+      nu = params[:line][:no].to_f
+      num =  nu -1
+    end
+    logger.info '------------------------create---------------------'
+    params[:line][:line].to_s.split("\r\n").each do |l|
+      logger.info l
+      num=num+1
+      @line = Line.new(:no=>num,:line=>l,:stanza_id=>params[:line][:stanza_id])
+      @line.save
+    end
+    logger.info '------------------------endcreate---------------------'
+    #--editEnd
+    #@line = Line.new(params[:line])
     respond_to do |format|
       if @line.save
         format.html { redirect_to @line, notice: 'Line was successfully created.' }
