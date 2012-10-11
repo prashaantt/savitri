@@ -8,7 +8,8 @@ gem 'rails', '3.2.6'
 gem 'pg'
 #gem 'sqlite3'
 gem 'acts-as-taggable-on'
-
+gem 'devise'
+gem 'simple_form'
 #gem "bullet", :group => "development"
 gem 'kaminari'
 #gem 'thin'
