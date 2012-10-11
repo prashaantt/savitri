@@ -13,7 +13,10 @@ class StanzasController < ApplicationController
   # GET /stanzas/1
   # GET /stanzas/1.json
   def show
-    @stanza = Stanza.find(params[:id])
+    #@stanza = Stanza.find(params[:id])
+    #@stanza = Stanza.where(:stanzno=>params[:id])
+    @stanza = Stanza.find_by_stanzno(params[:id])
+    logger.info @stanza
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,7 +37,7 @@ class StanzasController < ApplicationController
 
   # GET /stanzas/1/edit
   def edit
-    @stanza = Stanza.find(params[:id])
+    @stanza = Stanza.find_by_stanzno(params[:id])
   end
 
   # POST /stanzas
@@ -56,7 +59,7 @@ class StanzasController < ApplicationController
   # PUT /stanzas/1
   # PUT /stanzas/1.json
   def update
-    @stanza = Stanza.find(params[:id])
+    @stanza = Stanza.find_by_stanzno(params[:id])
 
     respond_to do |format|
       if @stanza.update_attributes(params[:stanza])
@@ -72,7 +75,7 @@ class StanzasController < ApplicationController
   # DELETE /stanzas/1
   # DELETE /stanzas/1.json
   def destroy
-    @stanza = Stanza.find(params[:id])
+    @stanza = Stanza.find_by_stanzno(params[:id])
     @stanza.destroy
 
     respond_to do |format|

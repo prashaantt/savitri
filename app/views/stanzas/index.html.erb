@@ -11,7 +11,8 @@
 <% @stanzas.each do |stanza| %>
   <tr>
     <td><%= stanza.stanzno %></td>
-    <td>(<%= stanza.canto_id %>)
+     <% @canto = Canto.find(stanza.canto_id) %>
+    <td>(<%= @canto.cantono %>)
       <%= Canto.find(stanza.canto_id).title %>
     </td>
     <td><%= link_to 'Show', stanza %></td>

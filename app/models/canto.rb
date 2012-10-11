@@ -7,4 +7,8 @@ class Canto < ActiveRecord::Base
   validates :cantono, :title, :uniqueness => true
   validates :cantono, :title, :presence=> true
   
+  def to_param
+  	cantono
+  end
+  
 end

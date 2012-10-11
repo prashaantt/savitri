@@ -7,4 +7,10 @@ class Line < ActiveRecord::Base
 
   accepts_nested_attributes_for :stanza, :allow_destroy => :true,
     :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
+
+
+  def to_param
+  	no
+  end
+
 end

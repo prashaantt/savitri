@@ -11,15 +11,17 @@
   <%= @line.line %>
 </p>
 
+<% @stan = Stanza.find(@line.stanza_id) %>
+
 <p>
   <b>StanzNo:</b>
-  <%= @line.stanza_id %>
+  <%= @stan.stanzno %>
 </p>
 
 
  <p>
  	<b>Canto Detail </b>
-      <% @canto = Stanza.find(@line.stanza_id).canto_id %>
+	  <% @canto = @stan.canto_id %>      
       <%= Canto.find(@canto).cantono %>---<%= Canto.find(@canto).title  %>
     </b>
 </p>
