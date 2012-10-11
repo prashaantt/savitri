@@ -24,40 +24,64 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="/">Home</a></li>
-			  <li><a href="#about">About</a></li>			 
-			  <li><a href="/cantos">Cantos</a></li>
-			  <li><a href="/stanzas">Stanzas</a></li>
-			  <li><a href="/lines">Lines</a></li>
-			  <li><a href="/posts">Blogs</a></li>
-			  <li class="dropdown" id="Resources">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Resources
-				  <span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu">
-				  <li><a href="#">Themes</a></li>
-				  <li><a href="#">Presentations</a></li>
-    			</ul>
-			  </li>
+        			  <li><a href="#about">About</a></li>			 
+        			  <li><a href="/cantos">Cantos</a></li>
+        			  <li><a href="/stanzas">Stanzas</a></li>
+        			  <li><a href="/lines">Lines</a></li>
+        			  <li><a href="/posts">Blogs</a></li>
+        			  <li class="dropdown" id="Resources">
+        				<a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Resources
+        				  <span class="caret"></span>
+        				</a>
+        				<ul class="dropdown-menu">
+        				  <li><a href="#">Themes</a></li>
+        				  <li><a href="#">Presentations</a></li>
+            			</ul>
+        			  </li>
             </ul>
           </div><!--/.nav-collapse -->
 		  <form class="navbar-search pull-left">
             <input type="text" class="search-query span2" placeholder="Search">
-          </form>
+      </form>
 		   <div class="btn-group pull-right">
-				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-					<i class="icon-user"></i> Username
-					<span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu">
-					<li><a href="#">Profile</a></li>
-					<li class="divider"></li>
-					<li><a href="#">Sign Out</a></li>
-				</ul>
+        <% if user_signed_in? %> 
+    				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    					<i class="icon-user">Signed in as <%= current_user.email %></i>
+              <span class="caret"></span>
+            </a>
+    				<ul class="dropdown-menu">
+              <li><%= link_to "Account Settings", edit_user_registration_path %> </li>
+              <li class="divider"/>
+              <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
+            </ul>
+         <% else %> 
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="icon-user"></i>Log In
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Sign Up", new_user_registration_path %> </li>
+              <li class="divider"></li>
+              <li> <%= link_to "Log In" , new_user_session_path %></li>
+
+           <!-- 
+
+              <li class="divider" />
+           Edit to add Login Modal Box
+              <li>
+                <a href="#myModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a> 
+              </li>
+            -->
+            </ul>
+         <% end %>
+         </div>
 			  </div>
-        </div>
+      </div>
       </div>
     </div>
+
 <body>
+    
 <div class="container">
 	<div class="row">
 		<%= yield %>

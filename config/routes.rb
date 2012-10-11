@@ -1,4 +1,6 @@
 Savitri::Application.routes.draw do
+  devise_for :users
+
   resources :read
 
   resources :users
