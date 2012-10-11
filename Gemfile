@@ -9,8 +9,10 @@ gem 'pg'
 #gem 'sqlite3'
 gem 'acts-as-taggable-on'
 
-gem "bullet", :group => "development"
+#gem "bullet", :group => "development"
 gem 'kaminari'
+#gem 'thin'
+gem 'newrelic_rpm'
 
 # Gems used only for assets and not required
 # in production environments by default.
