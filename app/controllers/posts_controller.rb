@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
   # GET /posts
   # GET /posts.json
   def index
@@ -29,8 +30,8 @@ class PostsController < ApplicationController
   # GET /posts/new
   # GET /posts/new.json
   def new
-    @post = Post.new
-
+    @post = Post.new 
+    #logger.info "count is"+@counter.count
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @post }
@@ -46,7 +47,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(params[:post])
-
+    @post.user_id = current_user.id
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
