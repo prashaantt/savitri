@@ -15,10 +15,13 @@
     <%= f.label :tag_list, "Tags (Separated by Commas)",:class => 'control-label' %><br />
     <%= f.text_field :tag_list, :class => 'text_area' %>
   </div>
-  <div class="control-group">
+  <!--<div class="control-group">
     <%= f.label :user_id, :class => 'control-label' %>
     <div class="controls">
+      <%= current_user.id %>
       <%= f.collection_select(:user_id, User.order(:id), :id, :name) %>
+    -->
+
     </div>
   </div>
   <div class="form-actions">

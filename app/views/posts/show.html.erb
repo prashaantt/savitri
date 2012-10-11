@@ -10,9 +10,14 @@
   <dd><%= simple_format @post.content %></dd>
   <dt><strong><%= model_class.human_attribute_name(:comments) %>:</strong></dt>
   <dd><%= render @post.comments %></dd>
-  <dt>Add a comment:</dt>
-  <dd><%= render "comments/form" %></dd>
-  
+  <% if user_signed_in? %>
+    <dt>Add a comment:</dt>
+    <dd><%= render "comments/form" %></dd>
+  <% else %>
+    <dt>
+    </dt>
+    <dd><%= link_to "Log in to Add Comment", new_user_session_path  %></dd>
+  <% end %>
 </dl>
 
 
