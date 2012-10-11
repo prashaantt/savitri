@@ -4,4 +4,10 @@ class Stanza < ActiveRecord::Base
   belongs_to :canto
 
   validates :stanzno , :uniqueness => true
+
+
+  def to_param
+  	stanzno
+  end
+  
 end

@@ -13,7 +13,7 @@ class CantosController < ApplicationController
   # GET /cantos/1
   # GET /cantos/1.json
   def show
-    @canto = Canto.find(params[:id])
+    @canto = Canto.find_by_cantono(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,7 +34,7 @@ class CantosController < ApplicationController
 
   # GET /cantos/1/edit
   def edit
-    @canto = Canto.find(params[:id])
+    @canto = Canto.find_by_cantono(params[:id])
   end
 
   # POST /cantos
@@ -56,7 +56,7 @@ class CantosController < ApplicationController
   # PUT /cantos/1
   # PUT /cantos/1.json
   def update
-    @canto = Canto.find(params[:id])
+    @canto = Canto.find_by_cantono(params[:id])
 
     respond_to do |format|
       if @canto.update_attributes(params[:canto])
@@ -72,7 +72,7 @@ class CantosController < ApplicationController
   # DELETE /cantos/1
   # DELETE /cantos/1.json
   def destroy
-    @canto = Canto.find(params[:id])
+    @canto = Canto.find_by_cantono(params[:id])
     @canto.destroy
 
     respond_to do |format|

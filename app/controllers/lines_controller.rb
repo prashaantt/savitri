@@ -16,7 +16,7 @@ class LinesController < ApplicationController
   # GET /lines/1
   # GET /lines/1.json
   def show
-    @line = Line.find(params[:id])
+    @line = Line.find_by_no(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,7 +37,7 @@ class LinesController < ApplicationController
 
   # GET /lines/1/edit
   def edit
-    @line = Line.find(params[:id])
+    @line = Line.find_by_no(params[:id])
   end
 
   # POST /lines
@@ -75,7 +75,7 @@ class LinesController < ApplicationController
   # PUT /lines/1
   # PUT /lines/1.json
   def update
-    @line = Line.find(params[:id])
+    @line = Line.find_by_no(params[:id])
 
     respond_to do |format|
       if @line.update_attributes(params[:line])
@@ -91,7 +91,7 @@ class LinesController < ApplicationController
   # DELETE /lines/1
   # DELETE /lines/1.json
   def destroy
-    @line = Line.find(params[:id])
+    @line = Line.find_by_no(params[:id])
     @line.destroy
 
     respond_to do |format|

@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
 	  $("#line_stanza_id").change ->
-	  	stanzno = $("select#line_stanza_id :selected").val()
+	  	stanzno = $("select#line_stanza_id :selected").text()
 	  	callback = (response) -> 
 	  			$("#cantono").val(response.canto_id) 
 	  			cantoname = (response) ->

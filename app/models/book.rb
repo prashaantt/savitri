@@ -6,4 +6,9 @@ class Book < ActiveRecord::Base
 
   validates :no, :name, :uniqueness => true
   validates :no, :name, :presence=> true
+
+  def to_param
+  	no
+  end
+  
 end

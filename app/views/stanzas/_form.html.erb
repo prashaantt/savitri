@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :stanzno %><br />
-    <%= f.number_field :stanzno %>
+    <%= f.number_field :stanzno , :value => Stanza.maximum("stanzno")+1 %>
   </div>
   <div class="field">
     <%= f.label :canto_id %><br/>
