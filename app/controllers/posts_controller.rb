@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  
+  before_filter :store_location
   before_filter :authenticate_user!, :except => [:show, :index]
   # GET /posts
   # GET /posts.json
@@ -86,4 +88,7 @@ class PostsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  
+
 end
