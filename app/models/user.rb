@@ -9,4 +9,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :email, :name
   has_many :posts
+
+ validates :username, :presence => true,
+                      :length => { :minimum => 2 }
+
 end
