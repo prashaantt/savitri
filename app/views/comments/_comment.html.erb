@@ -1,7 +1,8 @@
 <div class="form-actions">
 <p>
   <b>Commenter:</b>
-  <%= comment.commenter %>
+  <%  user = User.find(comment.user_id) %>
+  <%=link_to user.name , user_path(user) %>
 </p>
  
 <p>
