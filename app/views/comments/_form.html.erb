@@ -3,6 +3,7 @@
     <%= f.label :commenter , :class => 'control-label'%>
     <div class="controls" >
       <%= f.text_field :commenter , :class => 'text_field', :value => current_user.name, :readonly => 'true' %>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
     </div>
   </div>
   <div class="control-group">
