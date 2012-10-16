@@ -20,6 +20,7 @@ class Ability
     else
         can :read, :all
         if user.role == "Blogger"
+           can :read , Post
            can :create, Post
            can :update, Post do |p|
                p.user_id == user.id 
