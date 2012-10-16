@@ -8,12 +8,27 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :email, :name, :username
+  attr_accessible :email, :name, :username, :role_id
   has_many :posts
+  belongs_to :roles
 
- validates :username, :presence => true,
+  validates :username, :presence => true,
                       :length => { :minimum => 2 }
 
- validates :username, :uniqueness => true
+  validates :username, :uniqueness => true
 
+
+  after_initialize :init
+
+  def init
+    self.role_id ||= 3
+  end
+  
+  def role
+    Role.find_by_id(self.role_id).name
+  end
+
+  def role?(user)
+    Role.find_by_id(self.role_id).name
+  end
 end

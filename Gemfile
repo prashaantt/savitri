@@ -10,9 +10,10 @@ gem 'pg'
 gem 'acts-as-taggable-on'
 gem 'devise'
 gem 'simple_form'
+gem 'cancan'
 #gem "bullet", :group => "development"
 gem 'kaminari'
-#gem 'thin'
+gem 'thin'
 gem 'newrelic_rpm'
 gem 'bcrypt-ruby'
 # Gems used only for assets and not required
