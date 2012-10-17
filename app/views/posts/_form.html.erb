@@ -1,27 +1,25 @@
 <%= form_for @post, :html => { :class => 'form-horizontal' } do |f| %>
+      <div class="span8">
   <div class="control-group">
     <%= f.label :title, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :title, :class => 'text_field' %>
     </div>
   </div>
+  
   <div class="control-group">
     <%= f.label :content, :class => 'control-label' %>
+    
     <div class="controls">
-      <%= f.text_area :content, :class => 'text_area' %>
+      <%= f.text_area :content, :class => 'redactor' , :id=>'redactor_content', :rows => "40"%>
     </div>
+
   </div>
   <div class="control-group">
     <%= f.label :tag_list, "Tags (Separated by Commas)",:class => 'control-label' %><br />
     <%= f.text_field :tag_list, :class => 'text_area' %>
   </div>
-  <!--<div class="control-group">
-    <%= f.label :user_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= current_user.id %>
-      <%= f.collection_select(:user_id, User.order(:id), :id, :name) %>
-    -->
-
+ 
     </div>
   </div>
   <div class="form-actions">
@@ -29,4 +27,5 @@
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 posts_path, :class => 'btn' %>
   </div>
+</div>  
 <% end %>
