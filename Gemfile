@@ -16,6 +16,9 @@ gem 'kaminari'
 gem 'thin'
 gem 'newrelic_rpm'
 gem 'bcrypt-ruby'
+gem 'redactor-rails'
+gem 'carrierwave'
+gem 'mini_magick'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
