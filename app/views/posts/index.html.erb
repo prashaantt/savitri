@@ -24,7 +24,8 @@
         <%= link_to @uname, user_path(post.user_id)  %>
       </td>
         <td><%= link_to  post.title, post_path(post) %></td>
-        <td><%= simple_format post.content %></td>
+        <td><%= post.content.html_safe.gsub(/\r\n?/,"<br/>").html_safe %></td>
+        <!-- <td><%= simple_format post.content %></td> -->
         <td><%= link_to post.comments.count, post %></td>
         <td><%= raw post.tag_list.map { |t| link_to t,tag_path(t)}.join(',') %></td>
        <!-- <td><%=l post.created_at %></td> -->

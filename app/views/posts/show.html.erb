@@ -2,17 +2,16 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human %></h1>
 </div>
-
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
   <dd><%= @post.title %></dd>
   <dt><strong><%= model_class.human_attribute_name(:content) %>:</strong></dt>
-  <dd><%= simple_format @post.content %></dd>
+  <dd><%=  @post.content.html_safe.gsub(/\r\n?/,"<br/>").html_safe %></dd>
   <dt><strong><%= model_class.human_attribute_name(:comments) %>:</strong></dt>
   <dd><%= render @post.comments %></dd>
   <% if user_signed_in? %>
     <% if can? :create, Comment %>
-      <dd><%= render "comments/form" %></dd>
+      <%= render "comments/form" %>
     <% end %>
   <% else %>
     <dt>
