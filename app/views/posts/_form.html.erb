@@ -1,5 +1,5 @@
 <%= form_for @post, :html => { :class => 'form-horizontal' } do |f| %>
-      <div class="span8">
+ <div class="span10">
   <div class="control-group">
     <%= f.label :title, :class => 'control-label' %>
     <div class="controls">
@@ -9,9 +9,8 @@
   
   <div class="control-group">
     <%= f.label :content, :class => 'control-label' %>
-    
-    <div class="controls">
-      <%= f.text_area :content, :class => 'redactor' , :id=>'redactor_content', :rows => "40"%>
+    <div class="controls ">
+      <%= f.text_area :content, :class => 'redactor rowcol' , :id=>'redactor_content', :rows => "100"%>
     </div>
 
   </div>
