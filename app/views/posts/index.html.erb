@@ -20,8 +20,8 @@
       <tr>
         <td><%= link_to post.id, post_path(post) %></td>
         <td>
-        <% @uname = User.find(post.user_id).name %>
-        <%= link_to @uname, user_path(post.user_id)  %>
+        <% @uname = User.find(post.user_id) %>
+        <%= link_to @uname.name, profile_path(@uname)  %>
       </td>
         <td><%= link_to  post.title, post_path(post) %></td>
         <td><%= post.content.html_safe.gsub(/\r\n?/,"<br/>").html_safe %></td>

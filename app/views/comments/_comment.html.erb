@@ -1,8 +1,10 @@
+
 <div class="form-actions">
+
 <p>
   <b>Commenter:</b>
   <%  user = User.find(comment.user_id) %>
-  <%=link_to user.name , user_path(user) %>
+  <%=link_to user.name , profile_path(user) %>
 </p>
  
 <p>
@@ -10,12 +12,10 @@
   <%= comment.body %>
 </p>
 
-<p>
+
 <% if can? :destroy, comment %>
   <%= link_to 'Destroy Comment', [comment.post, comment],
                :confirm => 'Are you sure?',
                :method => :delete %>  
   </div>
-  
 <% end %>
-</p>
