@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :email, :name, :username, :role_id
   has_many :posts
+  has_many :comments
   belongs_to :roles
 
   validates :username, :presence => true,
@@ -17,6 +18,9 @@ class User < ActiveRecord::Base
 
   validates :username, :uniqueness => true
 
+  def to_param
+    "#{id}-#{username}"
+  end
 
   after_initialize :init
 

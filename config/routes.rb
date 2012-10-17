@@ -3,9 +3,7 @@ Savitri::Application.routes.draw do
 
   devise_for :users
   
-  scope "/admin" do
-    resources :users
-  end
+  get "/profile/:id" => "users#show", :as => :profile
   
   resources :read
 
