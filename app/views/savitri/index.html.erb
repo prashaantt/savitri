@@ -33,7 +33,7 @@
 				<%= button_to "Read More""&raquo;".html_safe, stanza_path(@stanzafirst), :class => "btn btn-small", :method => :get %> 
 			</div>
 				<div class="span4">
-				<% @latestfiveposts = Post.find(:all,:order=>:created_at,:limit=>5) %>
+				<% @latestfiveposts = Post.find(:all,:order=>("created_at DESC"),:limit=>5) %>
 				<h4>Latest 5 Posts</h4><br/>
 				<p> 
 				<% @latestfiveposts.each do |post| %>
