@@ -25,6 +25,7 @@
       <%= Canto.find(@canto).cantono %>---<%= Canto.find(@canto).title  %>
     </b>
 </p>
-
+<% if can? :update, @line %>
 <%= link_to 'Edit', edit_line_path(@line) %> |
+<% end %>
 <%= link_to 'Back', lines_path %>

@@ -25,12 +25,17 @@
     </td>
     <!--TODO FIll In to show canto Id -->
     <td><%= link_to 'Show', line %></td>
+    <% if can? :update, line %>
     <td><%= link_to 'Edit', edit_line_path(line) %></td>
+    <% end %>
+    <% if can? :destroy, line %>
     <td><%= link_to 'Destroy', line, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
 
 <br />
-
+<% if can? :create, Line %>
 <%= link_to 'New Line', new_line_path %>
+<% end %>

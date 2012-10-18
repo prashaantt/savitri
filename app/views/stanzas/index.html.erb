@@ -16,12 +16,21 @@
       <%= Canto.find(stanza.canto_id).title %>
     </td>
     <td><%= link_to 'Show', stanza %></td>
-    <td><%= link_to 'Edit', edit_stanza_path(stanza) %></td>
-    <td><%= link_to 'Destroy', stanza, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td>
+    <% if can? :update, stanza %>
+    <%= link_to 'Edit', edit_stanza_path(stanza) %>
+    <% end %>
+    </td>
+    <td>
+    <% if can? :destroy, stanza %>
+      <%= link_to 'Destroy', stanza, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
+<% if can? :create, Stanza %>
 <%= link_to 'New Stanza', new_stanza_path %>
+<% end %>
