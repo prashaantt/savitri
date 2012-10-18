@@ -1,6 +1,8 @@
 class BooksController < ApplicationController
 	# GET /books
   # GET /books.json
+  load_and_authorize_resource
+  
   def index
     @books = Book.order(:no)
 

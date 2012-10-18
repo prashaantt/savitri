@@ -1,6 +1,8 @@
 class LinesController < ApplicationController
   # GET /lines
   # GET /lines.json
+  load_and_authorize_resource
+  
   def index
     @lines = Line.order(:no).page(params[:lines]).per(10)
 

@@ -1,6 +1,8 @@
 class CantosController < ApplicationController
   # GET /cantos
   # GET /cantos.json
+  load_and_authorize_resource
+  
   def index
     @cantos = Canto.all
 

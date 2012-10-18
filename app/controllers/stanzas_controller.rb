@@ -1,6 +1,8 @@
 class StanzasController < ApplicationController
   # GET /stanzas
   # GET /stanzas.json
+  load_and_authorize_resource
+  
   def index
     @stanzas = Stanza.order(:stanzno)
 
