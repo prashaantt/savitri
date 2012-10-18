@@ -13,28 +13,34 @@
     </div> <!-- /container -->
 		<div class="row">
 			<div class="span4">
-				<h4>Love in the wilderness met Savitri</h4><br/>
-				<p>A stranger on the sorrowful roads of Time,<br/>
-				   Immortal under the yoke of death and fate,<br/>
-				   A sacrificant of the bliss and pain of the spheres,<br/>
-				   Love in the wilderness met Savitri.</p>
-				   <p><a class="btn btn-small" href="editpost.html">Read more &raquo;</a></p>
+				<% @stanzafirst = Stanza.order("RANDOM()").first %>
+				<h4><%= Canto.find(@stanzafirst.canto_id).title %> </h4><br/>
+				<p>
+				<% @stanzafirst.lines.each do |line| %>
+					<%= line.line %> <br/>
+				<% end %>
+				</p>
+				<%= button_to "Read More""&raquo;".html_safe, stanza_path(@stanzafirst), :class => "btn btn-small", :method => :get %> 
 			</div>
 			<div class="span4">
-				<h4>To meet the ancient Mother in her groves</h4><br/>
-				<p>Out of the ignorant eager toil of the years <br/>
-				 Abandoning man's loud drama he had come<br/>
-				 Led by the wisdom of an adverse Fate<br/>
-				 To meet the ancient Mother in her groves.</p>
-				 <p><a class="btn btn-small">Read more &raquo;</a></p>
+				<% @stanzafirst = Stanza.order("RANDOM()").last %>
+				<h4><%= Canto.find(@stanzafirst.canto_id).title %> </h4><br/>
+				<p>
+				<% @stanzafirst.lines.each do |line| %>
+					<%= line.line %> <br/>
+				<% end %>
+				</p>
+				<%= button_to "Read More""&raquo;".html_safe, stanza_path(@stanzafirst), :class => "btn btn-small", :method => :get %> 
 			</div>
 				<div class="span4">
-				<h4>For flashing of the splendid sword of God</h4><br/>
-				<p>O life, the life beneath the wheeling stars <br/>
-				For victory in the tournament with death,<br/>
-				For bending of the fi erce and diffi cult bow,<br/>
-				For fl ashing of the splendid sword of God!</p>
-				<p><a class="btn btn-small">Read more &raquo;</a></p>
+				<% @latestfiveposts = Post.find(:all,:order=>:created_at,:limit=>5) %>
+				<h4>Latest 5 Posts</h4><br/>
+				<p> 
+				<% @latestfiveposts.each do |post| %>
+					<%= link_to post.title, post_path(post) %> , by <%= User.find(post.user_id).name %><br/>
+				<% end %>
+				</p>
+				<p><a class="btn btn-small" href="/posts">Read more posts &raquo;</a></p>
 			</div>
 		</div>
 		<div align="center">
