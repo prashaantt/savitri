@@ -1,4 +1,7 @@
 $('#poem').fadeOut(1000,function(){
 	$("#paginator").html('<%= escape_javascript(paginate(@stanzas, :param_name => :stanzas , :remote => true).to_s) %>');
 	$("#poem").html("<%= escape_javascript render(@stanzas) %>").fadeIn(1000,function(){});
+	$("#bk1").removeClass("collapsed");
+	$("#collapse1").addClass("in");
+	$("#collapse1").css("height","auto");
 });
