@@ -1,18 +1,19 @@
 <%- model_class = User -%>
 <div class="page-header">
-  <h3><%= image_tag  "rails.png" %>
-  <%=t '.title', :default => @user.name %></h3>
-  <div class="pull-right">Subscribe Button (TBD)</div>
 </div>
 <div class="content">
   <div class="row">
-       <dl class="dl-horizontal">
-        <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-        <dd><%= @user.name %></dd>
-        <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
-        <dd><%= @user.email %></dd>
-        <br/>
-    <div class="span6">    
+    <div class="span1">&nbsp;</div>
+      <div class="span4">
+        <h3><%= image_tag(@user.photo_url(:thumb).to_s, :height => "100", :width => "100") %>
+        <%=t '.title', :default => @user.name %></h3>
+        <div class="pull-left">Subscribe Button (TBD)</div>
+      </div>
+    </div>
+    <br/>;
+  <div class="row">
+    <div class="span1">&nbsp;</div>
+    <div class="span4">    
         <dt>Recent Posts:</dt>
         <dd>
           <ol>
@@ -23,7 +24,7 @@
             <% end %>
         </dd>
    </div>
-   <div class="span6">
+   <div class="span4">
       <dt>Recent Comments:</dt>
       <dd>
         <ol>
