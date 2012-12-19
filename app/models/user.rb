@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :email, :name, :username, :role_id
+  attr_accessible :email, :name, :username, :role_id, :photo
   has_many :posts
   has_many :comments
   belongs_to :roles
@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
                       :length => { :minimum => 2 }
 
   validates :username, :uniqueness => true
+
+  mount_uploader :photo, UserPhotoUploader
 
   def to_param
     "#{id}-#{username}"
