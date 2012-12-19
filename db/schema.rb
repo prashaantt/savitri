@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121017120008) do
+ActiveRecord::Schema.define(:version => 20121219081315) do
 
   create_table "books", :force => true do |t|
     t.integer  "no"
@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(:version => 20121017120008) do
     t.string    "unconfirmed_email"
     t.string    "username"
     t.integer   "role_id"
+    t.string    "photo"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
