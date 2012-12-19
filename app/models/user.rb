@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
 
   validates :username, :uniqueness => true
 
-
   mount_uploader :photo, UserPhotoUploader
 
   def to_param
