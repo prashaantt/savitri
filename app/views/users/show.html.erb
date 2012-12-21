@@ -7,7 +7,9 @@
       <div class="span4">
         <h3><%= image_tag(@user.photo_url(:thumb).to_s, :height => "100", :width => "100") %>
         <%=t '.title', :default => @user.name %></h3>
-        <div class="pull-left">Subscribe Button (TBD)</div>
+        <div id="follow_user">
+            <%= render :partial => "shared/follow_user", :locals => {:user => @user} %>
+      </div>
       </div>
     </div>
     <br/>;
