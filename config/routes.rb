@@ -7,6 +7,8 @@ Savitri::Application.routes.draw do
   
   resources :read
 
+  resources :follows, :only => [:create, :destroy]
+
 #  resources :users
 
   get "savitri/index"
