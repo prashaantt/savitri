@@ -19,7 +19,7 @@ gem 'redactor-rails'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'acts_as_follower'
-
+gem 'sidekiq'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h4><%= @sender.username %>just posted on the blog</h4>
+     <p>
+        Link to the blogpost   <%= post_url(@sender.posts.last) %>
+    </p>
+  </body>
+</html>
