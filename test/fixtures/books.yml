@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  no: 1
-  name: MyString
-  description: MyText
+  'no': 1
+  name: "All About Java"
+  description: "This book covers"
 
 two:
-  no: 1
-  name: MyString
-  description: MyText
+  'no': 2
+  name: "All About avaj"
+  description: "This book covers nothing"
