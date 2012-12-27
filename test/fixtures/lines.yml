@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  line: MyString
-  no: 1
+  line: "I guess this is going to be the first line and whatever text is added is just added"
+  'no': 1
 
 two:
-  line: MyString
-  no: 1
+  line: "In first line we added bakwas, but not anymore :) lol"
+  'no': 2
