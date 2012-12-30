@@ -22,21 +22,21 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
   end
 
   create_table "cantos", :force => true do |t|
-    t.integer   "cantono"
-    t.string    "title"
-    t.string    "description"
-    t.timestamp "created_at",                 :null => false
-    t.timestamp "updated_at",                 :null => false
-    t.integer   "book_id",     :default => 1
+    t.integer  "cantono"
+    t.string   "title"
+    t.string   "description"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "book_id",     :default => 1
   end
 
   create_table "comments", :force => true do |t|
-    t.string    "commenter"
-    t.text      "body"
-    t.integer   "post_id"
-    t.timestamp "created_at", :null => false
-    t.timestamp "updated_at", :null => false
-    t.integer   "user_id"
+    t.string   "commenter"
+    t.text     "body"
+    t.integer  "post_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
 
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
@@ -55,20 +55,19 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
   add_index "follows", ["follower_id", "follower_type"], :name => "fk_follows"
 
   create_table "lines", :force => true do |t|
-    t.string    "line"
-    t.integer   "no"
-    t.timestamp "created_at", :null => false
-    t.timestamp "updated_at", :null => false
-    t.integer   "stanzno"
-    t.integer   "stanza_id"
+    t.string   "line"
+    t.integer  "no"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "stanza_id"
   end
 
   create_table "posts", :force => true do |t|
-    t.string    "title"
-    t.text      "content"
-    t.timestamp "created_at", :null => false
-    t.timestamp "updated_at", :null => false
-    t.integer   "user_id"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
 
   create_table "redactor_assets", :force => true do |t|
@@ -94,20 +93,20 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
   end
 
   create_table "stanzas", :force => true do |t|
-    t.integer   "stanzno"
-    t.timestamp "created_at", :null => false
-    t.timestamp "updated_at", :null => false
-    t.integer   "canto_id"
+    t.integer  "stanzno"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "canto_id"
   end
 
   create_table "taggings", :force => true do |t|
-    t.integer   "tag_id"
-    t.integer   "taggable_id"
-    t.string    "taggable_type"
-    t.integer   "tagger_id"
-    t.string    "tagger_type"
-    t.string    "context",       :limit => 128
-    t.timestamp "created_at"
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       :limit => 128
+    t.datetime "created_at"
   end
 
   add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
@@ -118,26 +117,26 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
   end
 
   create_table "users", :force => true do |t|
-    t.string    "name"
-    t.string    "email"
-    t.timestamp "created_at",                             :null => false
-    t.timestamp "updated_at",                             :null => false
-    t.string    "encrypted_password",     :default => "", :null => false
-    t.string    "reset_password_token"
-    t.datetime  "reset_password_sent_at"
-    t.datetime  "remember_created_at"
-    t.integer   "sign_in_count",          :default => 0
-    t.datetime  "current_sign_in_at"
-    t.datetime  "last_sign_in_at"
-    t.string    "current_sign_in_ip"
-    t.string    "last_sign_in_ip"
-    t.string    "confirmation_token"
-    t.datetime  "confirmed_at"
-    t.datetime  "confirmation_sent_at"
-    t.string    "unconfirmed_email"
-    t.string    "username"
-    t.integer   "role_id"
-    t.string    "photo"
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.string   "username"
+    t.integer  "role_id"
+    t.string   "photo"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
