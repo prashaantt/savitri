@@ -1,10 +1,20 @@
 Savitri::Application.routes.draw do
+  resources :notebooks
+
   mount RedactorRails::Engine => '/redactor_rails'
 
   devise_for :users
   
   get "/profile/:id" => "users#show", :as => :profile
   
+  match "/store/notebooks" => "notebooks#create"
+
+  match "/store/notesu" => "notebooks#update"
+
+  match "/store/notesd" => "notebooks#destroy"
+
+  match "/store/notess" => "notebooks#search"
+
   resources :read
 
   resources :follows, :only => [:create, :destroy]

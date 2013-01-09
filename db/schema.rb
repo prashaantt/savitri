@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121219115732) do
+ActiveRecord::Schema.define(:version => 20121228110013) do
 
   create_table "books", :force => true do |t|
     t.integer  "no"
@@ -61,6 +61,22 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
     t.timestamp "updated_at", :null => false
     t.integer   "stanzno"
     t.integer   "stanza_id"
+  end
+
+  create_table "notebooks", :force => true do |t|
+    t.string   "line"
+    t.string   "quote"
+    t.string   "annotation"
+    t.string   "start"
+    t.integer  "startoffset"
+    t.string   "end"
+    t.integer  "endoffset"
+    t.string   "externalurl"
+    t.string   "uri"
+    t.integer  "line_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "posts", :force => true do |t|
