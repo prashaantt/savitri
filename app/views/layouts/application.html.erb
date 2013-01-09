@@ -9,7 +9,10 @@
   <%= yield :head %> 
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= raw javascript_include_view_js %>
   <%= csrf_meta_tags %>
+<script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>
+<link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.1.0/annotator.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
  <div class="navbar navbar-fixed-top">

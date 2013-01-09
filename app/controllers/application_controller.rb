@@ -17,5 +17,21 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource_or_scope)
     request.referrer
   end
+
+  helper_method :javascript_include_view_js 
+
+  #http://stackoverflow.com/a/12903463/156775
+  def javascript_include_view_js
+      if FileTest.exists? "app/assets/javascripts/"+params[:controller]+".js.coffee"
+        if params[:controller].to_s == 'read'
+          unless current_user.nil?
+            return '<script src="/assets/'+params[:controller]+'.js.coffee" type="text/javascript"></script>'   
+          end
+        else
+          return '<script src="/assets/'+params[:controller]+'.js.coffee" type="text/javascript"></script>' 
+        end
+          
+      end
+  end
  
 end
