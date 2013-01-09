@@ -15,4 +15,4 @@
 //= require twitter/bootstrap
 //= require redactor-rails/redactor.min
 //= require /app/assets/config.js
-//= require_tree .
+
