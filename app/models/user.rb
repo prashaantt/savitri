@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :username, :role_id, :photo
   has_many :posts
   has_many :comments
+  has_many :notebooks
   belongs_to :roles
 
   validates :username, :presence => true,
