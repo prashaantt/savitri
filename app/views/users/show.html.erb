@@ -15,7 +15,7 @@
     <br/>;
   <div class="row">
     <div class="span1">&nbsp;</div>
-    <div class="span4">    
+    <div class="span3">    
         <dt>Recent Posts:</dt>
         <dd>
           <ol>
@@ -26,7 +26,7 @@
             <% end %>
         </dd>
    </div>
-   <div class="span4">
+   <div class="span3">
       <dt>Recent Comments:</dt>
       <dd>
         <ol>
@@ -37,6 +37,16 @@
           <% end %>
       </dd>
   </div>
+   <div class="span3">    
+        <dt>Latest Notebook Entries</dt>
+        <dd>
+          <ol>
+            <% @user.notebooks.limit(10).each  do |note| %>
+               <%=  note.quote  %>  <i>annotated</i> as <%=  note.annotation  %>
+               <br/> 
+            <% end %>
+        </dd>
+   </div>
 </div>
  </dl>
 </div>

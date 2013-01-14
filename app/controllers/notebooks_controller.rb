@@ -28,7 +28,7 @@ class NotebooksController < ApplicationController
   # "uri"=>"http://this/document/only", "prefix"=>"", "notebook"=>{}}
 
   def search
-    @notes = Notebook.all
+    @notes = Notebook.where(:user_id=>current_user).limit(params[:limit])
     @noti = Array.new
     @rows = Array.new
     @notes.each do |note|
@@ -86,6 +86,7 @@ class NotebooksController < ApplicationController
     #notebook.line - style params
     #logger.debug "#{params[:ranges].first}"
     @notebook.annotation = params[:text]
+    @notebook.user_id = current_user
     @notebook.quote = params[:quote]
     @notebook.uri = params[:uri]
     @notebook.start = params[:ranges].first[:start]
@@ -110,9 +111,9 @@ class NotebooksController < ApplicationController
   # PUT /notebooks/1.json
   def update
     @notebook = Notebook.find(params[:id])
-
+    
     respond_to do |format|
-      if @notebook.update_attributes(params[:notebook])
+      if @notebook.update_attributes(:annotation=>params[:text])
         format.html { redirect_to @notebook, notice: 'Notebook was successfully updated.' }
         format.json { head :no_content }
       else
@@ -127,7 +128,6 @@ class NotebooksController < ApplicationController
   def destroy
     @notebook = Notebook.find(params[:id])
     @notebook.destroy
-
     respond_to do |format|
       format.html { redirect_to notebooks_url }
       format.json { head :no_content }
