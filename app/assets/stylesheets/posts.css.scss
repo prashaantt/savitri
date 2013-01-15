@@ -1,15 +1,7 @@
 // Place all the styles related to the Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-#posts{
-	width: 1000px;
-	
-	.list_line_even {
-    	background:   #e0f5f5;
-  	}
-  	.list_line_odd {
-	    background:   #f8b0f8;
-   	}
+#blog-title{
 	color: blue;
 }
 
@@ -20,3 +12,12 @@
 	.m {font-size: 1.2em};
 	.l {font-size: 1.6em; text: bold;};
 }
+/* Panels ---------------------- */
+.panel { background: #f2f2f2; border: solid 1px #e6e6e6; margin: 0 0 22px 0; padding: 20px; }
+.panel > :first-child { margin-top: 0; }
+.panel > :last-child { margin-bottom: 0; }
+.panel.callout { background: #2ba6cb; color: #fff; border-color: #2284a1; -webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5); -moz-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5); box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5); }
+.panel.callout a { color: #fff; }
+.panel.callout .button { background: white; border: none; color: #2ba6cb; text-shadow: none; }
+.panel.callout .button:hover, .panel.callout .button:focus { background: rgba(255, 255, 255, 0.8); }
+.panel.radius { -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; }
