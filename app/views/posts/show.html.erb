@@ -1,38 +1,52 @@
 <%- model_class = Post -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+<div class="row">
+  <div class="span1">&nbsp;</div>
+  <div class="span9">
+  <h2 class="blog-title"><%= link_to User.find(params[:user_id]).username + "Blog", user_posts_path %> <small> This is my blog. It's awesome.</small></h2>
+  <hr/>
 </div>
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
-  <dd><%= @post.title %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:content) %>:</strong></dt>
-  <dd><%=  @post.content.html_safe.gsub(/\r\n?/,"<br/>").html_safe %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:comments) %>:</strong></dt>
-  <dd><%= render @post.comments %></dd>
-  <% if user_signed_in? %>
-    <% if can? :create, Comment %>
-      <%= render "comments/form" %>
-    <% end %>
-  <% else %>
-    <dt>
-    </dt>
-    <dd><%= link_to "Log in to Add Comment", new_user_session_path  %></dd>
-  <% end %>
-</dl>
-
-
-  <div class="form-actions">
-    <%= link_to t('.back', :default => t("helpers.links.back")),
-                posts_path, :class => 'btn'  %>
-    <% if can? :update, @post %>
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                edit_post_path(@post), :class => 'btn' %>
-    <% end %>
-    <% if can? :destroy, @post %>
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                post_path(@post),
-                :method => 'delete',
-                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                :class => 'btn btn-danger' %>
-    <% end %>
 </div>
+
+ <!-- Main Blog Content -->
+    <div class="row">
+        <div class="span1">
+            &nbsp;
+        </div>
+        <div class="span9" role="content">
+            <article>
+              <h3><a href="#"><%= link_to @post.title,  user_post_path(@post.user,@post) %></a></h3>
+                <h6>Posted by <%= link_to @post.user.username, @post.user %> on <%= @post.updated_at %></h6>
+                <div class="row">
+                    <%= @post.content.html_safe.gsub(/\r\n?/,"<br/>").html_safe %>                 
+                </div>
+             </article>
+             <comments> <%= link_to (pluralize @post.comments.count , "Comment") , user_post_path(@post.user,@post) %>
+             </comments>
+             <hr />
+               <dd><%= render @post.comments %></dd>
+                <% if user_signed_in? %>
+                  <% if can? :create, Comment %>
+                    <%= render "comments/form" %>
+                  <% end %>
+                <% else %>
+                  <dt>
+                  </dt>
+                  <dd><%= link_to "Log in to Add Comment", new_user_session_path  %></dd>
+                <% end %>
+                </dl>
+        </div>
+        <div class="span2">
+          <h5>Tagged as</h5>
+          <div id="tag_cloud">
+               <ul>
+              <% tag_cloud @post.tag_counts, %w[s m l] do |tag, css_class| %>
+                <li><%= link_to tag.name, tag_path(params[:user_id],tag.name), class: css_class %></li>
+              <% end %>
+        </div>
+        <br/><br/>
+         <div class="panel">
+            <h5>Featured</h5>
+              <p>What it takes to truly Know: For nothing is known while aught remains concealed; The Truth is known only when all is seen. ~Savitri</p>
+              <a href="https://twitter.com/SavitriForever/">SavitriForever</a> 
+          </div>
+      </div>

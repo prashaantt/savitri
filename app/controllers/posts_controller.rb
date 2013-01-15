@@ -9,12 +9,10 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     if params[:tag]
-      @posts = Post.tagged_with(params[:tag])
+      @posts = Post.tagged_with(params[:tag]).where(:user_id=>params[:user_id])
     else
-      @posts = Post.all  
+      @posts = Post.where(:user_id=>params[:user_id])  
     end
-    
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @posts }

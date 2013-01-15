@@ -2,14 +2,16 @@
 <div class="form-actions">
 
 <p>
-  <b>Commenter:</b>
   <%  user = User.find(comment.user_id) %>
-  <%=link_to user.name , profile_path(user) %>
+  <%=link_to user.name , profile_path(user) %> <i>commented as</i>
 </p>
  
 <p>
-  <b>Comment:</b>
   <%= comment.body %>
+</p>
+
+<p>
+   on <%= comment.updated_at %>
 </p>
 
 

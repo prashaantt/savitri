@@ -13,11 +13,23 @@ Savitri::Application.routes.draw do
 
   get "savitri/index"
 
-  get 'tags/:tag' , to: 'posts#index' , as: :tag
-  resources :posts do
-    resources :comments
+  # resources :users do
+  #   resources :posts do
+  #     resources :comments
+  #   end
+  # end
+
+  resources :users do
+   resources :posts, :name_prefix => "user_"
   end
 
+  resources :posts do
+    resources :comments, :name_prefix => "post_"
+  end
+
+
+  get 'users/:user_id/posts/tags/:tag' , to: 'posts#index' , as: :tag
+  
   resources :books
   
   resources :cantos
