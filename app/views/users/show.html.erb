@@ -19,7 +19,7 @@
         <dt>Recent Posts:</dt>
         <dd>
           <ol>
-            <% @user.posts.each do |post| %>
+            <% Post.find(@user.blogs).each do |post| %>
                <%= link_to post.title , user_post_path(@user,post.id) %> | 
                <%= link_to (pluralize post.comments.count , "Comment") , user_post_path(@user,post.id) %>
                <br/> 
@@ -31,8 +31,8 @@
       <dd>
         <ol>
           <% @user.comments.each do |comment| %>
-             <%= link_to comment.body , user_post_path(User.find(comment.post.user_id),comment.post_id) %> 
-             on <i><%= link_to Post.find(comment.post_id).title, user_post_path(User.find(comment.post.user_id),Post.find(comment.post_id)) %> </i>
+             <%= link_to comment.body , user_post_path(User.find(comment.post.blog.user_id),comment.post_id) %> 
+             on <i><%= link_to Post.find(comment.post_id).title, user_post_path(User.find(comment.post.blog.user_id),Post.find(comment.post_id)) %> </i>
              <br/> 
           <% end %>
       </dd>

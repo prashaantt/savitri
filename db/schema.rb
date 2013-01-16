@@ -13,6 +13,14 @@
 
 ActiveRecord::Schema.define(:version => 20121219115732) do
 
+  create_table "blogs", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "subtitle"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "books", :force => true do |t|
     t.integer  "no"
     t.string   "name"
@@ -31,9 +39,9 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
   end
 
   create_table "comments", :force => true do |t|
+    t.integer  "post_id"
     t.string   "commenter"
     t.text     "body"
-    t.integer  "post_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "user_id"
@@ -63,11 +71,11 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
   end
 
   create_table "posts", :force => true do |t|
+    t.integer  "blog_id"
     t.string   "title"
     t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "user_id"
   end
 
   create_table "redactor_assets", :force => true do |t|

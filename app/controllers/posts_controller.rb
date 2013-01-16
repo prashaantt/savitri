@@ -8,10 +8,11 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
+    @blog_id = Blog.find_by_user_id(params[:user_id]);
     if params[:tag]
-      @posts = Post.tagged_with(params[:tag]).where(:user_id=>params[:user_id])
+      @posts = Post.tagged_with(params[:tag]).where(:blog_id=>@blog_id)
     else
-      @posts = Post.where(:user_id=>params[:user_id])  
+      @posts = Post.where(:blog_id=>@blog_id)
     end
     respond_to do |format|
       format.html # index.html.erb
