@@ -201,10 +201,6 @@ Line.create([
 ], :without_protection => true )
 
 
-Post.create([
-  { :title => "The Golden Gate Bride", :content => "Golden gate bridge is a suspension bridge spanning the Golden Gate, the opening of the san franciso bay in the pacific ocean", :created_at => "2012-09-28 15:12:37", :updated_at => "2012-09-28 15:12:37", :user_id => 1 }
-], :without_protection => true )
-
 Role.create([
   { :name => "Admin", :created_at => "2012-10-16 06:34:05", :updated_at => "2012-10-16 06:34:05" },
   { :name => "Scholar", :created_at => "2012-10-16 06:34:05", :updated_at => "2012-10-16 06:34:05" },
@@ -256,18 +252,14 @@ Stanza.create([
   { :stanzno => 39, :created_at => "2012-10-11 07:58:44", :updated_at => "2012-10-11 07:58:44", :canto_id => 1 }
 ], :without_protection => true )
 
-
-
-Tag.create([
-  { :name => "golden gate" },
-  { :name => "usa" },
-  { :name => "bride" },
-  { :name => "gate" }
-], :without_protection => true )
-
-
 User.create([
   { :name => "Admin", :email => "modak.nishant@gmail.com", :password => "admin123",:password_confirmation => "admin123", :username => "admin", :role_id => 1, :photo => nil }
 ], :without_protection => true )
 
+Blog.create([
+    { :title => "Nishant's Ramblings", :subtitle => "Into the Unknown", :user_id => 1}
+  ])
 
+Post.create([
+  { :title => "The Golden Gate Bride", :content => "Golden gate bridge is a suspension bridge spanning the Golden Gate, the opening of the san franciso bay in the pacific ocean", :created_at => "2012-09-28 15:12:37", :updated_at => "2012-09-28 15:12:37", :blog_id => 1 }
+], :without_protection => true )

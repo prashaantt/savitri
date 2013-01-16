@@ -14,13 +14,13 @@
         </div>
         <div class="span9" role="content">
             <article>
-              <h3><a href="#"><%= link_to @post.title,  user_post_path(@post.user,@post) %></a></h3>
-                <h6>Posted by <%= link_to @post.user.username, @post.user %> on <%= @post.updated_at %></h6>
+              <h3><a href="#"><%= link_to @post.title,  user_post_path(@post.blog.user,@post) %></a></h3>
+                <h6>Posted by <%= link_to @post.blog.user.username, @post.blog.user %> on <%= @post.updated_at %></h6>
                 <div class="row">
                     <%= @post.content.html_safe.gsub(/\r\n?/,"<br/>").html_safe %>                 
                 </div>
              </article>
-             <comments> <%= link_to (pluralize @post.comments.count , "Comment") , user_post_path(@post.user,@post) %>
+             <comments> <%= link_to (pluralize @post.comments.count , "Comment") , user_post_path(@post.blog.user,@post) %>
              </comments>
              <hr />
                <dd><%= render @post.comments %></dd>

@@ -28,7 +28,17 @@
         			  <li><a href="/cantos">Cantos</a></li>
         			  <li><a href="/stanzas">Stanzas</a></li>
         			  <li><a href="/lines">Lines</a></li>
-        			  <!-- <li><a href="/posts">Blogs</a></li> -->
+        			  
+                <li class="dropdown" id="Blogs">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Blogs
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="/blogs">Blogs</a></li>
+                  <li><a href="/blogs/latest">User Blogs</a></li>
+                  </ul>
+                </li>
+                <!--  -->
         			  <li class="dropdown" id="Resources">
         				<a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Resources
         				  <span class="caret"></span>
@@ -63,9 +73,7 @@
               <li><%= link_to "Sign Up", new_user_registration_path %> </li>
               <li class="divider"></li>
               <li> <%= link_to "Log In" , new_user_session_path %></li>
-
            <!-- 
-
               <li class="divider" />
            Edit to add Login Modal Box
               <li>
