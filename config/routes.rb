@@ -5,7 +5,7 @@ Savitri::Application.routes.draw do
   
   get "/profile/:id" => "users#show", :as => :profile
   
-  get '/blogs' => "blogs#index"
+  resources :blogs
 
   get '/blogs/latest' => "blogs#latest"
   
@@ -13,8 +13,10 @@ Savitri::Application.routes.draw do
 
   resources :follows, :only => [:create, :destroy]
 
-#  resources :users
-
+  resources :users do
+    get "/users/sign_out" => "devise/sessions#destroy", :as => :destroy_user_session
+  end
+  
   get "savitri/index"
 
   # resources :users do
@@ -91,7 +93,7 @@ Savitri::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'blogs#index', :as => 'savitri'
+  root :to => 'blogs#home', :as => 'savitri'
 
   # See how all your routes lay out with "rake routes"
 
