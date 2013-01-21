@@ -59,7 +59,11 @@
               <span class="caret"></span>
             </a>
     				<ul class="dropdown-menu">
-              <li><%= link_to "My Blog", user_posts_path(current_user) %> </li>
+              <% if current_user.blogs.count > 0  %>
+              <li><%= link_to "Manage Blog", blogs_path %> </li>
+              <% else %>
+              <li><%= link_to "Manage Blog", new_blog_path %></li>
+              <% end %>
               <li class="divider"/>
               <li><%= link_to "Account Settings", edit_user_registration_path %> </li>
               <li class="divider"/>
