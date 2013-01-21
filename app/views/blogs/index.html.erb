@@ -1,85 +1,21 @@
-<!-- Header and Nav -->
+<%- model_class = Blog -%>
+<div class="page-header">
+	<h1>Manage Blog</h1>
+</div>
 
-<div class="row">
-  <div class="span2">
-    &nbsp;
-  </div>
-  <div class="span9">
-    <h3><i>Some Nice Landing Page Title</i></h3>
-  </div>
-  <div class="span2">
-    &nbsp;
-  </div>
-</div>
-<!-- End Header and Nav -->
-<div class="row">
-  <div class="span2">
-    &nbsp;
-  </div>
-  <div class="span9">
-    <div id="myCarousel" class="carousel slide">
-      <!-- Carousel items -->
-      <div class="carousel-inner">
-        <% @posts.each do |post| %>
-        <div class="item<%=cycle(" active","","")%>">
-          <h5><%= link_to post.title, user_post_path(post.blog.user,post) %></h5>
-          <%= post.content.html_safe.gsub(/\r\n?/,"<br/>").html_safe %>
-        </div>
-        <% end %>
-        <!-- Carousel nav -->
-        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-      </div>
-    </div>
-    <hr/>
-  </div>
-</div>
-  <div class="row">   
-    <div class="span2">
-      &nbsp;
-    </div>
-    <div class="span3">  
-      <ol>
-        <li> The Light of Supreme
-          <ul>
-            <li> Latest Blog Post 1</li>
-            <p>Summary of the Blog Post</p>
-          </ul> 
-        </li>
-      </ol>
-    </div>
-    <div class="span3"> 
-     <ol>
-      <li> Mirror
-        <ul>
-          <li> Blog Post 1</li>
-          <p>Summary of the Blog Post</p>
-        </ul> 
+<% @blogs.each do |blog| %>
+	<p>
+		<h4>
+			<%= blog.title %>
+			<small>
+			<%= pluralize blog.posts.count, "post" %> <br/><br/>
+			<%= link_to 'Edit', edit_blog_path(blog)  %> | 
+			<%= link_to 'Show', user_posts_path(blog.user)  %> |
+			<%= 'Moderate Comments'  %> |
+			<%= 'Delete Blog'  %> |
+			<%= 'Etc.'  %> |
+		</small>
+		<h4>
 
-      </li>
-    </ol>
-  </div>
-  <div class="span3">  
-    <ol>           
-      <li> पारस ज्योती | Parasa Jyotih</li>
-    </ol>
-  </div>
-</div>
-</div>
-<hr/>
-<div class="row">
-  <div class="span4">
-    &nbsp;
-  </div>
-  <div class="span4">
-    <% @stanzafirst = Stanza.order("RANDOM()").last %>
-    <p class="quote"><i>
-      <% @stanzafirst.lines.each do |line| %>
-      <%= line.line %> <br/>
-      <% end %>
-      Canto <%= @stanzafirst.canto.cantono %> Book <%= @stanzafirst.canto.book.no %></i></p>
-    </div>
-    <div class="span4">
-      &nbsp;
-    </div>
-  </div>
+	</p>
+<% end %>

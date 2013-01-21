@@ -51,11 +51,11 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(params[:post])
-    @post.blog_id = current_user.blogs.find(1).id
+    @post.blog_id = current_user.blogs.first.id
     respond_to do |format|
       if @post.save
         #EmailWorker.perform_async(current_user.id)
-        format.html { redirect_to user_post_path(@current_user,@post), notice: 'Post was successfully created.' }
+        format.html { redirect_to user_posts_path(@current_user), notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
         format.html { render action: "new" }

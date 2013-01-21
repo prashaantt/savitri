@@ -2,7 +2,15 @@
 <div class="row">
   <div class="span1">&nbsp;</div>
   <div class="span9">
-  <h2 class="blog-title"><%= link_to User.find(params[:user_id]).username + "Blog", user_posts_path %> <small> This is my blog. It's awesome.</small></h2>
+  <h2 class="blog-title">
+    <% @blog = Blog.find_by_user_id(params[:user_id]) %>
+    <% unless @blog.nil? %>
+    <%= link_to @blog.title, user_posts_path %>
+    <small><%=  @blog.subtitle %></small>
+    <% else %>
+    <%= link_to User.find(params[:user_id]).username + "Blog", user_posts_path %> <small> This is my blog. It's awesome.</small>
+    <% end %>
+  </h2>
   <hr/>
 </div>
 </div>
