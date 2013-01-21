@@ -24,11 +24,8 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="/">Home</a></li>
-        			  <li><a href="#about">About</a></li>			 
-        			  <li><a href="/cantos">Cantos</a></li>
-        			  <li><a href="/stanzas">Stanzas</a></li>
-        			  <li><a href="/lines">Lines</a></li>
-        			  
+                <li><a href="/read">Read Savitri</a></li>  
+        
                 <li class="dropdown" id="Blogs">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Blogs
                   <span class="caret"></span>
@@ -48,6 +45,8 @@
         				  <li><a href="#">Presentations</a></li>
             			</ul>
         			  </li>
+                        <li><a href="#about">About</a></li>      
+     
             </ul>
           </div><!--/.nav-collapse -->
 		  <form class="navbar-search pull-left">
@@ -60,6 +59,8 @@
               <span class="caret"></span>
             </a>
     				<ul class="dropdown-menu">
+              <li><%= link_to "My Blog", user_posts_path(current_user) %> </li>
+              <li class="divider"/>
               <li><%= link_to "Account Settings", edit_user_registration_path %> </li>
               <li class="divider"/>
               <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>

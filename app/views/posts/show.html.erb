@@ -8,7 +8,7 @@
 </div>
 
  <!-- Main Blog Content -->
-    <div class="row">
+    <div class="row sav-content">
         <div class="span1">
             &nbsp;
         </div>
@@ -36,6 +36,20 @@
                 </dl>
         </div>
         <div class="span2">
+           <% if can? :create, Post %>
+    <h3>Manage Blog</h3>
+    <p><%= link_to 'New Post', new_post_path,
+        :class => 'btn' %></p>
+    <% end %>
+        <% if can? :update, @post %>
+       <p> <%= link_to 'Edit Post', edit_post_path(@post), :class => 'btn' %></p>
+        <% end %>
+        <% if can? :destroy, @post %>
+              <p><%= link_to 'Delete Post', post_path(@post),
+                                        :method => :delete,
+                                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                                        :class => 'btn btn-danger' %></p>
+           <% end %>
           <h5>Tagged as</h5>
           <div id="tag_cloud">
                <ul>
@@ -43,7 +57,7 @@
                 <li><%= link_to tag.name, tag_path(params[:user_id],tag.name), class: css_class %></li>
               <% end %>
         </div>
-        <br/><br/>
+        <br/>
          <div class="panel">
             <h5>Featured</h5>
               <p>What it takes to truly Know: For nothing is known while aught remains concealed; The Truth is known only when all is seen. ~Savitri</p>

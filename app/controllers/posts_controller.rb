@@ -51,11 +51,11 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(params[:post])
-    @post.user_id = current_user.id
+    @post.blog_id = current_user.blogs.find(1).id
     respond_to do |format|
       if @post.save
-        EmailWorker.perform_async(current_user.id)
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        #EmailWorker.perform_async(current_user.id)
+        format.html { redirect_to user_post_path(@current_user,@post), notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
         format.html { render action: "new" }
@@ -71,7 +71,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html { redirect_to user_post_path(@current_user,@post), notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -87,7 +87,7 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to posts_url }
+      format.html { redirect_to user_posts_path(current_user) }
       format.json { head :no_content }
     end
   end
