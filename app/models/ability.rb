@@ -23,10 +23,10 @@ class Ability
            can :read , Post
            can :create, Post
            can :update, Post do |p|
-               p.user_id == user.id 
+               p.blog.user_id == user.id 
            end
            can :destroy, Post do |p|
-                p.user_id == user.id 
+                p.blog.user_id == user.id 
            end
            # Comments Capabilities of a Blogger
            can :create, Comment
