@@ -22,6 +22,6 @@ $ ->
   	  prefix: '/'
 	  loadFromSearch:
 	    limit: 20
-	    uri: "http://this/document/only"
+	    uri: window.location.href
   
 	    )
