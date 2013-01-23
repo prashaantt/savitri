@@ -28,7 +28,7 @@ class NotebooksController < ApplicationController
   # "uri"=>"http://this/document/only", "prefix"=>"", "notebook"=>{}}
 
   def search
-    @notes = Notebook.where(:user_id=>current_user).limit(params[:limit])
+    @notes = Notebook.where(:user_id=>current_user, :uri=>params[:uri]).limit(params[:limit])
     @noti = Array.new
     @rows = Array.new
     @notes.each do |note|
@@ -86,7 +86,7 @@ class NotebooksController < ApplicationController
     #notebook.line - style params
     #logger.debug "#{params[:ranges].first}"
     @notebook.annotation = params[:text]
-    @notebook.user_id = current_user
+    @notebook.user_id = current_user.id
     @notebook.quote = params[:quote]
     @notebook.uri = params[:uri]
     @notebook.start = params[:ranges].first[:start]
