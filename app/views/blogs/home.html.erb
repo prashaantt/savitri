@@ -22,7 +22,7 @@
       <div class="carousel-inner">
         <% @posts.each do |post| %>
         <div class="item<%=cycle(" active","","")%>">
-          <h5><%= link_to post.title, user_post_path(post.blog.user,post) %></h5>
+          <h5><%= link_to post.title, blog_post_path(post.blog,post) %></h5>
           <%= post.content.html_safe.gsub(/\r\n?/,"<br/>").html_safe %>
         </div>
         <% end %>
@@ -38,32 +38,19 @@
     <div class="span2">
       &nbsp;
     </div>
-    <div class="span3">  
-      <ol>
-        <li> The Light of Supreme
-          <ul>
-            <li> Latest Blog Post 1</li>
-            <p>Summary of the Blog Post</p>
-          </ul> 
-        </li>
-      </ol>
-    </div>
-    <div class="span3"> 
-     <ol>
-      <li> Mirror
-        <ul>
-          <li> Blog Post 1</li>
-          <p>Summary of the Blog Post</p>
-        </ul> 
-
-      </li>
-    </ol>
-  </div>
-  <div class="span3">  
-    <ol>           
-      <li> पारस ज्योती | Parasa Jyotih</li>
-    </ol>
-  </div>
+    <% blogs = User.find(1).blogs %>
+    <% blogs.each do |blog| %>
+      <div class="span3">  
+        
+          <li> <%= link_to blog.title, blog_posts_path(blog) %>
+             <ul>
+              <li><%= link_to blog.posts.first.title, blog_posts_path(blog,blog.posts.first.title) %></li>
+              <!-- <p><%= truncate_html(blog.posts.first.content) %></p> -->
+            </ul> 
+          </li>
+        
+      </div>
+    <% end %>
 </div>
 </div>
 <hr/>
