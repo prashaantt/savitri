@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    session[:resource_return_to] || super
+    session[:resource_return_to] || savitri_path
   end
 
   def after_sign_out_path_for(resource_or_scope)
