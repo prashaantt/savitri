@@ -42,7 +42,11 @@
 <!-- Main Blog Content End -->
 <!--  SideBar Begin -->
 <div class="span2">
-
+  <% if can? :create, Post %>
+  <h3>Manage Blog</h3>
+  <p><%= link_to 'New Post', new_blog_post_path,
+    :class => 'btn' %></p>
+  <% end %>
  <% if can? :update, @post %>
  <p> <%= link_to 'Edit Post', edit_blog_post_path(@post.blog,@post), :class => 'btn' %></p>
  <% end %>
