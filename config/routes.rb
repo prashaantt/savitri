@@ -5,10 +5,14 @@ Savitri::Application.routes.draw do
   
   get "/profile/:id" => "users#show", :as => :profile
   
-  resources :blogs
+ 
+
+  get '/the-light-of-supreme' => "blogs#show", :defaults => { :id => '1', :user_id=>'1' }
 
   get '/blogs/latest' => "blogs#latest"
   
+  resources :blogs
+
   resources :read
 
   resources :follows, :only => [:create, :destroy]
@@ -26,7 +30,11 @@ Savitri::Application.routes.draw do
   # end
 
   resources :users do
-   resources :posts, :name_prefix => "user_"
+   resources :blogs, :name_prefix => "user_"
+  end
+
+  resources :blogs do
+    resources :posts, :name_prefix => "blog_"
   end
 
   resources :posts do
@@ -34,7 +42,7 @@ Savitri::Application.routes.draw do
   end
 
 
-  get 'users/:user_id/posts/tags/:tag' , to: 'posts#index' , as: :tag
+  get 'blogs/:blog_id/posts/tags/:tag' , to: 'posts#index' , as: :tag
   
   resources :books
   

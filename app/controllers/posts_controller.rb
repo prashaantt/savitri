@@ -8,11 +8,11 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @blog_id = Blog.find_by_user_id(params[:user_id]);
+    @blog_id = Blog.find_by_slug(params[:blog_id]).id
     if params[:tag]
       @posts = Post.tagged_with(params[:tag]).where(:blog_id=>@blog_id)
     else
-      @posts = Post.where(:blog_id=>@blog_id)
+      @posts = Post.where(:blog_id=>@blog_id).order("created_at DESC")
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -24,7 +24,7 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @post = Post.find(params[:id])
-
+    puts @post.inspect
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post }
@@ -51,11 +51,14 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(params[:post])
-    @post.blog_id = current_user.blogs.first.id
+    #@blog=Blog.find_by_slug(params[:post][:blog_id])
+    #@post.blog_id = @blog.id   
+    #@post = @blog.build(params[:post])
+
     respond_to do |format|
       if @post.save
         #EmailWorker.perform_async(current_user.id)
-        format.html { redirect_to user_posts_path(@current_user), notice: 'Post was successfully created.' }
+        format.html { redirect_to blog_posts_path(@post.blog), notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
         format.html { render action: "new" }
@@ -68,10 +71,10 @@ class PostsController < ApplicationController
   # PUT /posts/1.json
   def update
     @post = Post.find(params[:id])
-
+    @blog=Blog.find_by_slug(params[:post][:blog_id])
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        format.html { redirect_to user_post_path(@current_user,@post), notice: 'Post was successfully updated.' }
+        format.html { redirect_to blog_post_path(@post.blog,@post), notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -87,11 +90,9 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to user_posts_path(current_user) }
+      format.html { redirect_to blog_posts_path(@post.blog) }
       format.json { head :no_content }
     end
   end
-
-  
 
 end

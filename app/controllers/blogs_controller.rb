@@ -11,6 +11,11 @@ class BlogsController < ApplicationController
 		@blogs = current_user.blogs
 	end
 
+	def show
+	puts params.inspect
+	@posts = Blog.find_by_slug(params[:id]).posts
+	end
+
 	def new
      @blog = Blog.new
      respond_to do |format|
@@ -37,12 +42,12 @@ class BlogsController < ApplicationController
 
 
 	def edit
-		@blog = Blog.find(params[:id])
+		@blog = Blog.find_by_slug(params[:id])
 	end
 
 
   def update
-    @blog = Blog.find(params[:id])
+    @blog = Blog.find_by_slug(params[:id])
 
     respond_to do |format|
       if @blog.update_attributes(params[:blog])
