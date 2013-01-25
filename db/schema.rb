@@ -68,7 +68,6 @@ ActiveRecord::Schema.define(:version => 20121228110013) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "stanza_id"
-    t.integer  "stanzno"
   end
 
   create_table "notebooks", :force => true do |t|
@@ -88,11 +87,11 @@ ActiveRecord::Schema.define(:version => 20121228110013) do
   end
 
   create_table "posts", :force => true do |t|
-    t.integer  "blog_id"
     t.string   "title"
     t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
 
   create_table "redactor_assets", :force => true do |t|
