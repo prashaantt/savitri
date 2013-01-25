@@ -44,8 +44,7 @@
         
           <li> <%= link_to blog.title, blog_posts_path(blog) %>
              <ul>
-              <li><%= link_to blog.posts.first.title, blog_posts_path(blog,blog.posts.first.title) %></li>
-              
+              <li><%= link_to blog.posts.first.title, blog_post_path(blog,blog.posts.first.id) %></li>
             </ul> 
           </li>
         
