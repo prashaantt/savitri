@@ -9,7 +9,15 @@
   <%= yield :head %> 
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
-  <%= raw javascript_include_view_js %>
+  <%  if params[:controller].to_s == 'read' %>
+        <% unless current_user.nil? %>
+          <%= javascript_include_tag params[:controller] %>
+          <script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>
+      <link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.1.0/annotator.min.css">
+        <% end %>
+      <% else %>
+        <%= javascript_include_tag params[:controller] %>
+      <% end %>
   <%= csrf_meta_tags %>
 <script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>
 <link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.1.0/annotator.min.css">
