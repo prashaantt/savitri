@@ -25,3 +25,4 @@ $ ->
 	    uri: window.location.href
   
 	    )
+
