@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
     request.referrer
   end
 
+=begin
   helper_method :javascript_include_view_js 
 
   #http://stackoverflow.com/a/12903463/156775
@@ -33,5 +34,6 @@ class ApplicationController < ActionController::Base
           
       end
   end
+=end
  
 end
