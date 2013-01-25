@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
     request.referrer
   end
 
+
 =begin
   helper_method :javascript_include_view_js 
 
@@ -26,14 +27,15 @@ class ApplicationController < ActionController::Base
       if FileTest.exists? "app/assets/javascripts/"+params[:controller]+".js.coffee"
         if params[:controller].to_s == 'read'
           unless current_user.nil?
-            return '<script src="/assets/'+params[:controller]+'.js.coffee" type="text/javascript"></script>'   
+            return javascript_include_tag params[:controller]
           end
         else
-          return '<script src="/assets/'+params[:controller]+'.js.coffee" type="text/javascript"></script>' 
+          return javascript_include_tag params[:controller]
         end
           
       end
   end
+
 =end
  
 end
