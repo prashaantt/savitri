@@ -29,19 +29,7 @@ class NotebooksController < ApplicationController
 
   def search
     @notes = Notebook.where(:user_id=>current_user, :uri=>params[:uri]).limit(params[:limit])
-    @noti = Array.new
-    @rows = Array.new
-    @notes.each do |note|
-      @n = Note.new
-      @n.text = note.annotation
-      @n.id = note.id
-      @range = {"start"=>note.start, "startOffset"=>note.startoffset, "end" => note.end, "endOffset"=> note.endoffset}
-      @n.ranges = Array.new
-      @n.ranges.push(@range)
-      @n.quote = note.quote
-      @n.uri = note.uri
-      @noti << @n
-    end
+    @noti = change_format @notes
     @notebooks = {"rows" => @noti }
     respond_to do |format|
       format.html # index.html.erb
@@ -63,7 +51,6 @@ class NotebooksController < ApplicationController
   # GET /notebooks/new.json
   def new
     @notebook = Notebook.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @notebook }
@@ -85,6 +72,7 @@ class NotebooksController < ApplicationController
     @notebook = Notebook.new(params[:notebook])
     #notebook.line - style params
     #logger.debug "#{params[:ranges].first}"
+    
     @notebook.annotation = params[:text]
     @notebook.user_id = current_user.id
     @notebook.quote = params[:quote]
@@ -94,8 +82,6 @@ class NotebooksController < ApplicationController
     @notebook.end = params[:ranges].first[:end]
     @notebook.endoffset = params[:ranges].first[:endOffset]
 
-    
-    
     respond_to do |format|
       if @notebook.save
         format.html { redirect_to @notebook, notice: 'Notebook was successfully created.' }
@@ -132,5 +118,23 @@ class NotebooksController < ApplicationController
       format.html { redirect_to notebooks_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def change_format notes
+    @noti = Array.new
+    @rows = Array.new
+    @notes.each do |note|
+      @n = Note.new
+      @n.text = note.annotation
+      @n.id = note.id
+      @range = {"start"=>note.start, "startOffset"=>note.startoffset, "end" => note.end, "endOffset"=> note.endoffset}
+      @n.ranges = Array.new
+      @n.ranges.push(@range)
+      @n.quote = note.quote
+      @n.uri = note.uri
+      @noti << @n
+    end
+    @noti
   end
 end
