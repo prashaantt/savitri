@@ -255,7 +255,7 @@ Stanza.create([
 Blog.create([
     { :title => "The Light of Supreme", :subtitle => "light of supreme", :slug => "light-of-supreme", :user_id => 1},
     { :title => "Mirror", :subtitle => "mirror", :slug => "mirror", :user_id => 1},
-    { :title => "पारस ज्योती", :subtitle => "Parasa Jyotih", :slug => "parasa-jyotih", :user_id => 1}
+    { :title => "परस्य ज्योतिः", :subtitle => "Parasya Jyotih", :slug => "parasya-jyotih", :user_id => 1}
   ])
 
 Post.create([
