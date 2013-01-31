@@ -10,4 +10,11 @@ class Stanza < ActiveRecord::Base
   	stanzno
   end
   
+  UNRANSACKABLE_ATTRIBUTES = ["id", "created_at", "updated_at", "canto_id"]
+
+  def self.ransackable_attributes auth_object = nil
+    (column_names - UNRANSACKABLE_ATTRIBUTES) + _ransackers.keys
+  end
+
+
 end

@@ -9,6 +9,8 @@ Savitri::Application.routes.draw do
 
   get '/blogs/latest' => "blogs#latest"
   
+
+  get '/search' =>  "lines#index"
   resources :blogs
 
   match "/store/notebooks" => "notebooks#create"

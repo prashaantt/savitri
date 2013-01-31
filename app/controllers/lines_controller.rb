@@ -4,11 +4,14 @@ class LinesController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @lines = Line.order(:no).page(params[:lines]).per(10)
+    #@lines = Line.order(:no).page(params[:lines]).per(10)
 
-    text = "this is a text containing no new-line
-             this contains a new line nism"
+    #text = "this is a text containing no new-line
+    #         this contains a new line nism"
     
+    @search = Line.search(params[:q])
+    @lines = @search.result
+    @search.build_condition
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @lines }
