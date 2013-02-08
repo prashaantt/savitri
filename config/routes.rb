@@ -1,4 +1,13 @@
 Savitri::Application.routes.draw do
+  get "search/index"
+
+  get "search/results"
+
+
+  get 'search' => 'search#index'
+  get 'search/search' => 'search#search'
+  get 'search/results' => 'search#results'
+
   resources :notebooks
 
   mount RedactorRails::Engine => '/redactor_rails'
