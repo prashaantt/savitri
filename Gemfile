@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.6'
+gem 'rails', '~> 3.2.0.rc2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -15,7 +15,7 @@ gem 'kaminari'
 gem 'thin'
 gem 'newrelic_rpm'
 gem 'bcrypt-ruby'
-gem 'redactor-rails'
+gem 'redactor-rails', '0.3.2'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'acts_as_follower'
