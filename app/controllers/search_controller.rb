@@ -1,9 +1,14 @@
 class SearchController < ApplicationController
-  def index
-    puts params.inspect
-    @search = Line.search(params[:q])
-    @lines = @search.result
 
+  def index
+    #puts params.inspect
+    #@search = Line.search(params[:q])
+    #@lines = @search.result
+    @search = Line.search do
+      fulltext params[:q]
+      order_by(:id, :asc)
+    end
+    @results = @search.results
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @lines }
@@ -15,6 +20,12 @@ class SearchController < ApplicationController
   end
 
   def results
+    @search = Line.search do
+      fulltext params[:q]
+      order_by(:id, :asc)
+    end
+    @results = @search.results
+=begin
     parameters = infixco (params[:q])
     puts "----------"
     puts  parameters
@@ -24,11 +35,13 @@ class SearchController < ApplicationController
       when 'and', 'or', 'and not'
         query_string << " #{token} "
       else
-        query_string << " line like '%#{token}%' "
+        query_string << " line like '#{token}' "
       end
     end
     puts query_string
     @results = Line.all(:conditions=>"#{query_string}")
+    @results =Line.search("@{params[:q]}")
+=end
 
     #puts (topostfix infixco(params[:q]))
     # it was and
@@ -82,7 +95,7 @@ def topostfix infix
   stack = Array.new
   infix.each do |token|
      case token
-     when 'and', 'or'
+     when 'and', 'or', 'AND', 'OR'
         if stack.empty? == true
           stack.push(token)   
         else
