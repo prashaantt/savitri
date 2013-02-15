@@ -1,5 +1,5 @@
 <%= form_tag("/search/results", :method => "get") do %>
   <%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:q) %>
+  <%= text_field_tag :q, params[:q] %>
   <%= submit_tag("Search") %>
 <% end %>
