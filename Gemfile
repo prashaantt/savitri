@@ -1,19 +1,16 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-#http://weblog.rubyonrails.org/2013/2/11/SEC-ANN-Rails-3-2-12-3-1-11-and-2-3-17-have-been-released/
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'pg'
-#gem 'sqlite3'
+gem 'sqlite3'
+gem 'bigdecimal'
 gem 'acts-as-taggable-on'
 gem 'devise'
 gem 'simple_form'
 gem 'cancan'
-#gem "bullet", :group => "development"
 gem 'kaminari'
-gem 'thin'
+
 gem 'newrelic_rpm'
 gem 'bcrypt-ruby'
 gem 'redactor-rails', '0.3.2'
@@ -33,6 +30,6 @@ group :assets do
 end
 
 gem 'jquery-rails', '2.1.3'
-#gem 'texticle', '~> 2.0', require: 'texticle/rails'
-#gem 'ransack'
-#gem 'nql'
+
+gem 'thin'
+gem 'capistrano'
