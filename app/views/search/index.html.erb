@@ -1,1 +1,19 @@
-<%= render 'search' %>
+<row>
+	<row class="span4">
+		&nbsp;
+	</row>
+	<row class="span5">
+		<%= render 'search' %>
+		<% unless @search.nil? %>
+			<p><b>Total results <%= @search.total %></b></p>
+		<% end %>
+		<% @search.results.each do |l| %>
+		<p><%= l.line %></p>
+		<% end %>
+
+		<%= paginate @search.results, :param_name => :page %>
+	</row>
+	<row class="span3">
+		&nbsp;
+	</row>
+</row>
