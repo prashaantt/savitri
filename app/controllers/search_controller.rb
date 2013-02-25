@@ -7,22 +7,21 @@ class SearchController < ApplicationController
     @search = Line.search do
       fulltext params[:q]
       order_by(:id, :asc)
+      paginate :page => params[:page], :per_page => 20
     end
-    @results = @search.results
+    @search
+    puts @search.inspect
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @lines }
     end
   end
 
-  def search
-    
-  end
-
   def results
     @search = Line.search do
       fulltext params[:q]
       order_by(:id, :asc)
+      paginate :page => params[:page], :per_page => 20
     end
     @results = @search.results
 =begin
