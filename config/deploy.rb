@@ -1,5 +1,5 @@
 set :user, 'ec2-user'
-set :domain, 'ec2-54-251-74-186.ap-southeast-1.compute.amazonaws.com'
+set :domain, 'ec2-54-251-105-152.ap-southeast-1.compute.amazonaws.com'
 set :application, "savitri"
 set :repository, "#{user}@#{domain}:git/#{application}.git"
 set :deploy_to, "/home/#{user}/#{application}"
