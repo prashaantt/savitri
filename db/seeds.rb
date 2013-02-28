@@ -240,7 +240,6 @@ Stanza.create([
   { :stanzno => 28, :created_at => "2012-10-10 12:41:40", :updated_at => "2012-10-10 12:41:40", :canto_id => 1 },
   { :stanzno => 29, :created_at => "2012-10-10 12:41:47", :updated_at => "2012-10-10 12:41:47", :canto_id => 1 },
   { :stanzno => 30, :created_at => "2012-10-10 12:41:54", :updated_at => "2012-10-10 12:41:54", :canto_id => 1 },
-  { :stanzno => 40, :created_at => "2012-10-11 06:48:22", :updated_at => "2012-10-11 06:48:22", :canto_id => 1 },
   { :stanzno => 31, :created_at => "2012-10-11 07:14:35", :updated_at => "2012-10-11 07:14:35", :canto_id => 1 },
   { :stanzno => 32, :created_at => "2012-10-11 07:41:50", :updated_at => "2012-10-11 07:41:50", :canto_id => 1 },
   { :stanzno => 33, :created_at => "2012-10-11 07:42:38", :updated_at => "2012-10-11 07:42:38", :canto_id => 1 },
@@ -249,7 +248,9 @@ Stanza.create([
   { :stanzno => 36, :created_at => "2012-10-11 07:44:58", :updated_at => "2012-10-11 07:44:58", :canto_id => 1 },
   { :stanzno => 37, :created_at => "2012-10-11 07:56:28", :updated_at => "2012-10-11 07:56:28", :canto_id => 1 },
   { :stanzno => 38, :created_at => "2012-10-11 07:57:55", :updated_at => "2012-10-11 07:57:55", :canto_id => 1 },
-  { :stanzno => 39, :created_at => "2012-10-11 07:58:44", :updated_at => "2012-10-11 07:58:44", :canto_id => 1 }
+  { :stanzno => 39, :created_at => "2012-10-11 07:58:44", :updated_at => "2012-10-11 07:58:44", :canto_id => 1 },
+  { :stanzno => 40, :created_at => "2012-10-11 08:48:22", :updated_at => "2012-10-11 08:48:22", :canto_id => 1 },
+  { :stanzno => 41, :created_at => "2012-10-11 09:48:22", :updated_at => "2012-10-11 09:48:22", :canto_id => 1 }
 ], :without_protection => true )
 
 Blog.create([

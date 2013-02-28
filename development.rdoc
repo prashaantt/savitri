@@ -1,0 +1,27 @@
+Solr
+1. http://stackoverflow.com/questions/7195894/how-does-sunspot-modify-solrs-schema-xml-does-it-modify-it-at-all
+
+2. If you do stemming, then you wont be able to do exact matches any more.
+http://stackoverflow.com/a/10648662/156775 
+
+- Unlike wildcards, n-gram query terms can be used within quoted phrases.
+(http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters)
+
+
+
+
+
+http://stackoverflow.com/questions/4824954/solr-partial-and-full-string-match/8247013#8247013
+
+
+God search karne par. Should Gods Goddesses be shown? => Yes (because of root word)
+"God awake" then should it give Gods awake in result? => No. (Inverted commans is exact match)
+
+
+Full-Text-Search with stemming and synonyms
+	https://github.com/sunspot/sunspot/wiki/Advanced-Fulltext-Search-Configuration
+
+
+
+Kill Solr
+kill `ps -ef | grep "ftp" | tr -s " " | cut -d" " -f 2`
