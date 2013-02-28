@@ -16,6 +16,7 @@ class Line < ActiveRecord::Base
 
   searchable do 
     text :line
+    text :no
     integer :id
   end
   
