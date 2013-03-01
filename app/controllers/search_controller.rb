@@ -8,8 +8,12 @@ class SearchController < ApplicationController
       fulltext params[:q]
       order_by(:id, :asc)
       facet(:canto)
+      facet(:length)
       if params[:canto].present?
         with(:canto).equal_to(params[:canto])
+      end
+      if params[:length].present?
+        with(:length).equal_to(params[:length])
       end
       #with(:canto, params[:canto]) if params[:canto].present?
       paginate :page => params[:page], :per_page => 20

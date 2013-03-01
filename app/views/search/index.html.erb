@@ -61,14 +61,19 @@
 					</li>
 					<% end %>
 				</ul>
-				<h4>Section</h4>
+				<h4>Sentence Length</h4>
+				<%=select_tag :length, options_for_select(@search.facet(:length).rows.map{ |type| [type.value, row]}), :onchange => "this.form.submit();" %>
+
+				<%= collection_select(:length, :length, @search.facet(:length).rows, :value, :value, :html_options => {:onchange => "this.submit();"}) %>
 				<ul class="facet">
-					<% for row in @search.facet(:canto).rows %>
+					<% for row in @search.facet(:length).rows %>
 					<li>
-						<% if params[:canto].blank? %>
-						<%= link_to row.value, search_path(:q => params[:q], :canto => row.value) %> (<%= row.count %>)
+
+						<% if params[:length].blank? %>
+
+						<%= link_to row.value, search_path(:q => params[:q], :length => row.value) %> (<%= row.count %>)
 						<% else %>
-						<strong><%= row.value %></strong> (<%= link_to "remove", :canto => nil %>)
+						<strong><%= row.value %></strong> (<%= link_to "remove", :length => nil %>)
 						<% end %>
 					</li>
 					<% end %>
