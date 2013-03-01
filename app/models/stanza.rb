@@ -9,12 +9,9 @@ class Stanza < ActiveRecord::Base
   def to_param
   	stanzno
   end
-  
-  UNRANSACKABLE_ATTRIBUTES = ["id", "created_at", "updated_at", "canto_id"]
 
-  def self.ransackable_attributes auth_object = nil
-    (column_names - UNRANSACKABLE_ATTRIBUTES) + _ransackers.keys
+  def length
+      Stanza.find(stanzno).lines.count.to_s
   end
-
 
 end
