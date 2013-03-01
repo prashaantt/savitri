@@ -18,6 +18,11 @@ class Line < ActiveRecord::Base
     text :line
     text :no
     integer :id
+    string :canto
+  end
+
+  def canto
+    Stanza.find(Line.find(self.id).stanza_id).canto_id.to_s
   end
   
   #UNRANSACKABLE_ATTRIBUTES = ["id", "created_at", "updated_at", "stanza_id"]

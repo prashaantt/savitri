@@ -1,24 +1,79 @@
-<row>
-	<row class="span3">
+<div class="row">
+	<div class="span3">
 		&nbsp;
-	</row>
-	<row class="span5">
+	</div>
+	<div class="span5">
 		<%= render 'search' %>
+
+	</div>
+	<div class="span3">
+		&nbsp;
+	</div>
+</div>
+<div class="row">
+	<div class="span3">
+		&nbsp;
+	</div>
+	<div class="span5">
 		<% unless @search.nil? %>
-			<p><b>Total results <%= @search.total %></b></p>
+		<p><b>Total results <%= @search.total %></b></p>
 		<% end %>
 		<div class="results" style="font-size: 18px">
-		<% @search.results.each do |l| %>
-		<% logger.debug { l.inspect }%>
-		<p>
-			|<%= l.no %>.<%= Canto.find(Stanza.find(l.stanza_id).canto).cantono %>.<%= Book.find(Canto.find(Stanza.find(l.stanza_id).canto).book).no %>|
-			&nbsp;
-		  <%= l.line %></p>
-		<% end %>
-		<%= paginate @search.results, :param_name => :page %>
+			<% @search.results.each do |l| %>
+			<% logger.debug { l.inspect }%>
+			<p>
+				|<%= l.no %>.<%= Canto.find(Stanza.find(l.stanza_id).canto).cantono %>.<%= Book.find(Canto.find(Stanza.find(l.stanza_id).canto).book).no %>|
+				&nbsp;
+				<%= l.line %></p>
+				<% end %>
+
+				<%= paginate @search.results, :param_name => :page %>
+			</div>
 		</div>
-	</row>
-	<row class="span3">
-		&nbsp;
-	</row>
-</row>
+		<div class="span3">
+			<h3>Browse by</h3>
+			<p><% unless params[:q].blank? %>
+		Text query: <i><%= params[:q] %></i> (<%= link_to "remove", :q => nil %>)
+		<% end %></p>
+			<div class="facets">
+				<h4>Book</h4>
+				<ul class="facet">
+					<% for row in @search.facet(:canto).rows %>
+					<li>
+						<% if params[:canto].blank? %>
+						<%= link_to row.value, search_path(:q => params[:q], :canto => row.value) %> (<%= row.count %>)
+						<% else %>
+						<strong><%= row.value %></strong> (<%= link_to "remove", :canto => nil %>)
+						<% end %>
+					</li>
+					<% end %>
+				</ul>
+
+				<h4>Canto</h4>
+				<ul class="facet">
+					<% for row in @search.facet(:canto).rows %>
+					<li>
+						<% if params[:canto].blank? %>
+						<%= link_to row.value, search_path(:q => params[:q], :canto => row.value) %> (<%= row.count %>)
+						<% else %>
+						<strong><%= row.value %></strong> (<%= link_to "remove", :canto => nil %>)
+						<% end %>
+					</li>
+					<% end %>
+				</ul>
+				<h4>Section</h4>
+				<ul class="facet">
+					<% for row in @search.facet(:canto).rows %>
+					<li>
+						<% if params[:canto].blank? %>
+						<%= link_to row.value, search_path(:q => params[:q], :canto => row.value) %> (<%= row.count %>)
+						<% else %>
+						<strong><%= row.value %></strong> (<%= link_to "remove", :canto => nil %>)
+						<% end %>
+					</li>
+					<% end %>
+				</ul>
+
+			</div>
+		</div>
+	</div>
