@@ -7,6 +7,11 @@ class SearchController < ApplicationController
     @search = Line.search do
       fulltext params[:q]
       order_by(:id, :asc)
+      facet(:canto)
+      if params[:canto].present?
+        with(:canto).equal_to(params[:canto])
+      end
+      #with(:canto, params[:canto]) if params[:canto].present?
       paginate :page => params[:page], :per_page => 20
     end
     @search
