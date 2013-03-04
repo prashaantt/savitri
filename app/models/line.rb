@@ -35,7 +35,7 @@ class Line < ActiveRecord::Base
   end
 
   def canto
-    Stanza.find(Line.find(self.id).stanza_id).canto_id.to_s
+    Stanza.find(self.stanza_id).canto_id.to_s
   end
 
   def length

@@ -17,7 +17,7 @@ class Canto < ActiveRecord::Base
   end
 
   def line
-  	Canto.find(self.id).lines
+  	self.lines
   end
 
 end

@@ -6,14 +6,6 @@
 	<% end %>
 </p>
 
-<p><% unless params[:canto].blank? %>
-	
-	Text query: <i><%= params[:canto] %></i> (<%= link_to "remove", :canto => nil %>)
-	
-	<% end %>
-</p>
-
-
 <div class="facets">
 	<% unless @search.facet(:category).nil? %>
 		<%= render 'category_facet' %>
@@ -23,6 +15,9 @@
 	<% end %>
 	<% unless @search.facet(:booknum).nil? %>
 		<%= render 'booknum_facet' %>
+	<% end %>
+	<% unless @search.facet(:sbook).nil? %>
+		<%= render 'sbook_facet' %>
 	<% end %>
 	<% unless @search.facet(:canto).nil? %>
 		<%= render 'canto_facet' %>
