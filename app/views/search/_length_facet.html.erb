@@ -1,0 +1,12 @@
+<h4>Length of Sentence</h4>
+	<ul class="facet">
+	<% for row in @search.facet(:length).rows.each do%>
+		<li>
+			<% if params[:length].blank? %>
+			<%= link_to row.value, search_path(:q => params[:q], :length => row.value) %>
+			<% else %>
+			<strong><%= row.value %></strong> (<%= link_to "remove", :length => nil, :canto => :canto %>)
+			<% end %>
+		</li>
+		<% end %>
+	</ul>

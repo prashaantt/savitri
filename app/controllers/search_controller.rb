@@ -1,23 +1,70 @@
 class SearchController < ApplicationController
 
   def index
+    # Parse Parameters
+    # in:lines , in:books ... in:posts
+    # canto:1 , book:1 , line:1  .. section:1
+    
+    if params[:q].to_s.include?("in:")
+      query = params[:q].split("in:")
+        case query[1]
+          when "books"
+            @search = Sunspot.search Book do
+              fulltext query[0]
+              order_by(:id, :asc)
+              facet(:book)
+              if params[:book].present?
+                with(:book).equal_to(params[:book])
+              end
+              paginate :page => params[:page], :per_page => 20
+            end
+          
+          when "lines"
+            @search = Sunspot.search Line do
+              fulltext query[0]
+              order_by(:id, :asc)
+              facet(:canto)
+              facet(:booknum)
+              facet(:length)
+              with(:booknum).equal_to(params[:booknum]) if params[:booknum].present?
+               if params[:canto].present?
+                  with(:canto).equal_to(params[:canto])
+               end
+               if params[:length].present?
+                  with(:length).equal_to(params[:length])
+               end
+               paginate :page => params[:page], :per_page => 20
+          end
+        end
+    else
+       @search = Sunspot.search Line, Book do
+        fulltext params[:q]
+        facet(:category)
+         if params[:category].present?
+           with(:category).equal_to(params[:category])
+         end
+        paginate :page => params[:page], :per_page => 20
+      end
+    end
+
     #puts params.inspect
     #@search = Line.search(params[:q])
     #@lines = @search.result
-    @search = Line.search do
-      fulltext params[:q]
-      order_by(:id, :asc)
-      facet(:canto)
-      facet(:length)
-      if params[:canto].present?
-        with(:canto).equal_to(params[:canto])
-      end
-      if params[:length].present?
-        with(:length).equal_to(params[:length])
-      end
-      #with(:canto, params[:canto]) if params[:canto].present?
-      paginate :page => params[:page], :per_page => 20
-    end
+    # @search = Line.search do
+    #   fulltext params[:q]
+    #   order_by(:id, :asc)
+    #   facet(:canto)
+    #   facet(:length)
+    #   if params[:canto].present?
+    #     with(:canto).equal_to(params[:canto])
+    #   end
+    #   if params[:length].present?
+    #     with(:length).equal_to(params[:length])
+    #   end
+    #   #with(:canto, params[:canto]) if params[:canto].present?
+    #   paginate :page => params[:page], :per_page => 20
+    # end
+
     @search
     puts @search.inspect
     respond_to do |format|

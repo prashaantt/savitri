@@ -10,8 +10,13 @@ class Stanza < ActiveRecord::Base
   	stanzno
   end
 
+  # searchable do 
+  #   string :length
+  # end
+
+
   def length
-      Stanza.find(stanzno).lines.count.to_s
+     Stanza.find(self.id).lines.count.to_s
   end
 
 end

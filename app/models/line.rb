@@ -19,7 +19,19 @@ class Line < ActiveRecord::Base
     text :no
     integer :id
     string :canto
+    string :booknum
     string :length
+    string :category
+  end
+
+  def category
+    "line"
+  end
+
+  def booknum
+    cid = canto
+    Book.find(Canto.find(cid).book_id).no.to_s
+
   end
 
   def canto
