@@ -11,4 +11,13 @@ class Canto < ActiveRecord::Base
   	cantono
   end
   
+  searchable do 
+    text :line
+    text :cantono
+  end
+
+  def line
+  	Canto.find(self.id).lines
+  end
+
 end

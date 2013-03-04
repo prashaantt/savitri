@@ -22,63 +22,24 @@
 			<% @search.results.each do |l| %>
 			<% logger.debug { l.inspect }%>
 			<p>
-				|<%= l.no %>.<%= Canto.find(Stanza.find(l.stanza_id).canto).cantono %>.<%= Book.find(Canto.find(Stanza.find(l.stanza_id).canto).book).no %>|
+
+				<% if l.is_a?(Line) %>
+								||<%= Stanza.find(l.stanza_id).canto.cantono %>.<%= l.no %>||
 				&nbsp;
-				<%= l.line %></p>
+					<%= l.line %>
+				<% else %>
+					<% if l.is_a?(Book) %>
+					(Book <%= l.no %>) <%= l.name %>
+
+					<% end %>
+				<% end %>
+</p>
 				<% end %>
 
 				<%= paginate @search.results, :param_name => :page %>
 			</div>
 		</div>
 		<div class="span3">
-			<h3>Browse by</h3>
-			<p><% unless params[:q].blank? %>
-		Text query: <i><%= params[:q] %></i> (<%= link_to "remove", :q => nil %>)
-		<% end %></p>
-			<div class="facets">
-				<h4>Book</h4>
-				<ul class="facet">
-					<% for row in @search.facet(:canto).rows %>
-					<li>
-						<% if params[:canto].blank? %>
-						<%= link_to row.value, search_path(:q => params[:q], :canto => row.value) %> (<%= row.count %>)
-						<% else %>
-						<strong><%= row.value %></strong> (<%= link_to "remove", :canto => nil %>)
-						<% end %>
-					</li>
-					<% end %>
-				</ul>
-
-				<h4>Canto</h4>
-				<ul class="facet">
-					<% for row in @search.facet(:canto).rows %>
-					<li>
-						<% if params[:canto].blank? %>
-						<%= link_to row.value, search_path(:q => params[:q], :canto => row.value) %> (<%= row.count %>)
-						<% else %>
-						<strong><%= row.value %></strong> (<%= link_to "remove", :canto => nil %>)
-						<% end %>
-					</li>
-					<% end %>
-				</ul>
-				<h4>Sentence Length</h4>
-				<%=select_tag :length, options_for_select(@search.facet(:length).rows.map{ |type| [type.value, row]}), :onchange => "this.form.submit();" %>
-
-				<%= collection_select(:length, :length, @search.facet(:length).rows, :value, :value, :html_options => {:onchange => "this.submit();"}) %>
-				<ul class="facet">
-					<% for row in @search.facet(:length).rows %>
-					<li>
-
-						<% if params[:length].blank? %>
-
-						<%= link_to row.value, search_path(:q => params[:q], :length => row.value) %> (<%= row.count %>)
-						<% else %>
-						<strong><%= row.value %></strong> (<%= link_to "remove", :length => nil %>)
-						<% end %>
-					</li>
-					<% end %>
-				</ul>
-
-			</div>
+			<%= render 'facet' %>
 		</div>
 	</div>

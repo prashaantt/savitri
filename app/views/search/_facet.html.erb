@@ -1,0 +1,34 @@
+<h3>Browse by</h3>
+<p><% unless params[:q].blank? %>
+	
+	Text query: <i><%= params[:q] %></i> (<%= link_to "remove", :q => nil %>)
+	
+	<% end %>
+</p>
+
+<p><% unless params[:canto].blank? %>
+	
+	Text query: <i><%= params[:canto] %></i> (<%= link_to "remove", :canto => nil %>)
+	
+	<% end %>
+</p>
+
+
+<div class="facets">
+	<% unless @search.facet(:category).nil? %>
+		<%= render 'category_facet' %>
+	<% end %>
+	<% unless @search.facet(:book).nil? %>
+		<%= render 'book_facet' %>
+	<% end %>
+	<% unless @search.facet(:booknum).nil? %>
+		<%= render 'booknum_facet' %>
+	<% end %>
+	<% unless @search.facet(:canto).nil? %>
+		<%= render 'canto_facet' %>
+	<% end %>
+	<% unless @search.facet(:length).nil? %>
+		<%= render 'length_facet' %>
+	<% end %>
+
+</div>
