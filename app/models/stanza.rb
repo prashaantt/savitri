@@ -10,13 +10,31 @@ class Stanza < ActiveRecord::Base
   	stanzno
   end
 
-  # searchable do 
-  #   string :length
-  # end
+  searchable do 
+    text :stanzno
+    text :lines do |l|
+      l.lines.map {|l| l.line}
+    end
+    integer :id
+    string :length
+    string :category
+    string :sbook
+  end
 
+  def category
+    "sentence"
+  end
+
+  def sbook
+    Canto.find(self.canto_id).book_id.to_s
+  end
+
+  def sentence
+    Stanza.find(self.stanzno).lines
+  end
 
   def length
-     Stanza.find(self.id).lines.count.to_s
+     Stanza.find(self.stanzno).lines.count.to_s
   end
 
 end

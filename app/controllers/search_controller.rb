@@ -4,6 +4,10 @@ class SearchController < ApplicationController
     # Parse Parameters
     # in:lines , in:books ... in:posts
     # canto:1 , book:1 , line:1  .. section:1
+
+    #1. Split on spaces. Left side => query , Right side => Operations
+    # god awake in:lines book:1 canto:1
+
     
     if params[:q].to_s.include?("in:")
       query = params[:q].split("in:")
@@ -18,7 +22,18 @@ class SearchController < ApplicationController
               end
               paginate :page => params[:page], :per_page => 20
             end
-          
+          when "sentences"
+            @search = Sunspot.search Stanza do
+              fulltext query[0]
+              order_by(:id, :asc)
+              facet(:sbook)
+              facet(:length)
+              with(:length).equal_to(params[:length]) if params[:length].present?
+              if params[:sbook].present?
+                with(:sbook).equal_to(params[:sbook])
+              end
+              paginate :page => params[:page], :per_page => 5
+            end
           when "lines"
             @search = Sunspot.search Line do
               fulltext query[0]
@@ -37,7 +52,7 @@ class SearchController < ApplicationController
           end
         end
     else
-       @search = Sunspot.search Line, Book do
+       @search = Sunspot.search Line, Book, Stanza do
         fulltext params[:q]
         facet(:category)
          if params[:category].present?
@@ -46,24 +61,6 @@ class SearchController < ApplicationController
         paginate :page => params[:page], :per_page => 20
       end
     end
-
-    #puts params.inspect
-    #@search = Line.search(params[:q])
-    #@lines = @search.result
-    # @search = Line.search do
-    #   fulltext params[:q]
-    #   order_by(:id, :asc)
-    #   facet(:canto)
-    #   facet(:length)
-    #   if params[:canto].present?
-    #     with(:canto).equal_to(params[:canto])
-    #   end
-    #   if params[:length].present?
-    #     with(:length).equal_to(params[:length])
-    #   end
-    #   #with(:canto, params[:canto]) if params[:canto].present?
-    #   paginate :page => params[:page], :per_page => 20
-    # end
 
     @search
     puts @search.inspect

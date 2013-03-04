@@ -30,13 +30,18 @@
 				<% else %>
 					<% if l.is_a?(Book) %>
 					(Book <%= l.no %>) <%= l.name %>
-
+					<% else %>
+						<% if l.is_a?(Stanza) %>
+							<% l.lines.each do |line| %>
+								<p> ||<%= line.stanza.id %>.<%= line.no %>||
+									<%= line.line %> </p>
+							<% end %>
+						<% end %>
 					<% end %>
 				<% end %>
-</p>
-				<% end %>
-
-				<%= paginate @search.results, :param_name => :page %>
+			</p>
+			<% end %>
+			<%= paginate @search.results, :param_name => :page %>
 			</div>
 		</div>
 		<div class="span3">

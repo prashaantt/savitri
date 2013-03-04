@@ -3,9 +3,9 @@
 	<% for row in @search.facet(:length).rows.each do%>
 		<li>
 			<% if params[:length].blank? %>
-			<%= link_to row.value, search_path(:q => params[:q], :length => row.value) %>
+			<%= link_to row.value, search_path(:q => params[:q], :length => row.value, :canto => params[:canto], :booknum => params[:booknum]) %>
 			<% else %>
-			<strong><%= row.value %></strong> (<%= link_to "remove", :length => nil, :canto => :canto %>)
+			<strong><%= row.value %></strong> (<%= link_to "remove", :length => nil, :canto => params[:canto] , :booknum => params[:booknum], :q => params[:q]  %>)
 			<% end %>
 		</li>
 		<% end %>
