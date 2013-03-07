@@ -53,11 +53,25 @@ class LinesController < ApplicationController
       num =  nu -1
     end
     logger.info '------------------------create---------------------'
+    stanznu = Stanza.last.stanzno + 1
+    @stan = Stanza.new(:stanzno=>stanznu, :canto_id=>Stanza.last.canto_id)
+    @stan.save
     params[:line][:line].to_s.split("\r\n").each do |l|
       logger.info l
-      num=num+1
-      @line = Line.new(:no=>num,:line=>l,:stanza_id=>params[:line][:stanza_id])
-      @line.save
+      logger.info '----check full-stop---'
+      if l.include? "."
+        num=num+1
+        @line = Line.new(:no=>num,:line=>l,:stanza_id=>stanznu)
+        @line.save
+        logger.info "--created new stanza--"
+        stanznu = stanznu + 1
+        @stan2=Stanza.new(:stanzno=>stanznu, :canto_id=>Stanza.last.canto_id)
+        @stan2.save
+      else
+        num=num+1
+        @line = Line.new(:no=>num,:line=>l,:stanza_id=>stanznu)
+        @line.save
+      end
     end
     logger.info '------------------------endcreate---------------------'
     #--editEnd

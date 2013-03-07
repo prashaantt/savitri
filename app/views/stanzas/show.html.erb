@@ -16,4 +16,7 @@
 <% if can? :update, @stanza %>
 <%= link_to 'Edit', edit_stanza_path(@stanza) %> |
 <% end %>
-<%= link_to 'Back', stanzas_path %>
+<%= link_to 'Back', stanzas_path %> | 
+<% if can? :create, Stanza %>
+<%= link_to 'New Stanza', new_stanza_path %>
+<% end %>

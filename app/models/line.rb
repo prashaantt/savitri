@@ -13,4 +13,39 @@ class Line < ActiveRecord::Base
   	no
   end
 
+
+  searchable do 
+    text :line
+    text :no
+    integer :id
+    string :canto
+    string :booknum
+    string :length
+    string :category
+  end
+
+  def category
+    "line"
+  end
+
+  def booknum
+    cid = canto
+    Book.find(Canto.find(cid).book_id).no.to_s
+
+  end
+
+  def canto
+    Stanza.find(self.stanza_id).canto_id.to_s
+  end
+
+  def length
+      Stanza.find(self.stanza_id).lines.count
+  end
+  
+  #UNRANSACKABLE_ATTRIBUTES = ["id", "created_at", "updated_at", "stanza_id"]
+
+  #def self.ransackable_attributes auth_object = nil
+  #  (column_names - UNRANSACKABLE_ATTRIBUTES) + _ransackers.keys
+  #end
+
 end

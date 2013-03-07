@@ -10,5 +10,21 @@ class Book < ActiveRecord::Base
   def to_param
   	no
   end
-  
+
+  searchable do 
+    text :name
+    text :no
+    integer :id
+    string :category
+    string :book
+  end
+
+  def book
+  	self.no
+  end
+
+  def category
+    "book"
+  end
+
 end
