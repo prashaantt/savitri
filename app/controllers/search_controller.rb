@@ -9,15 +9,17 @@ class SearchController < ApplicationController
     # god awake in:lines book:1 canto:1
     if params[:q].to_s.include?("in:")
       query = params[:q].split("in:")
-        case query[1]
+        case query[1].downcase
           when "books"
             @search = Sunspot.search Book do
               fulltext query[0]
               order_by(:id, :asc)
               facet(:book)
-              if params[:book].present?
-                with(:book).equal_to(params[:book])
-              end
+              facet(:canto)
+              facet(:section)
+              with(:book).equal_to(params[:book]) if params[:book].present?
+              with(:canto).equal_to(params[:canto]) if params[:canto].present?
+              with(:section).equal_to(params[:section]) if params[:section].present?              
               paginate :page => params[:page], :per_page => 20
             end
           when "sentences"
@@ -26,27 +28,27 @@ class SearchController < ApplicationController
               order_by(:id, :asc)
               facet(:sbook)
               facet(:length)
+              facet(:section)
+              facet(:canto)
+              with(:section).equal_to(params[:section]) if params[:section].present?
+              with(:canto).equal_to(params[:canto]) if params[:canto].present?
               with(:length).equal_to(params[:length]) if params[:length].present?
-              if params[:sbook].present?
-                with(:sbook).equal_to(params[:sbook])
-              end
+              with(:sbook).equal_to(params[:sbook]) if params[:sbook].present?
               paginate :page => params[:page], :per_page => 5
             end
           when "lines"
             @search = Sunspot.search Line do
               fulltext query[0]
               order_by(:id, :asc)
+              facet(:section)
               facet(:canto)
-              facet(:booknum)
+              facet(:lbook)
               facet(:length)
-              with(:booknum).equal_to(params[:booknum]) if params[:booknum].present?
-               if params[:canto].present?
-                  with(:canto).equal_to(params[:canto])
-               end
-               if params[:length].present?
-                  with(:length).equal_to(params[:length])
-               end
-               paginate :page => params[:page], :per_page => 20
+              with(:section).equal_to(params[:section]) if params[:section].present?
+              with(:canto).equal_to(params[:canto]) if params[:canto].present?
+              with(:length).equal_to(params[:length]) if params[:length].present?
+              with(:lbook).equal_to(params[:lbook]) if params[:lbook].present?
+              paginate :page => params[:page], :per_page => 30
           end
         end
     else
