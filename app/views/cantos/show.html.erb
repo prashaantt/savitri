@@ -53,18 +53,18 @@
   <li class="active">Section I</li>
 </ul>
 
-  <!--<dt><strong><%= model_class.human_attribute_name(:cantono) %>:</strong></dt>
-  <dd><%= @canto.cantono %></dd>
+  <!--<dt><strong><%= model_class.human_attribute_name(:no) %>:</strong></dt>
+  <dd><%= @canto.no %></dd>
   <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
   <dd><%= @canto.title %></dd>
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @canto.description %></dd>
 -->
- <h2><a href="http://savitri.in" title="Reference: Canto <%= @canto.cantono %> "><%= @canto.title %></a></h2>
+ <h2><a href="http://savitri.in" title="Reference: Canto <%= @canto.no %> "><%= @canto.title %></a></h2>
 <p class="readsavitri">
   <!--<b>Lines in this Canto</b>-->
-  <% @canto.stanzas.order(:stanzno).each do |stanz| %>
-    <!--<br/>Stanza <%= stanz.stanzno %>--><br/>
+  <% @canto.stanzas.order(:no).each do |stanz| %>
+    <br/>
     <% stanz.lines.each do |lin| %>
       <%= lin.line %><br/>
     <% end %>

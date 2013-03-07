@@ -23,7 +23,7 @@
 				<% logger.debug { l.inspect }%>
 				<p>
 					<% if l.is_a?(Line) %>
-									||<%= Stanza.find(l.stanza_id).canto.cantono %>.<%= l.no %>||
+									||<%= Stanza.find(l.stanza_id).section %>.<%= l.no %>||
 					&nbsp;
 
 						<%= l.line %>
@@ -33,7 +33,7 @@
 						<% else %>
 							<% if l.is_a?(Stanza) %>
 								<% l.lines.each do |line| %>
-									<p> ||<%= line.stanza.id %>.<%= line.no %>||
+									<p> ||<%= l.section %>.<%= line.no %>||
 										<%= line.line %> </p>
 								<% end %>
 							<% end %>
