@@ -1,5 +1,6 @@
 class CreateNotebooks < ActiveRecord::Migration
-  def change
+ 
+  def self.up
     create_table :notebooks do |t|
       t.string :line
       t.string :quote
@@ -12,7 +13,13 @@ class CreateNotebooks < ActiveRecord::Migration
       t.string   :uri
       t.references :line
       t.references :user
+
       t.timestamps
     end
   end
+
+  def self.down
+    drop_table :notebooks
+  end
+
 end
