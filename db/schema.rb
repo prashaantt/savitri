@@ -17,14 +17,6 @@ ActiveRecord::Schema.define(:version => 20121228110013) do
     t.integer  "user_id"
     t.string   "title"
     t.string   "subtitle"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "blogs", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "title"
-    t.string   "subtitle"
     t.string   "slug"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

@@ -1,0 +1,53 @@
+<div class="row">
+	<div class="span3">
+		&nbsp;
+	</div>
+	<div class="span5">
+		<%= render 'search' %>
+	</div>
+	<div class="span3">
+		&nbsp;
+	</div>
+</div>
+<div class="row">
+	<div class="span3">
+		&nbsp;
+	</div>
+	<div class="span5">
+		<% unless params[:q].nil? %>
+			<% unless @search.nil? %>
+			<p><b>Total results <%= @search.total %></b></p>
+			<% end %>
+			<div class="results" style="font-size: 18px">
+				<% @search.each_hit_with_result do |hit,l| %>
+				<% logger.debug { l.inspect }%>
+				<p>
+					<% if l.is_a?(Line) %>
+									||<%= Stanza.find(l.stanza_id).canto.cantono %>.<%= l.no %>||
+					&nbsp;
+
+						<%= l.line %>
+					<% else %>
+						<% if l.is_a?(Book) %>
+						(Book <%= l.no %>) <%= l.name %>
+						<% else %>
+							<% if l.is_a?(Stanza) %>
+								<% l.lines.each do |line| %>
+									<p> ||<%= line.stanza.id %>.<%= line.no %>||
+										<%= line.line %> </p>
+								<% end %>
+							<% end %>
+						<% end %>
+					<% end %>
+				</p>
+				<% end %>
+				<%= paginate @search.results, :param_name => :page %>
+				</div>
+		<% end %>	
+		</div>
+		<div class="span3">
+			<% unless params[:q].nil? %>
+			<%= render 'facet' %>
+			<% end %>
+		</div>
+	</div>

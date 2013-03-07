@@ -1,0 +1,14 @@
+<h4>Category</h4>
+	<ul class="facet">
+	<% for row in @search.facet(:category).rows.each do%>
+		<li>
+			<% if params[:category].blank? %>
+			<% query = params[:q].to_s + " in:" + row.value.to_s + "s" %>
+			<%= link_to row.value, search_path(:q => query) %> (<%= row.count %>)
+			<% else %>
+				<strong><%= row.value %></strong> (<%= link_to "remove", :category => nil %>)
+			<% end %>
+		</li>
+		<% end %>
+	</ul>
+	

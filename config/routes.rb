@@ -1,4 +1,13 @@
 Savitri::Application.routes.draw do
+  get "search/index"
+
+  get "search/results"
+
+
+  get 'search' => 'search#index'
+  get 'search/search' => 'search#search'
+  get 'search/results' => 'search#results'
+
   resources :notebooks
 
   mount RedactorRails::Engine => '/redactor_rails'
@@ -9,6 +18,8 @@ Savitri::Application.routes.draw do
 
   get '/blogs/latest' => "blogs#latest"
   
+
+  get '/search' =>  "lines#index"
   resources :blogs
 
   match "/store/notebooks" => "notebooks#create"
