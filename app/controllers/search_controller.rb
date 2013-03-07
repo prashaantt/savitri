@@ -7,8 +7,6 @@ class SearchController < ApplicationController
 
     #1. Split on spaces. Left side => query , Right side => Operations
     # god awake in:lines book:1 canto:1
-
-    
     if params[:q].to_s.include?("in:")
       query = params[:q].split("in:")
         case query[1]
