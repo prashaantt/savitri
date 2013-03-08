@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:cantono) %></th>
+      <th><%= model_class.human_attribute_name(:no) %></th>
       <th><%= model_class.human_attribute_name(:title) %></th>
       <th>Book Id</th>
       <th>Book Name</th>
@@ -19,7 +19,7 @@
     <% @cantos.each do |canto| %>
       <tr>
         <td><%= link_to canto.id, canto_path(canto) %></td>
-        <td><%= canto.cantono %></td>
+        <td><%= canto.no %></td>
         <td><%= canto.title %></td>
         <% @bk = Book.find(canto.book_id) %>
         <td><%= @bk.no %></td>

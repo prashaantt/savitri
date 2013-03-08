@@ -14,15 +14,15 @@
 <% @stan = Stanza.find(@line.stanza_id) %>
 
 <p>
-  <b>StanzNo:</b>
-  <%= @stan.stanzno %>
+  <b>Sentence No:</b>
+  <%= @stan.no %>
 </p>
 
 
  <p>
  	<b>Canto Detail </b>
-	  <% @canto = @stan.canto_id %>      
-      <%= Canto.find(@canto).cantono %>---<%= Canto.find(@canto).title  %>
+	  <% @canto = Section.find(@stan.section).canto_id %>      
+      <%= Canto.find(@canto).no %>---<%= Canto.find(@canto).title  %>
     </b>
 </p>
 <% if can? :update, @line %>
