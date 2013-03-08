@@ -11,19 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121219115732) do
+ActiveRecord::Schema.define(:version => 15) do
 
   create_table "blogs", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title"
+    t.string   "title",      :null => false
     t.string   "subtitle"
-    t.string   "slug"
+    t.string   "slug",       :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "books", :force => true do |t|
-    t.integer  "no"
+    t.integer  "no",          :null => false
     t.string   "name"
     t.text     "description"
     t.datetime "created_at",  :null => false
@@ -31,21 +31,21 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
   end
 
   create_table "cantos", :force => true do |t|
-    t.integer  "cantono"
+    t.integer  "no",          :null => false
     t.string   "title"
     t.string   "description"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-    t.integer  "book_id",     :default => 1
+    t.integer  "book_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "comments", :force => true do |t|
     t.integer  "post_id"
+    t.integer  "user_id"
     t.string   "commenter"
-    t.text     "body"
+    t.text     "body",       :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "user_id"
   end
 
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
@@ -64,16 +64,32 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
   add_index "follows", ["follower_id", "follower_type"], :name => "fk_follows"
 
   create_table "lines", :force => true do |t|
-    t.string   "line"
-    t.integer  "no"
+    t.integer  "no",         :null => false
+    t.string   "line",       :null => false
+    t.integer  "stanza_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "stanza_id"
+  end
+
+  create_table "notebooks", :force => true do |t|
+    t.string   "line"
+    t.string   "quote"
+    t.string   "annotation"
+    t.string   "start"
+    t.integer  "startoffset"
+    t.string   "end"
+    t.integer  "endoffset"
+    t.string   "externalurl"
+    t.string   "uri"
+    t.integer  "line_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "posts", :force => true do |t|
     t.integer  "blog_id"
-    t.string   "title"
+    t.string   "title",      :null => false
     t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -96,16 +112,24 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
   add_index "redactor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_redactor_assetable_type"
 
   create_table "roles", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "sections", :force => true do |t|
+    t.integer  "no",         :null => false
     t.string   "name"
+    t.integer  "canto_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "stanzas", :force => true do |t|
-    t.integer  "stanzno"
+    t.integer  "no",         :null => false
+    t.integer  "section_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "canto_id"
   end
 
   create_table "taggings", :force => true do |t|
@@ -127,7 +151,10 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
 
   create_table "users", :force => true do |t|
     t.string   "name"
-    t.string   "email"
+    t.string   "username",                               :null => false
+    t.string   "email",                                  :null => false
+    t.string   "photo"
+    t.integer  "role_id"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "encrypted_password",     :default => "", :null => false
@@ -143,9 +170,6 @@ ActiveRecord::Schema.define(:version => 20121219115732) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.string   "username"
-    t.integer  "role_id"
-    t.string   "photo"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

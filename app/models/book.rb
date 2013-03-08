@@ -10,5 +10,24 @@ class Book < ActiveRecord::Base
   def to_param
   	no
   end
-  
+
+  searchable do 
+    text :name
+    text :no
+    integer :id
+    string :category
+  end
+
+  # def canto
+  #   cantos
+  # end
+
+  # def section
+  #   self.cantos.map {|a| a.no}
+  # end
+
+  def category
+    self.class.name + "s"
+  end
+
 end

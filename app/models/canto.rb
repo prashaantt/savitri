@@ -1,14 +1,23 @@
 class Canto < ActiveRecord::Base
-  attr_accessible :cantono, :description, :title, :book_id
-  has_many :stanzas
-  has_many :lines , :through => :stanzas
+  attr_accessible :no, :description, :title, :book_id
+  has_many :sections
+  has_many :stanzas , :through => :sections
   belongs_to :book
   
-  validates :cantono, :title, :uniqueness => true
-  validates :cantono, :title, :presence=> true
+  validates :no, :title, :uniqueness => true
+  validates :no, :title, :presence=> true
   
   def to_param
-  	cantono
+  	no
   end
   
+  # searchable do 
+  #   text :line
+  #   text :no
+  # end
+
+  # def line
+  # 	self.lines
+  # end
+
 end

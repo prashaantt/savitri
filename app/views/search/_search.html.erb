@@ -1,0 +1,5 @@
+<%= form_tag("/search/", :method => "get", :class=> "form-wrapper cf") do  %>
+<!--   <%= label_tag(:q, "Search for:") %> -->
+  <%= text_field_tag :q, params[:q] ,:placeholder=>"Search here..." %>
+  <button type="submit">Search</button>
+<% end %>

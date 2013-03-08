@@ -9,8 +9,14 @@
   <%= yield :head %> 
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%  if params[:controller].to_s == 'read' %>
+      <% unless current_user.nil? %>
+        <script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>
+        <link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.1.0/annotator.min.css">
+      <% end %>
+  <% end %>
   <%= csrf_meta_tags %>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
  <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -23,18 +29,9 @@
           <a class="brand" href="#">Savitri</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="/">Home</a></li>
-                <li><a href="/read">Read Savitri</a></li>  
+              <li class="<%=is_active 'blogs' %>"><a href="/">Home</a></li>
+                <li class="<%=is_active 'read' %>"><a href="/read">Read Savitri</a></li>  
         
-                <li class="dropdown" id="Blogs">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Blogs
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a href="/blogs">Blogs</a></li>
-                  <li><a href="/blogs/latest">User Blogs</a></li>
-                  </ul>
-                </li>
                 <!--  -->
         			  <li class="dropdown" id="Resources">
         				<a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Resources
@@ -49,8 +46,8 @@
      
             </ul>
           </div><!--/.nav-collapse -->
-		  <form class="navbar-search pull-left">
-            <input type="text" class="search-query span2" placeholder="Search">
+		  <form class="navbar-search pull-left" action="/search/">
+            <%= text_field_tag :q, params[:q], :class=>"search-query span2", :placeholder=>"Search" %>
       </form>
 		   <div class="btn-group pull-right">
         <% if user_signed_in? %> 
