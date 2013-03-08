@@ -53,10 +53,15 @@ class LinesController < ApplicationController
       num =  nu -1
     end
     logger.info '------------------------create---------------------'
-    stanznu = Stanza.last.stanzno + 1
-    @stan = Stanza.new(:stanzno=>stanznu, :canto_id=>Stanza.last.canto_id)
+    stanznu = Stanza.last.no + 1
+    section_no = Section.last.no + 1
+    logger.info '----create new section---'
+    @section = Section.new(:no=>section_no, :canto_id =>Section.last.canto_id)
+    @section.save
+    @stan = Stanza.new(:no=>stanznu, :section_id=>section_no)
     @stan.save
-    params[:line][:line].to_s.split("\r\n").each do |l|
+    @line_arr = params[:line][:line].to_s.split("\r\n")
+    @line_arr.each_with_index do |l, index|
       logger.info l
       logger.info '----check full-stop---'
       if l.include? "."
@@ -64,9 +69,11 @@ class LinesController < ApplicationController
         @line = Line.new(:no=>num,:line=>l,:stanza_id=>stanznu)
         @line.save
         logger.info "--created new stanza--"
-        stanznu = stanznu + 1
-        @stan2=Stanza.new(:stanzno=>stanznu, :canto_id=>Stanza.last.canto_id)
-        @stan2.save
+        if(index!=@line_arr.length-1)
+          stanznu = stanznu + 1
+          @stan2=Stanza.new(:no=>stanznu, :section_id=>section_no)
+          @stan2.save
+        end
       else
         num=num+1
         @line = Line.new(:no=>num,:line=>l,:stanza_id=>stanznu)

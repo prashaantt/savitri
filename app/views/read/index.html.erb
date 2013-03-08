@@ -34,7 +34,8 @@
         </div>
         <div class="span6 offset1">
 			<div id="cantos">
-				<h2><%= Canto.find(@stanzas.first.canto_id).title %></h2> 
+				
+        <h2><%= Canto.find(Section.find(@stanzas.first.section).canto_id).title %></h2> 
         <div id="content">
 					<div id="poem" class="readsavitri">
 						<%= render @stanzas %>
