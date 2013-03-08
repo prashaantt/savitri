@@ -1,0 +1,12 @@
+<h4>Book</h4>
+	<ul class="facet">
+	<% for row in @search.facet(:lbook).rows.each do%>
+		<li>
+			<% if params[:lbook].blank? %>
+			<%= link_to row.value, search_path(:q => params[:q], :lbook => row.value,:length => params[:length], :canto => params[:canto], :section => params[:section]) %> (<%= row.count %>)
+			<% else %>
+			<strong><%= row.value %></strong> (<%= link_to "remove", :lbook => nil , :length => params[:length], :canto => params[:canto], :q => params[:q], :section => params[:section] %>)
+			<% end %>
+		</li>
+		<% end %>
+	</ul>

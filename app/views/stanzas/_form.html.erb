@@ -12,12 +12,12 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :stanzno %><br />
-    <%= f.number_field :stanzno , :value => Stanza.maximum("stanzno")+1 %>
+    <%= f.label :no %><br />
+    <%= f.number_field :no , :value => Stanza.maximum("no")+1 %>
   </div>
   <div class="field">
-    <%= f.label :canto_id %><br/>
-    <%= f.collection_select(:canto_id, Canto.all, :id, :cantono) %>
+    <%= f.label :section_id %><br/>
+    <%= f.collection_select(:section_id, Section.all, :id, :no) %>
   </div>
   <div class="actions">
     <%= f.submit %>

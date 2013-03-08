@@ -2,10 +2,10 @@
 
 one:
   "no": 1
-  title: MyString
-  description: MyString
+  name: MyString
+  references: 
 
 two:
   "no": 1
-  title: MyString
-  description: MyString
+  name: MyString
+  references: 
