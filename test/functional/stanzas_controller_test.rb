@@ -18,7 +18,7 @@ class StanzasControllerTest < ActionController::TestCase
 
   test "should create stanza" do
     assert_difference('Stanza.count') do
-      post :create, stanza: { stanzno: @stanza.stanzno }
+      post :create, stanza: { no: @stanza.no }
     end
 
     assert_redirected_to stanza_path(assigns(:stanza))
@@ -35,7 +35,7 @@ class StanzasControllerTest < ActionController::TestCase
   end
 
   test "should update stanza" do
-    put :update, id: @stanza, stanza: { stanzno: @stanza.stanzno }
+    put :update, id: @stanza, stanza: { no: @stanza.no }
     assert_redirected_to stanza_path(assigns(:stanza))
   end
 

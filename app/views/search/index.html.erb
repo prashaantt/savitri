@@ -23,7 +23,7 @@
 				<% logger.debug { l.inspect }%>
 				<p>
 					<% if l.is_a?(Line) %>
-									||<%= Stanza.find(l.stanza_id).section %>.<%= l.no %>||
+									||<%= Stanza.find(l.stanza_id).section_id %>.<%= l.no %>||
 					&nbsp;
 
 						<%= l.line %>
@@ -32,10 +32,15 @@
 						(Book <%= l.no %>) <%= l.name %>
 						<% else %>
 							<% if l.is_a?(Stanza) %>
-								<% l.lines.each do |line| %>
-									<p> ||<%= l.section %>.<%= line.no %>||
+							<p>
+								<% l.lines.each_with_index do |line, index| %>
+									<p> 
+										
+											||<%= l.section %>.<%= line.no %>||
+											&nbsp;										
 										<%= line.line %> </p>
 								<% end %>
+							</p>
 							<% end %>
 						<% end %>
 					<% end %>

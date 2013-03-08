@@ -9,9 +9,9 @@ class Stanza < ActiveRecord::Base
   	no
   end
 
-  def to_s
-    "Sentence"
-  end
+  # def self.to_s
+  #   "Sentence"
+  # end
 
   searchable do 
     text :no
@@ -28,7 +28,7 @@ class Stanza < ActiveRecord::Base
   end
 
   def category
-    self.class.to_s + "s"
+    "Sentences"
   end
 
   def section

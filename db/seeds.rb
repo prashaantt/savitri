@@ -32,11 +32,11 @@ Section.create([
   {:no => 2, :canto_id => 1, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"},
   {:no => 3, :canto_id => 2, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"},
   {:no => 4, :canto_id => 2, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"},
-  {:no => 5, :canto_id => 2, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"},
-  {:no => 6, :canto_id => 2, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"},
-  {:no => 7, :canto_id => 2, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"},
-  {:no => 8, :canto_id => 2, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"},
-  {:no => 9, :canto_id => 2, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"}
+  {:no => 5, :canto_id => 3, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"},
+  {:no => 6, :canto_id => 3, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"},
+  {:no => 7, :canto_id => 3, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"},
+  {:no => 8, :canto_id => 3, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"},
+  {:no => 9, :canto_id => 3, :name => "", :created_at=> "2012-09-28 14:43:43", :updated_at=>"2012-09-28 14:43:43"}
 ], :without_protection => true)
 
 
@@ -601,7 +601,7 @@ Line.create([
   { :line => "And, leader here with his uncertain mind,", :no => 183, :created_at => "2013-03-04 14:36:29", :updated_at => "2013-03-04 14:36:29", :stanza_id => 46 },
   { :line => "Alone who stares at the future’s covered face,", :no => 184, :created_at => "2013-03-04 14:36:29", :updated_at => "2013-03-04 14:36:29", :stanza_id => 46 },
   { :line => "Man lifted up the burden of his fate.", :no => 185, :created_at => "2013-03-04 14:36:30", :updated_at => "2013-03-04 14:36:30", :stanza_id => 46 },
-  { :line => "□□And Savitri too awoke among these tribes", :no => 186, :created_at => "2013-03-04 14:36:30", :updated_at => "2013-03-04 14:36:30", :stanza_id => 47 },
+  { :line => "And Savitri too awoke among these tribes", :no => 186, :created_at => "2013-03-04 14:36:30", :updated_at => "2013-03-04 14:36:30", :stanza_id => 47 },
   { :line => "That hastened to join the brilliant Summoner’s chant", :no => 187, :created_at => "2013-03-04 14:36:30", :updated_at => "2013-03-04 14:36:30", :stanza_id => 47 },
   { :line => "And, lured by the beauty of the apparent ways,", :no => 188, :created_at => "2013-03-04 14:36:31", :updated_at => "2013-03-04 14:36:31", :stanza_id => 47 },
   { :line => "Acclaimed their portion of ephemeral joy.", :no => 189, :created_at => "2013-03-04 14:36:31", :updated_at => "2013-03-04 14:36:31", :stanza_id => 47 },
