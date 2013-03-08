@@ -13,4 +13,40 @@ class Line < ActiveRecord::Base
   	no
   end
 
+   searchable do 
+     text :line
+     text :no
+     integer :id
+#  --facets below--
+     string :section
+     string :canto
+     string :lbook
+     string :length
+     string :category
+   end
+
+  def category
+    self.class.name + "s"
+  end
+
+  def section
+    Section.find(Stanza.find(self.stanza_id).section_id).no
+  end
+
+  def canto
+    Canto.find(Section.find_by_no(section).canto_id).no
+  end
+
+  def book
+    Book.find(Canto.find_by_no(canto).book_id).no
+  end
+
+  def lbook
+    book
+  end
+
+  def length
+    Stanza.find(self.stanza_id).lines.count
+  end
+  
 end

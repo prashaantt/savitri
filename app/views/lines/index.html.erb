@@ -18,10 +18,10 @@
     <td><%= line.line %></td>
     <td><%= line.no %></td>
     <% @stan= Stanza.find(line.stanza_id) %>
-    <td><%= @stan.stanzno %></td>
+    <td><%= @stan.no %></td>
     <td>
-      <% @canto = @stan.canto_id %>
-      (<%= Canto.find(@canto).cantono %>)<%= Canto.find(@canto).title  %>
+      <% @canto = Section.find(@stan.section).canto_id %>
+      (<%= Canto.find(@canto).no %>)<%= Canto.find(@canto).title  %>
     </td>
     <!--TODO FIll In to show canto Id -->
     <td><%= link_to 'Show', line %></td>
