@@ -16,22 +16,15 @@ class Book < ActiveRecord::Base
     text :no
     integer :id
     string :category
-    string :book
-    string :canto
-    string :section
   end
 
-  def book
-  	self.no
-  end
+  # def canto
+  #   cantos
+  # end
 
-  def canto
-    self.cantos.no
-  end
-
-  def section
-    self.cantos.map {|a| a.no}
-  end
+  # def section
+  #   self.cantos.map {|a| a.no}
+  # end
 
   def category
     self.class.name + "s"

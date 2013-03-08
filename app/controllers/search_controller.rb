@@ -14,12 +14,6 @@ class SearchController < ApplicationController
             @search = Sunspot.search Book do
               fulltext query[0]
               order_by(:id, :asc)
-              facet(:book)
-              facet(:canto)
-              facet(:section)
-              with(:book).equal_to(params[:book]) if params[:book].present?
-              with(:canto).equal_to(params[:canto]) if params[:canto].present?
-              with(:section).equal_to(params[:section]) if params[:section].present?              
               paginate :page => params[:page], :per_page => 20
             end
           when "sentences"

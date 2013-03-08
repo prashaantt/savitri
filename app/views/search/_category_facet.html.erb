@@ -6,7 +6,7 @@
 			<% query = params[:q].to_s + " in:" + row.value.to_s.downcase %>
 			<%= link_to row.value, search_path(:q => query) %> (<%= row.count %>)
 			<% else %>
-				<strong><%= row.value %></strong> (<%= link_to "remove", :category => nil %>)
+				<strong><%= row.value %></strong> (<%= link_to "remove", :category => "" %>)
 			<% end %>
 		</li>
 		<% end %>

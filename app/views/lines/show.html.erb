@@ -21,8 +21,8 @@
 
  <p>
  	<b>Canto Detail </b>
-	  <% @canto = @stan.section.canto_id %>      
-      <%= Canto.find(@canto).cantono %>---<%= Canto.find(@canto).title  %>
+	  <% @canto = Section.find(@stan.section).canto_id %>      
+      <%= Canto.find(@canto).no %>---<%= Canto.find(@canto).title  %>
     </b>
 </p>
 <% if can? :update, @line %>
