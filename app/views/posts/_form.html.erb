@@ -23,31 +23,6 @@
     </div>
   </div>
   
-  <div class="control-group">
-
-<p> <a class="btn" data-toggle="collapse" data-target="#demo">
-  Include Lines from Poetry
-</a>
-</p>
-<div id="demo" class="collapse">
-    <div class="control-group" id="book">
-    <%= f.label :book, "Book", :class=>'control-label' %>
-    <div class="controls">
-    <%= f.collection_select(:book, Book.order(:no), :id, :id, {:prompt => 'Select Book Type'},
-                       {:style => "width:75px"}) %>
-                     </div>
-  </div>
-  <br/>
-   <div class="control-group" id="section">
-    <%= f.label :section, "Section", :class=>'control-label' %>
-    <div class="controls">
-    <%= f.collection_select(:section, Section.order(:no), :id, :id, {:prompt => 'Select Section'},
-                       {:style => "width:75px"}) %>
-  </div>
-  </div>
-</div>
-
-  </div>  
 
 </div>
 </div>
@@ -58,5 +33,6 @@
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
   posts_path, :class => 'btn' %>
 </div>
-</div>  
+</div> 
+</div>
 <% end %>
