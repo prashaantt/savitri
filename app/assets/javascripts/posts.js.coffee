@@ -52,5 +52,6 @@ $ ->
   	$("#insert_into_post").click (e) ->
 		  e.preventDefault()
 		  potext = $("#poem-text").html()
-		  $(".redactor_editor").html(potext)
+		  $(".redactor_editor").append potext
+		  $("#redactor_content").append potext
 		  $("#myModal").modal "hide"
