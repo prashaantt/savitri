@@ -62,12 +62,16 @@ Savitri::Application.routes.draw do
   get 'blogs/:blog_id/posts/tags/:tag' , to: 'posts#index' , as: :tag
   
   resources :books
+
+  resources :sections
   
   resources :cantos
 
   resources :stanzas
 
   resources :lines
+
+  get 'lines/range/:id', to: 'lines#range'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
