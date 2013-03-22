@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(:version => 15) do
 
   create_table "stanzas", :force => true do |t|
     t.integer  "no",         :null => false
+    t.integer  "runningno"
     t.integer  "section_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
