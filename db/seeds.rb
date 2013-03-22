@@ -421,7 +421,7 @@ Line.create([
   { :line => "The huge foreboding mind of Night, alone", :no => 3, :created_at => "2012-09-28 14:55:41", :updated_at => "2012-09-28 14:55:41", :stanza_id => 2 },
   { :line => "In her unlit temple of eternity,", :no => 4, :created_at => "2012-09-28 14:56:00", :updated_at => "2012-09-28 14:56:00", :stanza_id => 2 },
   { :line => "Lay stretched immobile upon Silence’ marge.", :no => 5, :created_at => "2012-09-28 14:56:16", :updated_at => "2012-09-28 14:56:16", :stanza_id => 2 },
-  { :line => "Almost one felt, opaque, impenetrable,", :no => 6, :created_at => "2012-09-28 14:56:32", :updated_at => "2012-09-28 14:56:32", :stanza_id => 2 },
+  { :line => "Almost one felt, opaque, impenetrable,", :no => 6, :created_at => "2012-09-28 14:56:32", :updated_at => "2012-09-28 14:56:32", :stanza_id => 3 },
   { :line => "In the sombre symbol of her eyeless muse", :no => 7, :created_at => "2012-09-28 14:56:48", :updated_at => "2012-09-28 14:56:48", :stanza_id => 3 },
   { :line => "The abysm of the unbodied Infinite;", :no => 8, :created_at => "2012-09-28 14:57:05", :updated_at => "2012-09-28 14:57:05", :stanza_id => 3 },
   { :line => "A fathomless zero occupied the world.", :no => 9, :created_at => "2012-09-28 14:57:28", :updated_at => "2012-09-28 14:57:28", :stanza_id => 3 },
