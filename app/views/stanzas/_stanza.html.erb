@@ -1,5 +1,17 @@
-<p>
-<% stanza.lines.each do |lin| %> 
- <p id=<%= lin.id %>>	<%= lin.line %> </p>
+<p id="<%= Section.find(stanza.section).no %>.<%= stanza.no %>">
+<% stanza.lines.each_with_index do |lin,index| %> 
+ <div id=<%= lin.id %>>	<%= lin.line %> 
+ 	 <% if stanza.lines.count - 1 == index %>
+ 	 <% section = Section.find(stanza.section) %>
+ 	 <% anchor_t = section.no.to_s + "." + stanza.runningno.to_s %>
+ 	 <% if (stanza.no%4) == 0 %>
+ 	 	<% page_no = (stanza.no)/4 %>
+ 	 <% else %>
+ 	 	<% page_no = (stanza.no)/4 + 1%>
+ 	 <% end %>
+ 	 &nbsp;<%= link_to "||"+anchor_t+"||", read_path(:id => params[:id] || 1,:pages=> page_no,:anchor => Section.find(stanza.section).no.to_s + "." + stanza.runningno.to_s)  %>
+ 		
+ <% end %>
+ </div>
 <% end %>
 </p>

@@ -2,7 +2,7 @@ $('#poem').fadeOut(1000,function(){
 	$("#paginator a").live('ajax:success', function(e){ window.history.pushState('', '', $(e.target).attr('href')) });
 	$(window).bind('popstate', function(){ $.ajax({url:window.location, dataType:'script'}) ; return true });
 	
-	$("#paginator").html('<%= escape_javascript(paginate(@stanzas, :param_name => :stanzas , :remote => true, :window => 1).to_s) %>');
+	$("#paginator").html('<%= escape_javascript(paginate(@stanzas, :param_name => :pages , :remote => true, :window => 1).to_s) %>');
 
 	$("#poem").html("<%= escape_javascript render(@stanzas) %>").fadeIn(1000,function(){});	
 
@@ -14,8 +14,8 @@ $('#poem').fadeOut(1000,function(){
 	if(typeof $("#content").data('annotator')!='undefined'){
 		$("#content").data('annotator').plugins.Store.loadAnnotationsFromSearch({
 			limit: 20,
-			uri: window.location.href
+			uri: window.location.pathname + "?pages=<%= params[:pages] || 1 %>"
 		});
-		$("#content").data('annotator').plugins.Store.options.annotationData.uri = window.location.href;
+		$("#content").data('annotator').plugins.Store.options.annotationData.uri = "<%= params[:controller] %><%= params[:id] %>?pages=<%= params[:pages] %>";
 	}
 });
