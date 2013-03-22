@@ -2,6 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
+  prmstr = window.location.search.substr(1)
+  prmstr = "pages=1"  if prmstr == ""
   if typeof window["Annotator"] isnt "undefined"
     $("#content").annotator().annotator "addPlugin", "Store",
       urls:
@@ -12,10 +14,9 @@ $ ->
         search: "/notess"
 
       annotationData:
-        uri: document.URL
+        uri: window.location.pathname + "?" + prmstr
         prefix: "/"
 
       loadFromSearch:
         limit: 20
-        uri: window.location.href
-
+        uri: window.location.pathname + "?" + prmstr
