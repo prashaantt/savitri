@@ -1,0 +1,72 @@
+<%= form_for @post, :html => { :class => 'form-inline' } do |f| %>
+<div class="span10">
+  <p><a href="#myModal" role="button" class="btn" data-toggle="modal">Import Text from Savitri</a></p>
+  <!-- Modal -->
+  <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!--Modal Header -->
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Import Text from Savitri</h3>
+    </div>
+    <!--Modal Body -->
+    <div class="modal-body">
+      <table class="table table-condensed"> 
+      <tr>
+        <td>
+          <div id="book">
+           <%= f.label :book, "Book" %>
+           <div>
+            <%= f.collection_select(:book, Book.order(:no), :id, :id, {:prompt => 'Select Book'},{:style => "width:75px"}) %>
+           </div>
+          </div>
+        </td>
+        <td>
+          <div id="canto">
+            <%= f.label :canto, "Canto" %>
+            <div >
+             <%= f.collection_select(:canto, Canto.order(:no), :id, :id, {:prompt => 'Select Canto'},{:style => "width:75px"}) %>
+           </div>
+         </div>
+       </td>
+       <td>
+        <div id="section">
+        <%= f.label :section, "Section" %>
+          <div >
+            <%= f.collection_select(:section, Section.order(:no), :id, :id, {:prompt => 'Select Section'},{:style => "width:75px"}) %>
+          </div>
+          </div>
+        </td>
+        <td>
+          <div id="from-line">
+          <%= f.label :from, "From Line" %>
+          <div >
+            <%= f.collection_select(:from, Line.order(:no), :id, :id, {:prompt => 'Select Start Line'},{:style => "width:75px"}) %>
+          </div>
+        </div>
+      </td>
+        <td>
+          <div id="to-line">
+          <%= f.label :to, "To Line" %>
+          <div >
+            <%= f.collection_select(:to, Line.order(:no), :id, :id, {:prompt => 'Select End Line'},
+            {:style => "width:75px"}) %>
+          </div>
+        </div>
+      </td>
+  </tr>
+  <tr>
+    <td colspan="5" align="left">
+      <hr/>
+      <div id="poem-text">
+      </div></td>
+  </tr>
+</table>
+</div>
+<!--Modal Footer -->
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn" id="insert_into_post">Insert into Post</button>
+</div>
+</div>
+
+<% end %>

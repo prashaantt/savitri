@@ -3,6 +3,7 @@ class CreateStanzas < ActiveRecord::Migration
   def self.up
     create_table :stanzas do |t|
       t.integer :no, :null => false
+      t.integer :runningno
   	  t.references :section
     
       t.timestamps

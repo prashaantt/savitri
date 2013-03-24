@@ -26,6 +26,19 @@ class LinesController < ApplicationController
     end
   end
 
+  # GET /lines/range/1..20
+  # GET /lines/range/1..20.json
+  def range
+    #@lines = Line.where(:no=> params[:id])
+    line_range = params[:id].split("-")
+    @lines = Line.where(:no=>line_range[0]..line_range[1])
+
+    respond_to do |format|
+      format.html #range.html.erb
+      format.json { render json: @lines }
+    end
+  end
+
   # GET /lines/new
   # GET /lines/new.json
   def new

@@ -1,5 +1,5 @@
 <%= form_for @post, :html => { :class => 'form-horizontal' } do |f| %>
- <div class="span10">
+<div class="span10">
   <%= f.hidden_field :blog_id, :class=> 'text_field', :value=>Blog.find_by_slug(params[:blog_id]).id %>
   <div class="control-group">
     <%= f.label :title, :class => 'control-label' %>
@@ -15,17 +15,24 @@
     </div>
 
   </div>
+
   <div class="control-group">
-    <%= f.label :tag_list, "Tags (Separated by Commas)",:class => 'control-label' %><br />
+    <%= f.label :tag_list, "Tags (Separated by Commas)",:class => 'control-label' %>
+    <div class="controls">
     <%= f.text_field :tag_list, :class => 'text_area' %>
-  </div>
- 
     </div>
   </div>
-  <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                posts_path, :class => 'btn' %>
-  </div>
-</div>  
+  
+
+</div>
+</div>
+
+
+<div class="form-actions">
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+  posts_path, :class => 'btn' %>
+</div>
+</div> 
+</div>
 <% end %>

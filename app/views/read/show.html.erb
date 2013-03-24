@@ -1,5 +1,5 @@
 <div id="paginator">
-  <%= paginate @stanzas, :param_name => :stanzas , :remote => true %>
+  <%= paginate @stanzas, :param_name => :pages , :remote => true, :window => 1 %>
 </div>
 <% content_for :head do %>
 <link href='http://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css'>
@@ -33,16 +33,18 @@
           </div>
         </div>
         <div class="span6 offset1">
-      <div id="cantos">
-        <% unless @stanzas.blank? %>
-         <h2><%= Canto.find(Section.find(@stanzas.first.section).canto_id).title %></h2> 
-          <div id="poem" class="readsavitri">
-            <%= render @stanzas %>
+          <div id="cantos">
+            <% unless @stanzas.blank? %>
+              <h2><%= Canto.find(Section.find(@stanzas.first.section).canto_id).title %></h2> 
+              <div id="content">
+              <div id="poem" class="readsavitri">
+                <p><%= render @stanzas %></p>
+              </div>
+            </div>
+            <% else %>
+              <h2><%= Canto.find(params[:id]).title %></h2>
+            <% end %>
           </div>
-          <% else %>
-            <h2><%= Canto.find(params[:id]).title %></h2>
-        <% end %>
-      </div>
+        </div>
     </div>
-  </div>
 </div>

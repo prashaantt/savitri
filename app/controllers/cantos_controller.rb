@@ -19,7 +19,8 @@ class CantosController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @canto }
+      #format.json { render json: @canto }
+      format.json {render :json => @canto.to_json(:include => { :sections => { :only => :no } })}
     end
   end
 

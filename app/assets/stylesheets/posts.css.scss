@@ -13,6 +13,17 @@
 	.l {font-size: 1.6em; text: bold;};
 }
 
+
+.table td, .table th {
+    border: none;
+}
+
+table.table.table-condensed {
+    border: none;
+}
+
+.modal { left: 50%; margin-left: -300px; }
+
 /* Panels ---------------------- */
 
 .panel { background: #f2f2f2; border: solid 1px #e6e6e6; margin: 0 0 22px 0; padding: 20px; }
