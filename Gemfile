@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 gem 'pg'
 gem 'sqlite3'
@@ -11,7 +11,7 @@ gem 'simple_form'
 gem 'cancan'
 gem 'kaminari'
 
-#gem 'newrelic_rpm'
+gem 'newrelic_rpm'
 gem 'bcrypt-ruby'
 gem 'redactor-rails', '0.3.2'
 gem 'carrierwave'
@@ -31,6 +31,6 @@ end
 
 gem 'jquery-rails', '2.1.3'
 
-gem 'thin'
+gem 'unicorn'
 gem 'capistrano'
 #gem 'seed_dump'
