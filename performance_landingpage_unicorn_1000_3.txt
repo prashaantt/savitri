@@ -1,0 +1,52 @@
+Server
+Nginx + Unicorn (3 Workers) + Postgresql 
+
+On Landing Page
+
+#  ab -n 1000 -c 3 http://54.251.105.152/  > performance_landingpage_unicorn_1000_3.txt
+----------------------------------------------------------------------------------------
+
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 54.251.105.152 (be patient)
+
+
+Server Software:        nginx/1.2.6
+Server Hostname:        54.251.105.152
+Server Port:            80
+
+Document Path:          /
+Document Length:        6333 bytes
+
+Concurrency Level:      3
+Time taken for tests:   152.379 seconds
+Complete requests:      1000
+Failed requests:        995
+   (Connect: 0, Receive: 0, Length: 995, Exceptions: 0)
+Write errors:           0
+Total transferred:      7090848 bytes
+HTML transferred:       6449848 bytes
+Requests per second:    6.56 [#/sec] (mean)
+Time per request:       457.136 [ms] (mean)
+Time per request:       152.379 [ms] (mean, across all concurrent requests)
+Transfer rate:          45.44 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:      106  165  54.9    153     850
+Processing:   168  292 193.1    240    2485
+Waiting:      143  236 139.9    200    2349
+Total:        309  457 211.5    400    3093
+
+Percentage of the requests served within a certain time (ms)
+  50%    400
+  66%    433
+  75%    466
+  80%    494
+  90%    589
+  95%    698
+  98%   1090
+  99%   1319
+ 100%   3093 (longest request)

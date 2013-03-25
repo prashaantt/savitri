@@ -1,0 +1,52 @@
+Server
+Nginx + Thin (3) + Solr + Postgresql 
+
+On Landing Page
+
+#  ab -n 1000 -c 3 http://54.251.105.152/search/?q=  > performance_search_1000_3.txt
+------------------------------------------------------------------------------
+
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 54.251.105.152 (be patient)
+
+
+Server Software:        nginx/1.2.6
+Server Hostname:        54.251.105.152
+Server Port:            80
+
+Document Path:          /search/?q=
+Document Length:        7196 bytes
+
+Concurrency Level:      3
+Time taken for tests:   178.642 seconds
+Complete requests:      1000
+Failed requests:        52
+   (Connect: 0, Receive: 0, Length: 52, Exceptions: 0)
+Write errors:           0
+Total transferred:      7842948 bytes
+HTML transferred:       7195948 bytes
+Requests per second:    5.60 [#/sec] (mean)
+Time per request:       535.926 [ms] (mean)
+Time per request:       178.642 [ms] (mean, across all concurrent requests)
+Transfer rate:          42.87 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       70   95  39.0     87    1081
+Processing:   143  440 161.3    414     987
+Waiting:      142  439 161.2    412     985
+Total:        217  535 164.3    511    1525
+
+Percentage of the requests served within a certain time (ms)
+  50%    511
+  66%    585
+  75%    635
+  80%    684
+  90%    766
+  95%    838
+  98%    917
+  99%    976
+ 100%   1525 (longest request)

@@ -1,0 +1,52 @@
+Server
+Nginx + Thin (3) + Postgresql 
+
+On Landing Page
+
+#  ab -n 1000 -c 3 http://54.251.105.152/  > performance_landingpage_1000_3.txt
+------------------------------------------------------------------------------
+
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 54.251.105.152 (be patient)
+
+
+Server Software:        nginx/1.2.6
+Server Hostname:        54.251.105.152
+Server Port:            80
+
+Document Path:          /
+Document Length:        7203 bytes
+
+Concurrency Level:      3
+Time taken for tests:   145.361 seconds
+Complete requests:      1000
+Failed requests:        994
+   (Connect: 0, Receive: 0, Length: 994, Exceptions: 0)
+Write errors:           0
+Total transferred:      7854606 bytes
+HTML transferred:       7207606 bytes
+Requests per second:    6.88 [#/sec] (mean)
+Time per request:       436.084 [ms] (mean)
+Time per request:       145.361 [ms] (mean, across all concurrent requests)
+Transfer rate:          52.77 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       70   89  72.3     75    1109
+Processing:   101  347 362.3    246    6115
+Waiting:       99  161 181.9    127    3775
+Total:        173  436 373.1    335    6185
+
+Percentage of the requests served within a certain time (ms)
+  50%    335
+  66%    417
+  75%    549
+  80%    651
+  90%    769
+  95%    870
+  98%   1267
+  99%   2057
+ 100%   6185 (longest request)
