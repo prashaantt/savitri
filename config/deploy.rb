@@ -1,8 +1,8 @@
 set :user, 'ec2-user'
-set :domain, 'ec2-54-251-105-152.ap-southeast-1.compute.amazonaws.com'
+set :domain, '54.251.105.152'
 set :application, "savitri"
 set :repository, "#{user}@#{domain}:git/#{application}.git"
-set :deploy_to, "/home/#{user}/projects/#{application}"
+set :deploy_to, "/home/#{user}/#{application}"
 set :normalize_asset_timestamps, false
 
 role :web, domain                          # Your HTTP server, Apache/etc
@@ -14,7 +14,7 @@ default_run_options[:pty] = true
 # miscellaneous options
 set :deploy_via, :remote_cache
 set :scm, 'git'
-set :branch, 'savtextsearch'
+set :branch, 'deploy'
 set :scm_verbose, true
 set :use_sudo, false
 
