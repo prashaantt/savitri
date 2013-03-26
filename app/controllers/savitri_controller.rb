@@ -1,5 +1,10 @@
 class SavitriController < ApplicationController
+  
   def index
+
+  end
+
+  def show
   	 @sentence = Stanza.order("RANDOM()").last;
   	 #@text = @sentence.lines.to_json(:only => :line)
   	 @text = Array.new
