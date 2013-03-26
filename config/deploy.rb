@@ -1,5 +1,5 @@
 set :user, 'ec2-user'
-set :domain, 'ec2-54-251-105-152.ap-southeast-1.compute.amazonaws.com'
+set :domain, '54.251.105.152'
 set :application, "savitri"
 set :repository, "#{user}@#{domain}:git/#{application}.git"
 set :deploy_to, "/home/#{user}/#{application}"
@@ -14,7 +14,7 @@ default_run_options[:pty] = true
 # miscellaneous options
 set :deploy_via, :remote_cache
 set :scm, 'git'
-set :branch, 'savtextsearch'
+set :branch, 'deploy'
 set :scm_verbose, true
 set :use_sudo, false
 
@@ -30,7 +30,7 @@ after "deploy:update_code", :bundle_install
 	task :bundle_install, :roles => :app do
 		run "cd #{release_path} && bundle install"
 		run "cd #{release_path} && rake assets:precompile"
-		run "cd #{release_path} && thin restart -C thin-config.yml"
+		#run "cd #{release_path} && bundle exec unicorn -c #{release_path}/config/unicorn.rb -D -E production -p 3000"
 		#run "cd #{release_path} && rake sunsport:solr:stop"
 		#run "cd #{release_path} && rake sunsport:solr:start"
 end
