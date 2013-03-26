@@ -9,6 +9,7 @@
   <%= yield :head %> 
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  
   <%  if params[:controller].to_s == 'read' %>
       <% unless current_user.nil? %>
         <script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>

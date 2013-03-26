@@ -1,3 +1,25 @@
-// Place all the styles related to the savitri controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+div#selection {
+	margin-left: 300px;
+	margin-top: 50px;
+	line-height: 60px;
+}
+
+div.selection {
+	font-family: 'Satisfy', cursive;
+	font-size: 36px;
+	text-rendering: optimizeLegibility; /*[1]*/
+}
+
+
+div.reference {
+	font-family: Georgia, serif;
+	font-size: 22px;
+	padding-left: 500px;
+	margin-top: -30px;
+}
+
+blockquote {
+  padding: 10px 10px 10px 50px !important;
+  border-left: 1px solid #eeeeee !important;
+  line-height: 60px;
+}
