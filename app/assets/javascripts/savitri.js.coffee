@@ -7,7 +7,7 @@ $ ->
 	  			text5 = response
 	  			showIntro text5
 
-	  	$.get '/savitri/', callback, 'json'  
+	  	$.get '/savitri/show/', callback, 'json'  
 
 showIntro = (selectionData) ->
   d = JSON.stringify(selectionData, undefined, 2)

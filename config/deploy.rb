@@ -1,7 +1,7 @@
 set :user, 'ec2-user'
-set :domain, '54.251.105.152'
+set :domain, '54.251.36.74'
 set :application, "savitri"
-set :repository, "#{user}@#{domain}:git/#{application}.git"
+set :repository, "git@github.com:nishantmodak/savitri.git"
 set :deploy_to, "/home/#{user}/#{application}"
 set :normalize_asset_timestamps, false
 
@@ -14,7 +14,7 @@ default_run_options[:pty] = true
 # miscellaneous options
 set :deploy_via, :remote_cache
 set :scm, 'git'
-set :branch, 'deploy'
+set :branch, 'master'
 set :scm_verbose, true
 set :use_sudo, false
 
@@ -28,9 +28,25 @@ end
 after "deploy:update_code", :bundle_install
 	desc "install the necessary prerequisites"
 	task :bundle_install, :roles => :app do
-		run "cd #{release_path} && bundle install"
-		run "cd #{release_path} && rake assets:precompile"
+		run "cd #{release_path} && ~/bin/bundle install"
+		run "cd #{release_path} && ~/bin/rake assets:precompile"
 		#run "cd #{release_path} && bundle exec unicorn -c #{release_path}/config/unicorn.rb -D -E production -p 3000"
 		#run "cd #{release_path} && rake sunsport:solr:stop"
 		#run "cd #{release_path} && rake sunsport:solr:start"
 end
+
+
+# desc "Zero-downtime restart of Unicorn"
+# task :restart, :except => { :no_release => true } do
+#   run "kill -s USR2 `cat #{shared_path}/pids/unicorn.pid`"
+# end
+
+# desc "Start unicorn"
+# task :start, :except => { :no_release => true } do
+#   run "cd #{current_path} ; bundle exec unicorn_rails -c config/unicorn.rb -D -E production"
+# end
+
+# desc "Stop unicorn"
+# task :stop, :except => { :no_release => true } do
+#   run "kill -s QUIT `cat #{shared_path}/pids/unicorn.pid`"
+# end

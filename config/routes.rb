@@ -39,7 +39,7 @@ Savitri::Application.routes.draw do
   end
   
   get "savitri/index"
-  match '/savitri/' => "savitri#index"
+  match '/savitri/show' => "savitri#show"
   # resources :users do
   #   resources :posts do
   #     resources :comments
