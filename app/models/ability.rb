@@ -18,7 +18,7 @@ class Ability
     if user.role == "Admin"
         can :manage, :all
     else
-        can :read, :all
+        can :read, Post
         if user.role == "Blogger"
            can :read , Post
            can :create, Post
