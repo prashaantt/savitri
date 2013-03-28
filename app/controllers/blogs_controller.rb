@@ -1,5 +1,7 @@
 class BlogsController < ApplicationController
 
+	load_and_authorize_resource
+	
 	def home
 	  @posts = Blog.find_by_id(1).posts.limit(3)
 	end
