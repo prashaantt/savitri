@@ -14,6 +14,7 @@ showIntro = (selectionData) ->
   data = jQuery.parseJSON(d)
   text = data.text
   source = data.source
+  textDOM = {}
   lineByline = ((if text.length > 2 then true else false))
   $("div#text").append "<blockquote>"
   i = 0
@@ -21,34 +22,36 @@ showIntro = (selectionData) ->
   while i < text.length
     words = text[i].split(" ")
     linespan = document.createElement("span")
-    lineId = "line" + i
-    $(linespan).attr "id", lineId
+    key = "l" + i
+    $(linespan).attr "id", key
     $(linespan).css("opacity", 0).addClass "animated"  if lineByline
-    key = lineId
     values = []
     j = 0
 
     while j < words.length
-      element = document.createElement("span")
-      content = document.createTextNode(words[j])
-      element.appendChild content
-      wordId = "word" + i + "-" + j
-      values.push wordId
-      $(element).attr "id", wordId
-      $(element).css("opacity", 0).addClass "animated"  unless lineByline
-      linespan.appendChild element
+      unless lineByline
+        element = document.createElement("span")
+        content = document.createTextNode(words[j])
+        element.appendChild content
+        $(element).css("opacity", 0).addClass "animated"
+        wordId = "w" + i + "-" + j
+        values.push wordId
+        $(element).attr "id", wordId
+        linespan.appendChild element
+      else
+        $(linespan).append words[j]
       $(linespan).append "&nbsp;"  if j < words.length - 1
       j++
     $(linespan).append "<br>"  if i < text.length - 1
     $("blockquote").append linespan
-    $("div#source").html("||" + source + "||").css("opacity", 0).addClass "animated"
     textDOM[key] = values
     i++
+  $("div#source").html("||" + source + "||").css("opacity", 0).addClass "animated"
   line = 0
   word = 0
   count = 4
-  pairs = _.pairs(textDOM) #pair[I][0] == "lineI", pair[I][1][J] == "wordI-J"
-  numLines = Object.keys(pairs).length
+  lineWordArray = _.pairs(textDOM) #lineWordArray[I][0] == "lI", lineWordArray[I][1][J] == "wI-J"
+  numLines = Object.keys(lineWordArray).length
   timer = $.timer(->
     if lineByline
       if line is 0 and count < 2
@@ -58,7 +61,7 @@ showIntro = (selectionData) ->
         count++
       else
         if numLines > line
-          $("#" + pairs[line][0]).removeClass("fadeOut").addClass "fadeIn"
+          $("#" + lineWordArray[line][0]).removeClass("fadeOut").addClass "fadeIn"
           line++
         else
           $("div#source").removeClass("fadeOut").addClass "fadeIn"
@@ -71,8 +74,8 @@ showIntro = (selectionData) ->
           $("div#source").removeClass("fadeIn").addClass "fadeOut"
         count++
       else
-        if pairs[line][1].length > word
-          $("#" + pairs[line][1][word]).removeClass("fadeOut").addClass "fadeIn"
+        if lineWordArray[line][1].length > word
+          $("#" + lineWordArray[line][1][word]).removeClass("fadeOut").addClass "fadeIn"
           word++
         else
           word = 0
