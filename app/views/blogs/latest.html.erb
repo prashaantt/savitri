@@ -1,11 +1,10 @@
  <!-- Header and Nav -->
-
   <div class="row">
     <div class="span1">
       &nbsp;
     </div>
       <div class="span9">
-        <h3>Postings on Savitri from the Inter-Webs</h3>
+        <h3>Postings on Savitri from Blog Network</h3>
       </div> <!-- End of 9 area -->
   </div> <!-- End of Row -->
 
@@ -14,41 +13,24 @@
       &nbsp;
     </div>
       <div class="span9">
-           <div class="row panel">
-                      <div class="span1">
-                          <img src="http://placehold.it/100x100&text=[img]" />
-                      </div>
-                      <div class="span6">
-                        <h5><a href="#"><i>Prashant Tiwari</i></h5> just posted about <a href="#">The Enlightenment</a> from <b>Book 5 Chapter 2</b>
-                      </div>
-                  </div> <!-- Entry Ends -->
-                  <div class="row panel">
-                      
-                      <div class="span6">
-                        <h5><a href="#"><i>Prashant Tiwari</i></h5> just posted about <a href="#">The Enlightenment</a> from <b>Book 5 Chapter 2</b>
-                      </div>
-                  </div> <!-- Entry Ends -->
-                  <div class="row panel">
-                      <div class="span1">
-                          <img src="http://placehold.it/100x100&text=[img]" />
-                      </div>
-                      <div class="span6">
-                        <h5><a href="#"><i>Prashant Tiwari</i></h5> just posted about <a href="#">The Enlightenment</a> from <b>Book 5 Chapter 2</b>
-                      </div>
-                  </div> <!-- Entry Ends -->
-                  <div class="row panel">
-                      <div class="span6">
-                        <h5><a href="#"><i>Prashant Tiwari</i></h5> just posted about <a href="#">The Enlightenment</a> from <b>Book 5 Chapter 2</b>
-                      </div>
-                  </div> <!-- Entry Ends -->
+          <% @posts.each do |post| %>
+           <div class="row panel">  
+              <div class="span7">
+               <h5><a href="#"><i><%= post.blog.user.name %></i></h5> just posted on <%= link_to post.blog.title, blogs_path(post.blog) %> titled <b><%= link_to post.title, blog_post_path(post.blog,post) %></b>
+                <br/>
+                <%= truncate(strip_tags(post.content).gsub!("&nbsp;", ""), :length=>300) %>
+                ... <b><%= link_to "Read More ..", blog_post_path(post.blog,post) %></b>
+              </div>
+            </div> <!-- Entry Ends -->
+          <% end %>
       </div> <!-- End of 9 area -->
-      <div class="span2">
-        Multimedia from Inter-Webs
+<!--     <div class="span2">
+        Videos from YouTube
          <p><img src="http://placehold.it/100x100&text=[img]" /></p>
           <p><img src="http://placehold.it/100x100&text=[img]" /></p>
            <p><img src="http://placehold.it/100x100&text=[img]" /></p>
       </div>
-  </div> <!-- End of Row -->
+ -->  </div> <!-- End of Row -->
 
 
 

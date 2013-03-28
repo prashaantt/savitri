@@ -1,20 +1,21 @@
 class BlogsController < ApplicationController
 
-
 	def home
-		@posts = Blog.find_by_id(1).posts.limit(3)
+	  @posts = Blog.find_by_id(1).posts.limit(3)
 	end
 
 	def latest
+	  @posts = Post.order("created_at").limit(4)
+	  #client = YouTubeIt::Client.new(:dev_key => "AI39si46cUDp-C9EgXCdXZk3zwArq-lZwEDhmscmsAYeQmU-2UOiYXw9LlkmnJw5OyAbtT3-m4VtVcmdUPwN0DJyV4f3ceDFyg")
 	end
 
 	def index
-		 @blogs = current_user.blogs
+	  @blogs = current_user.blogs
 	end
 
 	def show
-	puts params.inspect
-	@posts = Blog.find_by_slug(params[:id]).posts
+	  puts params.inspect
+	  @posts = Blog.find_by_slug(params[:id]).posts
 	end
 
 	def new
