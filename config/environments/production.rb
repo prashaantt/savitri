@@ -65,13 +65,13 @@ Savitri::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.action_mailer.default_url_options = { :host => 'shrouded-sands-9712.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'alpha.savitri.in' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  :address              => "smtp.gmail.com",
+  :address              => "smtp.sendgrid.net",
   :port                 => 587,
-  :user_name            => 'emailsender@kryptonlabs.com',
-  :password             => 'emailsender2a',
+  :user_name            => 'nishantmodak',
+  :password             => 'X0Ro2ai5oyrq',
   :authentication       => 'plain',
   :enable_starttls_auto => true  }
 end

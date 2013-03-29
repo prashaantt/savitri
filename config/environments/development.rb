@@ -38,10 +38,10 @@ Savitri::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  :address              => "smtp.gmail.com",
+  :address              => "smtp.sendgrid.net",
   :port                 => 587,
-  :user_name            => 'emailsender@kryptonlabs.com',
-  :password             => 'emailsender2a',
+  :user_name            => 'nishantmodak',
+  :password             => 'X0Ro2ai5oyrq',
   :authentication       => 'plain',
   :enable_starttls_auto => true  }
 end
