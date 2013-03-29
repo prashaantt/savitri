@@ -18,10 +18,10 @@ class Ability
     if user.role == "Admin"
         can :manage, :all
     else
-        can :read, Post
         if user.role == "Blogger"
            can :read , Post
            can :create, Post
+           can :manage, Blog
            can :update, Post do |p|
                p.blog.user_id == user.id 
            end
@@ -36,6 +36,8 @@ class Ability
            can :destroy, Comment do |c|
                 c.user_id == user.id
             end
+        else
+          can :read, Post
         end
     end
     #
