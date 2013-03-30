@@ -16,7 +16,7 @@ Savitri::Application.routes.draw do
   
   get "/profile/:id" => "users#show", :as => :profile
 
-  get '/blogs/latest' => "blogs#latest"
+  get '/latest-posts' => "posts#latest"
   
 
   get '/search' =>  "lines#index"
