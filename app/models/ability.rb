@@ -31,6 +31,19 @@ class Ability
            can :destroy, Notebook do |n|
             n.user_id == user.id
           end
+          # Blogs
+           can :read , Blog
+           can :create, Blog do |b|
+            b.user_id == user.id
+            User.find(b.user_id).blogs.count < 1
+           end
+           can :update, Blog do |b|
+               b.user_id == user.id 
+           end
+           can :destroy, Blog do |b|
+                b.user_id == user.id 
+           end
+          # Posts
            can :read , Post
            can :create, Post do |p|
             p.blog.user_id == user.id
