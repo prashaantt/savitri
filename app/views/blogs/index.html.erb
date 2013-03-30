@@ -21,6 +21,6 @@
 <% end %>
 <% if current_user.role == 'Admin' && current_user.blogs.count < 3 %>
 	<%= link_to 'New Blog', new_blog_path %>
-<% elsif current_user.blogs.count < 1 %>
+<% elsif current_user.blogs.count < 1 && current_user.role != 'User' %>
 	<%= link_to 'New Blog', new_blog_path %>	
 <% end %>

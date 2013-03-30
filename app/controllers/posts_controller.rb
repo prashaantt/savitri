@@ -58,10 +58,13 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
+    puts params.inspect
     @post = Post.new(params[:post])
-    #@blog=Blog.find_by_slug(params[:post][:blog_id])
+    #@blog=Blog.find_by_slug(params[:post].first[:blog_id])
     #@post.blog_id = @blog.id   
     #@post = @blog.build(params[:post])
+    #@blog = current_user.blogs.build(params[:blog])
+    #@post = @blog.posts.build(params[:post])
     authorize! :create, @post
     respond_to do |format|
       if @post.save
@@ -69,7 +72,10 @@ class PostsController < ApplicationController
         format.html { redirect_to blog_posts_path(@post.blog), notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
-        format.html { render action: "new" }
+        format.html { render 'posts/new'}
+        #format.html { render new_blog_post_path(@post.blog) }
+        #format.html { redirect_to new_blog_post_path(:blog_id => Blog.find_by_id(@slug).slug,) }
+        #format.html { redirect_to blog_posts_path(Blog.find(params[:post][:blog_id])) }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
