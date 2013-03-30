@@ -14,14 +14,27 @@ class Ability
     #
 
     user ||= User.new(:role_id=>4) # guest user (not logged in)
-
+    #@user.role { |role| send(role) }
+    
     if user.role == "Admin"
         can :manage, :all
     else
+        can :read, [Post, Blog, Comment, Notebook]
         if user.role == "Blogger"
+           can :read , Notebook
+           can :create, Notebook do |n|
+            n.user_id == user.id
+           end
+           can :update, Notebook do |n|
+            n.user_id == user.id
+          end
+           can :destroy, Notebook do |n|
+            n.user_id == user.id
+          end
            can :read , Post
-           can :create, Post
-           can :manage, Blog
+           can :create, Post do |p|
+            p.blog.user_id == user.id
+           end
            can :update, Post do |p|
                p.blog.user_id == user.id 
            end
@@ -36,10 +49,8 @@ class Ability
            can :destroy, Comment do |c|
                 c.user_id == user.id
             end
-        else
-          can :read, Post
         end
-    end
+      end
     #
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are
@@ -55,4 +66,38 @@ class Ability
     #
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
   end
-end
+
+#   def Admin
+#     can :manage, :all
+#   end
+
+#   def Blogger
+#     can :create, Blog
+#     can :update, Blog do |b|
+#       b.user_id == @user.id
+#     end
+#     can :destroy, Blog do |b|
+#       b.user_id == @user.id
+#     end
+    
+#     can :create, Post do |p|
+#       p.blog.user_id = @user.id
+#     end
+#     can :update, Post do |p|
+#       p.blog.user_id == @user.id 
+#     end
+#     can :destroy, Post do |p|
+#       p.blog.user_id == @user.id 
+#     end
+    
+#     # Comments Capabilities of a Blogger
+#     can :create, Comment
+#     can :update, Comment do |c|
+#       c.user_id == @user.id
+#     end
+#     can :destroy, Comment do |c|
+#       c.user_id == @user.id
+#     end
+    
+#   end
+ end

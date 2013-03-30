@@ -1,10 +1,10 @@
 class PostsController < ApplicationController
 
   before_filter :store_location
-  before_filter :authenticate_user!, :except => [:show, :index]
-  
-  load_and_authorize_resource
+  before_filter :authenticate_user!, :except => [:show, :index, :latest]
 
+  #load_and_authorize_resource
+  # load_resource / authorize_resource
   # GET /posts
   # GET /posts.json
   def index
@@ -18,6 +18,11 @@ class PostsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @posts }
     end
+  end
+
+  def latest
+    @posts = Post.order("created_at").limit(4)
+    #client = YouTubeIt::Client.new(:dev_key => "AI39si46cUDp-C9EgXCdXZk3zwArq-lZwEDhmscmsAYeQmU-2UOiYXw9LlkmnJw5OyAbtT3-m4VtVcmdUPwN0DJyV4f3ceDFyg")
   end
 
   # GET /posts/1
@@ -34,8 +39,10 @@ class PostsController < ApplicationController
   # GET /posts/new
   # GET /posts/new.json
   def new
-    @post = Post.new 
+    puts params.inspect
+    @post = Post.new(:blog_id=>Blog.find_by_slug(params[:blog_id]).id)
     #logger.info "count is"+@counter.count
+    authorize! :new, @post
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @post }
@@ -45,6 +52,7 @@ class PostsController < ApplicationController
   # GET /posts/1/edit
   def edit
     @post = Post.find(params[:id])
+    authorize! :edit, @post
   end
 
   # POST /posts
@@ -54,7 +62,7 @@ class PostsController < ApplicationController
     #@blog=Blog.find_by_slug(params[:post][:blog_id])
     #@post.blog_id = @blog.id   
     #@post = @blog.build(params[:post])
-
+    authorize! :create, @post
     respond_to do |format|
       if @post.save
         #EmailWorker.perform_async(current_user.id)
@@ -72,6 +80,7 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     @blog=Blog.find_by_slug(params[:post][:blog_id])
+    authorize! :update, @post
     respond_to do |format|
       if @post.update_attributes(params[:post])
         format.html { redirect_to blog_post_path(@post.blog,@post), notice: 'Post was successfully updated.' }
@@ -87,6 +96,7 @@ class PostsController < ApplicationController
   # DELETE /posts/1.json
   def destroy
     @post = Post.find(params[:id])
+    authorize! :destroy, @post
     @post.destroy
 
     respond_to do |format|
