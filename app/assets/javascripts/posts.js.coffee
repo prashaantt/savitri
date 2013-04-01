@@ -55,3 +55,21 @@ $ ->
 		  $(".redactor_editor").append potext
 		  $("#redactor_content").append potext
 		  $("#myModal").modal "hide"
+
+$ ->
+	myTextarea = $('#post_content')
+	editor = new EpicEditor({ textarea: myTextarea} ).load()
+	editor.load ->
+  		$("textarea").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "html")
+	editor.on "save", ->
+  		$("textarea").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "html")
+
+  	#updatePreview = ->
+  	#	document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "html")
+  	#
+	#editor.load updatePreview
+	#editor.on "update", updatePreview
+	#
+	# This should be changed in the CSS.
+	#previewBtn = editor.getElement("wrapper").querySelector(".epiceditor-toggle-preview-btn")
+	#previewBtn.parentNode.removeChild previewBtn
