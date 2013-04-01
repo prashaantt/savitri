@@ -25,3 +25,14 @@ Full-Text-Search with stemming and synonyms
 
 Kill Solr
 kill `ps -ef | grep "ftp" | tr -s " " | cut -d" " -f 2`
+
+
+#unblock smtp port connections. (gmail ec2 smtp)
+
+iptables -I OUTPUT -p tcp --dport 465 -j ACCEPT
+iptables -I OUTPUT -p tcp --dport 587 -j ACCEPT
+
+
+Epic Editor Helpful Links.
+http://jsbin.com/uceyun/1/edit 
+http://jsbin.com/okivow/2/edit
