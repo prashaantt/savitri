@@ -9,8 +9,15 @@
   </div>
   <div class="control-group">
     <%= f.label :content, :class => 'control-label' %>
-    <div class="controls " id="epiceditor">
-      <%= f.text_area :content, :class => 'redactor rowcol', :rows => "100"%>
+    <div class="controls">
+      <div id="epiceditor" , style="height: 400px !important;">
+      </div>
+      <%= f.text_area :content, :style=>"display: none" %>
+      <div id="preview", style="display: none">
+      </div>
+       <!-- <div id="epiceditor", style="height: 400px !important;">
+       </div> -->
+          
     </div>
   </div>
   <div class="control-group">
