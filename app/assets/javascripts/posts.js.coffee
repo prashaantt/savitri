@@ -55,3 +55,8 @@ $ ->
 		  $(".redactor_editor").append potext
 		  $("#redactor_content").append potext
 		  $("#myModal").modal "hide"
+
+
+$ ->
+	$("#new-blog-post").click (e) ->
+	  $("#post_content").html($('.wmd-preview').html())

@@ -12,10 +12,12 @@
     <div class='wmd-panel'>
       <div class="controls">
       <div id='wmd-button-bar'></div>
-      <%= f.text_area :content, :class=> "wmd-input", :id=>"wmd-input" %>
+        <%= f.text_area :md_content, :class=> "wmd-input", :id=>"wmd-input" %>
+        <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+        <%= f.text_area :content, :style=> "display: none" %>        
       </div>
     </div>
-    <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+    
     </div>
   <div class="control-group">
     <%= f.label :tag_list, "Tags (Separated by Commas)",:class => 'control-label' %>
@@ -28,7 +30,7 @@
 </div>
 </div>
 <div class="form-actions">
-  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= f.submit nil, :class => 'btn btn-primary', :id=>"new-blog-post" %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")), blogs_path, :class => 'btn' %>
 </div>
 </div> 
