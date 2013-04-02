@@ -42,8 +42,11 @@ $ ->
 	  	lineto = $("select#post_to :selected").text()
 	  	callback = (response) -> 
 	  			$("#poem-text").empty()
+	  			$("#poem-html").append("<blockquote>")
 	  			$.each response, (val, te) ->
-	  				$("#poem-text").append("<p>" + te.line + "</p>")
+	  				$("#poem-text").append("\r\n >" + te.line + "\r\n")
+	  				$("#poem-html").append("<p>" + te.line + "</p>")
+	  			$("#poem-html").append("</blockquote>")
 
 	  	$.get '/lines/range/'+ linefrom + '-' + lineto, callback, 'json'
 
@@ -51,11 +54,9 @@ $ ->
 $ ->
   	$("#insert_into_post").click (e) ->
 		  e.preventDefault()
-		  potext = $("#poem-text").html()
-		  $(".redactor_editor").append potext
-		  $("#redactor_content").append potext
+		  $("#wmd-input").append $("#poem-text").html()
+		  $("#wmd-preview").append $("#poem-html").html()
 		  $("#myModal").modal "hide"
-
 
 $ ->
 	$("#new-blog-post").click (e) ->
