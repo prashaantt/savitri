@@ -43,7 +43,7 @@ $ ->
 	  	callback = (response) -> 
 	  			$("#poem-text").empty()
 	  			$.each response, (val, te) ->
-	  				$("#poem-text").append("<p>" + te.line + "</p>")
+	  				$("#poem-text").append("\r\n >" + te.line + "\r\n")
 
 	  	$.get '/lines/range/'+ linefrom + '-' + lineto, callback, 'json'
 
@@ -51,18 +51,30 @@ $ ->
 $ ->
   	$("#insert_into_post").click (e) ->
 		  e.preventDefault()
-		  potext = $("#poem-text").html()
-		  $(".redactor_editor").append potext
-		  $("#redactor_content").append potext
+  		editor = new EpicEditor().load()
+		  console.log editor
+		  duetext = editor.exportFile("epiceditor","text")
+		  potext = $("#poem-text").text()
+		  finaltext = duetext + potext
+		  editor.importFile("epiceditor", finaltext)
+		  editor.load ->
+	  		$("#post_content").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "html")
+	  		$("#md_content").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "text")
+		  editor.on "save", ->
+	  		$("#post_content").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "html")
+	  		$("#md_content").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "text")
 		  $("#myModal").modal "hide"
 
 $ ->
-	myTextarea = $('#post_content')
-	editor = new EpicEditor({ textarea: myTextarea} ).load()
-	editor.load ->
-  		$("textarea").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "html")
-	editor.on "save", ->
-  		$("textarea").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "html")
+	if $("#epiceditor").length > 0
+		editor = new EpicEditor().load()
+		editor.importFile(null,$("#md_content").val())
+		editor.load ->
+	  		$("#post_content").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "html")
+	  		$("#md_content").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "text")
+		editor.on "save", ->
+	  		$("#post_content").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "html")
+	  		$("#md_content").val document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "text")
 
   	#updatePreview = ->
   	#	document.getElementById("preview").innerHTML = editor.exportFile("epiceditor", "html")
