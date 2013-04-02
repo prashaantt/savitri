@@ -1,6 +1,20 @@
 // Place all the styles related to the Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#wrapper {
+      width: 620px;
+    }
+ #epiceditor #preview {
+     width: 300px;
+      height: 500px;
+      margin-right: 10px;
+      float: left;
+      background: white;
+    }
+    .clear {
+      clear: both;
+    }
+
 #blog-title{
 	color: blue;
 }

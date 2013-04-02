@@ -1,4 +1,4 @@
-<%= form_for @post, :url => urler,:html => { :class => 'form-horizontal' } do |f| %>
+<%= form_for @post, :url => urler,:html => { :class => 'form-horizontal newpost' } do |f| %>
 <div class="span10">
   <%= f.hidden_field :blog_id, :class=> 'text_field', :value=>@post.blog_id %>
   <div class="control-group">
@@ -9,8 +9,16 @@
   </div>
   <div class="control-group">
     <%= f.label :content, :class => 'control-label' %>
-    <div class="controls " id="epiceditor">
-      <%= f.text_area :content, :class => 'redactor rowcol', :rows => "100"%>
+    <div class="controls">
+      <div id="epiceditor" , style="height: 400px !important;">
+      </div>
+      <%= f.text_area :md_content, :style=>"display: none", :id=>"md_content" %>
+      <%= f.text_area :content, :style=>"display: none", :id=>"post_content" %>
+      <div id="preview", style="display: none">
+      </div>
+       <!-- <div id="epiceditor", style="height: 400px !important;">
+       </div> -->
+          
     </div>
   </div>
   <div class="control-group">
