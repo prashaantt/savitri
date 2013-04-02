@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  attr_accessible :content, :title, :tag_list, :blog_id, :section, :book, :canto, :from, :to
+  attr_accessible :content, :title, :tag_list, :blog_id, :section, :book, :canto, :from, :to, :md_content
   acts_as_taggable	
   belongs_to :blog
   has_many :comments, :dependent => :destroy

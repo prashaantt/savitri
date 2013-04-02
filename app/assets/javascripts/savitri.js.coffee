@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
+  if $("#source").length >0 
 	  	callback = (response) -> 
 	  			text5 = response
 	  			showIntro text5

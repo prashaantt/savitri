@@ -5,6 +5,7 @@ class CreatePosts < ActiveRecord::Migration
       t.references :blog
       t.string :title, :null => false
       t.text :content
+      t.text :md_content
 
       t.timestamps
     end
