@@ -2,8 +2,42 @@
 p.quote {
 	color: CornflowerBlue;
 }
-.sav-content p, .sav-content ul, .sav-content ol, .sav-content table, .sav-content dl, .sav-content blockquote, .sav-content pre {
+.sav-content ul, .sav-content ol, .sav-content table, .sav-content dl, .sav-content pre {
 	line-height: 1.5em !important;
 	font-family: Arial, Helvetica, Verdana, Tahoma, sans-serif !important;
 	font-size: 15px !important;
+}
+
+.sav-content blockquote {
+    font-family: AvenirNextLTW02-Italic;
+    margin-bottom: 1em;
+}
+
+.sav-content h1 {
+    margin-bottom: 0.2em;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 32px;
+    line-height: 50px;
+    font-family: 'Futura W01 Medium';
+}
+
+.sav-content h2 {
+    line-height: 25px;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.sav-content h5 {
+    margin-bottom: 1em;
+    font-family: 'ITC Garamond W01 Light';
+    font-size: 14px;
+}
+
+.sav-content p {
+	font-size: 16px;
+    line-height: 25px;
+    margin-bottom: 1em;
+    font-family: 'ITC Garamond W01 Light';
+    text-align: justify;
 }
