@@ -37,20 +37,14 @@
 <% end %>
     <script type="text/javascript">
         (function () {
-            var converter1 = Markdown.getSanitizingConverter();
+            var converter1 =  new Markdown.Converter();
+
+             converter1.hooks.chain("postConversion", function (text) {
+                 return text.replace('<blockquote>','<blockquote class="quotable">');
+              });
             var editor = new Markdown.Editor(converter1);
             editor.run();
-            editor.hooks.set("insertImageDialog", function (callback) {
-            alert("Please click okay to start scanning your brain...");
-            setTimeout(function () {
-              var prompt = "We have detected that you like cats. Do you want to insert an image of a cat?"; 
-              if (confirm(prompt))
-                callback("https://si0.twimg.com/profile_images/3132381314/a5adb1e8104f1343037b67ebebca22c2_normal.jpeg")
-              else
-                callback(null);
-            }, 2000);
-        return true; // tell the editor that we'll take care of getting the image url
-        });
+            
          var help = function () { alert("Do you need help?"); }
             
         })();

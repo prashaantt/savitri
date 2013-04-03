@@ -9,7 +9,7 @@
       <%= yield :head %> 
       <%= stylesheet_link_tag    "application", :media => "all" %>
       <%= javascript_include_tag "application" %>
-      <link type="text/css" rel="stylesheet" href="http://fast.fonts.com/cssapi/381214a9-5afb-4d5e-a767-3f2bc47454e9.css"/>
+      <script type="text/javascript" src="http://fast.fonts.com/jsapi/381214a9-5afb-4d5e-a767-3f2bc47454e9.js"></script>
       <%  if params[:controller].to_s == 'read' %>
         <% unless current_user.nil? %>
           <script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>

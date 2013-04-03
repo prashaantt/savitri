@@ -16,8 +16,8 @@
   </div>
   <div class="span9" role="content" id="redactor_content">
     <article>
-      <h3><a href="#"><%= link_to @post.title,  blog_post_path(@post.blog,@post) %></a></h3>
-      <h6><i><%= link_to @post.blog.user.username, @post.blog.user %></i></h6>
+      <h2><a href="#"><%= link_to @post.title,  blog_post_path(@post.blog,@post) %></a></h2>
+      <h6 class="blog"><%= link_to @post.blog.user.username, @post.blog.user %></h6>
       <div class="row">
         <div class="span9">
           <%= @post.content.html_safe.gsub(/\r\n?/,"").html_safe %>                 
@@ -64,10 +64,5 @@
     <% end %>
   </div>
   <br/>
-  <div class="panel">
-    <h5>Featured</h5>
-    <p>What it takes to truly Know: For nothing is known while aught remains concealed; The Truth is known only when all is seen. ~Savitri</p>
-    <a href="https://twitter.com/SavitriForever/">SavitriForever</a> 
-  </div>
 </div>
 <!--  SideBar End -->
