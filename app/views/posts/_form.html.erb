@@ -9,22 +9,43 @@
   </div>
   <div class="control-group">
     <%= f.label :content, :class => 'control-label' %>
-    <div class="controls " id="epiceditor">
-      <%= f.text_area :content, :class => 'redactor rowcol', :rows => "100"%>
+    <div class='wmd-panel'>
+      <div class="controls">
+      <div id='wmd-button-bar'></div>
+        <%= f.text_area :md_content, :class=> "wmd-input", :id=>"wmd-input" %>
+        <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+        <%= f.text_area :content, :style=> "display: none" %>        
+      </div>
     </div>
-  </div>
+    </div>
   <div class="control-group">
     <%= f.label :tag_list, "Tags (Separated by Commas)",:class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :tag_list, :class => 'text_area' %>
     </div>
   </div>
+   
+   <hr />
 </div>
 </div>
 <div class="form-actions">
-  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= f.submit nil, :class => 'btn btn-primary', :id=>"new-blog-post" %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")), blogs_path, :class => 'btn' %>
 </div>
 </div> 
 </div>
 <% end %>
+    <script type="text/javascript">
+        (function () {
+            var converter1 =  new Markdown.Converter();
+
+             converter1.hooks.chain("postConversion", function (text) {
+                 return text.replace('<blockquote>','<blockquote class="quotable">');
+              });
+            var editor = new Markdown.Editor(converter1);
+            editor.run();
+            
+         var help = function () { alert("Do you need help?"); }
+            
+        })();
+    </script>

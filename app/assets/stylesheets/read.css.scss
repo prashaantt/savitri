@@ -1,15 +1,15 @@
 // Place all the styles related to the read controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.readsavitri p{
-font-family: 'Play', sans-serif;
-font-size: 15px;
-line-height: 20px;
-}
+//.readsavitri p{
+//font-family: 'Play', sans-serif;
+//font-size: 15px;
+//line-height: 20px;
+//}
 
-h2 {
-	font-family: 'Courgette', cursive;
-}
+//h2 {
+//	font-family: 'Courgette', cursive;
+//}
 
 //.apiparam:before {
 //	content: "||";
@@ -26,4 +26,10 @@ h2 {
 -moz-user-select: none;
 -ms-user-select: none;
 user-select: none;
+}
+
+p {
+    margin-bottom: 1em;
+    font-family: AvenirNextLTW02-Regular;
+    font-size: 16px;
 }

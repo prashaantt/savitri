@@ -1,14 +1,14 @@
 body {
   background-color: #fff;
   color: #333;
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
+  font-family: 'ITC Garamond W01 Light', arial, helvetica, sans-serif;
+  font-size: 16px;
   line-height: 18px;
 }
 
 p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
+  font-family: 'ITC Garamond W01 Light', arial, helvetica, sans-serif;
+  font-size: 14px;
   line-height: 18px;
 }
 
@@ -19,14 +19,15 @@ pre {
 }
 
 a {
+  font-family: 'AvenirNextLTW01-Regular';
   color: #000;
   &:visited {
     color: #666;
   }
   &:hover {
-    color: #fff;
-    background-color: #000;
-  }
+   color: #000;
+   background-color: #eee;
+ }
 }
 
 div {

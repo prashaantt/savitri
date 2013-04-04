@@ -2,8 +2,60 @@
 p.quote {
 	color: CornflowerBlue;
 }
-.sav-content p, .sav-content ul, .sav-content ol, .sav-content table, .sav-content dl, .sav-content blockquote, .sav-content pre {
+.sav-content ul, .sav-content ol, .sav-content table, .sav-content dl, .sav-content pre {
 	line-height: 1.5em !important;
 	font-family: Arial, Helvetica, Verdana, Tahoma, sans-serif !important;
 	font-size: 15px !important;
+}
+
+.sav-content h1 {
+    font-size: 3.375em;
+    line-height: 1em;
+    margin-bottom: .5em;
+    font-style: normal;
+    font-weight: 500;
+    font-family: "Futura W01 Medium";
+}
+
+.sav-content h2, h2 a {
+    font-size: 1.33em;
+    line-height: 1.33em;
+    margin-bottom: .67em;
+    font-style: normal;
+    font-weight: 500;
+    font-family: "Futura W01 Medium";
+}
+
+.sav-content h5 {
+    margin-bottom: 1em;
+    font-family: 'ITC Garamond W01 Light';
+    font-size: 14px;
+}
+
+.sav-content p {
+    line-height: 1.5em;
+    margin-bottom: .75em;
+    font-family: "ITC Garamond W01 Light";
+    text-align: justify;
+    font-size: 1.125em;
+}
+
+blockquote .sav-content p {
+  font-family: AvenirNextLTW02-Italic;
+  margin-bottom: .75em;
+  font-size: 1.125em;
+  line-height: 1.5em;
+}
+
+h6.blog {
+  font-weight: 500;
+  font-style: normal;
+  margin-bottom: 1em;
+  font-size: 1.125em;
+  line-height: 1.5em;
+  font-family: "Futura W01 Light";
+}
+
+div#redactor_content, div.span9 {
+  width: 640px;
 }
