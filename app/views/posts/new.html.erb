@@ -18,21 +18,24 @@
               	$('#fileModal').modal();
                 $("#insert_image_post").click(function(e) {
                   e.preventDefault();
-                  if($(".preview").lenght>0){
-                    var images;
-                    $(".upload-photo").each(function(){
-                        images = ""+($(this).filter("[src]").attr("src"));
-                    })
-                    callback(images);
+                  if($(".upload-photo").length>0)
+                    {
+                       var images;
+                       $(".upload-photo").each(function(){
+                           images = "" + ($(this).filter("[src]").attr("src"));
+                       })
+                      callback(images);
+                     $('#upload_photo').fileupload();
+                    }
+                  else {
+                    var image=$("#img-url").val();
+                    callback(image);
+                    $("#img-url").val('');
                   }
-                  else{
-                    callback(""+$(".img-url").val());
-                  }
-
 
                   $("#fileModal").modal('hide');
                  });
-              }, 2000);
+              }, 0);
               return true; // tell the editor that we'll take care of getting the image url
           });
 
