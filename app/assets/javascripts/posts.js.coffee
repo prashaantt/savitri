@@ -61,7 +61,8 @@ $ ->
 $ ->
 	$("#new-blog-post").click (e) ->
 	  $("#post_content").html($('.wmd-preview').html())
-		  potext = $("#poem-text").html()
-		  $(".redactor_editor").append potext
-		  $("#redactor_content").append potext
-		  $("#myModal").modal "hide"
+	  potext = $("#poem-text").html()
+	  $(".redactor_editor").append potext
+	  $("#redactor_content").append potext
+	  $("#myModal").modal "hide"
+
