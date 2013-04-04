@@ -36,3 +36,6 @@ iptables -I OUTPUT -p tcp --dport 587 -j ACCEPT
 Epic Editor Helpful Links.
 http://jsbin.com/uceyun/1/edit 
 http://jsbin.com/okivow/2/edit
+
+
+https://blog.snipt.net/embed-youtube-videos-into-your-markdown-flavored-snipts/
