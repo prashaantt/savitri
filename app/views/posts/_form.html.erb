@@ -53,8 +53,6 @@
                 e.preventDefault();
                 text = $("#poem-text").text();
                 mdbox = $("#wmd-input");
-                alert("mdbox"+mdbox.val());
-                alert("text"+text);
                 mdbox.val(mdbox.val() + text);
                 $("#poem-text").text('');
                 $("#myModal").modal("hide");
