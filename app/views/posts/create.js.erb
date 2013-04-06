@@ -1,0 +1,5 @@
+<% if @post.new_record? %>
+  alert("Failed to upload post: <%= j @post.errors.full_messages.join(', ').html_safe %>");
+<% else %>
+  $("#posts").append("<%= j render(@post) %>");
+<% end %>

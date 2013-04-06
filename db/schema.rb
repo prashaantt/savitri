@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 15) do
+ActiveRecord::Schema.define(:version => 20130403135306) do
 
   create_table "blogs", :force => true do |t|
     t.integer  "user_id"
@@ -93,6 +93,8 @@ ActiveRecord::Schema.define(:version => 15) do
     t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.text     "md_content"
+    t.string   "photos"
   end
 
   create_table "redactor_assets", :force => true do |t|
@@ -148,6 +150,13 @@ ActiveRecord::Schema.define(:version => 15) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "uploads", :force => true do |t|
+    t.integer  "post_id"
+    t.string   "photo"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
