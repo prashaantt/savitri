@@ -2,14 +2,23 @@ body {
   background-color: #fff;
   color: #333;
   font-family: 'ITC Garamond W01 Light', arial, helvetica, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 18px;
 }
 
 p, ol, ul, td {
-  font-family: 'ITC Garamond W01 Light', arial, helvetica, sans-serif;
-  font-size: 14px;
+  font-family: 'AvenirNextLTW01-Regular', arial, helvetica, sans-serif;
+  font-size: 15px;
   line-height: 18px;
+}
+
+p.announce {
+  font-size: 24px;
+  font-family: 'Futura W01 Medium';
+}
+
+span.ref {
+  float:right;
 }
 
 pre {
