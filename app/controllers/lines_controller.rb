@@ -32,10 +32,16 @@ class LinesController < ApplicationController
     #@lines = Line.where(:no=> params[:id])
     line_range = params[:id].split("-")
     @lines = Line.where(:no=>line_range[0]..line_range[1])
-
+    line_op = Hash.new
+    @lines.each do |l|
+      #@lines[l.stanza.no] = l.stanza.section.to_s + "." + l.stanza.runningno.to_s
+      #Section.find(@sentence.section).no.to_s + "." + @sentence.runningno.to_s
+    end
     respond_to do |format|
       format.html #range.html.erb
-      format.json { render json: @lines }
+      #format.json { render json: @lines }
+      format.json {render :json => @lines.to_json(:only =>[:line, :stanza_id],:methods=>[:section,:runningno,:share_url])}
+      #format.json {render :json => {:lines => @lines, :marker => line_op }}
     end
   end
 

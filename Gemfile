@@ -27,6 +27,7 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
   gem 'twitter-bootstrap-rails', '2.1.3'
   gem 'uglifier', '>= 1.0.3'
+  gem 'jquery-fileupload-rails'
 end
 
 gem 'jquery-rails', '2.1.3'
