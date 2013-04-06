@@ -12,12 +12,21 @@ p, ol, ul, td {
   line-height: 18px;
 }
 
+p.result {
+  font-family: 'AvenirNextLTW01-Regular', arial, helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 22px;
+}
+
 p.announce {
   font-size: 24px;
   font-family: 'Futura W01 Medium';
 }
 
 span.ref {
+  font-family: 'AvenirNextLTW01-Regular', arial, helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 18px;
   float:right;
 }
 
