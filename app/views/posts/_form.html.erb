@@ -39,7 +39,7 @@
         (function () {
             var converter = new Markdown.Converter();
             var help = function () { window.open('http://stackoverflow.com/editing-help'); }
-            var editor = new Markdown.Editor(converter, null, { handler: help });
+            var editor = new Markdown.Editor(converter);
             converter.hooks.chain("postConversion", function (text) {
                  return text.replace('<blockquote>','<blockquote class="quotable">');
               });
