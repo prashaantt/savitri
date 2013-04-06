@@ -24,7 +24,7 @@
 				<p>
 					<% if l.is_a?(Line) %>
 						<%= l.line %>
-						<span class="ref">||<%= Stanza.find(l.stanza_id).section_id %>.<%= l.stanza_id %>||</span>
+						<span class="ref">||<%= Stanza.find(l.stanza_id).section_id %>.<%= l.runningno %>||</span>
 					<% else %>
 						<% if l.is_a?(Book) %>
 						(Book <%= l.no %>) <%= l.name %>
@@ -39,7 +39,7 @@
 										<br>
 									<% end %>
 								<% end %>
-								<span class="ref">||<%= l.section %>.<%= l.no %> ||</span>
+								<span class="ref">||<%= l.section %>.<%= l.runningno %>||</span>
 							</p>
 							<% end %>
 						<% end %>
