@@ -24,21 +24,22 @@
 				<p>
 					<% if l.is_a?(Line) %>
 						<%= l.line %>
-						&nbsp;
-						<span class="ref">||<%= Stanza.find(l.stanza_id).section_id %>.<%= l.no %>||</span>
+						<span class="ref">||<%= Stanza.find(l.stanza_id).section_id %>.<%= l.stanza_id %>||</span>
 					<% else %>
 						<% if l.is_a?(Book) %>
 						(Book <%= l.no %>) <%= l.name %>
 						<% else %>
 							<% if l.is_a?(Stanza) %>
-							<p>
+							<% count = 0 %>
+							<p class="result">
 								<% l.lines.each_with_index do |line, index| %>
-									<p>
-										<%= line.line %>
-										&nbsp;
-										<span class="ref">||<%= l.section %>.<%= line.no %>||</span>
-									</p>
+									<% (count += 1) %>
+									<%= line.line %>
+									<% if count < l.length.to_i %>
+										<br>
+									<% end %>
 								<% end %>
+								<span class="ref">||<%= l.section %>.<%= l.no %> ||</span>
 							</p>
 							<% end %>
 						<% end %>
