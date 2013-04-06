@@ -16,17 +16,16 @@
 	<div class="span5">
 		<% unless params[:q].nil? %>
 			<% unless @search.nil? %>
-			<p><b>Total results <%= @search.total %></b></p>
+			<p class="announce">Total results: <%= @search.total %></p>
 			<% end %>
 			<div class="results" style="font-size: 18px">
 				<% @search.each_hit_with_result do |hit,l| %>
 				<% logger.debug { l.inspect }%>
 				<p>
 					<% if l.is_a?(Line) %>
-									||<%= Stanza.find(l.stanza_id).section_id %>.<%= l.no %>||
-					&nbsp;
-
 						<%= l.line %>
+						&nbsp;
+						<span class="ref">||<%= Stanza.find(l.stanza_id).section_id %>.<%= l.no %>||</span>
 					<% else %>
 						<% if l.is_a?(Book) %>
 						(Book <%= l.no %>) <%= l.name %>
@@ -34,11 +33,11 @@
 							<% if l.is_a?(Stanza) %>
 							<p>
 								<% l.lines.each_with_index do |line, index| %>
-									<p> 
-										
-											||<%= l.section %>.<%= line.no %>||
-											&nbsp;										
-										<%= line.line %> </p>
+									<p>
+										<%= line.line %>
+										&nbsp;
+										<span class="ref">||<%= l.section %>.<%= line.no %>||</span>
+									</p>
 								<% end %>
 							</p>
 							<% end %>
