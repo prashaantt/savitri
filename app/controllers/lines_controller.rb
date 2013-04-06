@@ -75,22 +75,27 @@ class LinesController < ApplicationController
     stanznu = Stanza.last.no + 1
     section_no = Section.last.no + 1
     logger.info '----create new section---'
+    runningnum = 1
     @section = Section.new(:no=>section_no, :canto_id =>Section.last.canto_id)
     @section.save
-    @stan = Stanza.new(:no=>stanznu, :section_id=>section_no)
+    @stan = Stanza.new(:no=>stanznu, :section_id=>section_no, :runningno=>runningnum)
+    runningnum=runningnum+1
     @stan.save
     @line_arr = params[:line][:line].to_s.split("\r\n")
+    
     @line_arr.each_with_index do |l, index|
       logger.info l
       logger.info '----check full-stop---'
-      if l.include? "."
+      l=l.strip
+      if l.match(/[\.\?\!]$/)
         num=num+1
         @line = Line.new(:no=>num,:line=>l,:stanza_id=>stanznu)
         @line.save
         logger.info "--created new stanza--"
         if(index!=@line_arr.length-1)
           stanznu = stanznu + 1
-          @stan2=Stanza.new(:no=>stanznu, :section_id=>section_no)
+          @stan2=Stanza.new(:no=>stanznu, :section_id=>section_no,:runningno=>runningnum)
+          runningnum=runningnum+1
           @stan2.save
         end
       else

@@ -1,5 +1,5 @@
 class Stanza < ActiveRecord::Base
-  attr_accessible :no, :section_id
+  attr_accessible :no, :section_id, :runningno
   has_many :lines, :order => 'no'
   belongs_to :section
 
