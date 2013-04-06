@@ -11,4 +11,13 @@ module ApplicationHelper
   		end
   		link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n","")})
   	end
+
+    def page_no(sentence)
+       if sentence%4 == 0
+        page_no = (sentence)/4
+       else
+        page_no = (sentence)/4 + 1
+      end
+      page_no
+    end
 end
