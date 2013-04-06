@@ -1,0 +1,7 @@
+<div class="photo">
+  <%= link_to image_tag(upload.photo_url(:thumb),:class=>"upload-photo"), upload if upload.photo? %>
+<!--   <div class="actions">
+    <%= link_to "edit", edit_upload_path(upload) %> |
+    <%= link_to "remove", upload, :confirm => 'Are you sure?', :method => :delete %>
+  </div> -->
+</div>

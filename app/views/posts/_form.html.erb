@@ -1,4 +1,4 @@
-<%= form_for @post, :url => urler,:html => { :class => 'form-horizontal' } do |f| %>
+<%= form_for @post, :url => urler,:html => {:multipart=>true,  :class => 'form-horizontal' } do |f| %>
 <div class="span10">
   <%= f.hidden_field :blog_id, :class=> 'text_field', :value=>@post.blog_id %>
   <div class="control-group">
@@ -9,22 +9,83 @@
   </div>
   <div class="control-group">
     <%= f.label :content, :class => 'control-label' %>
-    <div class="controls " id="epiceditor">
-      <%= f.text_area :content, :class => 'redactor rowcol', :rows => "100"%>
+    <div class='wmd-panel'>
+      <div class="controls">
+      <div id='wmd-button-bar'></div>
+        <%= f.text_area :md_content, :class=> "wmd-input", :id=>"wmd-input" %>
+        <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+        <%= f.text_area :content, :style=> "display: none" %>        
+      </div>
     </div>
-  </div>
+    </div>
   <div class="control-group">
     <%= f.label :tag_list, "Tags (Separated by Commas)",:class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :tag_list, :class => 'text_area' %>
     </div>
   </div>
+   <hr />
 </div>
 </div>
 <div class="form-actions">
-  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= f.submit nil, :class => 'btn btn-primary', :id=>"new-blog-post" %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")), blogs_path, :class => 'btn' %>
 </div>
-</div> 
+</div>
+ 
 </div>
 <% end %>
+<script type="text/javascript">
+        (function () {
+            var converter = new Markdown.Converter();
+            var help = function () { window.open('http://stackoverflow.com/editing-help'); }
+            var editor = new Markdown.Editor(converter, null, { handler: help });
+            converter.hooks.chain("postConversion", function (text) {
+                 return text.replace('<blockquote>','<blockquote class="quotable">');
+              });
+            editor.hooks.chain("postBlockquoteCreation", function (text) {
+              setTimeout(function () {
+              if (!/^>/.test(text))
+                  return text; // the blockquote button was clicked to remove a blockquote -- no change
+
+              $("#myModal").modal();
+              $("#insert_into_post").click(function(e){
+                e.preventDefault();
+                text = $("#poem-text").text();
+                mdbox = $("#wmd-input");
+                mdbox.val(mdbox.val() + text);
+                $("#poem-text").text('');
+                $("#myModal").modal("hide");
+              });
+              }, 0);
+              return ""
+            });
+            editor.hooks.set("insertImageDialog", function (callback) {
+              setTimeout(function () {
+                $('#fileModal').modal();
+                $("#insert_image_post").click(function(e) {
+                  e.preventDefault();
+                  if($(".upload-photo").length>0)
+                    {
+                       var images;
+                       $(".upload-photo").each(function(){
+                           images = "" + ($(this).filter("[src]").attr("src"));
+                       })
+                      callback(images);
+                     $('#upload_photo').fileupload();
+                    }
+                  else {
+                    var image=$("#img-url").val();
+                    callback(image);
+                    $("#img-url").val('');
+                  }
+
+                  $("#fileModal").modal('hide');
+                 });
+              }, 0);
+              return true; // tell the editor that we'll take care of getting the image url
+          });
+
+            editor.run();
+        })();
+    </script>

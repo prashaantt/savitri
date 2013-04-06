@@ -29,6 +29,25 @@ class Line < ActiveRecord::Base
     self.class.name + "s"
   end
 
+  def runningno
+    stanza.runningno
+  end
+
+  def share_url
+    #$("#poem-text").append("||"+te.section+"."+te.runningno+"||\r\n")
+    text = "/read/"+canto.to_s+"?pages="+page_no(stanza.no).to_s+"#"+section.to_s+"."+runningno.to_s
+    #link_to read_path(stanza)
+  end
+
+  def page_no(sentence)
+   if sentence%4 == 0
+    page_no = (sentence)/4
+   else
+    page_no = (sentence)/4 + 1
+  end
+  page_no
+  end
+
   def section
     Section.find(Stanza.find(self.stanza_id).section_id).no
   end

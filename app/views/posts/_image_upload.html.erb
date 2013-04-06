@@ -1,0 +1,37 @@
+<%= form_for Upload.new, :url => uploads_path , :html => { :class => 'form-inline' } do |f| %>
+<!-- Modal -->
+<div id="fileModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="fileModalLabel">Upload Images</h3>
+	</div>
+	<div class="modal-form">
+		<div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab1" data-toggle="tab">Upload</a></li>
+				<li><a href="#tab2" data-toggle="tab">Enter URL</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab1">
+					<%= f.file_field :photo %>
+					<div class="preview" id="preview" >
+					</div>
+					<script id="template-upload" type="text/x-tmpl">
+						<div class="upload">
+						  {%=o.name%}
+						  <div class="progress"><div class="bar" style="width: 0%"></div></div>
+						</div>
+					</script>
+				</div>
+				<div class="tab-pane" id="tab2">
+					<p><input type="text" class="img-url" placeholder="Ex: http://yoursite.com/image.jpg" id="img-url" /></p>
+				</div>
+			</div>
+		</div>
+	</div> <!-- End of Modal-Body -->
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		<button class="btn" id="insert_image_post">Insert Image</button>
+	</div>
+</div>
+<% end %>
