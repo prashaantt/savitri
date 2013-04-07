@@ -1,14 +1,12 @@
 class LinesController < ApplicationController
   # GET /lines
   # GET /lines.json
-  load_and_authorize_resource
+  #load_and_authorize_resource
+  before_filter :authenticate_user!, :except => [:range]
   
   def index
     @lines = Line.order(:no).page(params[:lines]).per(10)
-
-    text = "this is a text containing no new-line
-             this contains a new line nism"
-    
+    authorize! :index, @lines
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @lines }
@@ -19,7 +17,7 @@ class LinesController < ApplicationController
   # GET /lines/1.json
   def show
     @line = Line.find_by_no(params[:id])
-
+    authorize! :index, @line
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @line }
@@ -49,6 +47,7 @@ class LinesController < ApplicationController
   # GET /lines/new.json
   def new
     @line = Line.new
+    authorize! :new, @line
 
     respond_to do |format|
       format.html # new.html.erb
@@ -59,6 +58,7 @@ class LinesController < ApplicationController
   # GET /lines/1/edit
   def edit
     @line = Line.find_by_no(params[:id])
+    authorize! :edit, @line
   end
 
   # POST /lines
@@ -107,6 +107,7 @@ class LinesController < ApplicationController
     logger.info '------------------------endcreate---------------------'
     #--editEnd
     #@line = Line.new(params[:line])
+    authorize! :create, @line
     respond_to do |format|
       if @line.save
         format.html { redirect_to @line, notice: 'Line was successfully created.' }

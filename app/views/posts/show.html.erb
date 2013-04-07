@@ -41,12 +41,13 @@
 <!-- Main Blog Content End -->
 <!--  SideBar Begin -->
 <div class="span2">
-  <% if can? :create, Post %>
+  <% @blog = Blog.find_by_slug(params[:blog_id]) %>
+  <% if can? :update, @blog %>
   <h3>Manage Blog</h3>
   <p><%= link_to 'New Post', new_blog_post_path,
     :class => 'btn' %></p>
   <% end %>
- <% if can? :update, @post %>
+ <% if can? :destroy, @post.blog %>
  <p> <%= link_to 'Edit Post', edit_blog_post_path(@post.blog,@post), :class => 'btn' %></p>
  <% end %>
  <% if can? :destroy, @post %>

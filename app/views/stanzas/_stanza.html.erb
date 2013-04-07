@@ -1,4 +1,4 @@
-<p id="<%= Section.find(stanza.section).no %>.<%= stanza.no %>">
+<p id="<%= Section.find(stanza.section).no %>.<%= stanza.runningno %>">
 <% stanza.lines.each_with_index do |lin,index| %> 
  <div id=<%= lin.id %>>	<%= lin.line %> 
  	 <% if stanza.lines.count - 1 == index %>

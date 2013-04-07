@@ -24,7 +24,10 @@
 				<p>
 					<% if l.is_a?(Line) %>
 						<%= l.line %>
-						<span class="ref">||<%= Stanza.find(l.stanza_id).section_id %>.<%= l.runningno %>||</span>
+						<span class="ref">
+						<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
+								<%= link_to "||"+anchor_t+"||", l.share_url  %>
+								</span>
 					<% else %>
 						<% if l.is_a?(Book) %>
 						(Book <%= l.no %>) <%= l.name %>
@@ -39,7 +42,10 @@
 										<br>
 									<% end %>
 								<% end %>
-								<span class="ref">||<%= l.section %>.<%= l.runningno %>||</span>
+								<span class="ref">
+								<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
+								<%= link_to "||"+anchor_t+"||", "/read/"+l.canto.to_s+"?pages="+page_no(l.no).to_s+"#"+l.section.to_s+"."+l.runningno.to_s   %>
+								</span>
 							</p>
 							<% end %>
 						<% end %>
