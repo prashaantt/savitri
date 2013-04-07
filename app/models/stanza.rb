@@ -51,4 +51,8 @@ class Stanza < ActiveRecord::Base
   #   Stanza.find(self.no).lines
   # end
 
+  def share_url
+        
+  end
+
 end
