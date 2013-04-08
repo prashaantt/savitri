@@ -63,6 +63,9 @@
             editor.hooks.set("insertImageDialog", function (callback) {
               setTimeout(function () {
                 $('#fileModal').modal();
+                // $('#preview').empty();
+                $(".photo").remove();
+                $("#img-url").val('');
                 $("#insert_image_post").click(function(e) {
                   e.preventDefault();
                   if($(".upload-photo").length>0)
@@ -71,15 +74,14 @@
                        $(".upload-photo").each(function(){
                            images = "" + ($(this).filter("[src]").attr("src"));
                        })
+                      alert(images);
                       callback(images);
                      $('#upload_photo').fileupload();
                     }
                   else {
                     var image=$("#img-url").val();
                     callback(image);
-                    $("#img-url").val('');
                   }
-
                   $("#fileModal").modal('hide');
                  });
               }, 0);
