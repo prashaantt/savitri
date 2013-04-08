@@ -31,10 +31,11 @@ after "deploy:update_code", :bundle_install
 	task :bundle_install, :roles => :app do
 		run "cd #{release_path} && ~/bin/bundle install"
 		run "cd #{release_path} && ~/bin/rake assets:precompile"
+		run "ln -nfs #{shared_path}/uploads  #{release_path}/public/uploads"
 		#run "cd #{release_path} && bundle exec unicorn -c #{release_path}/config/unicorn.rb -D -E production -p 3000"
 		#run "cd #{release_path} && rake sunsport:solr:stop"
 		#run "cd #{release_path} && rake sunsport:solr:start"
-end
+	end
 
 after "deploy:update", "newrelic:notice_deployment"
 # desc "Zero-downtime restart of Unicorn"
