@@ -31,7 +31,7 @@
      <h6><i><%= link_to post.blog.user.username, post.blog.user %></i></h6>
      <div class="row">
       <div class="span9">
-        <%= post.content.html_safe.gsub(/\r\n?/,"").html_safe %>
+        <%= post.content.html_safe.gsub(/\r\n?/,"").split(" ").first(200).join(" ").html_safe %> ... <%= link_to "Continue reading", blog_post_path(post.blog,post) %>
       </div>
     </div>
   </article>
@@ -39,6 +39,9 @@
   </comments>
   <hr/>
   <% end %>
+  <div id="paginator">
+  <%= paginate @posts, :param_name => :page %>
+</div>
 </div>
 <!-- Main Blog Content End -->
 <!--  SideBar Begin -->
