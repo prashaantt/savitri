@@ -2,8 +2,10 @@
 <html>
 <head>
   <title>Savitri</title>
-  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
+      <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+     <!--[IF IE]>
+     <![endif]-->
+      <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
       <![endif]-->
       <%= yield :head %> 
@@ -28,9 +30,21 @@
             <span class="icon-bar"></span>
           </a>
           <a class="brand" href="/">Savitri</a>
+
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="<%=is_active 'read' %>"><a href="/read/1">Read Savitri</a></li>  
+              <li class="<%=is_active 'read' %>"><a href="/read/1">The Book</a></li>  
+              <li class="dropdown" id="Resources">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Media Center
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#"><span class="icon-user"></span>Library</a></li>
+                  <li><a href="#"><i class="icon-facetime-video"></i> Presentations</a></li>
+                  <li><a href="#"><i class="icon-music"></i> Audio</a></li>
+                  <li><a href="#"><i class="icon-picture"></i> Themes</a></li>
+                </ul>
+              </li>
               <li class="dropdown" id="Blogs">
                 <a href="/latest-posts">Blogs
                   <span class="caret"></span>
@@ -39,15 +53,6 @@
                   <li><a href="/blogs/light-of-supreme/posts/">The Light of the Supreme</a></li>
                   <li><a href="/blogs/parasya-jyotih/posts">Parasya Jyotih (परस्य ज्योतिः)</a></li>
                   <li><a href="/blogs/mirror/posts">Mirror</a></li>
-                </ul>
-              </li>
-              <li class="dropdown" id="Resources">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Resources
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Themes</a></li>
-                  <li><a href="#">Presentations</a></li>
                 </ul>
               </li>
               <li><a href="#about">About</a></li>      
