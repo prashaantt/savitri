@@ -1,23 +1,17 @@
-
 <div class="form-actions">
-
-<p>
-  <%  user = User.find(comment.user_id) %>
-  <%=link_to user.name , profile_path(user) %> <i>commented as</i>
-</p>
- 
-<p>
+ <p>
+  <% user = User.find(comment.user_id) %>
+  <%= link_to user.name , profile_path(user) %> <i>commented as</i>
+ </p>
+  <p>
   <%= comment.body %>
-</p>
-
-<p>
+  </p>
+  <p>
    on <%= comment.updated_at %>
-</p>
-
-
-<% if can? :destroy, comment %>
-  <%= link_to 'Destroy Comment', [comment.post, comment],
-               :confirm => 'Are you sure?',
-               :method => :delete %>  
-  </div>
+  </p>
+  <% if can? :destroy, comment %>
+	<%= link_to 'Remove Comment', [comment.post, comment],
+	:confirm => 'Are you sure?',
+	:method => :delete %>  
+</div>
 <% end %>
