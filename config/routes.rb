@@ -1,4 +1,6 @@
 Savitri::Application.routes.draw do
+  ActiveAdmin.routes(self)
+
   get "search/index"
 
   get "search/results"

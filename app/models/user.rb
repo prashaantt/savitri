@@ -41,4 +41,8 @@ class User < ActiveRecord::Base
   def role?(user)
     Role.find_by_id(self.role_id).name
   end
+
+  def is_admin?
+    true if role_id == 1
+  end
 end
