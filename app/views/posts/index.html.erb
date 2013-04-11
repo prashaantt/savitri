@@ -6,6 +6,7 @@
     <h1 class="blog-title">
       <% @blog = Blog.find_by_slug(params[:blog_id]) %>
       <%= link_to @blog.title, blog_posts_path %>
+      <small><%=  @blog.subtitle %></small>
     </h1><hr/>
   </div>
 </div>
