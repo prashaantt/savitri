@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130412075146) do
+ActiveRecord::Schema.define(:version => 17) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -105,6 +105,8 @@ ActiveRecord::Schema.define(:version => 20130412075146) do
   create_table "pages", :force => true do |t|
     t.string   "name"
     t.string   "permalink"
+    t.integer  "priority"
+    t.string   "category"
     t.text     "content"
     t.text     "md_content"
     t.datetime "created_at", :null => false

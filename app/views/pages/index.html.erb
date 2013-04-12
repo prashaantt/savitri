@@ -6,8 +6,8 @@
     <th>Permalink</th>
     <th>Content</th>
     <th>MD Content</th>
-    <th></th>
-    <th></th>
+    <th>Priority</th>
+    <th>Category</th>
     <th></th>
   </tr>
 
@@ -17,6 +17,8 @@
     <td><%= page.permalink %></td>
     <td><%= page.content %></td>
     <td><%= page.md_content %></td>
+    <td><%= page.priority %></td>
+    <td><%= page.category %></td>
     <td><%= link_to 'Show', page %></td>
     <td><%= link_to 'Edit', edit_page_path(page) %></td>
     <td><%= link_to 'Destroy', page.permalink, method: :delete, data: { confirm: 'Are you sure?' } %></td>
