@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="span1">&nbsp;</div>
+  <div class="span9">
+	<h1>
+	  <%= @page.name %>
+	</h1>
+	<% if user_signed_in? %>
+    <% if can? :create, Page %>
+	<%= link_to 'Edit', edit_page_path(@page) %> |
+    <td><%= link_to 'Remove', page_path(@page), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+    <% end %>
+	<hr/>
+  </div>
+</div>
+<div class="span1">&nbsp;</div>
+<div class="span9" role="content">
+	<div class="row">
+		<div class="span9">
+  <%= @page.content.html_safe.gsub(/\r\n?/,"").html_safe %>
+  </div>
+  </div>
+</div>
