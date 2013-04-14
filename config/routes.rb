@@ -1,4 +1,5 @@
 Savitri::Application.routes.draw do
+
   get "search/index"
 
   get "search/results"
@@ -73,6 +74,12 @@ Savitri::Application.routes.draw do
   resources :lines
 
   get 'lines/range/:id', to: 'lines#range'
+  
+  resources :pages, except: :show
+ 
+  get ':id', to: 'pages#show', as: :page
+  put ':id', to: 'pages#update', as: :page
+  delete ':id', to: 'pages#destroy', as: :page
 
   root :to => 'savitri#index', :as => 'savitri'
 end

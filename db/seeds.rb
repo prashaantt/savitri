@@ -3935,8 +3935,6 @@ Comment.create([
   { :post_id => 1, :commenter => "NM", :body => "Wonderful Blog Post", :created_at => "2012-09-28 15:12:48", :updated_at => "2012-09-28 15:12:48", :user_id => 1 }
 ], :without_protection => true )
 
-
-
 Role.create([
   { :name => "Admin", :created_at => "2012-10-16 06:34:05", :updated_at => "2012-10-16 06:34:05" },
   { :name => "Scholar", :created_at => "2012-10-16 06:34:05", :updated_at => "2012-10-16 06:34:05" },
@@ -3944,10 +3942,14 @@ Role.create([
   { :name => "User", :created_at => "2012-10-16 06:34:06", :updated_at => "2012-10-16 06:34:06" }
 ], :without_protection => true )
 
+Page.create([
+  { :name => "About Us", :permalink => "About", :priority => 1, :category => "Menu", :content => "<p>About The Site</p>", :md_content => "About The Site", :created_at => "2013-04-12 13:56:39", :updated_at => "2013-04-12 13:57:20" },
+  { :name => "Site Help", :permalink => "Help", :priority => 2, :category => "Menu", :content => "<p>How to use the site</p>", :md_content => "How to use the site", :created_at => "2013-04-12 13:57:08", :updated_at => "2013-04-12 13:57:08" }
+], :without_protection => true )
 
 #Moved to End
 #When running offline - user creation will not be able to send email. Hence rake db:seeds will fail.
 #Remove this line / or disable email confirmation
 User.create([
   { :name => "Admin", :email => "modak.nishant@gmail.com", :password => "admin123",:password_confirmation => "admin123", :username => "admin", :role_id => 1, :photo => nil }
-], :without_protection => true )# encoding: utf-8
+], :without_protection => true )# encoding: utf-8# encoding: utf-8
