@@ -17,7 +17,7 @@ showIntro = (selectionData) ->
   source = data.source
   textDOM = {}
   lineByline = ((if text.length > 2 then true else false))
-  $("div#text").append "<blockquote>"
+  $("div#text").prepend "<blockquote id=\"display\">"
   i = 0
 
   while i < text.length
