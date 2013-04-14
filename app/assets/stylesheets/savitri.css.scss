@@ -1,25 +1,111 @@
-div#selection {
-	margin-left: 300px;
-	margin-top: 50px;
-	line-height: 60px;
+div#banner {
+  padding-top: 5%;
+  padding-bottom: 5%;
+
+  .selection {
+    font-family: 'Satisfy', cursive;
+    line-height: 1.5em;
+    text-rendering: optimizeLegibility;
+  }
+
+  blockquote#display {
+    padding: 0 0 0 0;
+    margin: 0px;
+    border-left: none;
+    text-shadow: 2px 1px 0px rgb(243, 243, 243);
+  }
+
+  .reference {
+    font-family: 'Georgia', serif;
+    font-size: 60%;
+    float: right;
+    padding-right: 38%;
+  }
+
+  #controls {
+    text-align: center;
+  }
+
+  .controlbutton {
+    vertical-align: middle;
+  }
+
+  :hover {
+    background-color: none;
+  }
 }
 
-div.selection {
-	font-family: 'Satisfy', cursive;
-	font-size: 36px;
-	text-rendering: optimizeLegibility; /*[1]*/
+@media (min-width: 1200px) {
+  div#banner {
+    font-size: 225%;
+  }
 }
 
-
-div.reference {
-	font-family: Georgia, serif;
-	font-size: 22px;
-	padding-left: 500px;
-	margin-top: -30px;
+@media (min-width: 980px) and (max-width: 1199px) {
+  div#banner {
+    font-size: 190%;
+  }
 }
 
-blockquote {
-  padding: 10px 10px 10px 50px !important;
-  border-left: 1px solid #eeeeee !important;
-  line-height: 60px;
+@media (min-width: 560px) and (max-width: 979px) {
+  div#banner {
+    font-size: 146%;
+  }
+}
+
+@media (max-width: 767px) {
+  blockquote {
+    text-align: center;
+  }
+  div#banner .reference {
+    padding-right: 25%;
+  }
+}
+
+@media (min-width: 540px) and (max-width: 559px) {
+  div#banner {
+    font-size: 140%;
+  }
+}
+
+@media (min-width: 520px) and (max-width: 539px) {
+  div#banner {
+    font-size: 134%;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 519px) {
+  div#banner {
+    font-size: 128%;
+  }
+}
+
+@media (min-width: 473px) and (max-width: 499px) {
+  div#banner {
+    font-size: 121%;
+  }
+}
+
+@media (min-width: 453px) and (max-width: 472px) {
+  div#banner {
+    font-size: 115%;
+  }
+}
+
+@media (min-width: 433px) and (max-width: 452px) {
+  div#banner {
+    font-size: 109%;
+  }
+}
+
+@media (min-width: 405px) and (max-width: 432px) {
+  div#banner {
+    font-size: 103%;
+  }
+}
+
+@media (max-width: 404px) {
+  div#banner {
+    font-size: 96%;
+  }
 }
