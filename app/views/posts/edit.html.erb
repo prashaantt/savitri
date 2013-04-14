@@ -4,5 +4,7 @@
                                    :default => "Edit #{model_class.model_name.human}") %></h1>
 </div>
 <%= render :partial => 'form', :locals => {:urler => blog_post_path} %>
-<%= render 'poemtext' %>
-<%= render 'image_upload' %>
+
+<%= render 'shared/poemtext' %>
+<%= render 'shared/image_upload' %>
+<%= render 'shared/wmd_editor' %>
