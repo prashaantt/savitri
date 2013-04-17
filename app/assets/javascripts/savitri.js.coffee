@@ -3,12 +3,38 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
- if $("#source").length >0 
-	  	callback = (response) -> 
-	  			text5 = response
-	  			showIntro text5
+  if $("#source").length > 0
+    # $(".controlbutton").hide()
+    $("#play").hide()
+    $("#pause").show()
+    callback = (response) ->
+      showIntro response
 
-	  	$.get '/savitri/show/', callback, 'json'  
+    $.get '/savitri/show/', callback, 'json'
+
+jQuery ->
+  $(".controlbutton").on "click", (event) ->
+    if window.timer.isActive
+      $("#play").show()
+      $("#pause").hide()
+    else
+      $("#play").hide()
+      $("#pause").show()
+    
+    window.timer.toggle()
+
+  $('#refresh').on "click", (event) ->
+    window.timer.stop()
+    $("#source").empty()
+    $("#display").remove()
+    $("#play").hide()
+    $("#pause").show()
+    # $(".controlbutton").hide()
+
+    callback = (response) ->
+      showIntro response
+    
+    $.get '/savitri/show/', callback, 'json'
 
 showIntro = (selectionData) ->
   d = JSON.stringify(selectionData, undefined, 2)
@@ -18,6 +44,7 @@ showIntro = (selectionData) ->
   textDOM = {}
   lineByline = ((if text.length > 2 then true else false))
   $("div#text").prepend "<blockquote id=\"display\">"
+
   i = 0
 
   while i < text.length
@@ -26,6 +53,7 @@ showIntro = (selectionData) ->
     key = "l" + i
     $(linespan).attr "id", key
     $(linespan).css("opacity", 0).addClass "animated"  if lineByline
+    $("div#source").css("opacity", 0).removeClass().addClass('reference')
     values = []
     j = 0
 
@@ -53,12 +81,14 @@ showIntro = (selectionData) ->
   count = 4
   lineWordArray = _.pairs(textDOM) #lineWordArray[I][0] == "lI", lineWordArray[I][1][J] == "wI-J"
   numLines = Object.keys(lineWordArray).length
-  timer = $.timer(->
+  window.timer = $.timer(->
+    # $(".controlbutton").show("slow")
     if lineByline
       if line is 0 and count < 2
         if count is 1
           $("blockquote").children().removeClass("fadeIn").addClass "fadeOut"
           $("div#source").removeClass("fadeIn").addClass "fadeOut"
+
         count++
       else
         if numLines > line
@@ -88,14 +118,14 @@ showIntro = (selectionData) ->
             count = 0
   )
   if lineByline
-    timer.set
+    window.timer.set
       time: 3000
       autostart: true
 
   else
-    timer.set
+    window.timer.set
       time: 500
       autostart: true
 
-text5 = undefined
+selectionData = undefined
 textDOM = {}

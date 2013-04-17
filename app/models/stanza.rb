@@ -56,4 +56,8 @@ class Stanza < ActiveRecord::Base
         
   end
 
+  def self.random
+    Stanza.offset(rand(Stanza.count)).first
+  end
+
 end
