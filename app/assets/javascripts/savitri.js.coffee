@@ -5,8 +5,11 @@
 $ ->
   if $("#source").length > 0
     # $(".controlbutton").hide()
-    $("#play").hide()
-    $("#pause").show()
+    # $("#play").hide()
+    # $("#pause").show()
+    # $("#play").css("display", "none")
+    # $("#pause").css("display", "inline")
+    $("#playpause").attr("src", "/assets/pause.png")
     callback = (response) ->
       showIntro response
 
@@ -15,11 +18,17 @@ $ ->
 jQuery ->
   $(".controlbutton").on "click", (event) ->
     if window.timer.isActive
-      $("#play").show()
-      $("#pause").hide()
+      # $("#play").show()
+      # $("#pause").hide()
+      # $("#play").css("display", "inline")
+      # $("#pause").css("display", "none")
+      $("#playpause").attr("src", "/assets/play.png")
     else
-      $("#play").hide()
-      $("#pause").show()
+      # $("#play").hide()
+      # $("#pause").show()
+      # $("#play").css("display", "none")
+      # $("#pause").css("display", "inline")
+      $("#playpause").attr("src", "/assets/pause.png")
     
     window.timer.toggle()
 
@@ -27,8 +36,11 @@ jQuery ->
     window.timer.stop()
     $("#source").empty()
     $("#display").remove()
-    $("#play").hide()
-    $("#pause").show()
+    # $("#play").hide()
+    # $("#pause").show()
+    # $("#play").css("display", "none")
+    # $("#pause").css("display", "inline")
+    $("#playpause").attr("src", "/assets/pause.png")
     # $(".controlbutton").hide()
 
     callback = (response) ->
