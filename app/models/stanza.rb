@@ -2,6 +2,7 @@ class Stanza < ActiveRecord::Base
   attr_accessible :no, :section_id, :runningno
   has_many :lines, :order => 'no'
   belongs_to :section
+  scope :by_section, lambda { |q| where(:section_id=>q ) }
 
   validates :no , :uniqueness => true
 

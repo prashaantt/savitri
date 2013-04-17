@@ -18,7 +18,7 @@
                        <ul class="nav nav-tabs nav-stacked">
                         <% book.cantos.each do |canto| %>
                           <li id="leftnav">
-                            <%= link_to canto.title, read_path(canto.id) %>
+                            <%= link_to canto.title, '/read/'+book.id.to_s+"/"+canto.id.to_s+"/1" %> 
                           </li>
                         <% end %>
                        </ul>
@@ -31,14 +31,15 @@
         <div class="span6 offset1">
           <div id="cantos">
             <% unless @stanzas.blank? %>
-              <h2><%= Canto.find(Section.find(@stanzas.first.section).canto_id).title %></h1> 
+              <% @canto = Canto.find(Section.find(@stanzas.first.section).canto_id) %>
+              <h2><%= @canto.title %></h1> 
               <div id="content">
               <div id="poem" class="readsavitri">
                 <p><%= render @stanzas %></p>
               </div>
             </div>
             <% else %>
-              <h2><%= Canto.find(params[:id]).title %></h2>
+              <h2><%= @canto.title %></h2>
             <% end %>
           </div>
         </div>
