@@ -10,6 +10,7 @@ $ ->
     # $("#play").css("display", "none")
     # $("#pause").css("display", "inline")
     $("#playpause").attr("src", "/assets/pause.png")
+    
     callback = (response) ->
       showIntro response
 
