@@ -1,18 +1,18 @@
-div#banner {
+#banner {
   padding-top: 5%;
   padding-bottom: 5%;
 
   .selection {
     font-family: 'Satisfy', cursive;
     line-height: 1.5em;
-    text-rendering: optimizeLegibility;
   }
 
-  blockquote#display {
+  #display {
     padding: 0 0 0 0;
     margin: 0px;
     border-left: none;
-    text-shadow: 2px 1px 0px rgb(243, 243, 243);
+    text-shadow: 2px 1px 0px #f3f3f3;
+    text-rendering: optimizeLegibility;
   }
 
   .reference {
@@ -28,10 +28,8 @@ div#banner {
 
   .controlbutton {
     vertical-align: middle;
-  }
-
-  :hover {
-    background-color: none;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }
 
