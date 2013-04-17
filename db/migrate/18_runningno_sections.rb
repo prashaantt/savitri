@@ -1,8 +1,6 @@
 class RunningnoSections < ActiveRecord::Migration
   def change
-    change_table(:sections) do |t|
-     add_column t.integer :runningno
-    end
+   add_column :sections, :runningno, :integer
    Canto.all.each do |c|
       count=1
       c.sections.each do |s|
