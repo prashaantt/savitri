@@ -9,7 +9,8 @@ $ ->
     # $("#pause").show()
     # $("#play").css("display", "none")
     # $("#pause").css("display", "inline")
-    $("#playpause").attr("src", "/assets/pause.png")
+    # $("#playpause").attr("src", "/assets/pause.png")
+    $("#playpause").removeClass("icon-play").addClass("icon-pause")
     
     callback = (response) ->
       showIntro response
@@ -17,32 +18,19 @@ $ ->
     $.get '/savitri/show/', callback, 'json'
 
 jQuery ->
-  $(".controlbutton").on "click", (event) ->
+  $("#playpause").on "click", (event) ->
     if window.timer.isActive
-      # $("#play").show()
-      # $("#pause").hide()
-      # $("#play").css("display", "inline")
-      # $("#pause").css("display", "none")
-      $("#playpause").attr("src", "/assets/play.png")
+      $("#playpause").removeClass("icon-pause").addClass("icon-play")
     else
-      # $("#play").hide()
-      # $("#pause").show()
-      # $("#play").css("display", "none")
-      # $("#pause").css("display", "inline")
-      $("#playpause").attr("src", "/assets/pause.png")
-    
+      $("#playpause").removeClass("icon-play").addClass("icon-pause")
+
     window.timer.toggle()
 
   $('#refresh').on "click", (event) ->
     window.timer.stop()
     $("#source").empty()
     $("#display").remove()
-    # $("#play").hide()
-    # $("#pause").show()
-    # $("#play").css("display", "none")
-    # $("#pause").css("display", "inline")
-    $("#playpause").attr("src", "/assets/pause.png")
-    # $(".controlbutton").hide()
+    $("#playpause").removeClass("icon-play").addClass("icon-pause")
 
     callback = (response) ->
       showIntro response
@@ -66,7 +54,7 @@ showIntro = (selectionData) ->
     key = "l" + i
     $(linespan).attr "id", key
     $(linespan).css("opacity", 0).addClass "animated"  if lineByline
-    $("div#source").css("opacity", 0).removeClass().addClass('reference')
+    $("div#source").css("opacity", 0).removeClass()
     values = []
     j = 0
 
