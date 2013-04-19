@@ -1,36 +1,53 @@
 #banner {
   padding-top: 5%;
   padding-bottom: 5%;
-
-  .selection {
-    font-family: 'Satisfy', cursive;
-    line-height: 1.5em;
-  }
+  # background-color: #ececf0;
 
   #display {
+    font-family: 'Satisfy', cursive;
+    line-height: 1.5em;
     padding: 0 0 0 0;
-    margin: 0px;
+    margin: 0 0 0 1%;
     border-left: none;
-    text-shadow: 2px 1px 0px #f3f3f3;
+    text-shadow: 2px 1px 0px #eeeeee;
     text-rendering: optimizeLegibility;
   }
 
-  .reference {
+  #source {
     font-family: 'Georgia', serif;
     font-size: 60%;
     float: right;
-    padding-right: 38%;
+    margin-top: 3%;
+    padding-right: 25%;
   }
 
   #controls {
     text-align: center;
+    font-size: 75%;
+    margin-top: 8%;
   }
 
   .controlbutton {
     vertical-align: middle;
     margin-left: 10px;
     margin-right: 10px;
+    text-shadow: 2px 2px 0px #eeeeee;
+    cursor: hand;
+    cursor: pointer;
+
+    //un-hover
+    color:darkgrey;
+    -o-transition:color .2s ease-out, background 1s ease-in;
+    -ms-transition:color .2s ease-out, background 1s ease-in;
+    -moz-transition:color .2s ease-out, background 1s ease-in;
+    -webkit-transition:color .2s ease-out, background 1s ease-in;
+    transition:color .2s ease-out, background 1s ease-in;
   }
+
+  .controlbutton:hover {
+    color:black;
+    text-shadow: none;
+  };
 }
 
 @media (min-width: 1200px) {
@@ -41,69 +58,108 @@
 
 @media (min-width: 980px) and (max-width: 1199px) {
   div#banner {
-    font-size: 190%;
+    font-size: 203%;
   }
 }
 
-@media (min-width: 560px) and (max-width: 979px) {
+@media (min-width: 768px) and (max-width: 979px) {
+  div#banner {
+    font-size: 153%;
+  }
+}
+
+@media (min-width: 760px) and (max-width: 767px) {
+  div#banner {
+    font-size: 210%;
+  }
+}
+
+@media (min-width: 738px) and (max-width: 759px) {
+  div#banner {
+    font-size: 203%;
+  }
+}
+
+@media (min-width: 716px) and (max-width: 737px) {
+  div#banner {
+    font-size: 196%;
+  }
+}
+
+@media (min-width: 684px) and (max-width: 715px) {
+  div#banner {
+    font-size: 189%;
+  }
+}
+
+@media (min-width: 662px) and (max-width: 683px) {
+  div#banner {
+    font-size: 182%;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 661px) {
+  div#banner {
+    font-size: 174%;
+  }
+}
+
+@media (min-width: 608px) and (max-width: 639px) {
+  div#banner {
+    font-size: 167%;
+  }
+}
+
+@media (min-width: 586px) and (max-width: 607px) {
+  div#banner {
+    font-size: 160%;
+  }
+}
+
+@media (min-width: 564px) and (max-width: 585px) {
+  div#banner {
+    font-size: 153%;
+  }
+}
+
+@media (min-width: 541px) and (max-width: 563px) {
   div#banner {
     font-size: 146%;
   }
 }
 
-@media (max-width: 767px) {
-  blockquote {
-    text-align: center;
-  }
-  div#banner .reference {
-    padding-right: 25%;
-  }
-}
-
-@media (min-width: 540px) and (max-width: 559px) {
+@media (min-width: 510px) and (max-width: 540px) {
   div#banner {
-    font-size: 140%;
+    font-size: 139%;
   }
 }
 
-@media (min-width: 520px) and (max-width: 539px) {
+@media (min-width: 488px) and (max-width: 509px) {
   div#banner {
-    font-size: 134%;
+    font-size: 132%;
   }
 }
 
-@media (min-width: 500px) and (max-width: 519px) {
+@media (min-width: 465px) and (max-width: 487px) {
   div#banner {
-    font-size: 128%;
+    font-size: 124%;
   }
 }
 
-@media (min-width: 473px) and (max-width: 499px) {
+@media (min-width: 434px) and (max-width: 464px) {
   div#banner {
-    font-size: 121%;
+    font-size: 117%;
   }
 }
 
-@media (min-width: 453px) and (max-width: 472px) {
+@media (min-width: 412px) and (max-width: 433px) {
   div#banner {
-    font-size: 115%;
+    font-size: 110%;
   }
 }
 
-@media (min-width: 433px) and (max-width: 452px) {
-  div#banner {
-    font-size: 109%;
-  }
-}
-
-@media (min-width: 405px) and (max-width: 432px) {
+@media (max-width: 411px) {
   div#banner {
     font-size: 103%;
-  }
-}
-
-@media (max-width: 404px) {
-  div#banner {
-    font-size: 96%;
   }
 }

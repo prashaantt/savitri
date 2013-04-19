@@ -33,26 +33,26 @@
 
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="<%=is_active 'read' %>"><a href="/read/1/1/1">The Book</a></li>  
+              <li class="<%=is_active 'read' %>"><a href="/read/1/1/1"><i class="icon-book navicon"></i>The Book</a></li>
               <li class="dropdown" id="Resources">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Media Centre
-                  <span class="caret"></span>
+                  <i class="icon-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="#"><span class="icon-user"></span>Library</a></li>
-                  <li><a href="#"><i class="icon-facetime-video"></i> Presentations</a></li>
-                  <li><a href="#"><i class="icon-music"></i> Audio</a></li>
-                  <li><a href="#"><i class="icon-picture"></i> Themes</a></li>
+                  <li><a href="#"><i class="icon-info-sign navicon"></i>Library</a></li>
+                  <li><a href="#"><i class="icon-film navicon"></i>Presentations</a></li>
+                  <li><a href="#"><i class="icon-headphones navicon"></i>Audio</a></li>
+                  <li><a href="#"><i class="icon-picture navicon"></i>Themes</a></li>
                 </ul>
               </li>
               <li class="dropdown" id="Blogs">
                 <a href="/latest-posts">Blogs
-                  <span class="caret"></span>
+                  <i class="icon-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
                   <li><a href="/blogs/light-of-supreme/posts/">The Light of the Supreme</a></li>
-                  <li><a href="/blogs/parasya-jyotih/posts">Parasya Jyotih (परस्य ज्योतिः)</a></li>
                   <li><a href="/blogs/mirror/posts">Mirror</a></li>
+                  <li><a href="/blogs/parasya-jyotih/posts">परस्य ज्योतिः</a></li>
                 </ul>
               </li>
                 <% @pages = Page.order(:priority).find_all_by_category("Menu") %>
@@ -62,7 +62,7 @@
                 </li>
                 <% else %>
                 <li class="dropdown" id="pages"><a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">About
-                  <span class="caret"></span>
+                  <i class="icon-caret-down"></i>
                 </a>
                   <ul class="dropdown-menu">
                     <% @pages.each do |page| %>
@@ -79,29 +79,31 @@
           <div class="btn-group pull-right">
             <% if user_signed_in? %> 
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-             <i class="icon-user"><%= current_user.username %></i>
-             <span class="caret"></span>
+             <i class="icon-user navicon"></i>
+             <%= current_user.username %>
+             <i class="icon-caret-down"></i>
            </a>
            <ul class="dropdown-menu">
             <% if current_user.blogs.count > 0  %>
-            <li><%= link_to "Manage Blog", blogs_path %> </li>
+            <li><%= link_to "Manage blog(s)", blogs_path %></li>
             <% else %>
-            <li><%= link_to "Manage Blog", new_blog_path %></li>
+            <li><%= link_to "Create a blog", new_blog_path %></li>
             <% end %>
             <li class="divider"/>
-            <li><%= link_to "Account Settings", edit_user_registration_path %> </li>
+            <li><%= link_to "Account settings", edit_user_registration_path %> </li>
             <li class="divider"/>
-            <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
+            <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
           </ul>
           <% else %> 
           <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-            <i class="icon-user"></i>Log In
-            <span class="caret"></span>
+            <i class="icon-user"></i>
+            Log in
+            <i class="icon-caret-down"></i>
           </a>
           <ul class="dropdown-menu">
-            <li><%= link_to "Sign Up", new_user_registration_path %> </li>
+            <li> <%= link_to "Log in", new_user_session_path %></li>
             <li class="divider"></li>
-            <li> <%= link_to "Log In" , new_user_session_path %></li>
+            <li><%= link_to "Sign up", new_user_registration_path %></li>
            <!-- 
               <li class="divider" />
            Edit to add Login Modal Box
