@@ -12,6 +12,11 @@
  *= require_tree .
  */
 
+.navicon {
+  padding-right: 5px;
+}
+
+
 a#bk1,
 li#leftnav,
 li#leftnav a {
