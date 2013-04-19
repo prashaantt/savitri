@@ -1,13 +1,20 @@
 @import "twitter/bootstrap/bootstrap";
+@import "twitter/bootstrap/responsive";
+
+// Font Awesome
+@fontAwesomeEotPath: '/assets/fontawesome-webfont.eot';
+@fontAwesomeWoffPath: '/assets/fontawesome-webfont.woff';
+@fontAwesomeTtfPath: '/assets/fontawesome-webfont.ttf';
+@fontAwesomeSvgPath: '/assets/fontawesome-webfont.svg';
+
+@import "fontawesome";
+
+
+//custom
+
 body { 
 	padding-top: 60px;
 }
-
-@import "twitter/bootstrap/responsive";
-
-// Set the correct sprite paths
-@iconSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings.png');
-@iconWhiteSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings-white.png');
 
 ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;    
