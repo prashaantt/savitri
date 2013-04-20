@@ -5,7 +5,7 @@
  	 <% section = Section.find(stanza.section) %>
  	 <% anchor_t = section.no.to_s + "." + stanza.runningno.to_s %>
  	 <% bookid = section.canto.book.id %>
-	&nbsp;<span class="apiparam"><%= link_to "||"+anchor_t+"||", '/read/'+bookid.to_s+"/"+section.canto.id.to_s+"/"+section.runningno.to_s+""+"?pages="+page_no(stanza.no).to_s+"#"+Section.find(stanza.section).no.to_s + "." + stanza.runningno.to_s  %></span>
+	&nbsp;<span class="apiparam"><%= link_to "||"+anchor_t+"||", '/read/'+Section.find(stanza.section).no.to_s + "." + stanza.runningno.to_s  %></span>
  <% end %>
  </div>
 <% end %>
