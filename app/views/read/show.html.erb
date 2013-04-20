@@ -1,6 +1,4 @@
-<div id="paginator" class="apiparam">
-  <%= paginate @stanzas, :param_name => :pages , :remote => true, :window => 1 %>
-</div>
+
 <!-- dynamic fetch of books and cantos -->
 <div class="container-fluid"> 
        <div class="row-fluid">
@@ -34,6 +32,9 @@
               <% @canto = Canto.find(Section.find(@stanzas.first.section).canto_id) %>
               <h2><%= @canto.title %></h1> 
               <div id="content">
+                  <% @canto.sections.each do |section| %>
+                    <%= link_to section.runningno, '/read/'+@canto.book.no.to_s+"/"+@canto.no.to_s+"/"+section.runningno.to_s, :class=>"btn" %>
+                  <% end %>
               <div id="poem" class="readsavitri">
                 <p><%= render @stanzas %></p>
               </div>

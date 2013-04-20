@@ -20,8 +20,10 @@ class ReadController < ApplicationController
     cantoid=params[:canto_id]
     bookid=params[:book_id]
     @canto = Canto.find_by_id_and_book_id(cantoid,bookid)
+    puts @canto
     @sections = @canto.sections.where(:runningno=>sectionrunningno)
-    @stanzas = Stanza.by_section(@sections.first.id).order("no").page(totalpages).per(4)
+    puts @sections.inspect
+    @stanzas = Stanza.by_section(@sections.first.id).order("no")
     #@stanzas = Stanza.find(:conditions => { :canto_id => @canto.id}) 
 #    @stanzas = Stanza.includes("lines").order("stanzno").page(params[:stanzas]).per(4)
     respond_to do |format|
@@ -52,6 +54,6 @@ class ReadController < ApplicationController
     else
       totalpages = (query[1].to_i)/4 + 1
     end
-    redirect_to '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'?pages='+totalpages.to_s+'#'+params[:book_id]
+    redirect_to '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+params[:book_id]
   end
 end
