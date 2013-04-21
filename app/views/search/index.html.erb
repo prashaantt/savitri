@@ -44,7 +44,7 @@
 								<% end %>
 								<span class="ref">
 								<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
-								<%= link_to "||"+anchor_t+"||", "/read/"+l.canto.to_s+"?pages="+page_no(l.no).to_s+"#"+l.section.to_s+"."+l.runningno.to_s   %>
+								<%= link_to "||"+anchor_t+"||", share_url(l.no)   %>
 								</span>
 							</p>
 							<% end %>
