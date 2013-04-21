@@ -29,12 +29,13 @@
           <div id="cantos">
             <% unless @stanzas.blank? %>
               <% @canto = Canto.find(Section.find(@stanzas.first.section).canto_id) %>
-              <h2><%= @canto.title %></h1> 
-              <div id="content">
+              <h2 class="cantoname"><%= @canto.title %></h1> 
+              <div class="sections">
                   <% @canto.sections.each do |section| %>
                     <%= link_to section.runningno, '/read/'+@canto.book.no.to_s+"/"+@canto.no.to_s+"/"+section.runningno.to_s, :class=>"btn" %>
                   <% end %>
-              <div id="poem" class="readsavitri">
+              <div id="s<%= params[:section_id] %>" class="section">
+                <h4 class="sectionno"></h4>
                 <p><%= render @stanzas %></p>
               </div>
             </div>
