@@ -3,6 +3,20 @@ module ApplicationHelper
     (params[:controller] == controller) ? "active" : "notactive" 
  	end
 
+ 	def is_active_link(params,bid,cid)
+ 		claz=""
+ 		if params[:book_id].eql? bid
+ 			if params[:canto_id].eql? cid
+ 				claz="activeaccrodion"
+ 			else
+ 				claz="inactiveaccordion"
+ 			end
+ 		else
+ 			claz="inactiveaccordion"
+ 		end
+ 		claz
+ 	end
+
   def share_url(sentence_number)
     stanza = Stanza.find_by_no(sentence_number)
     section = Section.find(stanza.section)

@@ -15,7 +15,7 @@
                        <ul class="nav nav-tabs nav-stacked">
                         <% book.cantos.each do |canto| %>
                           <li id="leftnav">
-                            <%= link_to canto.title, '/read/'+book.id.to_s+"/"+canto.id.to_s+"/1" %> 
+                            <a href="<%= '/read/'+book.id.to_s+"/"+canto.id.to_s+"/1" %>", class="<%= is_active_link params,book.id.to_s,canto.id.to_s %>"> <%= canto.title %> </a>
                           </li>
                         <% end %>
                        </ul>
@@ -30,7 +30,7 @@
             <% unless @stanzas.blank? %>
               <% @canto = Canto.find(Section.find(@stanzas.first.section).canto_id) %>
               <h2 class="cantoname"><%= @canto.title %></h1> 
-              <div class="sections">
+              <div class="sections" id="content">
                   <% @canto.sections.each do |section| %>
                     <%= link_to section.runningno, '/read/'+@canto.book.no.to_s+"/"+@canto.no.to_s+"/"+section.runningno.to_s, :class=>"btn" %>
                   <% end %>
