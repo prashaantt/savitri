@@ -29,6 +29,6 @@ class ReadController < ApplicationController
     canto=Section.find_by_no(section.id).canto
     cantoid = canto.id
     bookid = Book.find(canto.book_id).id
-    redirect_to '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+params[:book_id]
+    redirect_to '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1]
   end
 end
