@@ -1,14 +1,13 @@
-<a name="<%= stanza.runningno %>" />
 <p class="stanza" id="p<%= stanza.runningno %>">
-<% stanza.lines.each_with_index do |lin,index| %> 
- 	  <span class="line" id="l<%= lin.id %>"><%= lin.line %>
- 	  </span>
- 	 <% if stanza.lines.count - 1 == index %>
-	 	 <% section = Section.find(stanza.section) %>
-	 	 <% anchor_t = section.no.to_s + "." + stanza.runningno.to_s %>
-		<span class="reference"><%= link_to "||"+anchor_t+"||", share_url(stanza.no) %></span>
-	 <% else %>
-	  	 <br/>
- 	<% end %>
-<% end %>
+  <a name="<%= stanza.runningno %>"></a>
+  <% stanza.lines.each_with_index do |lin,index| %> 
+    <span class="line" id="l<%= lin.id %>"><%= lin.line %></span>
+    <% if stanza.lines.count - 1 == index %>
+      <% section = Section.find(stanza.section) %>
+      <% anchor_t = section.no.to_s + "." + stanza.runningno.to_s %>
+      <span class="reference" id="r<%= anchor_t %>"><%= link_to "||" + anchor_t + "||", share_url(stanza.no) %></span>
+    <% else %>
+      <br/>
+    <% end %>
+  <% end %>
 </p>

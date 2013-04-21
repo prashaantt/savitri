@@ -4,12 +4,6 @@
 
 $ ->
   if $("#source").length > 0
-    # $(".controlbutton").hide()
-    # $("#play").hide()
-    # $("#pause").show()
-    # $("#play").css("display", "none")
-    # $("#pause").css("display", "inline")
-    # $("#playpause").attr("src", "/assets/pause.png")
     $("#playpause").removeClass("icon-play").addClass("icon-pause")
     
     callback = (response) ->
@@ -18,6 +12,15 @@ $ ->
     $.get '/savitri/show/', callback, 'json'
 
 jQuery ->
+  $("#playpause").on "hover", (event) ->
+    $("#playpause").tooltip('show')
+
+  $("#refresh").on "hover", (event) ->
+    $("#refresh").tooltip('show')
+
+  $("#context").on "hover", (event) ->
+    $("#context").tooltip('show')
+
   $("#playpause").on "click", (event) ->
     if window.timer.isActive
       $("#playpause").removeClass("icon-pause").addClass("icon-play")
@@ -26,7 +29,7 @@ jQuery ->
 
     window.timer.toggle()
 
-  $('#refresh').on "click", (event) ->
+  $("#refresh").on "click", (event) ->
     window.timer.stop()
     $("#source").empty()
     $("#display").remove()
@@ -37,11 +40,14 @@ jQuery ->
     
     $.get '/savitri/show/', callback, 'json'
 
+  $("#context").on "click", (event) ->
+    window.location = "/read/" + window.ref
+
 showIntro = (selectionData) ->
   d = JSON.stringify(selectionData, undefined, 2)
   data = jQuery.parseJSON(d)
   text = data.text
-  source = data.source
+  window.ref = data.source
   textDOM = {}
   lineByline = ((if text.length > 2 then true else false))
   $("div#text").prepend "<blockquote id=\"display\">"
@@ -76,7 +82,7 @@ showIntro = (selectionData) ->
     $("blockquote").append linespan
     textDOM[key] = values
     i++
-  $("div#source").html("||" + source + "||").css("opacity", 0).addClass "animated"
+  $("div#source").html("||" + window.ref + "||").css("opacity", 0).addClass "animated"
   line = 0
   word = 0
   count = 4
