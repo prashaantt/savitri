@@ -1,39 +1,75 @@
 // Place all the styles related to the read controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-//.readsavitri p{
-//font-family: 'Play', sans-serif;
-//font-size: 15px;
-//line-height: 20px;
-//}
 
-//h2 {
-//	font-family: 'Courgette', cursive;
-//}
-
-//.apiparam:before {
-//	content: "||";
-//}
-
-//.apiparam:after {
-//	content: "||";
-//}
-
-.reference{
--webkit-touch-callout: none;
--webkit-user-select: none;
--khtml-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-user-select: none;
+.activeaccordion {
+  background: #FDF1CA;
 }
 
-p {
-    margin-bottom: 1em;
-    font-family: AvenirNextLTW02-Regular;
-    font-size: 16px;
+.navbook {
+  font-family: 'Myriad W01 Lt';
+  color: black;
 }
 
-.activeaccrodion{
-	background: #E6E6FA;
+.navcanto a {
+  font-family: 'Myriad W01 Lt';
+  color: black;
+}
+
+.rowread {
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+
+.cantono {
+  font-size: 150%;
+  line-height: 1em;
+}
+
+.cantoname {
+  font-size: 175%;
+  line-height: 1.2em;
+}
+
+.sectionno {
+  font-size: 125%;
+  margin-top: 4%;
+  margin-bottom: 5%;
+
+  #dropsection {
+    color: black;
+    text-decoration: none;
+  }
+
+  #dropsection:hover {
+    color: #08C;
+  }
+
+  .sectionlist {
+    font-size: 80%;
+    min-width: 0px;
+  }
+}
+
+#cantos {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.stanza {
+  margin-bottom: 2%;
+}
+
+.line {
+  font-family: 'Kepler W01 Lt';
+  font-size: 125%;
+  line-height: 1.4em;
+  text-rendering: optimizeLegibility;
+}
+
+.reference > a {
+  font-family: Georgia;
+  font-size: 100%;
+  color: grey;
+  float: right;
 }

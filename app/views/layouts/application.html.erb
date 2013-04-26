@@ -11,7 +11,7 @@
       <%= yield :head %> 
       <%= stylesheet_link_tag    "application", :media => "all" %>
       <%= javascript_include_tag "application" %>
-      <link type="text/css" rel="stylesheet" href="http://fast.fonts.com/cssapi/381214a9-5afb-4d5e-a767-3f2bc47454e9.css"/>
+      <link type="text/css" rel="stylesheet" href="http://fast.fonts.com/cssapi/8b9becaf-4f33-4214-83ca-084c4a14579f.css"/>
       <%  if params[:controller].to_s == 'read' %>
         <% unless current_user.nil? %>
           <script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>
@@ -121,10 +121,10 @@
 
 <body>
   <div class="container">
-     <div class="row">
+    <div class="row">
       <%= render 'layouts/messages' %>
-      <%= yield %>
     </div>
+      <%= yield %>
   </div>
 </body>
 </html>

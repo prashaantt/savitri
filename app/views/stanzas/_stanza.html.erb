@@ -1,5 +1,5 @@
 <p class="stanza" id="p<%= stanza.runningno %>">
-  <a name="<%= stanza.runningno %>"></a>
+  <a name="<%= stanza.runningno %>" class="navstanza"></a>
   <% stanza.lines.each_with_index do |lin,index| %> 
     <span class="line" id="l<%= lin.id %>"><%= lin.line %></span>
     <% if stanza.lines.count - 1 == index %>

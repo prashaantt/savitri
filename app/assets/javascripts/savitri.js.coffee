@@ -50,7 +50,7 @@ showIntro = (selectionData) ->
   window.ref = data.source
   textDOM = {}
   lineByline = ((if text.length > 2 then true else false))
-  $("div#text").prepend "<blockquote id=\"display\">"
+  $("#text").prepend "<p id=\"display\">"
 
   i = 0
 
@@ -60,7 +60,7 @@ showIntro = (selectionData) ->
     key = "l" + i
     $(linespan).attr "id", key
     $(linespan).css("opacity", 0).addClass "animated"  if lineByline
-    $("div#source").css("opacity", 0).removeClass()
+    $("#source").css("opacity", 0).removeClass()
     values = []
     j = 0
 
@@ -79,10 +79,10 @@ showIntro = (selectionData) ->
       $(linespan).append "&nbsp;"  if j < words.length - 1
       j++
     $(linespan).append "<br>"  if i < text.length - 1
-    $("blockquote").append linespan
+    $("#display").append linespan
     textDOM[key] = values
     i++
-  $("div#source").html("||" + window.ref + "||").css("opacity", 0).addClass "animated"
+  $("#source").html("||" + window.ref + "||").css("opacity", 0).addClass "animated"
   line = 0
   word = 0
   count = 4
@@ -93,8 +93,8 @@ showIntro = (selectionData) ->
     if lineByline
       if line is 0 and count < 2
         if count is 1
-          $("blockquote").children().removeClass("fadeIn").addClass "fadeOut"
-          $("div#source").removeClass("fadeIn").addClass "fadeOut"
+          $("#display").children().removeClass("fadeIn").addClass "fadeOut"
+          $("#source").removeClass("fadeIn").addClass "fadeOut"
 
         count++
       else
@@ -102,14 +102,14 @@ showIntro = (selectionData) ->
           $("#" + lineWordArray[line][0]).removeClass("fadeOut").addClass "fadeIn"
           line++
         else
-          $("div#source").removeClass("fadeOut").addClass "fadeIn"
+          $("#source").removeClass("fadeOut").addClass "fadeIn"
           line = 0
           count = 0
     else
       if count is 0 or line is 0 and word is 0 and count < 5
         if count is 3
-          $("blockquote").children().children().removeClass("fadeIn").addClass "fadeOut"
-          $("div#source").removeClass("fadeIn").addClass "fadeOut"
+          $("#display").children().children().removeClass("fadeIn").addClass "fadeOut"
+          $("#source").removeClass("fadeIn").addClass "fadeOut"
         count++
       else
         if lineWordArray[line][1].length > word
@@ -120,7 +120,7 @@ showIntro = (selectionData) ->
           unless numLines is line + 1
             line++
           else
-            $("div#source").removeClass("fadeOut").addClass "fadeIn"
+            $("#source").removeClass("fadeOut").addClass "fadeIn"
             line = 0
             count = 0
   )

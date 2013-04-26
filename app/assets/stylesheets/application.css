@@ -16,23 +16,7 @@
   padding-right: 5px;
 }
 
-
-a#bk1,
-li#leftnav,
-li#leftnav a {
-  font-family: 'Futura W01 Light';
-}
-
-a.brand,
-a.dropdown-toggle,
-div.readsavitri,
-ul li a,
-ul.dropdown-menu li a,
-ul.nav li a {
-  font-family: 'AvenirNextLTW01-Regular';
-}
-
-article div ol li,
+/*article div ol li,
 div ol li {
   font-family: "ITC Garamond W01 Light";
 }
@@ -41,16 +25,4 @@ blockquote p,
 blockquote.quotable,
 blockquote.quotable p {
   font-family: 'AvenirNextLTW01-Italic';
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-li.dropdown,
-ul.dropdown-menu,
-ul.nav {
-  font-family: 'Futura W01 Medium';
-}
+}*/

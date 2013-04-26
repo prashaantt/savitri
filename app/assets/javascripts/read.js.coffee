@@ -28,4 +28,7 @@ $ ->
 $ ->
   if window.location.hash
     hashvalue = "p" + window.location.hash.split("#")[1]
-    $("#"+hashvalue).css("background", "#E6E6FA")
+    currentColor = jQuery.Color("#" + hashvalue)
+    $("#" + hashvalue).css("background-color", "#FDF1CA").animate
+      backgroundColor: currentColor
+    , 2000
