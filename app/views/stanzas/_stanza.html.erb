@@ -5,7 +5,7 @@
     <% if stanza.lines.count - 1 == index %>
       <% section = Section.find(stanza.section) %>
       <% anchor_t = section.no.to_s + "." + stanza.runningno.to_s %>
-      <span class="reference" id="r<%= anchor_t %>"><%= link_to "||" + anchor_t + "||", share_url(stanza.no) %></span>
+      <span class="reference" id="r<%= anchor_t %>"><%= link_to "||" + anchor_t + "||", share_url(stanza.no), {:class => "muted"} %></span>
     <% else %>
       <br/>
     <% end %>

@@ -1,7 +1,16 @@
 #banner {
-  padding-top: 10%;
+  margin-top: 9%;
   padding-bottom: 6%;
-  # background-color: #ececf0;
+
+  #controls {
+    text-align: center;
+    font-size: 75%;
+    margin-top: 1%
+  }
+
+  #text {
+    margin-top: 5%;
+  }
 
   #display {
     font-family: 'Satisfy', cursive;
@@ -17,15 +26,11 @@
     float: right;
     margin-top: 3%;
     padding-right: 25%;
+    margin-bottom: 2%;
   }
+}
 
-  #controls {
-    text-align: center;
-    font-size: 75%;
-    margin-top: 8%;
-  }
-
-  .controlbutton {
+.controlbutton {
     vertical-align: middle;
     margin-left: 10px;
     margin-right: 10px;
@@ -45,8 +50,7 @@
   .controlbutton:hover {
     color:black;
     text-shadow: none;
-  };
-}
+  }
 
 @media (min-width: 1200px) {
   div#banner {
@@ -63,6 +67,12 @@
 @media (min-width: 768px) and (max-width: 979px) {
   div#banner {
     font-size: 153%;
+  }
+}
+
+@media (max-width: 767px) {
+  .tooltip {
+    display: none !important;
   }
 }
 
