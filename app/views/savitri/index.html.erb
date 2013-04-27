@@ -2,17 +2,15 @@
 <link href='http://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
 <% end %>
 
-<div id="banner" class="span9 offset2">
-  <div id="text" class="selection">
+<div id="banner" class="row">
+  <div id="controls" class="span4 offset4 .visible-desktop">
+    <i id="playpause" class="icon-pause controlbutton" data-toggle="tooltip" title="Play/pause" data-placement="left"></i>
+    <i id="context" class="icon-external-link controlbutton" data-toggle="tooltip" title="Read in context" data-placement="bottom"></i>
+    <i id="refresh" class="icon-refresh controlbutton" data-toggle="tooltip" title="New quote" data-placement="right"></i>
+  </div>
+  <div id="text" class="span9 offset2 selection">
     <div class="row">
       <div id="source" class="reference"></div>
-    </div>
-    <div class="row">
-      <div id="controls">
-        <i id="playpause" class="icon-pause controlbutton" data-toggle="tooltip" title="Play/pause" data-placement="left"></i>
-        <i id="context" class="icon-external-link controlbutton" data-toggle="tooltip" title="Read in context" data-placement="bottom"></i>
-        <i id="refresh" class="icon-refresh controlbutton" data-toggle="tooltip" title="New quote" data-placement="right"></i>
-      </div>
     </div>
   </div>
 </div>

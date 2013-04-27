@@ -32,20 +32,25 @@
           <h4 class="sectionno">
             <% if @canto.sections.length > 1 %>
               <span class="dropdown">
-                <a class="dropdown-toggle" id="dropsection" role="button" data-toggle="dropdown" data-target="#" href="#"><span class="sectionlbl" style="display:none">Section</span><b class="caret"></b></a>
+                <a class="dropdown-toggle" id="dropsection" role="button" data-toggle="dropdown" data-target="#" href="#">
+                  <span class="sectionlbl" style="display:none">Section</span>
+                  <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
+                  <b class="caret"></b>
+                </a>
                 <ul class="dropdown-menu sectionlist" role="menu" aria-labelledby="dropsection">
                   <% @canto.sections.each do |section| %>
                     <li role="presentation">
-                      <a href="<%= "/read/" + @canto.book.no.to_s + "/" + @canto.no.to_s + "/" + section.runningno.to_s %>">Section <%= section.runningno.to_s + " (" + @canto.sections.where(:runningno=>section.runningno).first.no.to_s + ")" %>
-                      </a>
+                      <%= link_to "/read/" + @canto.book.no.to_s + "/" + @canto.no.to_s + "/" + section.runningno.to_s do %>
+                        Section <%= section.runningno.to_s + " (" + @canto.sections.where(:runningno=>section.runningno).first.no.to_s + ")" %>
+                      <% end %>
                     </li>
                   <% end %>
                 </ul>
               </span>
             <% else %>
               <span class="sectionlbl" style="display:none">Section</span>
+              <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
             <% end %>
-            <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
           </h4>
           <div id="content">
             <div id="s<%= params[:section_id] %>" class="section">
@@ -62,4 +67,19 @@
 <script type="text/javascript">
   //show the static text "Section" after page load
   $(".sectionlbl").show();
+
+  //start color animation after page load
+  if (window.location.hash) {
+    var hashvalue = "p" + window.location.hash.split("#")[1];
+    
+    var currentColor = jQuery.Color("#" + hashvalue);
+    
+    $("#" + hashvalue).animate({
+      backgroundColor: "#FDF1CA"
+    }, 1000);
+    
+    $("#" + hashvalue).animate({
+      backgroundColor: currentColor
+    }, 3000);
+  };
 </script>

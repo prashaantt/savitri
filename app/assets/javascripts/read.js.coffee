@@ -23,12 +23,3 @@ $ ->
   $("#bk1").removeClass("collapsed");
   $("#collapse1").addClass("in");
   $("#collapse1").css("height","auto");
-
-
-$ ->
-  if window.location.hash
-    hashvalue = "p" + window.location.hash.split("#")[1]
-    currentColor = jQuery.Color("#" + hashvalue)
-    $("#" + hashvalue).css("background-color", "#FDF1CA").animate
-      backgroundColor: currentColor
-    , 2000
