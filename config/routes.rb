@@ -1,4 +1,5 @@
 Savitri::Application.routes.draw do
+
   get "search/index"
 
   get "search/results"
@@ -16,11 +17,12 @@ Savitri::Application.routes.draw do
   
   get "/profile/:id" => "users#show", :as => :profile
 
-  get '/blogs/latest' => "blogs#latest"
+  get '/latest-posts' => "posts#latest"
   
 
   get '/search' =>  "lines#index"
   resources :blogs
+  resources :uploads
 
   match "/store/notebooks" => "notebooks#create"
 
@@ -30,7 +32,9 @@ Savitri::Application.routes.draw do
 
   match "/store/notess" => "notebooks#search"
 
-  resources :read
+  match 'read/:book_id/:canto_id/:section_id' => 'read#show'
+  match 'read/:book_id/:canto_id' => 'read#bookcantoshow'
+  match 'read/:book_id' => 'read#specific', :constraints => {:book_id => /[^\/]+/ }
 
   resources :follows, :only => [:create, :destroy]
 
@@ -39,7 +43,7 @@ Savitri::Application.routes.draw do
   end
   
   get "savitri/index"
-
+  match '/savitri/show' => "savitri#show"
   # resources :users do
   #   resources :posts do
   #     resources :comments
@@ -62,6 +66,8 @@ Savitri::Application.routes.draw do
   get 'blogs/:blog_id/posts/tags/:tag' , to: 'posts#index' , as: :tag
   
   resources :books
+
+  resources :sections
   
   resources :cantos
 
@@ -69,60 +75,13 @@ Savitri::Application.routes.draw do
 
   resources :lines
 
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
+  get 'lines/range/:id', to: 'lines#range'
+  
+  resources :pages, except: :show
+ 
+  get ':id', to: 'pages#show', as: :page
+  put ':id', to: 'pages#update', as: :page
+  delete ':id', to: 'pages#destroy', as: :page
 
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  root :to => 'blogs#home', :as => 'savitri'
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
+  root :to => 'savitri#index', :as => 'savitri'
 end

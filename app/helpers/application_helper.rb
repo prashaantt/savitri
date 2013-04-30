@@ -1,14 +1,26 @@
 module ApplicationHelper
 	def is_active(controller)
-			(params[:controller] == controller) ? "active" : nil 
-  	end
+    (params[:controller] == controller) ? "active" : "notactive" 
+ 	end
 
-  	def link_to_add_fields(name,f,type)
-  		new_object = f.object.send "build_#{type}"
-  		id = "new_#{type}"
-  		fields = f.send("#{type}_fields", new_object, child_index: id) do |builder|
-  			render(type.to_s + "_fields" , f: builder)
-  		end
-  		link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n","")})
-  	end
+ 	def is_active_link(params,bid,cid)
+ 		claz=""
+ 		if params[:book_id].eql? bid
+ 			if params[:canto_id].eql? cid
+ 				claz="activeaccordion"
+ 			else
+ 				claz="inactiveaccordion"
+ 			end
+ 		else
+ 			claz="inactiveaccordion"
+ 		end
+ 		claz
+ 	end
+
+  def share_url(sentence_number)
+    stanza = Stanza.find_by_no(sentence_number)
+    section = Section.find(stanza.section)
+    section_running_no = section.runningno
+    "/read/"+section.no.to_s+"."+stanza.runningno.to_s
+  end
 end

@@ -13,39 +13,47 @@ class Line < ActiveRecord::Base
   	no
   end
 
-
-  searchable do 
-    text :line
-    text :no
-    integer :id
-    string :canto
-    string :booknum
-    string :length
-    string :category
-  end
+   searchable do 
+     text :line
+     text :no
+     integer :id
+#  --facets below--
+     string :section
+     string :canto
+     string :lbook
+     string :length
+     string :category
+   end
 
   def category
-    "line"
+    self.class.name + "s"
   end
 
-  def booknum
-    cid = canto
-    Book.find(Canto.find(cid).book_id).no.to_s
+  def runningno
+    stanza.runningno
+  end
 
+  def share_url
+    "/read/"+section.to_s+"."+stanza.runningno.to_s
+  end
+
+  def section
+    Section.find(Stanza.find(self.stanza_id).section_id).no
   end
 
   def canto
-    Stanza.find(self.stanza_id).canto_id.to_s
+    Canto.find(Section.find_by_no(section).canto_id).no
+  end
+
+  def book
+    Book.find(Canto.find_by_no(canto).book_id).no
+  end
+
+  def lbook
+    book
   end
 
   def length
-      Stanza.find(self.stanza_id).lines.count
+    Stanza.find(self.stanza_id).lines.count
   end
-  
-  #UNRANSACKABLE_ATTRIBUTES = ["id", "created_at", "updated_at", "stanza_id"]
-
-  #def self.ransackable_attributes auth_object = nil
-  #  (column_names - UNRANSACKABLE_ATTRIBUTES) + _ransackers.keys
-  #end
-
 end

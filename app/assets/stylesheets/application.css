@@ -9,6 +9,20 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require redactor-rails
  *= require_tree .
  */
+
+.navicon {
+  padding-right: 5px;
+}
+
+/*article div ol li,
+div ol li {
+  font-family: "ITC Garamond W01 Light";
+}
+
+blockquote p,
+blockquote.quotable,
+blockquote.quotable p {
+  font-family: 'AvenirNextLTW01-Italic';
+}*/

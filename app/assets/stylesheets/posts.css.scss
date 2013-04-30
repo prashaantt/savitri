@@ -1,6 +1,10 @@
 // Place all the styles related to the Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+ #wrapper {
+      width: 620px;
+    }
+
 #blog-title{
 	color: blue;
 }
@@ -12,6 +16,17 @@
 	.m {font-size: 1.2em};
 	.l {font-size: 1.6em; text: bold;};
 }
+
+
+.table td, .table th {
+    border: none;
+}
+
+table.table.table-condensed {
+    border: none;
+}
+
+.modal { left: 50%; margin-left: -300px; }
 
 /* Panels ---------------------- */
 

@@ -4,11 +4,10 @@
 </div>
 
 <% @blogs.each do |blog| %>
-	<p>
 		<h4>
 			<%= link_to blog.title, blog_posts_path(blog) %>
 			<small>
-			<%= pluralize blog.posts.count, "post" %> <br/><br/>
+			<%= pluralize blog.posts.count, "post" %> <br/>
 			<%= link_to 'Edit Blog', edit_blog_path(blog)  %> | 
 			<%= link_to 'Show Blog', blog_posts_path(blog)  %> |
 			<%= link_to 'New Post', new_blog_post_path(blog) %> | 
@@ -16,13 +15,12 @@
 			<%= 'Delete Blog'  %> |
 			<%= 'Change Tempalte'  %> |
 			<%= 'Etc.'  %> |
-		</small>
+			</small>
 		<h4>
-	</p>
+	<br/>
 <% end %>
-<br/>
 <% if current_user.role == 'Admin' && current_user.blogs.count < 3 %>
 	<%= link_to 'New Blog', new_blog_path %>
-<% elsif current_user.blogs.count < 1 %>
+<% elsif current_user.blogs.count < 1 && current_user.role != 'User' %>
 	<%= link_to 'New Blog', new_blog_path %>	
 <% end %>

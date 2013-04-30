@@ -3,6 +3,8 @@
   <h1><%=t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
                                    :default => "Edit #{model_class.model_name.human}") %></h1>
 </div>
-<%= render :partial => 'form' %>
+<%= render :partial => 'form', :locals => {:urler => blog_post_path} %>
 
-
+<%= render 'shared/poemtext' %>
+<%= render 'shared/image_upload' %>
+<%= render 'shared/wmd_editor' %>

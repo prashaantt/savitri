@@ -1,15 +1,33 @@
-body {
+/*body {
   background-color: #fff;
   color: #333;
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
+  font-family: 'ITC Garamond W01 Light', arial, helvetica, sans-serif;
+  font-size: 14px;
   line-height: 18px;
 }
 
 p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
+  font-family: 'AvenirNextLTW01-Regular', arial, helvetica, sans-serif;
+  font-size: 15px;
   line-height: 18px;
+}
+
+p.result {
+  font-family: 'AvenirNextLTW01-Regular', arial, helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+p.announce {
+  font-size: 24px;
+  font-family: 'Futura W01 Medium';
+}
+
+span.ref {
+  font-family: 'AvenirNextLTW01-Regular', arial, helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 18px;
+  float:right;
 }
 
 pre {
@@ -19,14 +37,15 @@ pre {
 }
 
 a {
+  font-family: 'AvenirNextLTW01-Regular';
   color: #000;
   &:visited {
     color: #666;
   }
   &:hover {
-    color: #fff;
-    background-color: #000;
-  }
+   color: #000;
+   background-color: #eee;
+ }
 }
 
 div {
@@ -67,3 +86,4 @@ div {
     list-style: square;
   }
 }
+*/

@@ -16,26 +16,37 @@
 	<div class="span5">
 		<% unless params[:q].nil? %>
 			<% unless @search.nil? %>
-			<p><b>Total results <%= @search.total %></b></p>
+			<p class="announce">Total results: <%= @search.total %></p>
 			<% end %>
 			<div class="results" style="font-size: 18px">
 				<% @search.each_hit_with_result do |hit,l| %>
 				<% logger.debug { l.inspect }%>
 				<p>
 					<% if l.is_a?(Line) %>
-									||<%= Stanza.find(l.stanza_id).canto.cantono %>.<%= l.no %>||
-					&nbsp;
-
 						<%= l.line %>
+						<span class="ref">
+						<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
+								<%= link_to "||"+anchor_t+"||", l.share_url  %>
+								</span>
 					<% else %>
 						<% if l.is_a?(Book) %>
 						(Book <%= l.no %>) <%= l.name %>
 						<% else %>
 							<% if l.is_a?(Stanza) %>
-								<% l.lines.each do |line| %>
-									<p> ||<%= line.stanza.id %>.<%= line.no %>||
-										<%= line.line %> </p>
+							<% count = 0 %>
+							<p class="result">
+								<% l.lines.each_with_index do |line, index| %>
+									<% (count += 1) %>
+									<%= line.line %>
+									<% if count < l.length.to_i %>
+										<br>
+									<% end %>
 								<% end %>
+								<span class="ref">
+								<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
+								<%= link_to "||"+anchor_t+"||", share_url(l.no)   %>
+								</span>
+							</p>
 							<% end %>
 						<% end %>
 					<% end %>
