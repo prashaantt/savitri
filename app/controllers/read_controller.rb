@@ -8,11 +8,14 @@ class ReadController < ApplicationController
     @canto = Canto.find_by_id_and_book_id(cantoid,bookid)
     @sections = @canto.sections.where(:runningno=>sectionrunningno)
     @stanzas = Stanza.by_section(@sections.first.id).order("no")
+    expires_in(7.days, public: true)
+    if stale?(:last_modified => @canto.updated_at.utc, :etag => @canto)
     respond_to do |format|
       format.html # index.html.erb
       format.js
       format.json { render json: @stanzas }
     end
+  end
   end
 
   def bookcantoshow
