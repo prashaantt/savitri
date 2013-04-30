@@ -28,6 +28,7 @@ group :assets do
   gem 'twitter-bootstrap-rails', '2.2.6'
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-fileupload-rails'
+  gem 'less-rails'
 end
 
 gem 'jquery-rails', '2.1.3'

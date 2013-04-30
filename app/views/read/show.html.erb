@@ -25,7 +25,8 @@
   <div class="span6">
     <div id="cantos">
       <% unless @stanzas.blank? %>
-        <% @canto = Canto.find(Section.find(@stanzas.first.section).canto_id) %>
+        <% @section = Section.find(@stanzas.first.section) %>
+        <% @canto = Canto.find(@section.canto_id) %>
         <h3 class="cantono">Canto <%= @canto.no %></h3>
         <h2 class="cantoname"><%= @canto.title %></h2>
         <div class="sections">
@@ -34,7 +35,7 @@
               <span class="dropdown">
                 <a class="dropdown-toggle" id="dropsection" role="button" data-toggle="dropdown" data-target="#" href="#">
                   <span class="sectionlbl" style="display:none">Section</span>
-                  <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
+                  <%= @section.runningno.to_s + " (" + @section.no.to_s + ")" %>
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu sectionlist" role="menu" aria-labelledby="dropsection">
@@ -49,11 +50,11 @@
               </span>
             <% else %>
               <span class="sectionlbl" style="display:none">Section</span>
-              <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
+              <%= @section.runningno.to_s + " (" + @section.no.to_s + ")" %>
             <% end %>
           </h4>
           <div id="content">
-            <div id="s<%= params[:section_id] %>" class="section">
+            <div id="s<%= @section.runningno %>" class="section">
               <p><%= render @stanzas %></p>
             </div>
           </div>
