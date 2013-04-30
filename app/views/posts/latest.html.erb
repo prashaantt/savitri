@@ -1,0 +1,49 @@
+ <!-- Header and Nav -->
+  <div class="row">
+    <div class="span1">
+      &nbsp;
+    </div>
+      <div class="span9">
+        <h3>Postings on Savitri from Blog Network</h3>
+      </div> <!-- End of 9 area -->
+  </div> <!-- End of Row -->
+
+<div class="row">
+    <div class="span1">
+      &nbsp;
+    </div>
+      <div class="span9">
+          <% @posts.each do |post| %>
+           <div class="row panel">  
+              <div class="span7">
+               <h5><a href="#"><i><%= post.blog.user.name %></i></h5> just posted on <%= link_to post.blog.title, blogs_path(post.blog) %> titled <b><%= link_to post.title, blog_post_path(post.blog,post) %></b>
+                <br/>
+                <%= truncate(strip_tags(post.content).gsub!("&nbsp;", ""), :length=>300) %>
+                ... <b><%= link_to "Read More ..", blog_post_path(post.blog,post) %></b>
+              </div>
+            </div> <!-- Entry Ends -->
+          <% end %>
+      </div> <!-- End of 9 area -->
+<!--     <div class="span2">
+        Videos from YouTube
+         <p><img src="http://placehold.it/100x100&text=[img]" /></p>
+          <p><img src="http://placehold.it/100x100&text=[img]" /></p>
+           <p><img src="http://placehold.it/100x100&text=[img]" /></p>
+      </div>
+ -->  </div> <!-- End of Row -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

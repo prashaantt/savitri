@@ -1,0 +1,22 @@
+<% if @upload.new_record? %>
+  alert("Failed to upload photo: <%= j @upload.errors.full_messages.join(', ').html_safe %>");
+<% else %>
+  $("#preview").append("<%= j render(@upload) %>");
+    var lastvalue="medium";
+	$("input[name='size']").change(function() {
+	  console.log("changed");
+	  if ($("input[name='size']:checked").val() === "small") {
+	    var src=$("#previewid").attr("src").replace(lastvalue,"small");
+	    $("#previewid").attr("src",src);
+	    lastvalue="small";
+	  } else if ($("input[name='size']:checked").val() === "medium") {
+	    var src=$("#previewid").attr("src").replace(lastvalue,"medium");
+	    $("#previewid").attr("src",src);
+	    lastvalue="medium";
+	  } else {
+	    var src=$("#previewid").attr("src").replace(lastvalue,"large");
+	    $("#previewid").attr("src",src);
+	    lastvalue="large";
+	  }
+	});
+<% end %>

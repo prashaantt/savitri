@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  cantono: 1
+  "no": 1
   title: MyString
   description: MyString
 
 two:
-  cantono: 1
+  "no": 1
   title: MyString
   description: MyString

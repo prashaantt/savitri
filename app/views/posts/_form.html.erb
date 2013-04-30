@@ -1,31 +1,37 @@
-<%= form_for @post, :html => { :class => 'form-horizontal' } do |f| %>
- <div class="span10">
-  <%= f.hidden_field :blog_id, :class=> 'text_field', :value=>Blog.find_by_slug(params[:blog_id]).id %>
+<%= form_for @post, :url => urler,:html => {:multipart=>true,  :class => 'form-horizontal' } do |f| %>
+<div class="span10">
+  <%= f.hidden_field :blog_id, :class=> 'text_field', :value=>@post.blog_id %>
   <div class="control-group">
     <%= f.label :title, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :title, :class => 'text_field' %>
     </div>
   </div>
-  
   <div class="control-group">
     <%= f.label :content, :class => 'control-label' %>
-    <div class="controls ">
-      <%= f.text_area :content, :class => 'redactor rowcol' , :id=>'redactor_content', :rows => "100"%>
+    <div class='wmd-panel'>
+      <div class="controls">
+      <div id='wmd-button-bar'></div>
+        <%= f.text_area :md_content, :class=> "wmd-input", :id=>"wmd-input" %>
+        <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+        <%= f.text_area :content, :style=> "display: none" %>        
+      </div>
     </div>
-
-  </div>
+    </div>
   <div class="control-group">
-    <%= f.label :tag_list, "Tags (Separated by Commas)",:class => 'control-label' %><br />
-    <%= f.text_field :tag_list, :class => 'text_area' %>
-  </div>
- 
+    <%= f.label :tag_list, "Tags (Separated by Commas)",:class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :tag_list, :class => 'text_area' %>
     </div>
   </div>
-  <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                posts_path, :class => 'btn' %>
-  </div>
-</div>  
+   <hr />
+</div>
+</div>
+<div class="form-actions">
+  <%= f.submit nil, :class => 'btn btn-primary', :id=>"new-blog-post" %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")), blogs_path, :class => 'btn' %>
+</div>
+</div>
+ 
+</div>
 <% end %>

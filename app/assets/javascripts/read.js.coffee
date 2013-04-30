@@ -12,10 +12,14 @@ $ ->
         search: "/notess"
 
       annotationData:
-        uri: document.URL
+        uri: window.location.pathname
         prefix: "/"
 
       loadFromSearch:
         limit: 20
-        uri: window.location.href
+        uri: window.location.pathname
 
+$ ->
+  $("#bk1").removeClass("collapsed");
+  $("#collapse1").addClass("in");
+  $("#collapse1").css("height","auto");

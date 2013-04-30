@@ -2,7 +2,8 @@
 
 <table>
   <tr>
-    <th>Stanzno</th>
+    <th>no</th>
+    <th>Section (No)</th>
     <th>Canto (No) Name</th>
     <th></th>
     <th></th>
@@ -10,10 +11,12 @@
 
 <% @stanzas.each do |stanza| %>
   <tr>
-    <td><%= stanza.stanzno %></td>
-     <% @canto = Canto.find(stanza.canto_id) %>
-    <td>(<%= @canto.cantono %>)
-      <%= Canto.find(stanza.canto_id).title %>
+    <td><%= stanza.no %></td>
+     <% @section = Section.find(stanza.section_id) %>
+     <td><%= @section.no %></td>
+     <% @canto = Canto.find(@section.canto_id) %>
+    <td>(<%= @canto.no %>)
+      <%= @canto.title %>
     </td>
     <td><%= link_to 'Show', stanza %></td>
     <td>

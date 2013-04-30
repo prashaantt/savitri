@@ -21,7 +21,7 @@
       <!-- Carousel items -->
       <div class="carousel-inner">
         <% @posts.each do |post| %>
-        <div class="item<%=cycle(" active","","")%>">
+        <div class="item<%=cycle(" active","","")%>" id="redactor_content">
           <h5><%= link_to post.title, blog_post_path(post.blog,post) %></h5>
           <%= post.content.html_safe.gsub(/\r\n?/,"<br/>").html_safe %>
         </div>
@@ -63,7 +63,7 @@
       <% @stanzafirst.lines.each do |line| %>
       <%= line.line %> <br/>
       <% end %>
-      Canto <%= @stanzafirst.canto.cantono %> Book <%= @stanzafirst.canto.book.no %></i></p>
+      ||<%= @stanzafirst.section %> . <%= @stanzafirst.no %>||</i></p>
     </div>
     <div class="span4">
       &nbsp;

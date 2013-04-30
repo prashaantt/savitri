@@ -1,12 +1,74 @@
 // Place all the styles related to the read controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.readsavitri p{
-	font-family: 'Play', sans-serif;
-	font-size: 15px;
-	line-height:200%;
+
+.activeaccordion {
+  background: #FDF1CA;
 }
 
-h2 {
-	font-family: 'Courgette', cursive;
+.navbook {
+  font-family: 'Myriad W01 Lt';
+  color: black;
+}
+
+.navcanto a {
+  font-family: 'Myriad W01 Lt';
+  color: black;
+}
+
+.rowread {
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+
+.cantono {
+  font-size: 150%;
+  line-height: 1em;
+}
+
+.cantoname {
+  font-size: 175%;
+  line-height: 1.2em;
+}
+
+.sectionno {
+  font-size: 125%;
+  margin-top: 4%;
+  margin-bottom: 5%;
+
+  #dropsection {
+    color: black;
+    text-decoration: none;
+  }
+
+  #dropsection:hover {
+    color: #08C;
+  }
+
+  .sectionlist {
+    font-size: 80%;
+    min-width: 0px;
+  }
+}
+
+#cantos {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.stanza {
+  margin-bottom: 2%;
+}
+
+.line {
+  font-family: 'Kepler W01 Lt';
+  font-size: 125%;
+  line-height: 1.4em;
+  text-rendering: optimizeLegibility;
+}
+
+.reference > a {
+  font-family: Georgia;
+  font-size: 100%;
+  float: right;
 }

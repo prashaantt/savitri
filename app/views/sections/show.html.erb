@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>No:</b>
+  <%= @section.no %>
+</p>
+
+
+<p>
+  <b>Name:</b>
+  <%= @section.name %>
+</p>
+
+
+<% if can? :update, @section %>
+<%= link_to 'Edit', edit_section_path(@section) %> |
+<% end %>
+<%= link_to 'Back', sections_path %>

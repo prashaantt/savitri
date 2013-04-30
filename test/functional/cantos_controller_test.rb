@@ -18,7 +18,7 @@ class CantosControllerTest < ActionController::TestCase
 
   test "should create canto" do
     assert_difference('Canto.count') do
-      post :create, canto: { cantono: @canto.cantono, description: @canto.description, title: @canto.title }
+      post :create, canto: { no: @canto.no, description: @canto.description, title: @canto.title }
     end
 
     assert_redirected_to canto_path(assigns(:canto))
@@ -35,7 +35,7 @@ class CantosControllerTest < ActionController::TestCase
   end
 
   test "should update canto" do
-    put :update, id: @canto, canto: { cantono: @canto.cantono, description: @canto.description, title: @canto.title }
+    put :update, id: @canto, canto: { no: @canto.no, description: @canto.description, title: @canto.title }
     assert_redirected_to canto_path(assigns(:canto))
   end
 

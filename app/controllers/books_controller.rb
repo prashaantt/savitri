@@ -4,7 +4,7 @@ class BooksController < ApplicationController
   load_and_authorize_resource
   
   def index
-    @books = Book.order(:no)
+    @books = Book.includes("cantos").order(:no)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,11 +15,12 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
-    @book = Book.find_by_no(params[:id])
+    @book = Book.includes("cantos").find_by_no(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @book }
+      #format.json { render json: @book }
+      format.json {render :json => @book.to_json(:include => { :cantos => { :only => :no } })}
     end
   end
 
