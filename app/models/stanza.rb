@@ -15,7 +15,7 @@ class Stanza < ActiveRecord::Base
   # end
 
   searchable do 
-    text :no
+    text :share_url
     text :lines do |l|
       l.lines.map {|l| l.line}
     end
@@ -53,7 +53,7 @@ class Stanza < ActiveRecord::Base
   # end
 
   def share_url
-        
+        section.to_s + "." + runningno.to_s
   end
 
   def self.random

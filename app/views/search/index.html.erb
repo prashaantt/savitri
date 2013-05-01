@@ -1,64 +1,67 @@
 <div class="row">
-	<div class="span3">
-		&nbsp;
-	</div>
-	<div class="span5">
+	<div class="span2 offset1">
+		<h1 style="margin-top:0px;">Search</h1></div>
+	<div class="span6">
 		<%= render 'search' %>
 	</div>
-	<div class="span3">
-		&nbsp;
+</div>
+<hr/>
+<div class="row">
+	<div class="span2 offset1">
+		<% unless params[:q].nil? %>
+		<%= render 'facet' %>
+		<% end %>
+	</div>
+	<div class="span6">
+		<% unless params[:q].nil? %>
+		<% unless @search.nil? %>
+		<p class="announce">Total <%= @search.total %> results</p>
+		<% end %>
+		<div class="results">
+			<% @search.each_hit_with_result do |hit,l| %>
+			<% logger.debug { l.inspect }%>
+			<div class="result">
+				<% if l.is_a?(Line) %>
+				<%= l.line %>
+				<span class="ref">
+					<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
+					<%= link_to "||"+anchor_t+"||", l.share_url  %>
+				</span>
+				<% else %>
+				<% if l.is_a?(Book) %>
+				(Book <%= l.no %>) <%= link_to l.name,'read/'+l.no.to_s+'/1/1' %>
+				<% else %>
+				<% if l.is_a?(Stanza) %>
+				<% count = 0 %>
+				
+					<% l.lines.each_with_index do |line, index| %>
+					<% (count += 1) %>
+					<%= line.line %>
+					<% if count < l.length.to_i %>
+					<br>
+					<% end %>
+					<% end %>
+					<span class="ref">
+						<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
+						<%= link_to "||"+anchor_t+"||", share_url(l.no)   %>
+					</span>
+				
+				<% else %>
+				<% if l.is_a?(Post) %>
+				<div class="result-title">
+					<h3><%= link_to l.title, blog_post_path(l.blog,l) %></h3>
+				</div>
+				<div class="result-text">
+					<%= strip_tags(l.content).first(150).html_safe %>
+				</div>
+				<% end %>
+				<% end %>
+				<% end %>
+				<% end %>
+			</div>
+			<% end %>
+			<%= paginate @search.results, :param_name => :page %>
+		</div>
+		<% end %>	
 	</div>
 </div>
-<div class="row">
-	<div class="span3">
-		&nbsp;
-	</div>
-	<div class="span5">
-		<% unless params[:q].nil? %>
-			<% unless @search.nil? %>
-			<p class="announce">Total results: <%= @search.total %></p>
-			<% end %>
-			<div class="results" style="font-size: 18px">
-				<% @search.each_hit_with_result do |hit,l| %>
-				<% logger.debug { l.inspect }%>
-				<p>
-					<% if l.is_a?(Line) %>
-						<%= l.line %>
-						<span class="ref">
-						<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
-								<%= link_to "||"+anchor_t+"||", l.share_url  %>
-								</span>
-					<% else %>
-						<% if l.is_a?(Book) %>
-						(Book <%= l.no %>) <%= l.name %>
-						<% else %>
-							<% if l.is_a?(Stanza) %>
-							<% count = 0 %>
-							<p class="result">
-								<% l.lines.each_with_index do |line, index| %>
-									<% (count += 1) %>
-									<%= line.line %>
-									<% if count < l.length.to_i %>
-										<br>
-									<% end %>
-								<% end %>
-								<span class="ref">
-								<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
-								<%= link_to "||"+anchor_t+"||", share_url(l.no)   %>
-								</span>
-							</p>
-							<% end %>
-						<% end %>
-					<% end %>
-				</p>
-				<% end %>
-				<%= paginate @search.results, :param_name => :page %>
-				</div>
-		<% end %>	
-		</div>
-		<div class="span3">
-			<% unless params[:q].nil? %>
-			<%= render 'facet' %>
-			<% end %>
-		</div>
-	</div>
