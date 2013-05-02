@@ -1,35 +1,46 @@
 <!-- dynamic fetch of books and cantos -->
+
 <div class="row rowread">
-  <div class="span3">
-    <div class="accordion" id="accordion2">
+          <div class="span3">
+        <div class="accordion" id="accordion2">
       <% Book.all.each do |book| %>
       <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle collapsed navbook" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= book.id %>" id="bk1"><%= book.name %></a>
             </div>
-            <div id="collapse<%= book.id %>" class="accordion-body collapse" style="height: 0px; ">
+            <div id="collapse<%= book.id %>" class="accordion-body collapse">
               <div class="accordion-inner">
                  <ul class="nav nav-tabs nav-stacked navcanto">
                   <% book.cantos.each do |canto| %>
-                    <li id="leftnav">
-                      <a href="<%= '/read/'+book.id.to_s+"/"+canto.id.to_s+"/1" %>", class="<%= is_active_link params,book.id.to_s,canto.id.to_s %>"><%= canto.title %></a>
+                    
+                    <li id="leftnav dropdown-submenu" >
+                      <a  href="<%= '/read/'+book.id.to_s+"/"+canto.id.to_s+"/1" %>", class="<%= is_active_link params,book.id.to_s,canto.id.to_s %>"><%= canto.title %></a>
                     </li>
-                  <% end %>
-                 </ul>
+                    <% end %>
+                    </ul>
               </div>
             </div>
           </div>
         <% end %>
     </div>
   </div>
+<!-- '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1] -->
   <div class="span6">
-    <div id="cantos">
+  <div class="tabbable tabs-left">
+    <ul class="nav nav-tabs visible-desktop" style="margin-top:15%;">
+    <% @canto = Canto.find(params[:canto_id]) %>
+    <% @canto.sections.each do |section| %>
+    <li class="<%= is_active_section params,section.runningno.to_s %>">
+      <%= link_to 'Section'+ section.runningno.to_s + ' ('+ section.no.to_s + ')',"/read/" + @canto.book.no.to_s + "/" + @canto.no.to_s + "/" + section.runningno.to_s %></li>
+    <% end %>
+    </ul>
+    <div id="cantos" class="tab-content">
       <% unless @stanzas.blank? %>
         <% @canto = Canto.find(Section.find(@stanzas.first.section).canto_id) %>
         <h3 class="cantono">Canto <%= @canto.no %></h3>
         <h2 class="cantoname"><%= @canto.title %></h2>
-        <div class="sections">
-          <h4 class="sectionno">
+          <div class="sections">
+          <h4 class="sectionno hidden-desktop">
             <% if @canto.sections.length > 1 %>
               <span class="dropdown">
                 <a class="dropdown-toggle" id="dropsection" role="button" data-toggle="dropdown" data-target="#" href="#">
@@ -52,6 +63,7 @@
               <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
             <% end %>
           </h4>
+           
           <div id="content">
             <div id="s<%= params[:section_id] %>" class="section">
               <p><%= render @stanzas %></p>
@@ -62,8 +74,11 @@
         <h2><%= @canto.title %></h2>
       <% end %>
     </div>
+    </div>
   </div>
-</div>
+ </div>
+ 
+
 <script type="text/javascript">
   //show the static text "Section" after page load
   $(".sectionlbl").show();
