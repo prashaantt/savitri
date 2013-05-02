@@ -1,12 +1,38 @@
 // Place all the styles related to the Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
- #wrapper {
-      width: 620px;
-    }
 
-#blog-title{
-	color: blue;
+.blog-title {
+  text-align: center;
+}
+
+.author {
+  font-family: "Kepler W01 Lt It", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 120%;
+  color: #999999;
+  margin-top: 2%;
+  margin-bottom: 3%;
+}
+
+.overrideanchor {
+  font-family: "Kepler W01 Lt It", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-decoration: underline !important;
+}
+
+.overrideinheritanchor {
+  font-family: inherit;
+  text-decoration: underline !important;
+}
+
+.overrideanchor:hover,
+.overrideinheritanchor:hover {
+  text-decoration: none !important;
+}
+
+#comments {
+  padding-top: 55px;
+  margin-top: -55px;
+  display: inline-block;
 }
 
 #tag_cloud {

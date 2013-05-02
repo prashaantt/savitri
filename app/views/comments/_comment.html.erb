@@ -1,17 +1,16 @@
 <div class="form-actions">
- <p>
-  <% user = User.find(comment.user_id) %>
-  <%= link_to user.name , profile_path(user) %> <i>commented as</i>
- </p>
+  <h5 class="author">
+    <% user = User.find(comment.user_id) %>
+    <%= link_to user.name , profile_path(user), {:class => "overrideanchor"} %> on <%= comment.updated_at.strftime("%a, %b %d %Y at %l:%M %p") %> said:
+  </h5>
   <p>
-  <%= comment.body %>
+    <%= comment.body %>
   </p>
-  <p>
-   on <%= comment.updated_at %>
-  </p>
-  <% if can? :destroy, comment %>
-	<%= link_to 'Remove Comment', [comment.post, comment],
-	:confirm => 'Are you sure?',
-	:method => :delete %>  
+  <span style="float:right">
+    <% if can? :destroy, comment %>
+    	<%= link_to 'Delete', [comment.post, comment], {:class => "overrideinheritanchor"},
+    	:confirm => 'Are you sure?',
+    	:method => :delete %>  
+    <% end %>
+  </span>
 </div>
-<% end %>
