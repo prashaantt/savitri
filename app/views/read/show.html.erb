@@ -1,5 +1,4 @@
 <!-- dynamic fetch of books and cantos -->
-
 <div class="row rowread">
           <div class="span3">
         <div class="accordion" id="accordion2">
@@ -10,11 +9,17 @@
             </div>
             <div id="collapse<%= book.id %>" class="accordion-body collapse">
               <div class="accordion-inner">
-                 <ul class="nav nav-tabs nav-stacked navcanto">
+                  <ul class="nav nav-tabs nav-stacked navcanto">
                   <% book.cantos.each do |canto| %>
-                    
-                    <li id="leftnav dropdown-submenu" >
+                    <li id="leftnav dropdown-submenu" class="dropdown-submenu">
                       <a  href="<%= '/read/'+book.id.to_s+"/"+canto.id.to_s+"/1" %>", class="<%= is_active_link params,book.id.to_s,canto.id.to_s %>"><%= canto.title %></a>
+                        <ul class="dropdown-menu hidden-tablet hidden-phone">
+                          
+                          <% canto.sections.each do |section| %>
+                          <li class="<%= is_active_section params,section.runningno.to_s %>">
+                            <%= link_to 'Section'+ section.runningno.to_s + ' ('+ section.no.to_s + ')',"/read/" + @canto.book.no.to_s + "/" + @canto.no.to_s + "/" + section.runningno.to_s %></li>
+                          <% end %>
+                          </ul>
                     </li>
                     <% end %>
                     </ul>
@@ -24,17 +29,10 @@
         <% end %>
     </div>
   </div>
+
 <!-- '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1] -->
   <div class="span6">
-  <div class="tabbable tabs-left">
-    <ul class="nav nav-tabs visible-desktop" style="margin-top:15%;">
-    <% @canto = Canto.find(params[:canto_id]) %>
-    <% @canto.sections.each do |section| %>
-    <li class="<%= is_active_section params,section.runningno.to_s %>">
-      <%= link_to 'Section'+ section.runningno.to_s + ' ('+ section.no.to_s + ')',"/read/" + @canto.book.no.to_s + "/" + @canto.no.to_s + "/" + section.runningno.to_s %></li>
-    <% end %>
-    </ul>
-    <div id="cantos" class="tab-content">
+     <div id="cantos" class="tab-content">
       <% unless @stanzas.blank? %>
         <% @canto = Canto.find(Section.find(@stanzas.first.section).canto_id) %>
         <h3 class="cantono">Canto <%= @canto.no %></h3>
@@ -55,7 +53,7 @@
                         Section <%= section.runningno.to_s + " (" + @canto.sections.where(:runningno=>section.runningno).first.no.to_s + ")" %>
                       <% end %>
                     </li>
-                  <% end %>
+                    <% end %>
                 </ul>
               </span>
             <% else %>
@@ -74,8 +72,7 @@
         <h2><%= @canto.title %></h2>
       <% end %>
     </div>
-    </div>
-  </div>
+   </div>
  </div>
  
 
