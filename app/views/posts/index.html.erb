@@ -1,19 +1,19 @@
 <%- model_class = Post -%>
 <!-- Main Page Content -->
 <div class="row">
-  <div class="span10 offset1">
-    <h1 class="blog-title">
+  <div class="span6 offset3">
+    <h1 class="page-header">
       <% @blog = Blog.find_by_slug(params[:blog_id]) %>
       <%= link_to @blog.title, blog_posts_path %><br>
-      <small><%=  @blog.subtitle %></small>
-    </h1><hr>
+      <small class="blog-subtitle"><%=  @blog.subtitle %></small>
+    </h1>
   </div>
 </div>
 <!-- Main Blog Content -->
 <div class="row">
-  <div class="span7 offset1">
+  <div class="span6 offset3">
     <% @posts.each do |post| %>
-      <article>
+      <section class="snippet">
         <h2><%= link_to post.title,  blog_post_path(post.blog,post) %>
          <% if can? :update, post %>
          <%= link_to 'Edit post', edit_blog_post_path(post.blog,post), :class => 'btn btn-mini' %>
@@ -25,16 +25,15 @@
          :class => 'btn btn-mini btn-danger' %>
          <% end %>
        </h2>
-       <h5 class="author">by <%= link_to post.blog.user.username, post.blog.user, {:class => "overrideanchor"} %> on <%= post.created_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize post.comments.count, "comment") , blog_post_path(post.blog, post) + "#comments", {:class => "overrideanchor"} %></h5>
+       <h5 class="blog-author">by <%= link_to post.blog.user.username, post.blog.user, {:class => "overrideanchor"} %> on <%= post.created_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize post.comments.count, "comment") , blog_post_path(post.blog, post) + "#comments", {:class => "overrideanchor"} %></h5>
         <%= post.content.html_safe.gsub(/\r\n?/,"").split(" ").first(200).join(" ").html_safe %>... <%= link_to "Continued", blog_post_path(post.blog,post), {:class => "overrideanchor"} %>
-      </article>
       <!-- <comments> <%= link_to (pluralize post.comments.count, "Comment") , blog_post_path(post.blog,post) %>
       </comments> -->
-      <hr>
+      </section>
     <% end %>
   <div id="paginator">
-  <%= paginate @posts, :param_name => :page %>
-</div>
+    <%= paginate @posts, :param_name => :page %>
+  </div>
 </div>
 <!-- Main Blog Content End -->
 <!--  SideBar Begin -->
