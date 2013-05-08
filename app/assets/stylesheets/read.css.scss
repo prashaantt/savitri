@@ -3,8 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .in{
-  overflow: visible;
-}
+  overflow: visible !important;
+  }
 
 .activeaccordion {
   background: #FDF1CA;
@@ -75,4 +75,13 @@
   font-family: Georgia;
   font-size: 100%;
   float: right;
+}
+
+#dropdown{
+webkit-border-radius: 0 6px 6px 6px;
+-moz-border-radius: 0 6px 6px 6px;
+border-radius: 0 6px 6px 6px;
+-webkit-border-radius: 0 6px 6px 6px;
+-moz-border-radius: 0 6px 6px 6px;
+border-radius: 0 6px 6px 6px;
 }
