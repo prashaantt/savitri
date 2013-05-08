@@ -13,8 +13,36 @@
   <div class="span6" role="content" id="redactor_content">
     <article>
       <h2><a href="#"><%= link_to @post.title,  blog_post_path(@post.blog,@post) %></a></h2>
-      <h5 class="blog-author">by <%= link_to @post.blog.user.username, @post.blog.user, {:class => "overrideanchor"} %> on <%= @post.created_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize @post.comments.count, "comment"), "#comments", {:class => "overrideanchor"} %></h5>
-      <%= @post.content.html_safe.gsub(/\r\n?/,"").html_safe %>                 
+      <div>
+        <span class="pull-right">
+          <% if can? :destroy, @post.blog %>
+            <%= link_to 'Edit', edit_blog_post_path(@post.blog,@post), :class => 'btn btn-mini btn-warning' %>
+          <% end %>
+          <% if can? :destroy, @post %>
+            <%= link_to 'Delete', blog_post_path(@post.blog,@post),
+              :method => :delete,
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-mini btn-danger' %>
+          <% end %>
+        </span>
+        <h5 class="blog-author">by <%= link_to @post.blog.user.username, @post.blog.user, {:class => "overrideanchor"} %> on <%= @post.created_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize @post.comments.count, "comment"), "#comments", {:class => "overrideanchor"} %>
+        </h5>
+      </div>
+      <%= @post.content.html_safe.gsub(/\r\n?/,"").html_safe %>
+      <% if @post.updated_at != @post.created_at %>
+        <p class="author muted" style="padding-top: 20px">
+          (This post was updated on <%= @post.updated_at.strftime("%b %d %Y at %l:%M %p") %>)
+        </p>
+      <% end %>
+      <% tag_counts = @post.tag_counts %>
+      <% if tag_counts.length > 0 %>
+        <div class="tags">
+          <span class="badge">Tagged as</span>
+          <% tag_cloud tag_counts, %w[s m l] do |tag| %>
+            <span><%= link_to tag.name, tag_path(params[:blog_id],tag.name), :class => "label label-info" %></span>
+          <% end %>
+        </div>
+      <% end %>
     </article>
     <section class="comments">
       <h3 id="comments"><%= pluralize(@post.comments.count, "comment") %></h3>
@@ -29,33 +57,10 @@
       </div>
       <% end %>
     </section>
-  <!-- </dl> -->
   </div>
 <!-- Main Blog Content End -->
 <!--  SideBar Begin -->
-<div class="span3">
-  <% @blog = Blog.find_by_slug(params[:blog_id]) %>
-  <% if can? :update, @blog %>
-    <h3>Manage Blog</h3>
-    <%= link_to 'New Post', new_blog_post_path, :class => 'btn btn-info' %>
-    <% if can? :destroy, @post.blog %>
-      <%= link_to 'Edit Post', edit_blog_post_path(@post.blog,@post), :class => 'btn btn-warning' %>
-    <% end %>
-    <% if can? :destroy, @post %>
-      <%= link_to 'Delete Post', blog_post_path(@post.blog,@post),
-        :method => :delete,
-        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-        :class => 'btn btn-danger' %>
-    <% end %>
-  <% end %>
-  <h5>Tagged as</h5>
-  <div id="tag_cloud">
-    <ul>
-      <% tag_cloud @post.tag_counts, %w[s m l] do |tag, css_class| %>
-        <li><%= link_to tag.name, tag_path(params[:blog_id],tag.name), class: css_class %></li>
-      <% end %>
-    </ul>
-  </div>
-  <br>
-</div>
+<!-- <div class="span3">
+</div> -->
 <!--  SideBar End -->
+</div>
