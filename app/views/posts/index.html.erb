@@ -14,21 +14,20 @@
   <div class="span6 offset3">
     <% @posts.each do |post| %>
       <section class="snippet">
-        <h2><%= link_to post.title,  blog_post_path(post.blog,post) %>
-         <% if can? :update, post %>
-         <%= link_to 'Edit post', edit_blog_post_path(post.blog,post), :class => 'btn btn-mini' %>
-         <% end %>
-         <% if can? :destroy, post %>
-         <%= link_to 'Delete post', blog_post_path(post.blog,post),
-         :method => :delete,
-         :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-         :class => 'btn btn-mini btn-danger' %>
-         <% end %>
-       </h2>
-       <h5 class="blog-author">by <%= link_to post.blog.user.username, post.blog.user, {:class => "overrideanchor"} %> on <%= post.created_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize post.comments.count, "comment") , blog_post_path(post.blog, post) + "#comments", {:class => "overrideanchor"} %></h5>
-        <%= post.content.html_safe.gsub(/\r\n?/,"").split(" ").first(200).join(" ").html_safe %>... <%= link_to "Continued", blog_post_path(post.blog,post), {:class => "overrideanchor"} %>
-      <!-- <comments> <%= link_to (pluralize post.comments.count, "Comment") , blog_post_path(post.blog,post) %>
-      </comments> -->
+        <h2><%= link_to post.title,  blog_post_path(post.blog,post) %></h2>
+        <div>
+          <span class="pull-right">
+            <% if can? :update, post %>
+              <%= link_to 'Edit post', edit_blog_post_path(post.blog,post), :class => 'btn btn-mini btn-warning' %>
+            <% end %>
+          </span>
+          <h5 class="blog-author">by <%= link_to post.blog.user.username, post.blog.user, {:class => "overrideanchor"} %> on <%= post.created_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize post.comments.count, "comment") , blog_post_path(post.blog, post) + "#comments", {:class => "overrideanchor"} %></h5>
+        <% post_content = post.content.gsub(/\r\n?/,"").html_safe %>
+        <% if post_content.length <= 200 %>
+          <%= post_content %>
+        <% else %>
+          <%= post_content.split(" ").first(200).join(" ").html_safe %>[...] <%= link_to "Continued", blog_post_path(post.blog,post), {:class => "overrideanchor"} %>
+        <% end %>
       </section>
     <% end %>
   <div id="paginator">
@@ -39,17 +38,23 @@
 <!--  SideBar Begin -->
 <div class="span3">
   <% if can? :update, @blog %>
-  <h3>Manage Blog</h3>
-  <%= link_to 'New Post', new_blog_post_path,
-  :class => 'btn' %>
+  <div class="well span2">
+    <div class="sidebar-title"><span class="badge">Manage blog</span></div><br>
+    <div class="btn-grp sidebar-title">
+      <%= link_to 'Make new post', new_blog_post_path, :class => 'btn btn-primary' %>
+    </div>
+  </div>
   <% end %>
-  <h3> Tag Cloud </h3>
-  <div id="tag_cloud">
-   <ul>
-    <% tag_cloud @posts.tag_counts, %w[s m l] do |tag, css_class| %>
-    <li><%= link_to tag.name, tag_path(params[:blog_id],tag.name), class: css_class %></li>
-    <% end %>
-  </ul>
-</div>
+  <% tag_counts = @posts.tag_counts.order('tags_count desc').first(10) %>
+  <% if tag_counts.length > 0 %>
+    <div class="well span2 visible-desktop">
+      <div class="sidebar-title"><span class="badge">Top tags</span></div><br>
+      <% tag_cloud tag_counts, %w[s m l] do |tag| %>
+        <%= link_to tag.name, tag_path(params[:blog_id], tag.name), :class => "label label-info tag" %>
+        <span class="badge pull-right"><%= tag.count %></span>
+        <br>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 <!-- End Sidebar Content -->
