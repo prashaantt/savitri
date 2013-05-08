@@ -16,12 +16,14 @@ class PostsController < ApplicationController
     end
     respond_to do |format|
       format.html # index.html.erb
+      format.atom { render :layout => false }
+      format.rss { redirect_to blog_posts_path(:format => :atom), :status => :moved_permanently }
       format.json { render json: @posts }
     end
   end
 
   def latest
-    @posts = Post.order("created_at").limit(4)
+    @posts = Post.order("created_at DESC").limit(4)
     #client = YouTubeIt::Client.new(:dev_key => "AI39si46cUDp-C9EgXCdXZk3zwArq-lZwEDhmscmsAYeQmU-2UOiYXw9LlkmnJw5OyAbtT3-m4VtVcmdUPwN0DJyV4f3ceDFyg")
   end
 
