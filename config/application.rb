@@ -59,5 +59,8 @@ module Savitri
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # acts_as_taggable_on config
+    ActsAsTaggableOn.force_lowercase = true
   end
 end

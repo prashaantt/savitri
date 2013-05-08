@@ -69,18 +69,24 @@ article {
   border-top: 1px solid #eee;
 }
 
+.sidebar-title {
+  text-align: center;
+}
+
+.tag {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tags {
+  padding-top: 20px;
+}
+
 /*.comment:nth-child(odd) {
   background-color: #f9f9f9;
 }*/
-
-#tag_cloud {
-	//width: 400px;
-	line-height: 1.6em;
-	.s {font-size: 0.8em};
-	.m {font-size: 1.2em};
-	.l {font-size: 1.6em; text: bold;};
-}
-
 
 .table td, .table th {
     border: none;
