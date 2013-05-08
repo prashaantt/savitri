@@ -17,10 +17,14 @@ module ApplicationHelper
  		claz
  	end
 
-  def is_active_section(params,no)
+  def is_active_section(params,no,cantono)
   	ac=""
   	if params[:section_id].eql? no
-  		ac="active"
+      if params[:canto_id].eql? cantono
+  		  ac="active"
+      else
+        ac="nonactive"
+      end
   	else
   		ac="nonactive"
   	end
