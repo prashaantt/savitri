@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .in {
-  overflow: visible !important;
+  overflow: visible;
 }
 
 .activeaccordion {
@@ -39,6 +39,7 @@
   font-size: 125%;
   margin-top: 4%;
   margin-bottom: 5%;
+  }
 
   #dropsection {
     color: black;
@@ -47,14 +48,13 @@
 
   #dropsection:hover {
     color: #08C;
-
   }
 
   .sectionlist {
     font-size: 80%;
     min-width: 0px;
   }
-}
+
 
 #cantos {
   margin-left: 5%;
@@ -81,12 +81,16 @@
 
 #roundcorner{
 min-width: 0px;
-webkit-border-radius: 0 6px 6px 6px;
--moz-border-radius: 0 6px 6px 6px;
-border-radius: 0 6px 6px 6px;
--webkit-border-radius: 0 6px 6px 6px;
--moz-border-radius: 0 6px 6px 6px;
-border-radius: 0 6px 6px 6px;
+webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+border-radius: 6px;
+-webkit-border-radius:6px;
+-moz-border-radius: 6px;
+border-radius:  6px;
+}
+
+.caret{
+  position:relative;
 }
 
  
