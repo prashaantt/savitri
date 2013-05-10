@@ -13,14 +13,14 @@
       <div class='wmd-panel'>
         <div class="controls">
           <div id='wmd-button-bar'><span id="preview" class="btn btn-info pull-right">Preview</span></div>
-          <%= f.text_area :md_content, :class=> "span6", :id=>"wmd-input", :style => "resize: none" %>
-          <div id="wmd-preview" class="wmd-preview well" style="display: none; min-height: 490px"></div>
+          <%= f.text_area :md_content, :class=> "span6", :id=>"wmd-input", :style => "resize: none; margin-top: 20px" %>
+          <div id="wmd-preview" class="wmd-preview well" style="display: none; min-height: 490px; margin-top: 20px"></div>
           <%= f.text_area :content, :style=> "display: none" %>        
         </div>
       </div>
     </div>
     <div class="control-group">
-      <%= f.label :tag_list, "Tags (Separated by Commas)",:class => 'control-label' %>
+      <%= f.label :tag_list, "Tags (separated by commas)",:class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :tag_list, :class => 'text_area span6' %>
       </div>
