@@ -14,7 +14,7 @@
         <div class="controls">
           <div id='wmd-button-bar'><span id="preview" class="btn btn-info pull-right">Preview</span></div>
           <%= f.text_area :md_content, :class=> "span6", :id=>"wmd-input", :style => "resize: none" %>
-          <div id="wmd-preview" class="wmd-preview well" style="display: none"></div>
+          <div id="wmd-preview" class="wmd-preview well" style="display: none; min-height: 490px"></div>
           <%= f.text_area :content, :style=> "display: none" %>        
         </div>
       </div>
@@ -39,11 +39,13 @@
     if ($("#wmd-input").is(":visible")) {
       $("#wmd-input").hide();
       $("#wmd-preview").show()
+      $(this).removeClass("btn-info").addClass("btn-warning");
       $(this).text("Edit");
     } else {
       $("#wmd-preview").hide();
       $("#wmd-input").show();
       $(this).text("Preview");
+      $(this).removeClass("btn-warning").addClass("btn-info");
     }
   });
 </script>
