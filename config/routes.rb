@@ -23,6 +23,8 @@ Savitri::Application.routes.draw do
   get '/search' =>  "lines#index"
   resources :blogs
   resources :uploads
+  
+  resources :signed_urls, :only => "index"
 
   match "/store/notebooks" => "notebooks#create"
 

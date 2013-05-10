@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(:version => 20130506182451) do
   create_table "uploads", :force => true do |t|
     t.integer  "post_id"
     t.string   "photo"
+    t.string   "music"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
