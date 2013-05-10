@@ -93,4 +93,37 @@ border-radius:  6px;
   position:relative;
 }
 
- 
+.separator{
+  width:5px;
+  float:left;
+  font-size:203%;
+  margin: 5px 0 0 0;
+  color:#808080;
+}
+
+.marginleft{
+    margin-left:-140%;
+}
+
+@media (min-width: 200px) and (max-width:550px){
+  body {
+    padding:0px;
+    margin:0px;
+  }
+}
+
+@media (min-width: 200px) and (max-width:550px){
+.navbar{
+  margin-left:auto;
+  margin-right:auto;
+}
+}
+
+.tag{
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+
+}

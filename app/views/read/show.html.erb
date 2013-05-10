@@ -15,7 +15,7 @@
                 <a  href="<%= '/read/'+book.id.to_s+"/"+canto.id.to_s+"/1" %>", class="<%= is_active_link params,book.id.to_s,canto.id.to_s %>"><%= canto.title %></a>
                 <ul id="roundcorner" class="dropdown-menu visible-desktop;">
                   <% canto.sections.each do |section| %>
-                  <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>" >
+                  <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>">
                     <%= link_to 'Section '+ section.runningno.to_s + ' ('+ section.no.to_s + ')',"/read/" + @canto.book.no.to_s + "/" +canto.no.to_s + "/" + section.runningno.to_s %>
                   </li>
                   <% end %>
@@ -31,7 +31,7 @@
     <div class="visible-phone" id="cantos">
       <h4 class="sectionno">
         <span class="dropdown">
-          <a class="dropdown-toggle" id="dropsection" data-toggle="dropdown" href="#">
+          <a class="dropdown-toggle " id="dropsection" data-toggle="dropdown" href="#">
             <span class="sectionlbl" style="display:none">Book</span>
             <%= params[:book_id]%>
             <span class="caret"></span>
@@ -39,13 +39,14 @@
           <ul class="dropdown-menu sectionlist">
             <% Book.all.each do |book| %>
             <li>
-              <%= link_to 'Book '+book.no.to_s+': '  + book.name.to_s, '/read/'+book.no.to_s+'/1/1' %>
+              <%= link_to 'Book '+book.no.to_s+': '  + book.name.to_s, '/read/'+book.no.to_s+'/1/1', :class=>"tag" %>
             </li>
             <% end %>
             <!-- dropdown menu links -->
           </ul>
         </h4>
       </div>
+      <span class="separator visible-phone">/</span>
       <div class="visible-phone" id="cantos">
         <h4 class="sectionno">
           <span class="dropdown">
@@ -54,10 +55,10 @@
               <%= params[:canto_id]%>
               <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu sectionlist" role="menu" aria-labelledby="dropsection">
+            <ul class="dropdown-menu sectionlist marginleft" role="menu" aria-labelledby="dropsection">
               <% Book.find(params[:book_id]).cantos.each do |canto| %>
               <li role="presentation">
-                <%= link_to 'Canto' + canto.no.to_s + ': '+ canto.title.to_s, '/read/'+params[:book_id].to_s+'/'+canto.no.to_s + '/1' %>
+                <%= link_to 'Canto ' + canto.no.to_s + ': '+ canto.title.to_s, '/read/'+params[:book_id].to_s+'/'+canto.no.to_s + '/1', :class=>"tag" %>
                 <% end %>
               </li>
               <!-- dropdown menu links -->
@@ -77,11 +78,15 @@
             <h4 class="sectionno ">
               <% if @canto.sections.length > 1 %>
               <span class="dropdown">
-                <a class="dropdown-toggle" id="dropsection" role="button" data-toggle="dropdown" data-target="#" href="#">
+                <a class="dropdown-toggle visible-phone" id="dropsection" role="button" data-toggle="dropdown" data-target="#" href="#">
                   <span class="sectionlbl" style="display:none">Section</span>
                   <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
                   <b class="visible-phone"><span class="caret"></span></b>
                 </a>
+                <span class="visible-desktop">
+                  <span class="sectionlbl" style="display:none">Section</span>
+                  <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
+                </span>
                 <ul class="dropdown-menu sectionlist" role="menu" aria-labelledby="dropsection">
                   <% @canto.sections.each do |section| %>
                   <li role="presentation" class="hidden-desktop">
