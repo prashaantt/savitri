@@ -15,7 +15,8 @@ $ ->
 	        data.context.find('.bar').css('width', progress + '%')
 
 $ ->
-  $("#embedurl").hide()
+  $(".embedurl").hide()
+  $(".previewmusic").hide()
   $(".progress").hide()
   $(".direct-upload").each ->
     form = $(this)
@@ -61,9 +62,9 @@ $ ->
         # Here we get the file url on s3 in an xml doc
         url = $(data).find("Location").text()
         $("#previewmusic").append("<audio controls>"+"<source src='"+url+"'"+"type='audio/mpeg'>"+"</audio>")
-        $("#previewmusic").show()
+        $(".previewmusic").show()
         $("#embedurl").val("<audio controls>"+"<source src='"+url+"'"+"type='audio/mpeg'>"+"</audio>")
-        $("#embedurl").show()
+        $(".embedurl").show()
         $("#real_file_url").val url # Update the real input in the other form
 
       done: (event, data) ->
