@@ -82,3 +82,25 @@ $ ->
 	$("#new-blog-post").click (e) ->
 	  $("#post_content").html($('.wmd-preview').html())
 	  $("#wmd-input").html($('.wmd-input').val())
+
+	$("#previewbtn").on "click", ->
+	  if $("#wmd-input").is(":visible")
+	    $("#wmd-input").hide()
+	    $("#wmd-preview").show()
+	    $(".btn-toolbar button").each ->
+	      unless $(this).attr("disabled")
+	        $(this).addClass "disabled"
+	        $(this).attr "disabled", "disabled"
+
+	    $(this).removeClass("btn-info").addClass "btn-warning"
+	    $(this).text "Edit"
+	  else
+	    $("#wmd-preview").hide()
+	    $("#wmd-input").show()
+	    $(".btn-toolbar button").each ->
+	      if $(this).hasClass("disabled")
+	        $(this).removeAttr "disabled"
+	        $(this).removeClass "disabled"
+
+	    $(this).text "Preview"
+	    $(this).removeClass("btn-warning").addClass "btn-info"
