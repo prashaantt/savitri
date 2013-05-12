@@ -1,5 +1,10 @@
+<% if Rails.env.production? %>
+  <% @bucket="savitri-in-uploads" %>
+<% else %>
+  <% @bucket="savitri-in-devuploads" %>
+<% end %>
 <div class="span6 offset3">
-	<form action='http://savitri-in-devuploads.s3.amazonaws.com' class='direct-upload' enctype='multipart/form-data' method='post'>
+	<form action='http://<%= @bucket %>.s3.amazonaws.com' class='direct-upload' enctype='multipart/form-data' method='post'>
 	<table class="table-bordered">
 	<tbody>
 		<tr>
