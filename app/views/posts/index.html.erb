@@ -50,7 +50,7 @@
     </div>
   </div>
   <% end %>
-  <% tag_counts = @posts.tag_counts.order('tags_count desc').first(10) %>
+  <% tag_counts = @blog.posts.tag_counts.order('tags_count desc').first(10) %>
   <% if tag_counts.length > 0 %>
     <div class="well span2 visible-desktop">
       <div class="sidebar-title"><span class="badge">Top tags</span></div><br>
