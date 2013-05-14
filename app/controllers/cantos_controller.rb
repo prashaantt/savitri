@@ -47,7 +47,7 @@ class CantosController < ApplicationController
 
     respond_to do |format|
       if @canto.save
-        format.html { redirect_to @canto, notice: 'Canto was successfully created.' }
+        format.html { redirect_to cantos_path, notice: 'Canto was successfully created.' }
         format.json { render json: @canto, status: :created, location: @canto }
       else
         format.html { render action: "new" }

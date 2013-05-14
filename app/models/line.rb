@@ -13,6 +13,9 @@ class Line < ActiveRecord::Base
   	no
   end
 
+  def canto_id
+  end
+
    searchable do 
      text :line
      text :no
