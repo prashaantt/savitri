@@ -59,8 +59,7 @@
 #cantos {
   margin-left: 5%;
   margin-right: 5%;
-  float:left;
-  }
+}
 
 .stanza {
   margin-bottom: 2%;
@@ -79,14 +78,14 @@
   float: right;
 }
 
-#roundcorner{
+.roundcorner{
 min-width: 0px;
-webkit-border-radius: 6px;
--moz-border-radius: 6px;
-border-radius: 6px;
--webkit-border-radius:6px;
--moz-border-radius: 6px;
-border-radius:  6px;
+webkit-border-radius: 6px !important;
+-moz-border-radius: 6px !important;
+border-radius: 6px !important;
+-webkit-border-radius:6px !important;
+-moz-border-radius: 6px !important;
+border-radius:  6px !important;
 }
 
 .caret{
@@ -94,11 +93,13 @@ border-radius:  6px;
 }
 
 .separator{
-  width:5px;
+  font-family: Myriad W01 SmBd;
+  font-weight:bold;
   float:left;
-  font-size:203%;
-  margin: 5px 0 0 0;
+  margin: 0 15px 0;
   color:#808080;
+  line-height:30px;
+  font-size:20px;
 }
 
 .marginleft{
@@ -120,10 +121,22 @@ border-radius:  6px;
 }
 
 .tag{
-  max-width: 200px;
+  min-width: 0px;
+  max-width: 250px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
 
+.arrange{
+  float:left;
+  min-width:0px;
+  width:auto;
+}
 
+@media screen and (max-width:350px){
+.size{
+  width: 180px;
+  font-size:70%;
+}
 }

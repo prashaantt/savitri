@@ -1,9 +1,9 @@
 <!-- dynamic fetch of books and cantos -->
 <div class="row rowread">
     <div class="span3">
-    <div class="accordion" id="accordion2">
+    <div class="accordion hidden-phone" id="accordion2">
       <% Book.all.each do |book| %>
-      <div class="accordion-group  hidden-phone">
+      <div class="accordion-group">
         <div class="accordion-heading">
           <a class="accordion-toggle collapsed navbook" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= book.id %>" id="bk1"><%= book.name %></a>
         </div>
@@ -11,9 +11,9 @@
           <div class="accordion-inner">
             <ul class="nav nav-tabs nav-stacked navcanto">
               <% book.cantos.each do |canto| %>
-              <li id="leftnav dropdown-submenu" class="dropdown-submenu">
+              <li id="leftnav" class="dropdown-submenu">
                 <a  href="<%= '/read/'+book.id.to_s+"/"+canto.id.to_s+"/1" %>", class="<%= is_active_link params,book.id.to_s,canto.id.to_s %>"><%= canto.title %></a>
-                <ul id="roundcorner" class="dropdown-menu visible-desktop;">
+                <ul class="dropdown-menu roundcorner visible-desktop;">
                   <% canto.sections.each do |section| %>
                   <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>">
                     <%= link_to 'Section '+ section.runningno.to_s + ' ('+ section.no.to_s + ')',"/read/" + @canto.book.no.to_s + "/" +canto.no.to_s + "/" + section.runningno.to_s %>
@@ -28,7 +28,8 @@
       </div>
       <% end %>
     </div>
-    <div class="visible-phone" id="cantos">
+    <div id="cantos" class="row visible-phone">
+    <span class="arrange">
       <h4 class="sectionno">
         <span class="dropdown">
           <a class="dropdown-toggle " id="dropsection" data-toggle="dropdown" href="#">
@@ -36,7 +37,7 @@
             <%= params[:book_id]%>
             <span class="caret"></span>
           </a>
-          <ul class="dropdown-menu sectionlist">
+          <ul class="dropdown-menu sectionlist size">
             <% Book.all.each do |book| %>
             <li>
               <%= link_to 'Book '+book.no.to_s+': '  + book.name.to_s, '/read/'+book.no.to_s+'/1/1', :class=>"tag" %>
@@ -45,9 +46,10 @@
             <!-- dropdown menu links -->
           </ul>
         </h4>
-      </div>
-      <span class="separator visible-phone">/</span>
-      <div class="visible-phone" id="cantos">
+      </span>
+      </span>
+     <span class="separator">/</span>
+      <span class="arrange">
         <h4 class="sectionno">
           <span class="dropdown">
             <a class="dropdown-toggle" id="dropsection" data-toggle="dropdown" href="#">
@@ -55,21 +57,23 @@
               <%= params[:canto_id]%>
               <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu sectionlist marginleft" role="menu" aria-labelledby="dropsection">
+            <ul class="dropdown-menu size sectionlist marginleft" role="menu" aria-labelledby="dropsection">
               <% Book.find(params[:book_id]).cantos.each do |canto| %>
               <li role="presentation">
-                <%= link_to 'Canto ' + canto.no.to_s + ': '+ canto.title.to_s, '/read/'+params[:book_id].to_s+'/'+canto.no.to_s + '/1', :class=>"tag" %>
+                <%= link_to 'Canto ' + canto.no.to_s + ': '+ canto.title.to_s, '/read/'+params[:book_id].to_s+'/'+canto.no.to_s + '/1', :class=> "tag" %>
                 <% end %>
               </li>
               <!-- dropdown menu links -->
             </ul>
           </h4>
-        </div>
+        </span>
+        </span>
       </div>
+      <hr>
+    </div>
       <!-- '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1] -->
       <div class="span6">
         <div id="cantos" class="tab-content">
-          <hr class="visible-phone">
           <% unless @stanzas.blank? %>
           <% @canto = Canto.find(Section.find(@stanzas.first.section).canto_id) %>
           <h3 class="cantono visible-desktop">Canto <%= @canto.no %></h3>
