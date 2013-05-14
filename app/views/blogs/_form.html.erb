@@ -1,10 +1,12 @@
-<%= form_for @blog, :html => { :class => 'form-horizontal' } do |f| %>
+<%= form_for @blog do |f| %>
+<div style="margin: auto; float:none; width: 220px;">
   <div class="control-group">
     <%= f.label :title, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :title, :class => 'text_field' %>
     </div>
   </div>
+  
   <div class="control-group">
     <%= f.label :subtitle, :class => 'control-label' %>
     <div class="controls">
@@ -19,9 +21,12 @@
     </div>
   </div>
 
-  <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+  <div class="control-grp" style="text-align: center">
+    <div class="controls">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 blogs_path, :class => 'btn' %>
+    </div>
   </div>
+</div>
 <% end %>

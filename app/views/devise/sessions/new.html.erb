@@ -1,5 +1,5 @@
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div class="well" style="margin: auto; float:none; width: 220px;">
+<div class="well" style="margin: auto; float:none; width: 220px;">
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
     <h2>Sign in</h2>
 
     <div class="control-group">
@@ -30,6 +30,6 @@
         <%= f.submit "Sign in", :class => 'btn btn-success', :style => 'margin-bottom: 20px' %>
       </div>
     </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  <% end %>
+  <%= render "devise/shared/links" %>
+</div>
