@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Savitri</title>
+
+  <title>Savitri <%= yield(:title) %> </title>
       <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
      <!--[IF IE]>
      <![endif]-->
@@ -9,6 +10,7 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
       <![endif]-->
       <%= yield :head %> 
+
       <%= stylesheet_link_tag    "application", :media => "all" %>
       <%= javascript_include_tag "application" %>
       <link type="text/css" rel="stylesheet" href="http://fast.fonts.com/cssapi/8b9becaf-4f33-4214-83ca-084c4a14579f.css"/>

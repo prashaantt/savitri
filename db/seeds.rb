@@ -30,30 +30,30 @@ Canto.create([
 
 
 Section.create([
-  { :no => 1, :name => "", :canto_id => 1, :created_at => "2012-09-28 14:43:43", :updated_at => "2012-09-28 14:43:43" },
-  { :no => 2, :name => "", :canto_id => 1, :created_at => "2012-09-28 14:43:43", :updated_at => "2012-09-28 14:43:43" },
-  { :no => 3, :name => "", :canto_id => 2, :created_at => "2012-09-28 14:43:43", :updated_at => "2012-09-28 14:43:43" },
-  { :no => 4, :name => "", :canto_id => 2, :created_at => "2012-09-28 14:43:43", :updated_at => "2012-09-28 14:43:43" },
-  { :no => 5, :name => "", :canto_id => 3, :created_at => "2012-09-28 14:43:43", :updated_at => "2012-09-28 14:43:43" },
-  { :no => 6, :name => "", :canto_id => 3, :created_at => "2012-09-28 14:43:43", :updated_at => "2012-09-28 14:43:43" },
-  { :no => 7, :name => "", :canto_id => 3, :created_at => "2012-09-28 14:43:43", :updated_at => "2012-09-28 14:43:43" },
-  { :no => 8, :name => "", :canto_id => 3, :created_at => "2012-09-28 14:43:43", :updated_at => "2012-09-28 14:43:43" },
-  { :no => 9, :name => "", :canto_id => 3, :created_at => "2012-09-28 14:43:43", :updated_at => "2012-09-28 14:43:43" },
-  { :no => 10, :name => nil, :canto_id => 4, :created_at => "2013-04-06 14:37:13", :updated_at => "2013-04-06 14:37:13" },
-  { :no => 11, :name => nil, :canto_id => 4, :created_at => "2013-04-06 14:38:32", :updated_at => "2013-04-06 14:38:32" },
-  { :no => 12, :name => nil, :canto_id => 4, :created_at => "2013-04-07 08:47:41", :updated_at => "2013-04-07 08:47:41" },
-  { :no => 13, :name => nil, :canto_id => 4, :created_at => "2013-04-07 08:56:32", :updated_at => "2013-04-07 08:56:32" },
-  { :no => 14, :name => nil, :canto_id => 4, :created_at => "2013-04-07 08:59:17", :updated_at => "2013-04-07 08:59:17" },
-  { :no => 15, :name => nil, :canto_id => 4, :created_at => "2013-04-07 09:01:05", :updated_at => "2013-04-07 09:01:05" },
-  { :no => 16, :name => nil, :canto_id => 4, :created_at => "2013-04-07 09:03:03", :updated_at => "2013-04-07 09:03:03" },
-  { :no => 17, :name => nil, :canto_id => 4, :created_at => "2013-04-07 09:05:23", :updated_at => "2013-04-07 09:05:23" },
-  { :no => 18, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:09:06", :updated_at => "2013-04-07 09:09:06" },
-  { :no => 19, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:11:28", :updated_at => "2013-04-07 09:11:28" },
-  { :no => 20, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:13:49", :updated_at => "2013-04-07 09:13:49" },
-  { :no => 21, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:16:47", :updated_at => "2013-04-07 09:16:47" },
-  { :no => 22, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:18:15", :updated_at => "2013-04-07 09:18:15" },
-  { :no => 23, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:20:46", :updated_at => "2013-04-07 09:20:46" },
-  { :no => 24, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:22:36", :updated_at => "2013-04-07 09:22:36" }
+  { :no => 1, :name => "", :canto_id => 1, :created_at => "2012-09-28 14:43:43", :updated_at => "2013-05-14 11:24:13", :runningno => 1 },
+  { :no => 2, :name => "", :canto_id => 1, :created_at => "2012-09-28 14:43:43", :updated_at => "2013-05-14 11:24:14", :runningno => 2 },
+  { :no => 3, :name => "", :canto_id => 2, :created_at => "2012-09-28 14:43:43", :updated_at => "2013-05-14 11:24:14", :runningno => 1 },
+  { :no => 4, :name => "", :canto_id => 2, :created_at => "2012-09-28 14:43:43", :updated_at => "2013-05-14 11:24:14", :runningno => 2 },
+  { :no => 5, :name => "", :canto_id => 3, :created_at => "2012-09-28 14:43:43", :updated_at => "2013-05-14 11:24:14", :runningno => 1 },
+  { :no => 6, :name => "", :canto_id => 3, :created_at => "2012-09-28 14:43:43", :updated_at => "2013-05-14 11:24:14", :runningno => 2 },
+  { :no => 7, :name => "", :canto_id => 3, :created_at => "2012-09-28 14:43:43", :updated_at => "2013-05-14 11:24:15", :runningno => 3 },
+  { :no => 8, :name => "", :canto_id => 3, :created_at => "2012-09-28 14:43:43", :updated_at => "2013-05-14 11:24:15", :runningno => 4 },
+  { :no => 9, :name => "", :canto_id => 3, :created_at => "2012-09-28 14:43:43", :updated_at => "2013-05-14 11:24:15", :runningno => 5 },
+  { :no => 10, :name => nil, :canto_id => 4, :created_at => "2013-04-06 14:37:13", :updated_at => "2013-05-14 11:24:15", :runningno => 1 },
+  { :no => 11, :name => nil, :canto_id => 4, :created_at => "2013-04-06 14:38:32", :updated_at => "2013-05-14 11:24:15", :runningno => 2 },
+  { :no => 12, :name => nil, :canto_id => 4, :created_at => "2013-04-07 08:47:41", :updated_at => "2013-05-14 11:24:16", :runningno => 3 },
+  { :no => 13, :name => nil, :canto_id => 4, :created_at => "2013-04-07 08:56:32", :updated_at => "2013-05-14 11:24:16", :runningno => 4 },
+  { :no => 14, :name => nil, :canto_id => 4, :created_at => "2013-04-07 08:59:17", :updated_at => "2013-05-14 11:24:16", :runningno => 5 },
+  { :no => 15, :name => nil, :canto_id => 4, :created_at => "2013-04-07 09:01:05", :updated_at => "2013-05-14 11:24:16", :runningno => 6 },
+  { :no => 16, :name => nil, :canto_id => 4, :created_at => "2013-04-07 09:03:03", :updated_at => "2013-05-14 11:24:16", :runningno => 7 },
+  { :no => 17, :name => nil, :canto_id => 4, :created_at => "2013-04-07 09:05:23", :updated_at => "2013-05-14 11:24:17", :runningno => 8 },
+  { :no => 18, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:09:06", :updated_at => "2013-05-14 11:24:17", :runningno => 1 },
+  { :no => 19, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:11:28", :updated_at => "2013-05-14 11:24:17", :runningno => 2 },
+  { :no => 20, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:13:49", :updated_at => "2013-05-14 11:24:17", :runningno => 3 },
+  { :no => 21, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:16:47", :updated_at => "2013-05-14 11:24:17", :runningno => 4 },
+  { :no => 22, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:18:15", :updated_at => "2013-05-14 11:24:17", :runningno => 5 },
+  { :no => 23, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:20:46", :updated_at => "2013-05-14 11:24:18", :runningno => 6 },
+  { :no => 24, :name => nil, :canto_id => 5, :created_at => "2013-04-07 09:22:36", :updated_at => "2013-05-14 11:24:18", :runningno => 7 }
 ], :without_protection => true )
 
 
@@ -3953,3 +3953,8 @@ Page.create([
 User.create([
   { :name => "Admin", :email => "modak.nishant@gmail.com", :password => "admin123",:password_confirmation => "admin123", :username => "admin", :role_id => 1, :photo => nil }
 ], :without_protection => true )# encoding: utf-8# encoding: utf-8
+# encoding: utf-8
+
+
+
+

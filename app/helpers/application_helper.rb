@@ -1,8 +1,24 @@
 module ApplicationHelper
+
+	def title(page_title)
+		content_for(:title) {" - " +page_title}
+	end
+
 	def is_active(controller)
     (params[:controller] == controller) ? "active" : "notactive" 
  	end
 
+  def is_collapsed(params, bid)
+    clas=Array.new
+    if params[:book_id].eql? bid
+      clas[0]="collapsed"
+      clas[1]="collapsed"
+    else
+      clas[0]=""
+      clas[1]=""
+    end
+    clas
+  end
  	def is_active_link(params,bid,cid)
  		claz=""
  		if params[:book_id].eql? bid

@@ -65,22 +65,29 @@ class LinesController < ApplicationController
   # POST /lines.json
   def create
     #--edit
-    if params[:line][:no].blank?
-      num=0
-    else
-      nu = params[:line][:no].to_f
-      num =  nu -1
-    end
+    puts params.inspect
+    num=Line.last.no+1
     logger.info '------------------------create---------------------'
-    stanznu = Stanza.last.no + 1
-    section_no = Section.last.no + 1
-    logger.info '----create new section---'
+    last_stanza = Stanza.last
+    stanznu = last_stanza.no + 1
+    last_section = Section.last
+    section_no = last_section.no + 1
     runningnum = 1
-    @section = Section.new(:no=>section_no, :canto_id =>Section.last.canto_id)
-    @section.save
-    @stan = Stanza.new(:no=>stanznu, :section_id=>section_no, :runningno=>runningnum)
-    runningnum=runningnum+1
-    @stan.save
+    logger.info '----create new section---'
+      if(last_section.canto.id == params[:line][:canto_id].to_f)
+        section_running_no=last_section.runningno+1
+      else
+        section_running_no=1
+      end
+      @section = Section.new(:no=>section_no, :canto_id =>params[:line][:canto_id],:runningno=>section_running_no)
+      @section.save
+    logger.info '----end of create section---'
+    logger.info '----create new STANZA---'
+      @stan = Stanza.new(:no=>stanznu, :section_id=>section_no, :runningno=>runningnum)
+      runningnum=runningnum+1
+      @stan.save
+    logger.info '----end of create stanza----'
+
     @line_arr = params[:line][:line].to_s.split("\r\n")
     
     @line_arr.each_with_index do |l, index|
