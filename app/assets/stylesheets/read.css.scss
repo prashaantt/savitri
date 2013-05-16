@@ -39,24 +39,29 @@
   font-size: 125%;
   margin-top: 4%;
   margin-bottom: 5%;
-  }
+}
 
-  #dropsection {
-    color: black;
-    text-decoration: none;
-  }
+.bookcantono {
+  font-size: 125%;
+  margin-bottom: 5%;
+}
 
-  #dropsection:hover {
-    color: #08C;
-  }
+#dropsection {
+  color: black;
+  text-decoration: none;
+}
 
-  .sectionlist {
-    font-size: 80%;
-    min-width: 0px;
-  }
+#dropsection:hover {
+  color: #08C;
+}
+
+.sectionlist {
+  font-size: 80%;
+  min-width: 0px;
+}
 
 
-#cantos {
+.read-margins {
   margin-left: 5%;
   margin-right: 5%;
 }
@@ -69,7 +74,6 @@
   font-family: 'Kepler W01 Lt';
   font-size: 125%;
   line-height: 1.4em;
-  text-rendering: optimizeLegibility;
 }
 
 .reference > a {
@@ -78,21 +82,18 @@
   float: right;
 }
 
-.roundcorner{
-min-width: 0px;
-webkit-border-radius: 6px !important;
--moz-border-radius: 6px !important;
-border-radius: 6px !important;
--webkit-border-radius:6px !important;
--moz-border-radius: 6px !important;
-border-radius:  6px !important;
+.roundcorner {
+  min-width: 0px;
+  border-radius: 6px !important;
+  -moz-border-radius: 6px !important;
+  -webkit-border-radius:6px !important;
 }
 
 .caret{
   position:relative;
 }
 
-.separator{
+/*.separator{
   font-family: Myriad W01 SmBd;
   font-weight:bold;
   float:left;
@@ -100,13 +101,13 @@ border-radius:  6px !important;
   color:#808080;
   line-height:30px;
   font-size:20px;
+}*/
+
+.dropdown-align {
+  margin-left:-120px;
 }
 
-.marginleft{
-    margin-left:-140%;
-}
-
-@media (min-width: 200px) and (max-width:550px){
+/*@media (min-width: 200px) and (max-width:550px){
   body {
     padding:0px;
     margin:0px;
@@ -118,20 +119,14 @@ border-radius:  6px !important;
   margin-left:auto;
   margin-right:auto;
 }
-}
+}*/
 
 .tag{
   min-width: 0px;
-  max-width: 250px;
+  max-width: 280px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.arrange{
-  float:left;
-  min-width:0px;
-  width:auto;
 }
 
 @media screen and (max-width:350px){
@@ -139,4 +134,140 @@ border-radius:  6px !important;
   width: 180px;
   font-size:70%;
 }
+}
+
+.custom-accordion-inner {
+  //border-top: 0px;
+  padding: 0px;
+}
+
+.navcanto {
+  margin-bottom: 0px;
+}
+
+.navcanto > li > a {
+  border: 0px !important;
+}
+
+.navcanto > li:first-child > a {
+  -webkit-border-top-right-radius: 0px !important;
+  -moz-border-radius-topright: 0px !important;
+  border-top-right-radius: 0px !important;
+  -webkit-border-top-right-radius: 0px !important;
+  -moz-border-radius-topright: 0px !important;
+  border-top-right-radius: 0px !important;
+  -webkit-border-top-left-radius: 0px !important;
+  -moz-border-radius-topleft: 0px !important;
+  border-top-left-radius: 0px !important;
+  -webkit-border-top-left-radius: 0px !important;
+  -moz-border-radius-topleft: 0px !important;
+  border-top-left-radius: 0px !important;
+  -webkit-border-top-right-radius: 0px !important;
+  -moz-border-radius-topright: 0px !important;
+  border-top-right-radius: 0px !important;
+  -webkit-border-top-right-radius: 0px !important;
+  -moz-border-radius-topright: 0px !important;
+  border-top-right-radius: 0px !important;
+  -webkit-border-top-left-radius: 0px !important;
+  -moz-border-radius-topleft: 0px !important;
+  border-top-left-radius: 0px !important;
+  -webkit-border-top-left-radius: 0px !important;
+  -moz-border-radius-topleft: 0px !important;
+  border-top-left-radius: 0px !important;
+}
+
+@media (min-width: 524px) and (max-width: 554px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 124%;
+  }
+
+  .reference > a {
+    font-size: 96%;
+  }
+
+  .cantoname {
+    font-size: 161%;
+  }
+}
+
+@media (min-width: 490px) and (max-width: 523px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 117%;
+  }
+
+  .reference > a {
+    font-size: 89%;
+  }
+
+  .cantoname {
+    font-size: 154%;
+  }
+}
+
+@media (min-width: 476px) and (max-width: 489px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 110%;
+  }
+
+  .reference > a {
+    font-size: 82%;
+  }
+
+  .cantoname {
+    font-size: 146%;
+  }
+}
+
+@media (min-width: 430px) and (max-width: 475px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 103%;
+  }
+
+  .reference > a {
+    font-size: 74%;
+  }
+
+  .cantoname {
+    font-size: 131%;
+  }
+}
+
+@media (min-width: 410px) and (max-width: 429px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 96%;
+  }
+
+  .reference > a {
+    font-size: 67%;
+  }
+
+  .cantoname {
+    font-size: 117%;
+  }
+}
+
+@media (max-width: 409px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 89%;
+  }
+
+  .reference > a {
+    font-size: 60%;
+  }
+
+  .cantoname {
+    font-size: 103%;
+  }
 }
