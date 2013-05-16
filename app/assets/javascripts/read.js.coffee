@@ -36,30 +36,22 @@ $ ->
       backgroundColor: currentColor
     , 3000
 
-  load_window_width = $(window).width()
-
-  if load_window_width > 767 && load_window_width < 980
-    $("#read").removeClass().addClass("span8").addClass("offset2")
-  else if load_window_width <= 767
-    $("#read").removeClass().addClass("span6")
-  
-  $(window).resize ->
-    window_width = $(window).width()
-    console.log(window_width)
+  setSpan = (window_width) ->
     if window_width >= 1200
-      $("#read").removeClass().addClass("span6").addClass("offset1")
-      console.log("6/1")
-    else if window_width >= 980 && window_width < 1200
-      $("#read").removeClass().addClass("span7").addClass("offset1")
-      console.log("7/1")
-    else if window_width > 767 && window_width < 980
-      $("#read").removeClass().addClass("span10").addClass("offset1")
-      console.log("10/1")
+      $("#read").removeClass().addClass("span6").addClass "offset1"
+    else if window_width >= 980 and window_width < 1200
+      $("#read").removeClass().addClass("span7").addClass "offset1"
+    else if window_width > 767 and window_width < 980
+      $("#read").removeClass().addClass("span10").addClass "offset1"
     else
-      $("#read").removeClass().addClass("span6")
-      console.log("6")
+      $("#read").removeClass().addClass "span6"
 
     if window_width > 611 && window_width < 768
       $("#read").addClass("read-margins")
     else
       $("#read").removeClass("read-margins")
+
+  setSpan($(window).width())
+
+  $(window).resize ->
+    setSpan($(window).width())
