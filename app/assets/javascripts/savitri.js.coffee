@@ -4,7 +4,7 @@
 
 $ ->
   if $("#source").length > 0
-    $("#playpause").removeClass("icon-play").addClass("icon-pause")
+    $("#playpauseicon").removeClass("icon-play").addClass("icon-pause")
     
     callback = (response) ->
       showIntro response
@@ -12,20 +12,12 @@ $ ->
     $.get '/savitri/show/', callback, 'json'
 
 jQuery ->
-  $("#playpause").on "hover", (event) ->
-    $("#playpause").tooltip('show')
-
-  $("#refresh").on "hover", (event) ->
-    $("#refresh").tooltip('show')
-
-  $("#context").on "hover", (event) ->
-    $("#context").tooltip('show')
 
   $("#playpause").on "click", (event) ->
     if window.timer.isActive
-      $("#playpause").removeClass("icon-pause").addClass("icon-play")
+      $("#playpauseicon").removeClass("icon-pause").addClass("icon-play")
     else
-      $("#playpause").removeClass("icon-play").addClass("icon-pause")
+      $("#playpauseicon").removeClass("icon-play").addClass("icon-pause")
 
     window.timer.toggle()
 
@@ -33,7 +25,7 @@ jQuery ->
     window.timer.stop()
     $("#source").empty()
     $("#display").remove()
-    $("#playpause").removeClass("icon-play").addClass("icon-pause")
+    $("#playpauseicon").removeClass("icon-play").addClass("icon-pause")
 
     callback = (response) ->
       showIntro response
@@ -82,7 +74,7 @@ showIntro = (selectionData) ->
     $("#display").append linespan
     textDOM[key] = values
     i++
-  $("#source").html("||" + window.ref + "||").css("opacity", 0).addClass "animated"
+  $("#source").html("<a href='/read/" + window.ref + "'>||" + window.ref + "||</a>").css("opacity", 0).addClass("animated")
   line = 0
   word = 0
   count = 4
