@@ -10,9 +10,8 @@
 <div class="row">
   <div class="span6 offset3">
     <h1 class="page-header">
-      
       <%= link_to @blog.title, blog_posts_path %><br>
-      <small class="blog-subtitle"><%=  @blog.subtitle %></small>
+      <small class="blog-subtitle"><%= @blog.subtitle %></small>
     </h1>
   </div>
 </div>
@@ -45,16 +44,17 @@
 <!--  SideBar Begin -->
 <div class="span3">
   <% if can? :update, @blog %>
-  <div class="well span2">
+  <div class="span2">
     <div class="sidebar-title"><span class="badge">Manage blog</span></div><br>
     <div class="btn-grp sidebar-title">
       <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
     </div>
   </div>
   <% end %>
-  <% tag_counts = @blog.posts.tag_counts.order('tags_count desc').first(10) %>
+  <% tag_counts = @blog.posts.tag_counts.order('tags_count desc').first(15) %>
   <% if tag_counts.length > 0 %>
-    <div class="well span2 visible-desktop">
+    <div class="span2 visible-desktop">
+      <hr>
       <div class="sidebar-title"><span class="badge">Top tags</span></div><br>
       <% tag_cloud tag_counts, %w[s m l] do |tag| %>
         <%= link_to tag.name, tag_path(params[:blog_id], tag.name), :class => "label label-info tag" %>

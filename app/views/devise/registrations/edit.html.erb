@@ -1,23 +1,36 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-
-<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:multipart=> :true, :method => :put, :class => 'form-vertical' }) do |f| %>
-  <%= f.error_notification %>
-<ul id="myTab" class="nav nav-tabs">
-  <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-  <li class=""><a href="#profile" data-toggle="tab">Profile</a></li>
-</ul>
-
-<br/><br/>
-  <%= f.input :username, :autofocus => true %>
-  <%= f.input :name, :autofocus => true %>
-  <%= f.input :email, :required => true %>
-  <%= f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false %>
-  <%= f.input :password_confirmation, :required => false %>
-  <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true %>
-  <%= f.file_field :photo %><br/><br/>
-  <%= f.button :submit, 'Update', :class => 'btn-primary' %>
-<% end %>
-<h3>Cancel my account</h3>
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>.</p>
-<%= link_to "Back", :back %>
+<div class="row">
+  <div class="span4 offset4">
+    <div class="page-header">
+      <h1>
+        Edit <%= resource_name.to_s.humanize %>
+      </h1>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div style="margin: auto; float:none; width: 220px;">
+    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:multipart=> :true, :method => :put}) do |f| %>
+      <%= f.error_notification %>
+      <%= f.input :username, :autofocus => true %>
+      <%= f.input :name, :autofocus => true %>
+      <%= f.input :email, :required => true %>
+      <%= f.input :password, :autocomplete => "off", :placeholder => "Leave blank if no changes", :required => false %>
+      <%= f.input :password_confirmation, :required => false %>
+      <%= f.input :current_password, :required => true %>
+      <%= f.file_field :photo %>
+      <div style="text-align: center; padding-top: 20px">
+        <%= f.button :submit, 'Update', :class => 'btn btn-success' %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")), :back, :class => 'btn' %>
+      </div>
+    <% end %>
+    <hr>
+    <h3>Cancel my account
+      <br>
+      <small>This cannot be undone!</small>
+    </h3>
+    <div style="text-align: center">
+      <%= link_to "Delete account", registration_path(resource_name), :class => "btn btn-danger", :data => { :confirm => "Are you sure?" }, :method => :delete %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")), :back, :class => 'btn' %>
+    </div>
+  </div>
+</div>

@@ -1,29 +1,48 @@
 <%- model_class = Blog -%>
-<div class="page-header">
-  <h1>Manage Blog</h1>
+<div class="row">
+  <div class="span6 offset3">
+    <div class="page-header">
+      <h1>Manage Blogs</h1>
+    </div>
+  </div>
 </div>
-<% @blogs.each do |blog| %>
-  <h4>
-    <%= link_to blog.title, blog_posts_path(blog) %>
-    <small>
-	  <%= pluralize blog.posts.count, "post" %> <br/>
-	  <%= link_to 'Edit Blog', edit_blog_path(blog)  %> | 
-	  <%= link_to 'Show Blog', blog_posts_path(blog)  %> |
-	  <%= link_to 'New Post', new_blog_post_path(blog) %> | 
-	  <%= 'Moderate Comments'  %> |
-	  <%= 'Delete Blog'  %> |
-	  <%= 'Change Tempalte'  %> |
-	  <%= 'Etc.'  %> |
-    </small>
-  <h4>
-  <br/>
-<% end %>
-<% if current_user.role == 'Admin' %>
-	<%= link_to 'Invite User', new_user_invitation_path %>
-	
-	<% if current_user.blogs.count < 3 %>
-		<%= link_to 'New Blog', new_blog_path %>
-	<% end %>
-<% elsif current_user.blogs.count < 1 && current_user.role != 'User' %>
-	<%= link_to 'New Blog', new_blog_path %>	
-<% end %>
+<div class="row">
+  <div class="span6 offset3">
+    <section>
+      <h2>Blogs</h2>
+      <% @blogs.each do |blog| %>
+      <div class="well well-small">
+        <h3>
+          <%= link_to blog.title, blog_posts_path(blog) %>
+          <br>
+          <small><%= link_to (pluralize blog.posts.count, "post"), blog_posts_path(blog) %></small>
+        </h3>
+        <%= link_to 'Edit details', edit_blog_path(blog), :class => "btn btn-mini btn-warning" %>
+        <%= link_to 'New post', new_blog_post_path(blog), :class => "btn btn-mini btn-info" %>
+    	  <!--| <%= 'Moderate comments'  %> |
+        | <%= 'Change template'  %> |
+        | <%= link_to 'Delete', "#", :class => "btn btn-mini btn-danger" %>-->
+      </div>
+      <% end %>
+    </section>
+    <% if current_user.role == 'Admin' %>
+    <hr>
+    <section>
+      <h2>
+        Invitations
+      </h2>
+      <h3><small>Invite new users or migrate existing ones.</small></h3>
+      <%= link_to 'Send invitation', new_user_invitation_path, :class => "btn btn-info" %>
+    </section>
+    <section>
+    	<% if current_user.blogs.count < 3 %>
+      <hr>
+      <%= link_to 'New blog', new_blog_path, :class => "btn btn-mini btn-info" %>
+      <% end %>
+      <% elsif current_user.blogs.count < 1 && current_user.role != 'User' %>
+      <hr>
+      <%= link_to 'New blog', new_blog_path, :class => "btn btn-mini btn-info"  %>
+      <% end %>
+    </section>
+  </div>
+</div>
