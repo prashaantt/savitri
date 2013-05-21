@@ -1,20 +1,22 @@
 @import "twitter/bootstrap/bootstrap";
-
 @import "twitter/bootstrap/responsive";
 
+// Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
+// Note: If you use asset_path() here, your compiled bootstrap_and_overrides.css will not
+//       have the proper paths. So for now we use the absolute path.
+@fontAwesomeEotPath: asset-path("fontawesome-webfont.eot?v=3.0.2");
+@fontAwesomeEotPath_iefix: asset-path("fontawesome-webfont.eot?#iefix&v=3.0.2");
+@fontAwesomeWoffPath: asset-path("fontawesome-webfont.woff?v=3.0.2");
+@fontAwesomeTtfPath: asset-path("fontawesome-webfont.ttf?v=3.0.2");
+
 // Font Awesome
-@fontAwesomeEotPath: '/assets/fontawesome-webfont.eot';
-@fontAwesomeWoffPath: '/assets/fontawesome-webfont.woff';
-@fontAwesomeTtfPath: '/assets/fontawesome-webfont.ttf';
-@fontAwesomeSvgPath: '/assets/fontawesome-webfont.svg';
-
 @import "fontawesome";
-
 
 //custom
 
 body,
-.navbar-search .search-query {
+.navbar-search .search-query,
+input, button, select {
   font-family: "Myriad W01 Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -28,10 +30,44 @@ h6 {
   font-weight: normal;
 }
 
+h2 {
+  font-size: 175%;
+  line-height: 1.2em;
+}
+
+h3 {
+  font-size: 150%;
+  line-height: 1em;
+}
+
+h4 {
+  font-size: 125%;
+}
+
+p,
+blockquote.quotable p,
+textarea {
+  font-family: "Kepler W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 125%;
+  line-height: 1.4em;
+  word-break: hyphenate;
+  margin: 0 0 10px;
+}
+
+p#display {
+  font-size: 100%;
+}
+
 ul.nav li.dropdown:hover > ul.dropdown-menu {
-    display: block;    
+    display: block;
 }
 
 a {
+  color: inherit;
   text-decoration: none !important;
+  -webkit-touch-callout: none;
+}
+
+a:hover {
+  color: "#08C";
 }

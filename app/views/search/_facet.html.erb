@@ -1,7 +1,7 @@
-<h3>Browse by</h3>
+<h4>Browse by</h4>
 <p><% unless params[:q].blank? %>
 	
-	Text query: <i><%= params[:q] %></i> (<%= link_to "remove", :q => nil %>)
+	Query: <i><%= params[:q] %></i> (<%= link_to "x", :q => nil %>)
 	
 	<% end %>
 </p>
