@@ -1,37 +1,71 @@
-<%= form_for @post, :url => urler,:html => {:multipart=>true,  :class => 'form-horizontal' } do |f| %>
-<div class="span10">
-  <%= f.hidden_field :blog_id, :class=> 'text_field', :value=>@post.blog_id %>
-  <div class="control-group">
-    <%= f.label :title, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :title, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :content, :class => 'control-label' %>
-    <div class='wmd-panel'>
+<%= form_for @post, :url => urler,:html => {:multipart=>true } do |f| %>
+<div class="row">
+  <div class="span6 offset3">
+    <%= f.hidden_field :blog_id, :class=> 'text_field', :value=> @post.blog_id %>
+    <div class="control-group">
+      <%= f.label :title, :class => 'control-label' %>
       <div class="controls">
-      <div id='wmd-button-bar'></div>
-        <%= f.text_area :md_content, :class=> "wmd-input", :id=>"wmd-input" %>
-        <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
-        <%= f.text_area :content, :style=> "display: none" %>        
+        <%= f.text_field :title, :class => 'text_field span6' %>
       </div>
     </div>
+    <!-- FIXME: Remove ability to set created_at after migration -->
+    <% if current_user.name == "nm" %>
+      <div class="control-group">
+      <%= f.label :created_at, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.datetime_select :created_at,{:use_short_month=>"true", :end_year=>Time.now.year,:order => [:day, :month, :year, :hour, :minute]}, {:class=>"span1"} %>
+      </div>
     </div>
-  <div class="control-group">
-    <%= f.label :tag_list, "Tags (Separated by Commas)",:class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :tag_list, :class => 'text_area' %>
+    <% end %>
+    <!-- End -->
+    <div class="control-group">
+      <%= f.label :content, :class => 'control-label' %>
+      <div class='wmd-panel'>
+        <div class="controls">
+          <div id='wmd-button-bar'><span id="previewbtn" class="btn btn-info pull-right" style="min-width: 46px;">Preview</span></div>
+          <%= f.text_area :md_content, :class=> "span6", :id=>"wmd-input", :style => "resize: none; margin-top: 20px" %>
+          <div id="wmd-preview" class="wmd-preview well" style="display: none; min-height: 490px; margin-top: 20px"></div>
+          <%= f.text_area :content, :style=> "display: none" %>        
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :tag_list, "Tags (separated by commas)", :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :tag_list, :class => 'text_area span6' %>
+      </div>
     </div>
   </div>
-   <hr />
+  <!-- New upload audio ui -->
+  <!-- <div class="span3">
+    <div class="well">
+      <div style="text-align: center">
+        <div class="badge">Upload media</div>
+      </div><br>
+      <form action='http://savitri-in-devuploads.s3.amazonaws.com' class='direct-upload' enctype='multipart/form-data' method='post'>
+        <div class="input-append">
+          <input class="span2 input-xlarge uneditable-input" id="audiopath" type="text">
+          <div class="btn" id="audiobtn" style="width: auto; position: relative; overflow: hidden; direction: ltr;">
+            Audio
+            <input name='key' type='hidden'>
+            <input name='AWSAccessKeyId' type='hidden' value='AKIAJRJLL5KWIITWOWWA'>
+            <input name='acl' type='hidden' value='public-read'>
+            <input name='policy' type='hidden'>
+            <input name='signature' type='hidden'>
+            <input name='success_action_status' type='hidden' value='201'>
+            <input id="inputbtn" multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div> -->
 </div>
-</div>
-<div class="form-actions">
-  <%= f.submit nil, :class => 'btn btn-primary', :id=>"new-blog-post" %>
-  <%= link_to t('.cancel', :default => t("helpers.links.cancel")), blogs_path, :class => 'btn' %>
-</div>
-</div>
- 
+<div class="row">
+  <div class="span6 offset3">
+    <div class="control-grp" style="text-align: center">
+      <%= f.submit nil, :class => 'btn btn-success', :id=>"new-blog-post" %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")), blog_posts_path, :class => 'btn' %>
+    </div>
+  </div>
 </div>
 <% end %>

@@ -1,6 +1,7 @@
 <% if @upload.new_record? %>
   alert("Failed to upload photo: <%= j @upload.errors.full_messages.join(', ').html_safe %>");
 <% else %>
+ <% if @upload.photo? %>
   $("#preview").append("<%= j render(@upload) %>");
     var lastvalue="medium";
 	$("input[name='size']").change(function() {
@@ -19,4 +20,8 @@
 	    lastvalue="large";
 	  }
 	});
+  <% else %>
+    $('.progress').hide();
+   	$("#preview").append("<%= j render 'musicupload' %>");
+   <% end %>
 <% end %>

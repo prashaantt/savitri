@@ -1,17 +1,18 @@
-<div class="form-actions">
- <p>
+<div class="comment">
   <% user = User.find(comment.user_id) %>
-  <%= link_to user.name , profile_path(user) %> <i>commented as</i>
- </p>
-  <p>
-  <%= comment.body %>
-  </p>
-  <p>
-   on <%= comment.updated_at %>
-  </p>
-  <% if can? :destroy, comment %>
-	<%= link_to 'Remove Comment', [comment.post, comment],
-	:confirm => 'Are you sure?',
-	:method => :delete %>  
+  <div class="comment-author">
+    <span class="author">
+      <%= link_to user.name, profile_path(user), {:class => "overrideanchor"} %>
+      on <%= comment.created_at.strftime("%b %d %Y at %l:%M %p") %>:
+    </span>
+    <span style="float:right">
+      <% if can? :destroy, comment %>
+        <%= link_to 'Delete', [comment.post, comment],
+        :class => "btn btn-mini btn-danger",
+        :confirm => 'Are you sure?',
+        :method => :delete %>
+      <% end %>
+    </span>
+  </div>
+  <p><%= comment.body %></p>
 </div>
-<% end %>

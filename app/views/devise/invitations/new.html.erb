@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="span4 offset4">
+    <div class="page-header">
+      <h1>
+        <%= t "devise.invitations.new.header" %>
+      </h1>
+    </div>
+  </div>
+</div>
+
+<!-- <h2><%= t "devise.invitations.new.header" %></h2> -->
+
+<%= simple_form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
+  <div style="margin: auto; float:none; width: 220px;">
+    <%= devise_error_messages! %>
+
+    <% resource.class.invite_key_fields.each do |field| -%>
+      <div>
+        <%= f.label :username %>
+        <%= f.text_field :username %>
+      </div>
+      <div>
+        <%= f.input field %>
+      </div>
+      <div>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+    <% end -%>
+    
+    <div class="control-grp" style="text-align: center; padding-top: 20px">
+      <div class="controls">
+        <%= f.submit t("devise.invitations.new.submit_button"), :class => "btn btn-success" %>
+      </div>
+    </div>
+  </div>
+<% end %>

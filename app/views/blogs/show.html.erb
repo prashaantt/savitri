@@ -1,8 +1,7 @@
 <%- model_class = Post -%>
 <!-- Main Page Content and Sidebar -->
 <div class="row">
-  <div class="span1">&nbsp;</div>
-  <div class="span9">
+  <div class="span10 offset1">
     <h2 class="blog-title">
       <% @blog = Blog.find_by_title(params[:blog_id]) %>
       <% unless @blog.nil? %>
@@ -15,10 +14,7 @@
 </div>
 <!-- Main Blog Content -->
 <div class="row">
-  <div class="span1">
-    &nbsp;
-  </div>
-  <div class="span9 sav-content">
+  <div class="span7 offset1 sav-content">
     <% @posts.each do |post| %>
     <article>
       <h3><a href="#"><%= link_to post.title,  blog_post_path(post.blog,post) %></a>
@@ -34,9 +30,7 @@
 
      </h3>
      <h6><i><%= link_to post.blog.user.username, post.blog.user %></i></h6>
-     <div class="row">
-      <%= post.content.html_safe.gsub(/\r\n?/,"<br/>").html_safe %>                 
-    </div>
+      <%= post.content.html_safe.gsub(/\r\n?/,"<br/>").html_safe %>
   </article>
   
   <comments> <%= link_to (pluralize post.comments.count , "Comment") , blog_post_path(post.blog,post) %>
@@ -44,7 +38,7 @@
   <hr/>
   <% end %>
 </div>
-<div class="span2">
+<div class="span3">
   <% if can? :update, @blog %>
   <h3>Manage Blog</h3>
   <%= link_to 'New Post', new_post_path,

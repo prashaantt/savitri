@@ -1,22 +1,92 @@
 // Place all the styles related to the Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
- #wrapper {
-      width: 620px;
-    }
 
-#blog-title{
-	color: blue;
+.page-header {
+  text-align: center;
 }
 
-#tag_cloud {
-	width: 400px;
-	line-height: 1.6em;
-	.s {font-size: 0.8em};
-	.m {font-size: 1.2em};
-	.l {font-size: 1.6em; text: bold;};
+.blog-subtitle {
+  font-family: "Kepler W01 Lt It", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.author {
+  font-family: "Kepler W01 Lt It", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 120%;
+  color: #999999;
+}
+
+.blog-author {
+  @extend .author;
+  margin-top: 2%;
+  margin-bottom: 5%;
+}
+
+.comment-author {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.overrideanchor {
+  font-family: "Kepler W01 Lt It", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-decoration: underline !important;
+}
+
+.overrideinheritanchor {
+  font-family: inherit;
+  text-decoration: underline !important;
+}
+
+.overrideanchor:hover,
+.overrideinheritanchor:hover {
+  text-decoration: none !important;
+}
+
+article {
+  padding-bottom: 20px;
+  border-bottom: 2px dotted #eee;
+}
+
+.snippet {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px dotted #eee;
+}
+
+#comments {
+  padding-top: 55px;
+  margin-top: -55px;
+  padding-bottom: 20px;
+  display: inline-block;
+}
+
+.comments {
+  padding-top: 40px;
+}
+
+.comment {
+  padding: 19px 0px 20px;
+  border-top: 1px solid #eee;
+}
+
+.sidebar-title {
+  text-align: center;
+}
+
+.tag {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tags {
+  padding-top: 20px;
+}
+
+/*.comment:nth-child(odd) {
+  background-color: #f9f9f9;
+}*/
 
 .table td, .table th {
     border: none;

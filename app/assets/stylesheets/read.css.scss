@@ -6,44 +6,15 @@
   background: #FDF1CA;
 }
 
-.navbook {
-  font-family: 'Myriad W01 Lt';
-  color: black;
-}
-
+.navbook,
 .navcanto a {
-  font-family: 'Myriad W01 Lt';
-  color: black;
-}
-
-.rowread {
-  margin-top: 10%;
-  margin-bottom: 5%;
-}
-
-.cantono {
-  font-size: 150%;
-  line-height: 1em;
-}
-
-.cantoname {
-  font-size: 175%;
-  line-height: 1.2em;
+  font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
 }
 
 .sectionno {
-  font-size: 125%;
   margin-top: 4%;
   margin-bottom: 5%;
-
-  #dropsection {
-    color: black;
-    text-decoration: none;
-  }
-
-  #dropsection:hover {
-    color: #08C;
-  }
 
   .sectionlist {
     font-size: 80%;
@@ -61,14 +32,23 @@
 }
 
 .line {
-  font-family: 'Kepler W01 Lt';
-  font-size: 125%;
-  line-height: 1.4em;
-  text-rendering: optimizeLegibility;
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.section {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .reference > a {
   font-family: Georgia;
-  font-size: 100%;
+  font-size: 80%;
   float: right;
 }
