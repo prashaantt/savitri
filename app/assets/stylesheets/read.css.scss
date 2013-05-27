@@ -1,237 +1,165 @@
-// Place all the styles related to the read controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+<!-- dynamic fetch of books and cantos -->
+<div class="row rowread">
+  <div class="span2 visible-desktop">
+    <div class="sidebar">
+    <div class="accordion" id="accordion2">
+      <% Book.all.each do |book| %>
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle collapsed navbook" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= book.id %>" id="bk1"><%= book.name %></a>
+        </div>
+        <div id="collapse<%= book.id %>" class="accordion-body collapse">
+          <div class="accordion-inner custom-accordion-inner">
+            <ul class="nav nav-tabs nav-stacked navcanto">
+              <% book.cantos.each do |canto| %>
+                <li id="leftnav" class="dropdown-submenu">
+                  <a href="<%= "/read/" + book.id.to_s + "/" + canto.id.to_s + "/1" %>" class="<%= is_active_link params,book.id.to_s,canto.id.to_s %>">
+                    <% *title = canto.title.split(/(: )/) %>
+                    <% if title.length == 1%>
+                      <%= title[0] %>
+                    <% else %>
+                      <%= title[0] + title[1] %>
+                      <br>
+                      <%= title[2] %>
+                    <% end %>
+                  </a>
+                  <ul class="dropdown-menu roundcorner look">
+                    <% canto.sections.each do |section| %>
+                      <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>">
+                        <%= link_to 'Section '+ section.runningno.to_s + ' ('+ section.no.to_s + ')',"/read/" + @canto.book.no.to_s + "/" +canto.no.to_s + "/" + section.runningno.to_s %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </li>
+              <% end %> 
+            </ul>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    </div>
+  </div>
+  <!-- '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1] -->
+  <div class="span6 offset1" id="read">
+    <div id="cantos">
+      <% unless @stanzas.blank? %>
+        <% @book = Book.find(params[:book_id]) %>
+        <% @canto = Canto.find(Section.find(@stanzas.first.section).canto_id) %>
+        <div class="page-header visible-desktop">
+          <h4>Book <%= @book.no %>: <%= Book.find(params[:book_id]).name %></h4>
+        </div>
+        <h3 class="cantono visible-desktop">Canto <%= @canto.no %></h3>
+        <div class="page-header hidden-desktop">
+          <h4 class="bookcantono">
+            <span class="dropdown">
+              <a class="dropdown-toggle" id="dropsection" data-toggle="dropdown" href="#">
+                <span class="sectionlbl" style="display:none">Book</span>
+                <%= params[:book_id]%>
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu sectionlist size">
+                <% Book.all.each do |book| %>
+                <li>
+                  <%= link_to 'Book ' + book.no.to_s + ': ' + book.name.to_s, '/read/' + book.no.to_s + '/1/1', :class=>"tag" %>
+                </li>
+ 
+                <% end %>
+                <!-- dropdown menu links -->
+              </ul>
+            </span>
+            <span style="margin-left: 20px; margin-right: 20px">/</span>
+            <span class="dropdown">
+              <a class="dropdown-toggle" id="dropsection" data-toggle="dropdown" href="#">
+                <span class="sectionlbl" style="display:none">Canto</span>
+                <%= params[:canto_id]%>
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu size sectionlist dropdown-align" role="menu" aria-labelledby="dropsection">
+                <% @book.cantos.each do |canto| %>
+                <li role="presentation">
+                  <% *title = canto.title.split(/(: )/) %>
+                  <% if title.length == 1%>
+                      <% canto_title = title[0] %>
+                    <% else %>
+                      <% canto_title = title[2] %>
+                  <% end %>
+                  <%= link_to 'Canto ' + canto.no.to_s + ': '+ canto_title, '/read/' + params[:book_id].to_s + '/' + canto.no.to_s + '/1', :class=> "tag" %>
+                  <% end %>
+                </li>
+                <!-- dropdown menu links -->
+              </ul>
+            </span>
+          </h4>
+ 
+        </div>
+        <h2 class="cantoname">
+          <% *title = @canto.title.split(/(: )/) %>
+          <% if title.length == 1%>
+            <%= title[0] %>
+          <% else %>
+            <%= title[0] + title[1] %>
+            <br>
+            <%= title[2] %>
+          <% end %>
+        </h2>
+        <div class="sections">
+          <h4 class="sectionno">
+            <% if @canto.sections.length > 1 %> 
+              <span class="dropdown">
+                <a class="dropdown-toggle hidden-desktop" id="dropsection" role="button" data-toggle="dropdown" data-target="#" href="#">
+                  <span class="sectionlbl" style="display:none">Section</span>
+                  <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
+                  <b class="hidden-desktop"><span class="caret"></span></b>
+                </a>
+                <ul class="dropdown-menu sectionlist" role="menu" aria-labelledby="dropsection">
+                  <% @canto.sections.each do |section| %>
+                  <li role="presentation" class="hidden-desktop">
+                    <%= link_to "/read/" + @canto.book.no.to_s + "/" + @canto.no.to_s + "/" + section.runningno.to_s do %>
+                    Section <%= section.runningno.to_s + " (" + @canto.sections.where(:runningno=>section.runningno).first.no.to_s + ")" %>
+                    <% end %>
+                  </li>
+                  <% end %>
+                </ul>
+              </span>
+              <span class="visible-desktop">
+                  <span class="sectionlbl" style="display:none;">Section</span>
+                  <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
+                </span>
+            <% else %>
+              <span class="sectionlbl">Section</span>
+              <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
+            <% end %>
+          </h4>
+          <div id="content">
+            <div id="s<%= params[:section_id] %>" class="section">
+              <p><%= render @stanzas %></p>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <h2><%= @canto.title %></h2>
+      <% end %>
+    </div>
+ 
+  </div>
+</div>
+ 
 
-.in {
-  overflow: visible;
-}
-
-.activeaccordion {
-  background: #FDF1CA;
-}
-
-.navbook {
-  font-family: 'Myriad W01 Lt';
-  color: black;
-}
-
-.navcanto a {
-  font-family: 'Myriad W01 Lt';
-  color: black;
-}
-
-.rowread {
-  margin-top: 10%;
-  margin-bottom: 5%;
-}
-
-.cantono {
-  font-size: 150%;
-  line-height: 1em;
-}
-
-.cantoname {
-  font-size: 175%;
-  line-height: 1.2em;
-}
-
-.sectionno {
-  font-size: 125%;
-  margin-top: 4%;
-  margin-bottom: 5%;
-}
-
-.bookcantono {
-  font-size: 125%;
-  margin-bottom: 5%;
-}
-
-#dropsection {
-  color: black;
-  text-decoration: none;
-}
-
-#dropsection:hover {
-  color: #08C;
-}
-
-.sectionlist {
-  font-size: 80%;
-  min-width: 0px;
-}
-
-
-.read-margins {
-  margin-left: 5%;
-  margin-right: 5%;
-}
-
-.stanza {
-  margin-bottom: 2%;
-}
-
-.line {
-  font-family: 'Kepler W01 Lt';
-  font-size: 125%;
-  line-height: 1.4em;
-}
-
-.reference > a {
-  font-family: Georgia;
-  font-size: 100%;
-  float: right;
-}
-
-.roundcorner {
-  min-width: 0px;
-  border-radius: 6px !important;
-  -moz-border-radius: 6px !important;
-  -webkit-border-radius:6px !important;
-}
-
-.dropdown-align {
-  margin-left:-120px;
-}
-
-.tag{
-  min-width: 0px;
-  max-width: 280px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.custom-accordion-inner {
-  padding: 0px;
-}
-
-.navcanto {
-  margin-bottom: 0px;
-}
-
-.navcanto > li > a {
-  border: 0px !important;
-}
-
-.navcanto > li:first-child > a {
-  -webkit-border-top-right-radius: 0px !important;
-  -moz-border-radius-topright: 0px !important;
-  border-top-right-radius: 0px !important;
-  -webkit-border-top-right-radius: 0px !important;
-  -moz-border-radius-topright: 0px !important;
-  border-top-right-radius: 0px !important;
-  -webkit-border-top-left-radius: 0px !important;
-  -moz-border-radius-topleft: 0px !important;
-  border-top-left-radius: 0px !important;
-  -webkit-border-top-left-radius: 0px !important;
-  -moz-border-radius-topleft: 0px !important;
-  border-top-left-radius: 0px !important;
-  -webkit-border-top-right-radius: 0px !important;
-  -moz-border-radius-topright: 0px !important;
-  border-top-right-radius: 0px !important;
-  -webkit-border-top-right-radius: 0px !important;
-  -moz-border-radius-topright: 0px !important;
-  border-top-right-radius: 0px !important;
-  -webkit-border-top-left-radius: 0px !important;
-  -moz-border-radius-topleft: 0px !important;
-  border-top-left-radius: 0px !important;
-  -webkit-border-top-left-radius: 0px !important;
-  -moz-border-radius-topleft: 0px !important;
-  border-top-left-radius: 0px !important;
-}
-
-@media (min-width: 524px) and (max-width: 554px) {
-  .line,
-  .bookcantono,
-  .sectionno {
-    font-size: 124%;
-  }
-
-  .reference > a {
-    font-size: 96%;
-  }
-
-  .cantoname {
-    font-size: 161%;
-  }
-}
-
-@media (min-width: 490px) and (max-width: 523px) {
-  .line,
-  .bookcantono,
-  .sectionno {
-    font-size: 117%;
-  }
-
-  .reference > a {
-    font-size: 89%;
-  }
-
-  .cantoname {
-    font-size: 154%;
-  }
-}
-
-@media (min-width: 476px) and (max-width: 489px) {
-  .line,
-  .bookcantono,
-  .sectionno {
-    font-size: 110%;
-  }
-
-  .reference > a {
-    font-size: 82%;
-  }
-
-  .cantoname {
-    font-size: 146%;
-  }
-}
-
-@media (min-width: 430px) and (max-width: 475px) {
-  .line,
-  .bookcantono,
-  .sectionno {
-    font-size: 103%;
-  }
-
-  .reference > a {
-    font-size: 74%;
-  }
-
-  .cantoname {
-    font-size: 131%;
-  }
-}
-
-@media (min-width: 410px) and (max-width: 429px) {
-  .line,
-  .bookcantono,
-  .sectionno {
-    font-size: 96%;
-  }
-
-  .reference > a {
-    font-size: 67%;
-  }
-
-  .cantoname {
-    font-size: 117%;
-  }
-}
-
-@media (max-width: 409px) {
-  .line,
-  .bookcantono,
-  .sectionno {
-    font-size: 89%;
-  }
-
-  .reference > a {
-    font-size: 60%;
-  }
-
-  .cantoname {
-    font-size: 103%;
-  }
-}
+    
+<script type="text/javascript">
+  //show the static text "Section" after page load
+  $(".sectionlbl").show();
+  //start color animation after page load
+  if (window.location.hash) {
+    var hashvalue = "p" + window.location.hash.split("#")[1];    
+    var currentColor = jQuery.Color("#" + hashvalue);    
+    $("#" + hashvalue).animate({
+      backgroundColor: "#FDF1CA"
+    }, 1000);    
+    $("#" + hashvalue).animate({
+      backgroundColor: currentColor
+    }, 3000);
+  };
+</script>
+ 
