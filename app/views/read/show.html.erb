@@ -144,7 +144,9 @@
  
   </div>
 </div>
- 
+<hr/>
+<i class="icon-chevron-up" style="float:right;"></i>
+  
 
     
 <script type="text/javascript">
@@ -162,4 +164,26 @@
     }, 3000);
   };
 </script>
+
+<script>
+    $(document).ready(function() {
+      // Show or hide the sticky footer button
+      $(window).scroll(function() {
+        if ($(this).scrollTop() > 200) {
+          $('.icon-chevron-up').fadeIn(200);
+        } else {
+          $('.icon-chevron-up').fadeOut(200);
+        }
+      });
+      
+      // Animate the scroll to top
+      $('.icon-chevron-up').click(function(event) {
+        event.preventDefault();
+        
+        $('html, body').animate({scrollTop: 0}, 600);
+      })
+    });
+  </script>
+
+
  
