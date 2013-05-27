@@ -33,6 +33,20 @@ module ApplicationHelper
  		claz
  	end
 
+  def is_active_section(params,no,cantono)
+  	ac=""
+  	if params[:section_id].eql? no
+      if params[:canto_id].eql? cantono
+  		  ac="active"
+      else
+        ac="nonactive"
+      end
+  	else
+  		ac="nonactive"
+  	end
+  	ac
+  end
+
   def share_url(sentence_number)
     stanza = Stanza.find_by_no(sentence_number)
     section = Section.find(stanza.section)
