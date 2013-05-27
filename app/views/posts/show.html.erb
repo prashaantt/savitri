@@ -39,7 +39,7 @@
         <div class="tags">
           <span class="badge">Tagged as</span>
           <% tag_cloud tag_counts, %w[s m l] do |tag| %>
-            <span><%= link_to tag.name, tag_path(params[:blog_id],tag.name), :class => "label label-info" %></span>
+            <span><%= link_to tag.name, tag_path(params[:blog_id],tag.name), :class => "tag label label-info" %></span>
           <% end %>
         </div>
       <% end %>
