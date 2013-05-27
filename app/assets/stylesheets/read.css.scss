@@ -2,27 +2,66 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.in {
+  overflow: visible;
+}
+
 .activeaccordion {
   background: #FDF1CA;
 }
 
-.navbook,
+.navbook {
+  font-family: 'Myriad W01 Lt';
+  color: black;
+}
+
 .navcanto a {
-  font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 300;
+  font-family: 'Myriad W01 Lt';
+  color: black;
+}
+
+.rowread {
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+
+.cantono {
+  font-size: 150%;
+  line-height: 1em;
+}
+
+.cantoname {
+  font-size: 175%;
+  line-height: 1.2em;
 }
 
 .sectionno {
+  font-size: 125%;
   margin-top: 4%;
   margin-bottom: 5%;
-
-  .sectionlist {
-    font-size: 80%;
-    min-width: 0px;
-  }
 }
 
-#cantos {
+.bookcantono {
+  font-size: 125%;
+  margin-bottom: 5%;
+}
+
+#dropsection {
+  color: black;
+  text-decoration: none;
+}
+
+#dropsection:hover {
+  color: #08C;
+}
+
+.sectionlist {
+  font-size: 80%;
+  min-width: 0px;
+}
+
+
+.read-margins {
   margin-left: 5%;
   margin-right: 5%;
 }
@@ -32,23 +71,167 @@
 }
 
 .line {
-  -webkit-user-select: text;
-  -khtml-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-.section {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  font-family: 'Kepler W01 Lt';
+  font-size: 125%;
+  line-height: 1.4em;
 }
 
 .reference > a {
   font-family: Georgia;
-  font-size: 80%;
+  font-size: 100%;
   float: right;
+}
+
+.roundcorner {
+  min-width: 0px;
+  border-radius: 6px !important;
+  -moz-border-radius: 6px !important;
+  -webkit-border-radius:6px !important;
+}
+
+.dropdown-align {
+  margin-left:-120px;
+}
+
+.tag{
+  min-width: 0px;
+  max-width: 280px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.custom-accordion-inner {
+  padding: 0px;
+}
+
+.navcanto {
+  margin-bottom: 0px;
+}
+
+.navcanto > li > a {
+  border: 0px !important;
+}
+
+.navcanto > li:first-child > a {
+  -webkit-border-top-right-radius: 0px !important;
+  -moz-border-radius-topright: 0px !important;
+  border-top-right-radius: 0px !important;
+  -webkit-border-top-right-radius: 0px !important;
+  -moz-border-radius-topright: 0px !important;
+  border-top-right-radius: 0px !important;
+  -webkit-border-top-left-radius: 0px !important;
+  -moz-border-radius-topleft: 0px !important;
+  border-top-left-radius: 0px !important;
+  -webkit-border-top-left-radius: 0px !important;
+  -moz-border-radius-topleft: 0px !important;
+  border-top-left-radius: 0px !important;
+  -webkit-border-top-right-radius: 0px !important;
+  -moz-border-radius-topright: 0px !important;
+  border-top-right-radius: 0px !important;
+  -webkit-border-top-right-radius: 0px !important;
+  -moz-border-radius-topright: 0px !important;
+  border-top-right-radius: 0px !important;
+  -webkit-border-top-left-radius: 0px !important;
+  -moz-border-radius-topleft: 0px !important;
+  border-top-left-radius: 0px !important;
+  -webkit-border-top-left-radius: 0px !important;
+  -moz-border-radius-topleft: 0px !important;
+  border-top-left-radius: 0px !important;
+}
+
+@media (min-width: 524px) and (max-width: 554px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 124%;
+  }
+
+  .reference > a {
+    font-size: 96%;
+  }
+
+  .cantoname {
+    font-size: 161%;
+  }
+}
+
+@media (min-width: 490px) and (max-width: 523px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 117%;
+  }
+
+  .reference > a {
+    font-size: 89%;
+  }
+
+  .cantoname {
+    font-size: 154%;
+  }
+}
+
+@media (min-width: 476px) and (max-width: 489px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 110%;
+  }
+
+  .reference > a {
+    font-size: 82%;
+  }
+
+  .cantoname {
+    font-size: 146%;
+  }
+}
+
+@media (min-width: 430px) and (max-width: 475px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 103%;
+  }
+
+  .reference > a {
+    font-size: 74%;
+  }
+
+  .cantoname {
+    font-size: 131%;
+  }
+}
+
+@media (min-width: 410px) and (max-width: 429px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 96%;
+  }
+
+  .reference > a {
+    font-size: 67%;
+  }
+
+  .cantoname {
+    font-size: 117%;
+  }
+}
+
+@media (max-width: 409px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 89%;
+  }
+
+  .reference > a {
+    font-size: 60%;
+  }
+
+  .cantoname {
+    font-size: 103%;
+  }
 }
