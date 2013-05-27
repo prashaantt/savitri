@@ -1,6 +1,7 @@
 <!-- dynamic fetch of books and cantos -->
 <div class="row rowread">
   <div class="span2 visible-desktop">
+    <div class="sidebar">
     <div class="accordion" id="accordion2">
       <% Book.all.each do |book| %>
       <div class="accordion-group">
@@ -22,7 +23,7 @@
                       <%= title[2] %>
                     <% end %>
                   </a>
-                  <ul class="dropdown-menu roundcorner">
+                  <ul class="dropdown-menu roundcorner look">
                     <% canto.sections.each do |section| %>
                       <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>">
                         <%= link_to 'Section '+ section.runningno.to_s + ' ('+ section.no.to_s + ')',"/read/" + @canto.book.no.to_s + "/" +canto.no.to_s + "/" + section.runningno.to_s %>
@@ -36,6 +37,7 @@
         </div>
       </div>
       <% end %>
+    </div>
     </div>
   </div>
   <!-- '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1] -->
@@ -61,6 +63,7 @@
                 <li>
                   <%= link_to 'Book ' + book.no.to_s + ': ' + book.name.to_s, '/read/' + book.no.to_s + '/1/1', :class=>"tag" %>
                 </li>
+ 
                 <% end %>
                 <!-- dropdown menu links -->
               </ul>
@@ -88,6 +91,7 @@
               </ul>
             </span>
           </h4>
+ 
         </div>
         <h2 class="cantoname">
           <% *title = @canto.title.split(/(: )/) %>
@@ -101,17 +105,13 @@
         </h2>
         <div class="sections">
           <h4 class="sectionno">
-            <% if @canto.sections.length > 1 %>
+            <% if @canto.sections.length > 1 %> 
               <span class="dropdown">
                 <a class="dropdown-toggle hidden-desktop" id="dropsection" role="button" data-toggle="dropdown" data-target="#" href="#">
                   <span class="sectionlbl" style="display:none">Section</span>
                   <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
                   <b class="hidden-desktop"><span class="caret"></span></b>
                 </a>
-                <span class="visible-desktop">
-                  <span class="sectionlbl" style="display:none">Section</span>
-                  <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
-                </span>
                 <ul class="dropdown-menu sectionlist" role="menu" aria-labelledby="dropsection">
                   <% @canto.sections.each do |section| %>
                   <li role="presentation" class="hidden-desktop">
@@ -122,6 +122,10 @@
                   <% end %>
                 </ul>
               </span>
+              <span class="visible-desktop">
+                  <span class="sectionlbl" style="display:none;">Section</span>
+                  <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
+                </span>
             <% else %>
               <span class="sectionlbl">Section</span>
               <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
@@ -137,5 +141,25 @@
         <h2><%= @canto.title %></h2>
       <% end %>
     </div>
+ 
   </div>
 </div>
+ 
+
+    
+<script type="text/javascript">
+  //show the static text "Section" after page load
+  $(".sectionlbl").show();
+  //start color animation after page load
+  if (window.location.hash) {
+    var hashvalue = "p" + window.location.hash.split("#")[1];    
+    var currentColor = jQuery.Color("#" + hashvalue);    
+    $("#" + hashvalue).animate({
+      backgroundColor: "#FDF1CA"
+    }, 1000);    
+    $("#" + hashvalue).animate({
+      backgroundColor: currentColor
+    }, 3000);
+  };
+</script>
+ 
