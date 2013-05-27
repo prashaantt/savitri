@@ -18,7 +18,7 @@ class Line < ActiveRecord::Base
 
    searchable do 
      text :line
-     text :no
+     #text :no
      integer :id
 #  --facets below--
      string :section

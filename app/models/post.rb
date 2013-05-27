@@ -6,11 +6,35 @@ class Post < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :uploads
   has_many :tags
+
+  searchable do 
+    text :title
+    text :content
+# --facets below--
+    string :category
+    string :author
+    string :posted
+    string :blogname
+  end
+  
   validates :title, :presence => true,
                     :length => { :minimum => 3 }
   accepts_nested_attributes_for :uploads
+
   def photo
     uplods.photo
+  end
+  def category
+    self.class.name + "s"
+  end
+  def author
+    blog.user.username
+  end
+  def posted
+    updated_at.strftime("%B") + ' ' + updated_at.strftime("%Y")
+  end
+  def blogname
+    blog.title
   end
   def section
   end
