@@ -33,7 +33,6 @@ GEM
     acts_as_follower (0.1.1)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
-    bigdecimal (1.1.0)
     builder (3.0.4)
     cancan (1.6.7)
     capistrano (2.14.2)
@@ -105,7 +104,6 @@ GEM
     newrelic_rpm (3.6.0.78)
     nokogiri (1.5.6)
     orm_adapter (0.4.0)
-    pg (0.14.1)
     polyglot (0.3.3)
     pr_geohash (1.0.0)
     rack (1.4.5)
@@ -201,7 +199,6 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_follower
   bcrypt-ruby
-  bigdecimal
   cancan
   capistrano
   carrierwave
@@ -212,7 +209,6 @@ DEPENDENCIES
   kaminari
   mini_magick
   newrelic_rpm
-  pg
   rails (= 3.2.13)
   redactor-rails (= 0.3.2)
   sass-rails (~> 3.2.3)
