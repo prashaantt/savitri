@@ -1,6 +1,6 @@
 class Post < ActiveRecord::Base
   #FIXME: Remove :created_at from attr_accessible after migration
-  attr_accessible :content, :title, :tag_list, :blog_id, :section, :book, :canto, :from, :to, :md_content, :photo, :uploads_attributes, :created_at
+  attr_accessible :content, :title, :tag_list, :blog_id, :section, :book, :canto, :from, :to, :md_content, :photo, :uploads_attributes, :created_at, :excerpt
   acts_as_taggable	
   belongs_to :blog
   has_many :comments, :dependent => :destroy
