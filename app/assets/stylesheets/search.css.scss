@@ -136,3 +136,35 @@
     border: 0;
     padding: 0;
 }
+
+@media all and (max-width: 400px) {
+    iframe{
+    width:100% !important;
+    height:0%;
+    position:initial;
+    }
+}
+
+iframe{  
+    width:100% !important;
+}
+
+.video {
+position: relative;
+padding-bottom: 56.25%;
+padding-top: 30px;
+height: 0;
+overflow: hidden;
+}
+
+.video iframe, .video object, .video embed {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+}
+
+.entry-content img, .entry-content iframe, .entry-content object, .entry-content embed {
+max-width: 100%;
+}
