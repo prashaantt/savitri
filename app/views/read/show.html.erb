@@ -1,8 +1,7 @@
 <!-- dynamic fetch of books and cantos -->
 <div class="row rowread">
   <div class="span2 visible-desktop">
-    <div class="sidebar">
-    <div class="accordion" id="accordion2">
+    <div class="accordion sidebar" id="accordion2">
       <% Book.all.each do |book| %>
       <div class="accordion-group">
         <div class="accordion-heading">
@@ -23,7 +22,7 @@
                       <%= title[2] %>
                     <% end %>
                   </a>
-                  <ul class="dropdown-menu roundcorner look">
+                  <ul class="dropdown-menu roundcorner submenutext">
                     <% canto.sections.each do |section| %>
                       <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>">
                         <%= link_to 'Section '+ section.runningno.to_s + ' ('+ section.no.to_s + ')',"/read/" + @canto.book.no.to_s + "/" +canto.no.to_s + "/" + section.runningno.to_s %>
@@ -38,11 +37,10 @@
       </div>
       <% end %>
     </div>
-    </div>
   </div>
-  <!-- '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1] -->
+    <!-- '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1] -->
   <div class="span6 offset1" id="read">
-    <div id="cantos">
+  <div id="cantos">
       <% unless @stanzas.blank? %>
         <% @book = Book.find(params[:book_id]) %>
         <% @canto = Canto.find(Section.find(@stanzas.first.section).canto_id) %>
@@ -91,7 +89,6 @@
               </ul>
             </span>
           </h4>
- 
         </div>
         <h2 class="cantoname">
           <% *title = @canto.title.split(/(: )/) %>
@@ -141,11 +138,10 @@
         <h2><%= @canto.title %></h2>
       <% end %>
     </div>
- 
   </div>
 </div>
 <hr/>
-<i class="icon-chevron-up" style="float:right;"></i>
+<i href="#" class="icon-chevron-up go-top visible-desktop" style="float:right;"></i>
   
 
     
@@ -170,17 +166,17 @@
       // Show or hide the sticky footer button
       $(window).scroll(function() {
         if ($(this).scrollTop() > 200) {
-          $('.icon-chevron-up').fadeIn(200);
+          $('.go-top').fadeIn(200);
         } else {
-          $('.icon-chevron-up').fadeOut(200);
+          $('.go-top').fadeOut(200);
         }
       });
       
       // Animate the scroll to top
-      $('.icon-chevron-up').click(function(event) {
+      $('.go-top').click(function(event) {
         event.preventDefault();
         
-        $('html, body').animate({scrollTop: 0}, 600);
+        $('html, body').animate({scrollTop: 0}, 300);
       })
     });
   </script>
