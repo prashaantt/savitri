@@ -52,9 +52,11 @@
                   <i class="icon-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="/blogs/light-of-supreme/posts/">The Light of the Supreme</a></li>
-                  <li><a href="/blogs/mirror/posts">Mirror</a></li>
-                  <li><a href="/blogs/parasya-jyotih/posts">परस्य ज्योतिः</a></li>
+                  <% User.find(1).blogs.each do |b| %>
+                    <li>
+                      <%= link_to b.title, blog_posts_path(b) %>
+                    </li>
+                  <% end %>
                 </ul>
               </li>
                 <% @pages = Page.order(:priority).find_all_by_category("Menu") %>
