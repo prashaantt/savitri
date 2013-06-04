@@ -52,7 +52,7 @@
                   <i class="icon-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                  <% User.find(1).blogs.each do |b| %>
+                  <% User.find(1).blogs.order("id").each do |b| %>
                     <li>
                       <%= link_to b.title, blog_posts_path(b) %>
                     </li>
