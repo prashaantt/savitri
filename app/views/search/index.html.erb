@@ -22,7 +22,11 @@
 			<% logger.debug { l.inspect }%>
 			<div class="result">
 				<% if l.is_a?(Line) %>
-				<%= l.line %>
+				 <% if highlight = hit.highlight(:line) %>
+					<%= hit.highlight(:line).format { |fragment| content_tag(:strong, fragment) }.html_safe %>
+				 <% else %>
+				 	<%= l.line %>
+				 	<% end %>
 				<span class="ref">
 					<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
 					<%= link_to "||"+anchor_t+"||", l.share_url  %>
@@ -32,27 +36,34 @@
 				(Book <%= l.no %>) <%= link_to l.name,'read/'+l.no.to_s+'/1/1' %>
 				<% else %>
 				<% if l.is_a?(Stanza) %>
-				<% count = 0 %>
-				
-					<% l.lines.each_with_index do |line, index| %>
-					<% (count += 1) %>
-					<%= line.line %>
-					<% if count < l.length.to_i %>
-					<br>
+				  <% highlights = Array.new %>
+					<% hit.highlight(:lines).format do |r| %>
+					<% highlights << r %>
 					<% end %>
+					<% count = 0 %>
+					<% l.lines.each_with_index do |line, index| %>
+						<% (count += 1) %>
+						<%= line.line %><!--.gsub!(highlights[index].to_s,"<b>"+highlights[index]. to_s+"</b>").to_s.html_safe %>-->
+						<% if count < l.length.to_i %>
+							<br>
+						<% end %>
 					<% end %>
 					<span class="ref">
 						<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
 						<%= link_to "||"+anchor_t+"||", share_url(l.no)   %>
 					</span>
-				
 				<% else %>
 				<% if l.is_a?(Post) %>
 				<div class="result-title">
 					<h3><%= link_to l.title, blog_post_path(l.blog,l) %></h3>
 				</div>
 				<div class="result-text">
-					<%= strip_tags(l.content).first(150).html_safe %>
+					<% if highlight = hit.highlight(:content) %>
+			       ...<%= hit.highlight(:content).format { |fragment| content_tag(:b, strip_tags(fragment)) }.html_safe %>...
+			    <% else %>
+			       <%= strip_tags(l.content).first(150).html_safe %>
+			    <% end %>
+					
 				</div>
 				<% end %>
 				<% end %>
