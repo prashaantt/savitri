@@ -8,8 +8,8 @@ class Post < ActiveRecord::Base
   has_many :tags
 
   searchable do 
-    text :title
-    text :content
+    text :title, :stored => true
+    text :content, :stored => true
 # --facets below--
     string :category
     string :author

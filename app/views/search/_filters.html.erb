@@ -74,7 +74,7 @@
 				<% for row in @search.facet(:length).rows.each do %>
 					<li>
 						<p>
-							<%= link_to "x", search_path(:canto => params[:canto] , :length => nil, :lbook => params[:lbook], :sbook=>params[:sbook], :book=>params[:book], :q=>params[:q]) %>
+							<%= link_to "x", search_path(:canto => params[:canto] , :length => nil, :lbook => params[:lbook], :sbook=>params[:sbook], :book=>params[:book], :q=>params[:q], :section => params[:section]) %>
 							&nbsp;Length of Sentence <%= row.value %>
 						</p>
 					</li>

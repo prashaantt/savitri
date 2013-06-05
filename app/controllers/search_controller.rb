@@ -18,7 +18,7 @@ class SearchController < ApplicationController
             end
           when "sentences"
             @search = Sunspot.search Stanza do
-              fulltext query[0]
+              fulltext query[0], :highlight => true
               order_by(:id, :asc)
               facet(:sbook)
               facet(:length)
@@ -32,7 +32,7 @@ class SearchController < ApplicationController
             end
           when "lines"
             @search = Sunspot.search Line do
-              fulltext query[0]
+              fulltext query[0], :highlight => true
               order_by(:id, :asc)
               facet(:section)
               facet(:canto)
@@ -46,7 +46,7 @@ class SearchController < ApplicationController
           end
           when "posts"
             @search = Sunspot.search Post do
-              fulltext query[0]
+              fulltext query[0], :highlight => true
               facet(:posted)
               facet(:author)
               facet(:blogname)
@@ -58,7 +58,7 @@ class SearchController < ApplicationController
         end
     else
        @search = Sunspot.search Line, Book, Stanza, Post do
-        fulltext params[:q]
+        fulltext params[:q], :highlight => true
         facet(:category)
          if params[:category].present?
            with(:category).equal_to(params[:category])

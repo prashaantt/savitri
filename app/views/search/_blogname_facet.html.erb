@@ -1,5 +1,5 @@
 <% if  params[:blogname].blank? %>
-<h5 class="left-filter">Post</h5>
+<h5 class="left-filter">Blog</h5>
 <% rows = Array.new %>
 	<ul class="facet">
 	<% for row in @search.facet(:blogname).rows.each do%>

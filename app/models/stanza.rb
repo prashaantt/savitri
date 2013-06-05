@@ -15,9 +15,9 @@ class Stanza < ActiveRecord::Base
   # end
 
   searchable do 
-    text :share_url
-    text :lines do |l|
-      l.lines.map {|l| l.line}
+    text :share_url, :stored => true
+    text :lines, :stored => true do 
+      lines.map {|l| l.line}
     end
 #  --facets below--    
     integer :id
