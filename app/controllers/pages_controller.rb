@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
+  authorize_resource
   def index
     @pages = Page.all
 
