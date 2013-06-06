@@ -5,7 +5,7 @@
     <h1><%= @page.name %></h1>
     <div class="pull-right">
     <% if user_signed_in? %>
-      <% if can? :create, Page %>
+      <% if current_user.role == "Admin" %>
         <%= link_to 'Edit', edit_page_path(@page), :class => "btn btn-mini btn-warning" %>
         <td><%= link_to 'Delete', page_path(@page), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-mini btn-danger" %></td>
       <% end %>
