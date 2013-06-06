@@ -20,12 +20,12 @@
       <%= f.text_field :permalink %>
     </div>
     <div class="field">
-      <%= f.label :priority %> 
-      <%= f.text_field :priority, :size => 5  %>
-    </div>
-    <div class="field">
       <%= f.label :category %>
       <%= f.select(:category,[["Menu","Menu"],["Non-Menu","Non-Menu"]]) %>
+    </div>
+    <div class="field">
+      <%= f.label :priority %> 
+      <%= f.text_field :priority, :size => 5  %>
     </div>
     <div class="control-group">
       <%= f.label :content, :class => 'control-label' %>
@@ -33,7 +33,7 @@
         <div class="controls">
           <div id='wmd-button-bar'><span id="previewbtn" class="btn btn-info pull-right" style="min-width: 46px;">Preview</span></div>
           <%= f.text_area :md_content, :class=> "span6", :id=>"wmd-input", :style => "resize: none; margin-top: 20px" %>
-          <div id="wmd-preview" class="wmd-preview well" style="display: none; min-height: 490px; margin-top: 20px"></div>
+          <div id="wmd-preview" class="wmd-preview well well-small" style="display: none; min-height: 490px; margin-top: 20px"></div>
           <%= f.text_area :content, :style=> "display: none" %>        
         </div>
       </div>
