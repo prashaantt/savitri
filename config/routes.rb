@@ -87,6 +87,7 @@ Savitri::Application.routes.draw do
 
   root :to => 'savitri#index', :as => 'savitri'
 
-  match '*paths' => 'pages#show', as: :page
+  get '*paths' => 'pages#show', as: :page
+  put '*paths' => 'pages#update', as: :page
   
 end

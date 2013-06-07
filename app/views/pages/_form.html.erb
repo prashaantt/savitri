@@ -16,9 +16,14 @@
       <%= f.text_field :name %>
     </div>
     <div class="field">
-      <%= f.label :permalink %>
-      <%= f.text_field :permalink %>
+      <%= f.label :url %>
+      <%= f.text_field :url %>
     </div>
+    <div class="field">
+      <%= f.label :permalink %>
+      <%= f.text_field :permalink, :readonly=>:true %>
+    </div>
+    <%= f.hidden_field :id %>
     <div class="field">
       <%= f.label :category %>
       <%= f.select(:category,[["Menu","Menu"],["Non-Menu","Non-Menu"]]) %>
@@ -27,7 +32,7 @@
       <%= f.label :parent %>
       <%= f.collection_select(:parent,Page.all,:id,:name,:prompt => 'Select Parent') %>
     </div>
-    <div class="field">
+    <div class="field" id="page-priority">
       <%= f.label :priority %> 
       <%= f.text_field :priority, :size => 5  %>
     </div>

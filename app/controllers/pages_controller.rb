@@ -40,7 +40,8 @@ class PagesController < ApplicationController
 
   # GET /pages/1/edit
   def edit
-    @page = Page.find(params[:id])
+    @page = Page.find(params[:id]) 
+    @page.url = @page.permalink.split("/").last
   end
 
   # POST /pages
@@ -62,8 +63,14 @@ class PagesController < ApplicationController
   # PUT /pages/1
   # PUT /pages/1.json
   def update
+    puts "--------------------------------"
     puts params.inspect
-    @page = Page.find(params[:id])
+    puts "--------------------------------"
+    if params[:paths].nil?
+      @page = Page.find(params[:page][:id])  
+    else
+      @page = Page.find_by_permalink!(params[:paths])
+    end
 
     respond_to do |format|
       if @page.update_attributes(params[:page])

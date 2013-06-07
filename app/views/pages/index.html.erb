@@ -22,7 +22,7 @@
         <% @pages.each do |page| %>
         <tr>
             <td><%= page.name %></td>
-            <td><%= link_to "/" + page.permalink, page.permalink %></td>
+            <td><%= link_to "/" + page.permalink,"/" + page.permalink %></td>
             <td><% unless page.parent.blank? %>
               <%= Page.find(page.parent).name %>
               <% end %></td>

@@ -1,9 +1,9 @@
 class Page < ActiveRecord::Base
-  attr_accessible :content, :name, :permalink, :md_content, :priority, :category, :parent
+  attr_accessible :content, :name, :permalink, :md_content, :priority, :category, :parent, :id, :url
 
-  validates_length_of :permalink, :minimum => 3
+  validates_length_of :permalink,:url, :minimum => 3
   validates_presence_of :content, :name, :permalink, :md_content
-  validates_uniqueness_of  :permalink
+  validates_uniqueness_of  :url,:permalink
   validates_presence_of :priority, :unless => Proc.new {|m| m.category != "Menu"}
   validates_uniqueness_of :priority, :unless => Proc.new {|m| m.category != "Menu"}
   validates :priority, :numericality => {:only_integer => true}, :unless => Proc.new {|m| m.category != "Menu"}
@@ -12,15 +12,14 @@ class Page < ActiveRecord::Base
   	"#{permalink}"
   end
 
-  before_save :permalink_update
+  before_validation :permalink_update
   
   private
 
   def permalink_update
     unless self.parent.nil?
-      newvalue = Page.find(self.parent).permalink.concat("/").concat(self.permalink)
-      puts "newvalue-----" + newvalue.to_s
-      self.permalink = newvalue
+      newvalue = Page.find(self.parent).permalink.concat("/").concat(self.url)
+      self.permalink = newvalue.downcase
     end
   end
 end
