@@ -61,9 +61,7 @@
               </li>
                 <% @pages = Page.order(:priority).find_all_by_category("Menu") %>
                 <% unless @pages.count > 1 %>
-                <li>
-                  <a href="<%= page_path("About")%>">About</a>
-                </li>
+                <li><%= link_to @pages.first.name, page_path(@pages.first) %></li>
                 <% else %>
                 <li class="dropdown" id="pages"><a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">About
                   <i class="icon-caret-down"></i>

@@ -5,3 +5,10 @@ $ ->
 	$("#new-page").click (e) ->
 	  $("#page_content").html($('.wmd-preview').html())
 	  $("#wmd-input").html($('.wmd-input').val())
+
+$ ->
+  $("#page_category").change ->
+  	if $("#page_category").val() == "Non-Menu"
+      $("#page-priority").hide()
+    else
+        $("#page-priority").show()
