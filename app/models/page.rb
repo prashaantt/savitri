@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  attr_accessible :content, :name, :permalink, :md_content, :priority, :category
+  attr_accessible :content, :name, :permalink, :md_content, :priority, :category, :parent
 
   validates_length_of :permalink, :minimum => 3
   validates_presence_of :content, :name, :permalink, :md_content
@@ -10,5 +10,17 @@ class Page < ActiveRecord::Base
 
   def to_param
   	"#{permalink}"
+  end
+
+  before_save :permalink_update
+  
+  private
+
+  def permalink_update
+    unless self.parent.nil?
+      newvalue = Page.find(self.parent).permalink.concat("/").concat(self.permalink)
+      puts "newvalue-----" + newvalue.to_s
+      self.permalink = newvalue
+    end
   end
 end
