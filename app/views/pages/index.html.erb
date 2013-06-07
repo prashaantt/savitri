@@ -12,6 +12,7 @@
           <tr>
             <th>Name</th>
             <th>Link</th>
+            <th>Parent</th>
             <th>Category</th>
             <th>Priority</th>
             <th colspan="2"></th>
@@ -22,9 +23,12 @@
         <tr>
             <td><%= page.name %></td>
             <td><%= link_to "/" + page.permalink, page.permalink %></td>
+            <td><% unless page.parent.blank? %>
+              <%= Page.find(page.parent).name %>
+              <% end %></td>
             <td><%= page.category %></td>
             <td><%= page.priority %></td>
-            <td><%= link_to 'Edit', edit_page_path(page), :class => "btn btn-mini btn-warning" %></td>
+            <td><%= link_to 'Edit', edit_page_path(page.id), :class => "btn btn-mini btn-warning" %></td>
             <td style="text-align: left"><%= link_to 'Delete', page.permalink, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-mini btn-danger" %></td>
         </tr>
         <% end %>
