@@ -20,6 +20,8 @@ class Page < ActiveRecord::Base
     unless self.parent.nil?
       newvalue = Page.find(self.parent).permalink.concat("/").concat(self.url)
       self.permalink = newvalue.downcase
+    else
+      self.permalink=self.url
     end
   end
 end

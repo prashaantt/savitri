@@ -6,8 +6,8 @@
 </div>
 </div>
 <div class="row">
-  <div class="span6 offset3">
-    <table class="table table-hover">
+  <div class="span10 offset1">
+    <table class="table table-hover table-striped">
       <thead>
           <tr>
             <th>Name</th>
@@ -19,23 +19,25 @@
         </tr>
     </thead>
     <tbody>
-        <% @pages.each do |page| %>
-        <tr>
-            <td><%= page.name %></td>
-            <td><%= link_to "/" + page.permalink,"/" + page.permalink %></td>
-            <td><% unless page.parent.blank? %>
-              <%= Page.find(page.parent).name %>
-              <% end %></td>
-            <td><%= page.category %></td>
-            <td><%= page.priority %></td>
-            <td><%= link_to 'Edit', edit_page_path(page.id), :class => "btn btn-mini btn-warning" %></td>
-            <td style="text-align: left"><%= link_to 'Delete', page.permalink, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-mini btn-danger" %></td>
-        </tr>
-        <% end %>
+      <% @pages.each do |page| %>
+      <tr>
+        <td><%= page.name %></td>
+        <td><%= link_to "/" + page.permalink,"/" + page.permalink %></td>
+        <td>
+          <% unless page.parent.blank? %>
+            <%= Page.find(page.parent).name %>
+          <% end %>
+        </td>
+        <td><%= page.category %></td>
+        <td><%= page.priority %></td>
+        <td style="text-align: center"><%= link_to 'Edit', edit_page_path(page.id), :class => "btn btn-mini btn-warning" %></td>
+        <td style="text-align: center"><%= link_to 'Delete', page.permalink, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-mini btn-danger" %></td>
+      </tr>
+      <% end %>
     </tbody>
 </table>
 <div style="text-align: center">
-    <%= link_to 'New Page', new_page_path, :class => "btn btn-info" %>
+    <%= link_to 'New page', new_page_path, :class => "btn btn-info" %>
 </div>
 </div>
 </div>
