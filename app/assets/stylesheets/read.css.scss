@@ -4,8 +4,10 @@
 
 .in {
   overflow: visible;
+  height:0% !important;
+  
 }
-
+ 
 .activeaccordion {
   background: #FDF1CA;
 }
@@ -223,8 +225,8 @@
   height:1200px;
   position:fixed;
   width:19%;
-  top:0;
-  left:0;
+  top:0%;
+  left:0%;
   padding-top:113px;
   padding-left:1%;
   padding-right:1%;
@@ -410,6 +412,7 @@ a:hover, a:focus {
 
 .navbar-search .search-query {
   border-radius: 0px;
+  line-height:normal;
 }
 
 .btn-group > .btn:first-child {
@@ -471,8 +474,4 @@ a:hover, a:focus {
 
 .page-header {
   text-align: left;
-}
-
-.annotator-wrapper {
-position: static;
 }
