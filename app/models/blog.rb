@@ -5,7 +5,7 @@ class Blog < ActiveRecord::Base
                     :length => { :minimum => 5 }
 
   belongs_to :user
-  has_many :posts
+  has_many :posts, :dependent => :delete_all
 
   def to_param
   	"#{slug}"

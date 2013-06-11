@@ -86,4 +86,8 @@ Savitri::Application.routes.draw do
   delete ':id', to: 'pages#destroy', as: :page
 
   root :to => 'savitri#index', :as => 'savitri'
+
+  get '*paths' => 'pages#show', as: :page
+  put '*paths' => 'pages#update', as: :page
+  
 end

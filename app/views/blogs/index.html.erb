@@ -20,28 +20,35 @@
         <%= link_to 'Edit details', edit_blog_path(blog), :class => "btn btn-mini btn-warning" %>
         <%= link_to 'New post', new_blog_post_path(blog), :class => "btn btn-mini btn-info" %>
     	  <!--| <%= 'Moderate comments'  %> |
-        | <%= 'Change template'  %> |
-        | <%= link_to 'Delete', "#", :class => "btn btn-mini btn-danger" %>-->
+        | <%= 'Change template'  %> |-->
+         <%= link_to 'Delete', blog_path(blog),  :method => :delete,
+  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+  :class => 'btn btn-mini btn-danger' %>
       </div>
       <% end %>
     </section>
-    <% if current_user.role == 'Admin' %>
-    <hr>
-    <section>
-      <h2>
-        Invitations
-      </h2>
-      <h3><small>Invite new users or migrate existing ones.</small></h3>
-      <%= link_to 'Send invitation', new_user_invitation_path, :class => "btn btn-info" %>
-    </section>
-    <section>
-    	<% if current_user.blogs.count < 3 %>
-      <hr>
-      <%= link_to 'New blog', new_blog_path, :class => "btn btn-mini btn-info" %>
-      <% end %>
-      <% elsif current_user.blogs.count < 1 && current_user.role != 'User' %>
-      <hr>
-      <%= link_to 'New blog', new_blog_path, :class => "btn btn-mini btn-info"  %>
+    	<% if current_user.role == 'Admin'%>
+        <% if current_user.blogs.count < 3 %>
+          <section>
+            <h3><small>You can host up to 3 blogs.</small></h3>
+            <%= link_to 'New blog', new_blog_path, :class => "btn btn-info" %>
+          </section>
+          <hr>
+          <section>
+            <h2>Pages</h2>
+            <h3><small>Create static files.</small></h3>
+            <%= link_to 'Manage pages', pages_path, :class => "btn btn-info" %>
+          </section>
+          <hr>
+          <section>
+            <h2>Invitations</h2>
+            <h3><small>Invite new users or migrate existing ones.</small></h3>
+            <%= link_to 'Send invitation', new_user_invitation_path, :class => "btn btn-info" %>
+          </section>
+        <% end %>
+      <% elsif current_user.blogs.count < 1 %>
+        <h3><small>You can host 1 blog.</small></h3>
+        <%= link_to 'New blog', new_blog_path, :class => "btn btn-info"  %>
       <% end %>
     </section>
   </div>
