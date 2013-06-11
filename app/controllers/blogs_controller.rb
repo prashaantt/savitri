@@ -63,4 +63,17 @@ class BlogsController < ApplicationController
       end
     end
   end
+
+  # DELETE /blogs/{slug}
+  def destroy
+    @blog = Blog.find_by_slug(params[:id])
+    authorize! :destroy, @blog
+    @blog.destroy
+
+    respond_to do |format|
+      format.html { redirect_to blogs_path, notice: 'blog was successfully deleted.' }
+      format.json { head :no_content }
+    end
+  end
+
 end

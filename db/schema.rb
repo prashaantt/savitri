@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130510192120) do
+ActiveRecord::Schema.define(:version => 20130606125307) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -111,6 +111,8 @@ ActiveRecord::Schema.define(:version => 20130510192120) do
     t.text     "md_content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "parent"
+    t.string   "url"
   end
 
   add_index "pages", ["permalink"], :name => "index_pages_on_permalink"
@@ -123,6 +125,8 @@ ActiveRecord::Schema.define(:version => 20130510192120) do
     t.datetime "updated_at", :null => false
     t.text     "md_content"
     t.string   "photos"
+    t.text     "excerpt"
+    t.string   "url"
   end
 
   create_table "redactor_assets", :force => true do |t|
@@ -184,9 +188,9 @@ ActiveRecord::Schema.define(:version => 20130510192120) do
   create_table "uploads", :force => true do |t|
     t.integer  "post_id"
     t.string   "photo"
-    t.string   "music"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "music"
   end
 
   create_table "users", :force => true do |t|
