@@ -2,6 +2,16 @@
 <p id="notice"><%= notice %></p>
 <div class="row">
   <div class="span6 offset3 page-header">
+    <ul class="breadcrumb" style="background: none;">
+      <% myparents = @page.myparents %>
+        <% myparents.reverse.each_with_index do |p, index| %>
+          <% pp=Page.find(p) %>
+          <li><%= link_to pp.name,"/" + pp.permalink %> <span class="divider">></span></li>  
+        <% end %>
+        <% unless myparents.count ==0 %>
+          <li class="active"><%= @page.name %></li>
+        <% end %>
+    </ul>
     <h1><%= @page.name %></h1>
     <div class="pull-right">
     <% if user_signed_in? %>

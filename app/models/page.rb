@@ -12,6 +12,20 @@ class Page < ActiveRecord::Base
   	"#{permalink}"
   end
 
+  def myparents(parents=Array.new)
+    unless self.parent.nil?
+      parents << self.parent
+      Page.find(self.parent).myparents(parents)
+    else
+      if(parents.nil?)
+        return Array.new << self.id
+      else
+        self.id
+      end
+    end
+    return parents
+  end
+
   before_validation :permalink_update
   
   private
