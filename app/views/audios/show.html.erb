@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @audio.title %>
+</p>
+
+<p>
+  <b>Audio url:</b>
+  <%= @audio.audio_url %>
+</p>
+
+<p>
+  <b>Summary:</b>
+  <%= @audio.summary %>
+</p>
+
+<p>
+  <b>Author:</b>
+  <%= @audio.author %>
+</p>
+
+<p>
+  <b>Seconds:</b>
+  <%= @audio.seconds %>
+</p>
+
+<p>
+  <b>File size:</b>
+  <%= @audio.file_size %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @audio.url %>
+</p>
+
+<p>
+  <b>Explicit:</b>
+  <%= @audio.explicit %>
+</p>
+
+<p>
+  <b>Order:</b>
+  <%= @audio.order %>
+</p>
+
+<p>
+  <b>Closedcaptioned:</b>
+  <%= @audio.closedcaptioned %>
+</p>
+
+<p>
+  <b>Block:</b>
+  <%= @audio.block %>
+</p>
+
+
+<%= link_to 'Edit', edit_medium_audio_path(@audio.medium,@audio) %> |
+<%= link_to 'Back', medium_audios_path %>

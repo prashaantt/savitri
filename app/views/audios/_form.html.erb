@@ -1,0 +1,65 @@
+<%= form_for(@audio) do |f| %>
+  <% if @audio.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@audio.errors.count, "error") %> prohibited this audio from being saved:</h2>
+
+      <ul>
+      <% @audio.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :medium_id %><br />
+    <%= f.collection_select(:medium_id, Medium.all, :id, :title) %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :audio_url %><br />
+    <%= f.text_field :audio_url %>
+  </div>
+  <div class="field">
+    <%= f.label :summary %><br />
+    <%= f.text_area :summary %>
+  </div>
+  <div class="field">
+    <%= f.label :author %><br />
+    <%= f.text_field :author %>
+  </div>
+  <div class="field">
+    <%= f.label :seconds %><br />
+    <%= f.number_field :seconds %>
+  </div>
+  <div class="field">
+    <%= f.label :file_size %><br />
+    <%= f.number_field :file_size %>
+  </div>
+  <div class="field">
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :explicit %><br />
+    <%= f.text_field :explicit %>
+  </div>
+  <div class="field">
+    <%= f.label :order %><br />
+    <%= f.number_field :order %>
+  </div>
+  <div class="field">
+    <%= f.label :closedcaptioned %><br />
+    <%= f.text_field :closedcaptioned %>
+  </div>
+  <div class="field">
+    <%= f.label :block %><br />
+    <%= f.text_field :block %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

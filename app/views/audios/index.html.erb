@@ -1,0 +1,43 @@
+<h1>Listing audios</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Audio url</th>
+    <th>Summary</th>
+    <th>Author</th>
+    <th>Seconds</th>
+    <th>File size</th>
+    <th>Url</th>
+    <th>Explicit</th>
+    <th>Order</th>
+    <th>Closedcaptioned</th>
+    <th>Block</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @audios.each do |audio| %>
+  <tr>
+    <td><%= audio.title %></td>
+    <td><%= audio.audio_url %></td>
+    <td><%= audio.summary %></td>
+    <td><%= audio.author %></td>
+    <td><%= audio.seconds %></td>
+    <td><%= audio.file_size %></td>
+    <td><%= audio.url %></td>
+    <td><%= audio.explicit %></td>
+    <td><%= audio.order %></td>
+    <td><%= audio.closedcaptioned %></td>
+    <td><%= audio.block %></td>
+    <td><%= link_to 'Show', medium_audio_path(audio.medium,audio) %></td>
+    <td><%= link_to 'Edit', edit_medium_audio_path(audio.medium,audio) %></td>
+    <td><%= link_to 'Destroy', medium_audio_path(audio.medium,audio), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Audio', new_audio_path %>
