@@ -24,3 +24,19 @@ $ ->
   $("#bk"+ind[2]).removeClass("collapsed");
   $("#collapse"+ind[2]).addClass("in");
   $("#collapse"+ind[2]).css("height","auto");
+
+$ ->
+  #show the static text "Section" after page load
+  $(".sectionlbl").show()
+
+$ ->
+  #start color animation after page load
+  if window.location.hash
+    hashvalue = "p" + window.location.hash.split("#")[1]
+    currentColor = jQuery.Color("#" + hashvalue)
+    $("#" + hashvalue).animate
+      backgroundColor: "#FDF1CA"
+    , 1000
+    $("#" + hashvalue).animate
+      backgroundColor: currentColor
+    , 3000
