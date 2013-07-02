@@ -1,7 +1,4 @@
 class MediaController < ApplicationController
-  
-  before_filter :authenticate_user!
-  
   # GET /media
   # GET /media.json
   def index

@@ -10,7 +10,7 @@ xml.rss version: "2.0" do
       xml.pubDate @audios.first.updated_at.to_s(:rfc822)
       xml.itunes :subtitle, medium.subtitle
       xml.itunes :author, medium.user.name
-      xml.itunes :keywords, "Sri Aurobindo, The Mother, Savitri, Integral Yoga, spirituality"
+      xml.itunes :keywords, "sri aurobindo, aurobindo, the mother, mother, mirra, alfassa, savitri, integral yoga, yoga, supermind, supramental, spirituality"
       xml.itunes :image, medium.image_url
       xml.itunes :owner do
         xml.itunes :name, medium.user.name
@@ -30,7 +30,7 @@ xml.rss version: "2.0" do
           if audio.author?
             xml.itunes :author, audio.author
           end
-          xml.guid({:isPermaLink => "false"}, request.protocol + request.host_with_port + "/" + medium.id.to_s + "/" + audio.url)
+          xml.guid({:isPermaLink => "true"}, request.protocol + request.host_with_port + medium_audios_path + "/" + audio.url)
           xml.enclosure :url => audio.audio_url, :type => "audio/mp3"
         end
       end
