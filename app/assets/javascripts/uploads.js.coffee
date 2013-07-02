@@ -63,7 +63,7 @@ $ ->
         url = $(data).find("Location").text()
         $("#previewmusic").append("<audio controls>"+"<source src='"+url+"'"+"type='audio/mpeg'>"+"</audio>")
         $(".previewmusic").show()
-        $("#embedurl").val("<audio controls>"+"<source src='"+url+"'"+"type='audio/mpeg'>"+"</audio>")
+        $("#embedurl").val("<audio controls class='span6' style='margin-left: 0px'>"+"<source src='"+url+"'"+"type='audio/mpeg'>"+"</audio>")
         $(".embedurl").show()
         $("#real_file_url").val url # Update the real input in the other form
 

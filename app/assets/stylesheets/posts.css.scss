@@ -53,6 +53,11 @@ article {
   border-bottom: 2px dotted #eee;
 }
 
+.audio-snippet {
+  @extend .snippet;
+  padding-bottom: 70px;
+}
+
 #comments {
   padding-top: 55px;
   margin-top: -55px;
@@ -82,6 +87,10 @@ article {
 
 .tags {
   padding-top: 20px;
+}
+
+.audio-tags {
+  padding-top: 80px;
 }
 
 /*.comment:nth-child(odd) {
