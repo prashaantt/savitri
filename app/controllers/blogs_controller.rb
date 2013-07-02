@@ -13,8 +13,8 @@ class BlogsController < ApplicationController
 	end
 
 	def show
-	  puts params.inspect
-	  @posts = Blog.find_by_slug(params[:id]).posts
+	  blog = Blog.find_by_slug(params[:id])
+    redirect_to blog_posts_path(blog), status: 301
 	end
 
 	def new
