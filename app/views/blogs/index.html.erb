@@ -34,18 +34,24 @@
             <%= link_to 'New blog', new_blog_path, :class => "btn btn-info" %>
           </section>
           <hr>
-          <section>
-            <h2>Pages</h2>
-            <h3><small>Create static files.</small></h3>
-            <%= link_to 'Manage pages', pages_path, :class => "btn btn-info" %>
-          </section>
-          <hr>
-          <section>
-            <h2>Invitations</h2>
-            <h3><small>Invite new users or migrate existing ones.</small></h3>
-            <%= link_to 'Send invitation', new_user_invitation_path, :class => "btn btn-info" %>
-          </section>
         <% end %>
+        <section>
+          <h2>Pages</h2>
+          <h3><small>Create static files.</small></h3>
+          <%= link_to 'Manage pages', pages_path, :class => "btn btn-info" %>
+        </section>
+        <hr>
+        <section>
+          <h2>Media</h2>
+          <h3><small>Create podcasts.</small></h3>
+          <%= link_to 'Manage media', media_path, :class => "btn btn-info" %>
+        </section>
+        <hr>
+        <section>
+          <h2>Invitations</h2>
+          <h3><small>Invite new users or migrate existing ones.</small></h3>
+          <%= link_to 'Send invitation', new_user_invitation_path, :class => "btn btn-info" %>
+        </section>        
       <% elsif current_user.blogs.count < 1 %>
         <h3><small>You can host 1 blog.</small></h3>
         <%= link_to 'New blog', new_blog_path, :class => "btn btn-info"  %>

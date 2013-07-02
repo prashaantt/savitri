@@ -141,11 +141,13 @@ ActiveRecord::Schema.define(:version => 20130627091213) do
     t.string   "category"
     t.text     "content"
     t.text     "md_content"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "parent"
-    t.string   "url",        :limit => nil
+    t.string   "url"
   end
+
+  add_index "pages", ["permalink"], :name => "index_pages_on_permalink"
 
   create_table "posts", :force => true do |t|
     t.integer  "blog_id"

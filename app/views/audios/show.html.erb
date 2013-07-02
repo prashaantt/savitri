@@ -1,60 +1,62 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Title:</b>
-  <%= @audio.title %>
-</p>
-
-<p>
-  <b>Audio url:</b>
-  <%= @audio.audio_url %>
-</p>
-
-<p>
-  <b>Summary:</b>
-  <%= @audio.summary %>
-</p>
-
-<p>
-  <b>Author:</b>
-  <%= @audio.author %>
-</p>
-
-<p>
-  <b>Seconds:</b>
-  <%= @audio.seconds %>
-</p>
-
-<p>
-  <b>File size:</b>
-  <%= @audio.file_size %>
-</p>
-
-<p>
-  <b>Url:</b>
-  <%= @audio.url %>
-</p>
-
-<p>
-  <b>Explicit:</b>
-  <%= @audio.explicit %>
-</p>
-
-<p>
-  <b>Order:</b>
-  <%= @audio.order %>
-</p>
-
-<p>
-  <b>Closedcaptioned:</b>
-  <%= @audio.closedcaptioned %>
-</p>
-
-<p>
-  <b>Block:</b>
-  <%= @audio.block %>
-</p>
-
-
-<%= link_to 'Edit', edit_medium_audio_path(@audio.medium,@audio) %> |
-<%= link_to 'Back', medium_audios_path %>
+<% content_for :head do %>
+<% @current_link = request.protocol + request.host_with_port + params[:medium_id] + medium_audios_path %>
+<%= auto_discovery_link_tag :atom, @current_link + ".atom" %>
+<%= auto_discovery_link_tag :rss,  @current_link + ".rss" %>
+<% end %>
+<% title @medium.title %>
+<div class="row">
+  <div class="span6 offset3">
+    <h1 class="page-header">
+      <%= link_to @medium.title, medium_audios_path %>
+      <%= link_to "", request.protocol + request.host_with_port + medium_audios_path + ".rss", :class => "icon-music", :title => "Subscribe to podcast" %><br>
+      <small class="blog-subtitle"><%=  @medium.subtitle %></small>
+    </h1>
+  </div>
+</div>
+<div class="row">
+  <div class="span6 offset3">
+    <h2><%= link_to @audio.title,  medium_audio_path(@medium, @audio) %></h2>
+    <div>
+      <% if true %>
+        <span class="pull-right">
+          <% if can? :destroy, @medium %>
+            <%= link_to 'Edit', edit_medium_audio_path(@medium, @audio), :class => 'btn btn-mini btn-warning' %>
+          <% end %>
+          <% if can? :destroy, @medium %>
+            <%= link_to 'Delete', medium_audio_path(@medium, @audio),
+              :method => :delete,
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-mini btn-danger' %>
+          <% end %>
+        <% end %>
+      </span>
+      <h5 class="blog-author">
+        <%= @audio.created_at.strftime("%a, %b %d %Y") %>
+        <% if (@audio.author && @audio.author.length > 0) %>
+          / with <%= @audio.author %>
+        <% end %>
+      </h5>
+      <article class="audio">
+        <p><%= @audio.summary.html_safe %></p>
+        <audio controls class="span6" style="margin-left: 0px; margin-top: 20px"><source src=<%= @audio.audio_url %> type="audio/mpeg"></audio>
+        <% tag_counts = @audio.tag_counts %>
+        <% if tag_counts.length > 0 %>
+          <div class="audio-tags">
+            <span class="badge">Tagged as</span>
+            <% tag_cloud tag_counts, %w[s m l] do |tag| %>
+              <!-- <span><%= link_to tag.name, tag_path(params[:medium_id], tag.name), :class => "label label-info" %></span> -->
+              <span class="label label-info"><%= tag.name %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </article>
+      <p class="author muted" style="padding-top: 20px">
+        <%= link_to "Download MP3", @audio.audio_url, :class => "overrideanchor", :type => "application/octet-stream" %>
+        (<%= number_to_human_size(@audio.file_size) %>,
+        <%= pluralize(@audio.duration["hours"], "hour") if (@audio.duration["hours"] > 0) %>
+        <%= pluralize(@audio.duration["minutes"], "minute") if (@audio.duration["minutes"] > 0) %>
+        <%= pluralize(@audio.duration["seconds"], "second") if (@audio.duration["seconds"] > 0) %>)
+      </p>
+    </div>
+  </div>
+</div>

@@ -11,6 +11,7 @@ class CreateMedia < ActiveRecord::Migration
       t.string :explicit
       t.string :block
       t.string :complete
+      t.string :url
 
       t.timestamps
     end
