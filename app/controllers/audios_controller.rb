@@ -1,7 +1,4 @@
 class AudiosController < ApplicationController
-
-  before_filter :authenticate_user!
-
   # GET /audios
   # GET /audios.json
   def index
