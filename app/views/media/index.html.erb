@@ -1,39 +1,27 @@
-<h1>Listing media</h1>
-
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Subtitle</th>
-    <th>Summary</th>
-    <th>Image url</th>
-    <th>Category</th>
-    <th>Language</th>
-    <th>Explicit</th>
-    <th>Block</th>
-    <th>Complete</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @media.each do |medium| %>
-  <tr>
-    <td><%= medium.title %></td>
-    <td><%= medium.subtitle %></td>
-    <td><%= medium.summary %></td>
-    <td><%= medium.image_url %></td>
-    <td><%= medium.category %></td>
-    <td><%= medium.language %></td>
-    <td><%= medium.explicit %></td>
-    <td><%= medium.block %></td>
-    <td><%= medium.complete %></td>
-    <td><%= link_to 'Show', medium %></td>
-    <td><%= link_to 'Edit', edit_medium_path(medium) %></td>
-    <td><%= link_to 'Destroy', medium, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Medium', new_medium_path %>
+<div class="row">
+  <div class="span6 offset3">
+    <div class="page-header">
+      <h1>Manage media</h1>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="span6 offset3">
+    <section>
+      <% @media.each do |medium| %>
+      <div class="well well-small">
+        <h3>
+          <%= link_to medium.title, medium_audios_path(medium) %>
+          <br>
+          <small><%= link_to (pluralize medium.audios.count, "items"), medium_audios_path(medium) %></small>
+        </h3>
+        <%= link_to 'Edit details', edit_medium_path(medium), :class => "btn btn-mini btn-warning" %>
+        <%= link_to 'New item', new_medium_audio_path(medium), :class => "btn btn-mini btn-info" %>
+        <%= link_to 'Delete', medium_path(medium),  :method => :delete,
+  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+  :class => 'btn btn-mini btn-danger' %>
+      </div>
+      <% end %>
+    </section>
+  </div>
+</div>

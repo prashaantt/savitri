@@ -1,43 +1,54 @@
-<h1>Listing audios</h1>
-
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Audio url</th>
-    <th>Summary</th>
-    <th>Author</th>
-    <th>Seconds</th>
-    <th>File size</th>
-    <th>Url</th>
-    <th>Explicit</th>
-    <th>Order</th>
-    <th>Closedcaptioned</th>
-    <th>Block</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @audios.each do |audio| %>
-  <tr>
-    <td><%= audio.title %></td>
-    <td><%= audio.audio_url %></td>
-    <td><%= audio.summary %></td>
-    <td><%= audio.author %></td>
-    <td><%= audio.seconds %></td>
-    <td><%= audio.file_size %></td>
-    <td><%= audio.url %></td>
-    <td><%= audio.explicit %></td>
-    <td><%= audio.order %></td>
-    <td><%= audio.closedcaptioned %></td>
-    <td><%= audio.block %></td>
-    <td><%= link_to 'Show', medium_audio_path(audio.medium,audio) %></td>
-    <td><%= link_to 'Edit', edit_medium_audio_path(audio.medium,audio) %></td>
-    <td><%= link_to 'Destroy', medium_audio_path(audio.medium,audio), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Audio', new_audio_path %>
+<div class="row">
+  <div class="span6 offset3">
+    <h1 class="page-header">
+      <%= link_to @medium.title, medium_audios_path %>
+      <%= link_to "", request.protocol + request.host_with_port + medium_audios_path + ".rss", :class => "icon-music", :title => "Subscribe to podcast" %><br>
+      <small class="blog-subtitle"><%= @medium.subtitle %></small>
+    </h1>
+  </div>
+</div>
+<div class="row">
+  <div class="span6 offset3">
+    <% @audios.each do |audio| %>
+      <section class="audio-snippet">
+        <h2><%= link_to audio.title,  medium_audio_path(@medium, audio) %></h2>
+        <div>
+          <span class="pull-right">
+            <% if can? :update, audio %>
+              <%= link_to 'Edit', edit_medium_audio_path(@medium, audio), :class => 'btn btn-mini btn-warning' %>
+            <% end %>
+          </span>
+          <h5 class="blog-author"><%= audio.created_at.strftime("%a, %b %d %Y") %> / <%= audio.duration["total"] %>
+          </h5>
+          <p><%= audio.summary.html_safe %></p>
+          <audio controls class="span6" style="margin-left: 0px; margin-top: 20px"><source src=<%= audio.audio_url %> type="audio/mpeg"></audio>
+        </div>
+      </section>
+    <% end %>
+  </div>
+  <div class="span3">
+    <% if can? :update, @medium %>
+    <div class="span2">
+      <div class="sidebar-title"><span class="badge">Manage podcast</span></div><br>
+      <div class="btn-grp sidebar-title">
+        <%= link_to 'New podcast', new_medium_audio_path, :class => 'btn btn-info' %>
+      </div>
+      <hr>
+    </div>
+    <% end %>
+    <% tag_counts = @medium.audios.tag_counts.order('tags_count desc').first(15) %>
+    <% if tag_counts.length > 0 %>
+      <div class="span2 visible-desktop">
+        <div class="sidebar-title"><span class="badge">Top tags</span></div><br>
+        <% tag_cloud tag_counts, %w[s m l] do |tag| %>
+          <% if false %>
+            <%= link_to tag.name, tag_path(params[:blog_id], tag.name), :class => "label label-info tag" %>
+          <% end %>
+          <span class="label label-info"><%= tag.name %></span>
+          <span class="badge pull-right"><%= tag.count %></span>
+          <br>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
