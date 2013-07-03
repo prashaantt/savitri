@@ -6,7 +6,7 @@ class Audio < ActiveRecord::Base
   has_many :tags
 
   validates :title, :presence => true, :length => { :minimum => 3 }
-  validates :summary, :presence => true, :length => { :minimum => 10 }
+  validates :summary, :presence => true, :length => { :minimum => 10, :maximum => 4000 }
   validates :audio_url, :presence => true
   validates :seconds, :presence => true
   validates :file_size, :presence => true
@@ -18,7 +18,13 @@ class Audio < ActiveRecord::Base
   def duration
     time = Time.at(seconds).utc
     duration = Hash.new
-    duration["total"] = time.strftime("%k").to_s + ":" + time.strftime("%M").to_s + ":" + time.strftime("%S").to_s
+    total = ""
+    if (time.strftime("%-k").to_i > 0)
+      total << time.strftime("%H").to_s + ":"
+    end
+    total << time.strftime("%M").to_s + ":"
+    total << time.strftime("%S").to_s
+    duration["total"] = total
     duration["hours"] = time.strftime("%-k").to_i
     duration["minutes"] = time.strftime("%-M").to_i
     duration["seconds"] = time.strftime("%-S").to_i
