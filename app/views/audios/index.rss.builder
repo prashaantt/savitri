@@ -4,7 +4,7 @@ xml.rss "xmlns:itunes" => "http://www.itunes.com/dtds/podcast-1.0.dtd", "xmlns:m
     medium = @audios.first.medium
     feed_url = request.protocol + request.host_with_port + medium_audios_path
     xml.channel do
-      xml.tag! "atom:link", :rel => "self", :type => "application/rss+xml", :href => feed_url
+      xml.tag! "atom:link", :rel => "self", :type => "application/rss+xml", :href => feed_url + ".rss"
       xml.title medium.title
       xml.link feed_url
       xml.description medium.summary
