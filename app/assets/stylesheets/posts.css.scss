@@ -108,3 +108,51 @@ table.table.table-condensed {
 .panel.callout .button { background: white; border: none; color: #2ba6cb; text-shadow: none; }
 .panel.callout .button:hover, .panel.callout .button:focus { background: rgba(255, 255, 255, 0.8); }
 .panel.radius { -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; }
+
+ 
+.listi{
+  list-style:none;
+}
+
+.ltag{
+    list-style: none;
+    padding-left: 15px;
+    margin-top:5px;
+}
+
+.textin{
+    position: relative;
+    left: 0;
+    top: 0px;
+    margin-left: 0;
+    opacity: 0;
+    z-index: -999;
+    cursor: pointer;
+}
+
+.file{
+    padding-left: 16px;
+    width: 180px;
+}
+    
+.textin + ol> li { display: none; margin-left: 0px !important; padding-left: 0px; }
+    
+.textin + ol{
+    background: url(collapsed.gif) 40px -2px no-repeat;
+    background-position: left top;
+    margin: -42px 0 1px 0px;
+    padding: 1.963em 0 1px 40px;
+}
+
+.textin:checked + ol{
+    background: url(expanded.gif) 40px -2px no-repeat;
+    background-position: left top;
+    padding: 20px 0 0 12px;
+}
+    
+.textin:checked + ol > li { display: block; margin: 7px 0 0.125em;}
+.textin:checked + ol > li:last-child { margin: 0 0 0 0.090em;}
+
+.subfolder{
+    padding-top:5px;
+}
