@@ -19,55 +19,78 @@
 <div class="row">
   <div class="span6 offset3">
     <% @posts.each do |post| %>
-      <section class="snippet">
-        <h2><%= link_to post.title,  blog_post_path(post.blog,post) %></h2>
-        <div>
-          <span class="pull-right">
-            <% if can? :update, post %>
-              <%= link_to 'Edit post', edit_blog_post_path(post.blog,post), :class => 'btn btn-mini btn-warning' %>
-            <% end %>
-          </span>
-          <h5 class="blog-author">by <%= link_to post.blog.user.username, post.blog.user, {:class => "overrideanchor"} %> on <%= post.created_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize post.comments.count, "comment") , blog_post_path(post.blog, post) + "#comments", {:class => "overrideanchor"} %></h5>
-          <% if post.excerpt && post.excerpt.length > 0 %>
-            <p><%= post.excerpt %></p>
-            <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "overrideanchor"} %></p>
-          <% else %>
-            <% post_content = post.content.gsub(/\r\n?/, "").html_safe %>
-            <% if post_content.length <= 200 %>
-              <%= post_content %>
-            <% else %>
-              <%= post_content.split(" ").first(200).join(" ").html_safe %>...
-              <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "overrideanchor"} %></p>
-            <% end %>
+    <section class="snippet">
+      <h2><%= link_to post.title,  blog_post_path(post.blog,post) %></h2>
+      <div>
+        <span class="pull-right">
+          <% if can? :update, post %>
+          <%= link_to 'Edit post', edit_blog_post_path(post.blog,post), :class => 'btn btn-mini btn-warning' %>
           <% end %>
+        </span>
+        <h5 class="blog-author">by <%= link_to post.blog.user.username, post.blog.user, {:class => "overrideanchor"} %> on <%= post.created_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize post.comments.count, "comment") , blog_post_path(post.blog, post) + "#comments", {:class => "overrideanchor"} %></h5>
+        <% if post.excerpt && post.excerpt.length > 0 %>
+        <p><%= post.excerpt %></p>
+        <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "overrideanchor"} %></p>
+        <% else %>
+        <% post_content = post.content.gsub(/\r\n?/, "").html_safe %>
+        <% if post_content.length <= 200 %>
+        <%= post_content %>
+        <% else %>
+        <%= post_content.split(" ").first(200).join(" ").html_safe %>...
+        <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "overrideanchor"} %></p>
+        <% end %>
+        <% end %>
       </section>
-    <% end %>
-  <div id="paginator">
-    <%= paginate @posts, :param_name => :page %>
-  </div>
-</div>
-<!-- Main Blog Content End -->
-<!--  SideBar Begin -->
-<div class="span3">
-  <% if can? :update, @blog %>
-  <div class="span2">
-    <div class="sidebar-title"><span class="badge">Manage blog</span></div><br>
-    <div class="btn-grp sidebar-title">
-      <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
+      <% end %>
+      <div id="paginator">
+        <%= paginate @posts, :param_name => :page %>
+      </div>
     </div>
-    <hr>
-  </div>
-  <% end %>
-  <% tag_counts = @blog.posts.tag_counts.order('tags_count desc').first(15) %>
-  <% if tag_counts.length > 0 %>
-    <div class="span2 visible-desktop">
-      <div class="sidebar-title"><span class="badge">Top tags</span></div><br>
-      <% tag_cloud tag_counts, %w[s m l] do |tag| %>
+    <!-- Main Blog Content End -->
+    <!--  SideBar Begin -->
+    <div class="span3 visible-desktop">
+      <% if can? :update, @blog %>
+      <div class="">
+        <div class="sidebar-title"><span class="badge">Manage blog</span></div><br>
+        <div class="btn-grp sidebar-title">
+          <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
+        </div>
+        <hr>
+      </div>
+      <% end %>
+      <% tag_counts = @blog.posts.tag_counts.order('tags_count desc').first(15) %>
+      <% if tag_counts.length > 0 %>
+      <div class=" visible-desktop">
+        <div class="sidebar-title"><span class="badge">Top tags</span></div><br>
+        <% tag_cloud tag_counts, %w[s m l] do |tag| %>
         <%= link_to tag.name, tag_path(params[:blog_id], tag.name), :class => "label label-info tag" %>
         <span class="badge pull-right"><%= tag.count %></span>
         <br>
+        <% end %>
+      </div>
       <% end %>
+      <div class="archives">
+        <h2>Blog Archive</h2>
+        <% @post_years = @blog.posts.group_by { |t| t.created_at.beginning_of_year } %>
+        <% @post_years.sort.reverse.each do |year, posts| %>
+        <li class="listi">
+          <label for="f<%= year.strftime("%m%Y") %>"><span class="ltag"><%=h year.strftime("%Y") %></span></label>
+          <input class="textin" type="checkbox" id="f<%= year.strftime("%m%Y") %>"> 
+          <ol>  
+            <% post_months = posts.group_by {|t| t.created_at.beginning_of_month } %>
+            <% post_months.each do |month, month_posts| %>
+            <li class="subfolder">  
+              <label for="f<%= month_posts.first.created_at %>"><span class="ltag"><%=h month_posts.first.created_at.strftime("%B") %></span></label> <input class="textin" type="checkbox" id="f<%= month_posts.first.created_at %>"> 
+              <ol>
+                <% for post in month_posts %>
+                 <li class="file"><a href="#"><%=h link_to post.title, blog_post_path(post.blog,post.url) %></a></li>
+                <% end %>
+              </ol>
+            </li>
+            <% end %>
+          </ol>
+        </li>
+        <% end %>
+      </div>
     </div>
-  <% end %>
-</div>
-<!-- End Sidebar Content -->
+    <!-- End Sidebar Content -->
