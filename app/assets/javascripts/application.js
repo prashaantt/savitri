@@ -16,3 +16,19 @@
 //= require jquery-fileupload/basic
 //= require jquery-fileupload/vendor/tmpl
 //= require_tree .
+
+function showBrand(window_width) {
+  if (window_width >= 980) {
+    $("#brandid").hide();
+  } else {
+    $("#brandid").show();
+  }
+};
+
+$(window).resize(function() {
+  showBrand($(window).width());
+})
+
+$(function() {
+  showBrand($(window).width());
+});
