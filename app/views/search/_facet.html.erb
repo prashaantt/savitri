@@ -1,12 +1,8 @@
-<h3>Browse by</h3>
-<p><% unless params[:q].blank? %>
-	
-	Text query: <i><%= params[:q] %></i> (<%= link_to "remove", :q => nil %>)
-	
-	<% end %>
-</p>
-
+<%= render 'filters' %>
 <div class="facets">
+	<h5 class="left-filter">
+		Filter By
+	</h5>
 	<% unless @search.facet(:category).nil? %>
 		<%= render 'category_facet' %>
 	<% end %>
@@ -27,5 +23,14 @@
 	<% end %>
 	<% unless @search.facet(:length).nil? %>
 		<%= render 'length_facet' %>
+	<% end %>
+	<% unless @search.facet(:author).nil? %>
+		<%= render 'author_facet' %>
+	<% end %>
+	<% unless @search.facet(:blogname).nil? %>
+		<%= render 'blogname_facet' %>
+	<% end %>
+	<% unless @search.facet(:posted).nil? %>
+		<%= render 'posted_facet' %>
 	<% end %>
 </div>

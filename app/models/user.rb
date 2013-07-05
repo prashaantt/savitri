@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :blogs
   has_many :comments
   has_many :notebooks
+  has_many :media
   belongs_to :roles
 
   validates :username, :presence => true,

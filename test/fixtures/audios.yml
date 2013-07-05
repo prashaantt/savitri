@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  audio_url: MyString
+  summary: MyText
+  author: MyString
+  seconds: 1
+  file_size: 1
+  url: MyString
+  explicit: MyString
+  order: 1
+  closedcaptioned: MyString
+  block: MyString
+
+two:
+  title: MyString
+  audio_url: MyString
+  summary: MyText
+  author: MyString
+  seconds: 1
+  file_size: 1
+  url: MyString
+  explicit: MyString
+  order: 1
+  closedcaptioned: MyString
+  block: MyString

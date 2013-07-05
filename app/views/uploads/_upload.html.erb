@@ -1,11 +1,11 @@
 <div class="photo">
-  <%= link_to image_tag(upload.photo_url(:medium),:class=>"upload-photo", :id=>"previewid"), upload if upload.photo? %>
+  <%= link_to image_tag(upload.photo_url(:medium),:class=>"upload-photo", :id=>"previewid"), upload.photo_url , :target=>"_blank" if upload.photo? %>
   <div class="actions">
     <!--<%= link_to "remove", upload, :confirm => 'Are you sure?', :method => :delete %></
     !-->
     <label for="size">Select Image Size</label>
     <% [ 'small', 'medium', 'large' ].each do |size| %>
-      <%= radio_button_tag 'size', size, @size == size %>
+      <%= radio_button_tag 'size', size, size == "medium" %>
       <%= size.humanize %>
     <% end %>
   </div>

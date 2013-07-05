@@ -6,7 +6,7 @@ class ReadController < ApplicationController
     cantoid=params[:canto_id]
     bookid=params[:book_id]
     @canto = Canto.find_by_no_and_book_id(cantoid,bookid)
-    @sections = @canto.sections.where(:runningno=>sectionrunningno)
+    @sections = @canto.sections.where(:runningno=>sectionrunningno).order("no")
     @stanzas = Stanza.by_section(@sections.first.id).order("no")
 
     respond_to do |format|

@@ -1,46 +1,46 @@
 <!-- dynamic fetch of books and cantos -->
-<div class="row rowread">
+<div class="row">
   <div class="span2 visible-desktop">
     <div class="accordion sidebar" id="accordion2">
       <% Book.all.each do |book| %>
-      <div class="accordion-group">
-        <div class="accordion-heading">
-          <a class="accordion-toggle collapsed navbook" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= book.id %>" id="bk1"><%= book.name %></a>
-        </div>
-        <div id="collapse<%= book.id %>" class="accordion-body collapse">
-          <div class="accordion-inner custom-accordion-inner">
-            <ul class="nav nav-tabs nav-stacked navcanto">
-              <% book.cantos.each do |canto| %>
-                <li id="leftnav" class="dropdown-submenu">
-                  <a href="<%= "/read/" + book.id.to_s + "/" + canto.id.to_s + "/1" %>" class="<%= is_active_link params,book.id.to_s,canto.id.to_s %>">
-                    <% *title = canto.title.split(/(: )/) %>
-                    <% if title.length == 1%>
-                      <%= title[0] %>
-                    <% else %>
-                      <%= title[0] + title[1] %>
-                      <br>
-                      <%= title[2] %>
-                    <% end %>
-                  </a>
-                  <ul class="dropdown-menu roundcorner submenutext">
-                    <% canto.sections.each do |section| %>
-                      <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>">
-                        <%= link_to 'Section '+ section.runningno.to_s + ' ('+ section.no.to_s + ')',"/read/" + @canto.book.no.to_s + "/" +canto.no.to_s + "/" + section.runningno.to_s %>
-                      </li>
-                    <% end %>
-                  </ul>
-                </li>
-              <% end %> 
-            </ul>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle collapsed navbook navfx" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= book.id %>" id="bk1"><%= book.name %></a>
+          </div>
+          <div id="collapse<%= book.id %>" class="accordion-body collapse">
+            <div class="accordion-inner custom-accordion-inner">
+              <ul class="nav nav-tabs nav-stacked navcanto">
+                <% book.cantos.each do |canto| %>
+                  <li id="leftnav" class="dropdown-submenu">
+                    <a href="<%= "/read/" + book.id.to_s + "/" + canto.id.to_s + "/1" %>" class="<%= is_active_link params,book.id.to_s,canto.id.to_s %>">
+                      <% *title = canto.title.split(/(: )/) %>
+                      <% if title.length == 1%>
+                        <%= title[0] %>
+                      <% else %>
+                        <%= title[0] + title[1] %>
+                        <br>
+                        <%= title[2] %>
+                      <% end %>
+                    </a>
+                    <ul class="dropdown-menu roundcorner submenutext">
+                      <% canto.sections.each do |section| %>
+                        <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>">
+                          <%= link_to 'Section '+ section.runningno.to_s + ' ('+ section.no.to_s + ')',"/read/" + @canto.book.no.to_s + "/" +canto.no.to_s + "/" + section.runningno.to_s %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </li>
+                <% end %> 
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
       <% end %>
     </div>
   </div>
     <!-- '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1] -->
   <div class="span6 offset1" id="read">
-  <div id="cantos">
+    <div id="cantos">
       <% unless @stanzas.blank? %>
         <% @book = Book.find(params[:book_id]) %>
         <% @canto = Canto.find(Section.find(@stanzas.first.section).canto_id) %>
@@ -58,12 +58,11 @@
               </a>
               <ul class="dropdown-menu sectionlist size">
                 <% Book.all.each do |book| %>
-                <li>
-                  <%= link_to 'Book ' + book.no.to_s + ': ' + book.name.to_s, '/read/' + book.no.to_s + '/1/1', :class=>"tag" %>
-                </li>
- 
+                  <li>
+                    <%= link_to 'Book ' + book.no.to_s + ': ' + book.name.to_s, '/read/' + book.no.to_s + '/1/1', :class=>"tag" %>
+                  </li>
                 <% end %>
-                <!-- dropdown menu links -->
+                  <!-- dropdown menu links -->
               </ul>
             </span>
             <span style="margin-left: 20px; margin-right: 20px">/</span>
@@ -75,17 +74,17 @@
               </a>
               <ul class="dropdown-menu size sectionlist dropdown-align" role="menu" aria-labelledby="dropsection">
                 <% @book.cantos.each do |canto| %>
-                <li role="presentation">
-                  <% *title = canto.title.split(/(: )/) %>
-                  <% if title.length == 1%>
+                  <li role="presentation">
+                    <% *title = canto.title.split(/(: )/) %>
+                    <% if title.length == 1%>
                       <% canto_title = title[0] %>
                     <% else %>
-                      <% canto_title = title[2] %>
-                  <% end %>
-                  <%= link_to 'Canto ' + canto.no.to_s + ': '+ canto_title, '/read/' + params[:book_id].to_s + '/' + canto.no.to_s + '/1', :class=> "tag" %>
-                  <% end %>
-                </li>
-                <!-- dropdown menu links -->
+                        <% canto_title = title[2] %>
+                    <% end %>
+                    <%= link_to 'Canto ' + canto.no.to_s + ': '+ canto_title, '/read/' + params[:book_id].to_s + '/' + canto.no.to_s + '/1', :class=> "tag" %>
+                  </li>
+                  <!-- dropdown menu links -->
+                <% end %>
               </ul>
             </span>
           </h4>
@@ -102,12 +101,12 @@
         </h2>
         <div class="sections">
           <h4 class="sectionno">
-            <% if @canto.sections.length > 1 %> 
+            <% if @sections.length > 1 %>
               <span class="dropdown">
                 <a class="dropdown-toggle hidden-desktop" id="dropsection" role="button" data-toggle="dropdown" data-target="#" href="#">
                   <span class="sectionlbl" style="display:none">Section</span>
                   <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
-                  <b class="hidden-desktop"><span class="caret"></span></b>
+                  <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu sectionlist" role="menu" aria-labelledby="dropsection">
                   <% @canto.sections.each do |section| %>
@@ -120,9 +119,9 @@
                 </ul>
               </span>
               <span class="visible-desktop">
-                  <span class="sectionlbl" style="display:none;">Section</span>
-                  <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
-                </span>
+                <span class="sectionlbl" style="display:none;">Section</span>
+                <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
+              </span>
             <% else %>
               <span class="sectionlbl">Section</span>
               <%= params[:section_id] + " (" + @canto.sections.where(:runningno=>params[:section_id]).first.no.to_s + ")" %>
@@ -141,42 +140,3 @@
   </div>
 </div>
 <i href="#" class="icon-chevron-up go-top visible-desktop" style="float:right;"></i>
-    
-<script type="text/javascript">
-  //show the static text "Section" after page load
-  $(".sectionlbl").show();
-  //start color animation after page load
-  if (window.location.hash) {
-    var hashvalue = "p" + window.location.hash.split("#")[1];    
-    var currentColor = jQuery.Color("#" + hashvalue);    
-    $("#" + hashvalue).animate({
-      backgroundColor: "#FDF1CA"
-    }, 1000);    
-    $("#" + hashvalue).animate({
-      backgroundColor: currentColor
-    }, 3000);
-  };
-</script>
-
-<script>
-    $(document).ready(function() {
-      // Show or hide the sticky footer button
-      $(window).scroll(function() {
-        if ($(this).scrollTop() > 200) {
-          $('.go-top').fadeIn(200);
-        } else {
-          $('.go-top').fadeOut(200);
-        }
-      });
-      
-      // Animate the scroll to top
-      $('.go-top').click(function(event) {
-        event.preventDefault();
-        
-        $('html, body').animate({scrollTop: 0}, 300);
-      })
-    });
-  </script>
-
-
- 

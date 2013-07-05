@@ -1,0 +1,16 @@
+<% if  params[:author].blank? %>
+<h5 class="left-filter">Author</h5>
+<% rows = Array.new %>
+	<ul class="facet">
+	<% for row in @search.facet(:author).rows.each do%>
+		<% rows << row.value %>
+	<% end %>
+	<% rows.sort! %>
+	</ul>
+	<% links = Hash.new %>
+	<% for n in rows.each %>
+		<% links[n] = search_path(:posted => params[:posted], :q => params[:q],:author => n) %>
+	<% end %>
+	<%= select_tag "author", options_for_select(links.keys.each_with_index.map {|name, index| [name,links[name]]}), :class=>"span2",:onChange=>"window.document.location.href=this.options[this.selectedIndex].value;", :prompt => 'Select Author'%>
+
+<% end %>

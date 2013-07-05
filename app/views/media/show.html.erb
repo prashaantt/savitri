@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @medium.title %>
+</p>
+
+<p>
+  <b>Subtitle:</b>
+  <%= @medium.subtitle %>
+</p>
+
+<p>
+  <b>Summary:</b>
+  <%= @medium.summary %>
+</p>
+
+<p>
+  <b>Image url:</b>
+  <%= @medium.image_url %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @medium.category %>
+</p>
+
+<p>
+  <b>Language:</b>
+  <%= @medium.language %>
+</p>
+
+<p>
+  <b>Explicit:</b>
+  <%= @medium.explicit %>
+</p>
+
+<p>
+  <b>Block:</b>
+  <%= @medium.block %>
+</p>
+
+<p>
+  <b>Complete:</b>
+  <%= @medium.complete %>
+</p>
+
+
+<%= link_to 'Edit', edit_medium_path(@medium) %> |
+<%= link_to 'Back', media_path %>
