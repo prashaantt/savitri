@@ -1,13 +1,13 @@
-<h4>Book</h4>
-	<ul class="facet">
+<h5 class="left-filter">Book</h5>
+<ul class="facet">
 	<% for row in @search.facet(:book).rows.each do%>
-		<li>
-			<% if params[:book].blank? %>
-			<% query = params[:q].to_s + " in:" + row.value.to_s + "s" %>
-			<%= link_to row.value, search_path(:q => query) %> (<%= row.count %>)
-			<% else %>
-			<strong><%= row.value %></strong> (<%= link_to "remove", :book => nil %>)
-			<% end %>
-		</li>
+	<li>
+		<% if params[:book].blank? %>
+		<% query = params[:q].to_s + " in:" + row.value.to_s + "s" %>
+		<%= link_to row.value, search_path(:q => query) %> (<%= row.count %>)
+		<% else %>
+		<strong><%= row.value %></strong> (<%= link_to "remove", :book => nil %>)
 		<% end %>
-	</ul>
+	</li>
+	<% end %>
+</ul>

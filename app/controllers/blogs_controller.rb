@@ -13,8 +13,8 @@ class BlogsController < ApplicationController
 	end
 
 	def show
-	  puts params.inspect
-	  @posts = Blog.find_by_slug(params[:id]).posts
+	  blog = Blog.find_by_slug(params[:id])
+    redirect_to blog_posts_path(blog), status: 301
 	end
 
 	def new
@@ -63,4 +63,17 @@ class BlogsController < ApplicationController
       end
     end
   end
+
+  # DELETE /blogs/{slug}
+  def destroy
+    @blog = Blog.find_by_slug(params[:id])
+    authorize! :destroy, @blog
+    @blog.destroy
+
+    respond_to do |format|
+      format.html { redirect_to blogs_path, notice: 'blog was successfully deleted.' }
+      format.json { head :no_content }
+    end
+  end
+
 end
