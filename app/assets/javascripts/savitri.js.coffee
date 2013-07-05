@@ -21,7 +21,7 @@ jQuery ->
 
     window.timer.toggle()
 
-  $("#refresh").on "click", (event) ->
+  $(".btn.refresh").on "click", (event) ->
     window.timer.stop()
     $("#source").empty()
     $("#display").remove()

@@ -15,9 +15,9 @@ class Stanza < ActiveRecord::Base
   # end
 
   searchable do 
-    text :no
-    text :lines do |l|
-      l.lines.map {|l| l.line}
+    text :share_url, :stored => true
+    text :lines, :stored => true do 
+      lines.map {|l| l.line}
     end
 #  --facets below--    
     integer :id
@@ -53,7 +53,7 @@ class Stanza < ActiveRecord::Base
   # end
 
   def share_url
-        
+        section.to_s + "." + runningno.to_s
   end
 
   def self.random

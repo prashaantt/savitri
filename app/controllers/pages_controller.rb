@@ -1,9 +1,11 @@
 class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
+  before_filter :authenticate_user!, :except => [:show,:parents]
+
   def index
     @pages = Page.all
-
+    authorize! :create, @pages 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @pages }
@@ -13,7 +15,11 @@ class PagesController < ApplicationController
   # GET /pages/1
   # GET /pages/1.json
   def show
-    @page = Page.find_by_permalink!(params[:id])
+    if params[:paths].nil?
+      @page = Page.find_by_permalink!(params[:id])  
+    else
+      @page = Page.find_by_permalink!(params[:paths])
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,7 +40,8 @@ class PagesController < ApplicationController
 
   # GET /pages/1/edit
   def edit
-    @page = Page.find_by_permalink!(params[:id])
+    @page = Page.find(params[:id]) 
+    @page.url = @page.permalink.split("/").last
   end
 
   # POST /pages
@@ -56,8 +63,14 @@ class PagesController < ApplicationController
   # PUT /pages/1
   # PUT /pages/1.json
   def update
+    puts "--------------------------------"
     puts params.inspect
-    @page = Page.find_by_permalink!(params[:id])
+    puts "--------------------------------"
+    if params[:paths].nil?
+      @page = Page.find(params[:page][:id])  
+    else
+      @page = Page.find_by_permalink!(params[:paths])
+    end
 
     respond_to do |format|
       if @page.update_attributes(params[:page])

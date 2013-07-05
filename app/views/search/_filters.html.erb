@@ -1,0 +1,118 @@
+<% unless params[:q].blank? %>
+	<h5 class="left-filter">Query</h5>
+	<div class="filters">
+		<ul>
+			<li>
+				<% if params[:q].to_s.include?("in:") %>
+					<% woplus = params[:q].gsub('\+','').to_s %>
+					<% query = woplus.split("in:") %>
+					<% unless query[0].blank? %>
+						<p><%= link_to "x",search_path(:q => "in:"+query[1]) %> &nbsp; <%= query[0] %> </p>
+					<% end %>
+					<p><%= link_to "x", search_path(:q =>query[0].gsub(' ','')) %> &nbsp; <%= "in:" + query[1] %> </p>
+				<% else %>
+					<p><%= link_to "x", search_path(:q => nil) %> &nbsp; <%= params[:q] %> </p>
+				<% end %>
+			</li>
+			<!--sBook Filter Selected -->
+			<% unless params[:sbook].blank? %>
+				<% for row in @search.facet(:sbook).rows.each do %>
+					<li>
+						<p>
+							<%= link_to "x", search_path(:sbook => nil , :length => params[:length], :canto => params[:canto], :q => params[:q], :section => params[:section]) %>
+							&nbsp;Book <%= row.value %>
+						</p>
+					</li>
+				<% end %>
+			<% end %>
+			<!--lBook Filter Selected -->
+			<% unless params[:lbook].blank? %>
+				<% for row in @search.facet(:lbook).rows.each do %>
+					<li>
+						<p>
+							<%= link_to "x", search_path(:lbook => nil , :length => params[:length], :q => params[:q]) %>
+							&nbsp;Book <%= row.value %>
+						</p>
+					</li>
+				<% end %>
+			<% end %>
+			<!-- Book Filter Selected -->
+			<% unless params[:book].blank? %>
+				<% for row in @search.facet(:book).rows.each do%>
+					<li>
+						<p>
+							<%= link_to "x", :book => nil  %>
+							&nbsp;Book <%= row.value %> 
+						</p>
+					</li>
+				<% end %>
+			<% end %>
+			<!--Canto Filter Selected -->
+			<% unless params[:canto].blank? %>
+				<% for row in @search.facet(:canto).rows.each do %>
+					<li>
+						<p>
+							<%= link_to "x", search_path(:canto => nil ,:q=>params[:q], :length => params[:length], :lbook => params[:lbook], :sbook=>params[:sbook], :book=>params[:book]) %>
+							&nbsp;Canto <%= row.value %>
+						</p>
+					</li>
+				<% end %>
+			<% end %>
+			<!-- Section Filter Selected -->
+			<% unless params[:section].blank? %>
+				<% for row in @search.facet(:section).rows.each do%>
+					<li>
+						<p>
+							<%= link_to "x", search_path(:section => nil, :canto => params[:canto] , :lbook => params[:lbook], :q => params[:q],:sbook => params[:sbook],:length=>params[:length])  %>
+							&nbsp;Section <%= row.value %> 
+						</p>
+					</li>
+				<% end %>
+			<% end %>
+  		<!--Length of Sentence Selected -->
+			<% unless params[:length].blank? %>
+				<% for row in @search.facet(:length).rows.each do %>
+					<li>
+						<p>
+							<%= link_to "x", search_path(:canto => params[:canto] , :length => nil, :lbook => params[:lbook], :sbook=>params[:sbook], :book=>params[:book], :q=>params[:q], :section => params[:section]) %>
+							&nbsp;Length of Sentence <%= row.value %>
+						</p>
+					</li>
+				<% end %>
+			<% end %>
+			<!-- Blog Filter Selected -->
+			<% unless params[:blogname].blank? %>
+				<% for row in @search.facet(:blogname).rows.each do%>
+					<li>
+						<p>
+							<%= link_to "x", search_path(:blogname => nil, :q => params[:q],:posted => params[:posted],:author=>params[:author])  %>
+							&nbsp;Blog <%= row.value %> 
+						</p>
+					</li>
+				<% end %>
+			<% end %>
+			<!-- Author Filter Selected -->
+			<% unless params[:author].blank? %>
+				<% for row in @search.facet(:author).rows.each do%>
+					<li>
+						<p>
+							<%= link_to "x", search_path(:author => nil, :q => params[:q],:posted => params[:posted],:blogname=>params[:blogname])  %>
+							&nbsp;Author <%= row.value %> 
+						</p>
+					</li>
+				<% end %>
+			<% end %>
+			<!-- Posted Filter Selected -->
+			<% unless params[:posted].blank? %>
+				<% for row in @search.facet(:posted).rows.each do%>
+					<li>
+						<p>
+							<%= link_to "x", search_path(:posted => nil, :q => params[:q],:author => params[:author],:blogname=>params[:blogname])  %>
+							&nbsp;Posted in <%= row.value %> 
+						</p>
+					</li>
+				<% end %>
+			<% end %>
+		</ul>
+	</div>
+<% end %>
