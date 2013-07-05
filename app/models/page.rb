@@ -26,6 +26,10 @@ class Page < ActiveRecord::Base
     return parents
   end
 
+  def self.cached_menu_pages
+    Rails.cache.fetch([name,"menu-pages"]) {order(:priority).find_all_by_category("Menu")}
+  end
+
   before_validation :permalink_update
   
   private

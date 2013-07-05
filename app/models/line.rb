@@ -36,6 +36,28 @@ class Line < ActiveRecord::Base
     stanza.runningno
   end
 
+  def self.cached_wherestan(q)
+    Rails.cache.fetch([name, "stanza"+q.to_s]) { where(:stanza_id=>q) }
+  end
+
+  def self.cached_wheres(q)
+    where(:stanza_id=>q)
+  end
+  def self.cached_all
+    #Rails.cache.fetch(["lineall"]) { find_by_stanza_id(2) }
+    Rails.cache.fetch(["lineall2"]) { where(:stanza_id=>2) }
+  end
+  def self.cached_all2
+    Rails.cache.fetch(["lineall2"]) { where(:stanza_id=>2).all }
+  end
+  def cached_line
+    Rails.cache.fetch([self, "line"]) { line }
+  end
+
+  def cached_no
+    Rails.cache.fetch([self, "no"]) { no }
+  end
+
   def share_url
     "/read/"+section.to_s+"."+stanza.runningno.to_s
   end

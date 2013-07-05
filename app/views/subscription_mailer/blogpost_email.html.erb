@@ -6,7 +6,8 @@
   <body>
     <h4><%= @sender.username %>just posted on the blog</h4>
      <p>
-        Link to the blogpost   <%= post_url(@sender.posts.last) %>
+        Link to the blogpost   <%= blog_post_url(@blog, @post) %>
+        
     </p>
   </body>
 </html>

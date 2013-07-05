@@ -2,7 +2,7 @@ class Stanza < ActiveRecord::Base
   attr_accessible :no, :section_id, :runningno
   has_many :lines, :order => 'no'
   belongs_to :section
-  scope :by_section, lambda { |q| where(:section_id=>q ) }
+  #scope :_section, lambda { |q| where(:section_id=>q ) }
 
   validates :no , :uniqueness => true
 
@@ -27,6 +27,31 @@ class Stanza < ActiveRecord::Base
     string :sbook
     string :length
   end
+
+  def cached_lines
+    Rails.cache.fetch([self,"lines"]) { lines }
+  end
+
+  def self.cached_by_section(q)
+    Rails.cache.fetch([name, "cached_by_section"+q.to_s]) { self.where(:section_id=>q ).all }
+  end
+
+  def cached_runningno
+    Rails.cache.fetch([self, "runningno"]) { runningno }
+  end
+  
+  def cached_no
+    Rails.cache.fetch([self, "no"]) { no }
+  end
+
+  def self.cached_find_by_no(no)
+    Rails.cache.fetch([name, no]) { find_by_no(no) }
+  end
+
+  def cached_section
+    Rails.cache.fetch([self, "section"]) { section }
+  end
+
 
   def category
     "Sentences"
@@ -53,7 +78,7 @@ class Stanza < ActiveRecord::Base
   # end
 
   def share_url
-        section.to_s + "." + runningno.to_s
+    section.to_s + "." + runningno.to_s
   end
 
   def self.random

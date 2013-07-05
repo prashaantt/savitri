@@ -55,6 +55,8 @@ module Savitri
     # parameters by using an attr_accessible or attr_protected declaration.
     config.active_record.whitelist_attributes = true
 
+    # config.cache_store = :redis_store, "redis://localhost:6379/0/cache"
+
     # Enable the asset pipeline
     config.assets.enabled = true
 

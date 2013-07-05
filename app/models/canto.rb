@@ -10,7 +10,39 @@ class Canto < ActiveRecord::Base
   def to_param
   	no
   end
+
+  def sections_cache
+    Rails.cache.fetch([self,"sections"]) { self.sections.order("no") }
+  end
+
+  def sections_cache_with_runningno(q)
+    Rails.cache.fetch([self,"runningno"+q.to_s]) { sections_cache.where(:runningno=>q).to_a }
+  end
+
+  def cached_number
+    Rails.cache.fetch([self,"number"]) { no }
+  end
+
+  def cached_book
+    Rails.cache.fetch([self,"book"]) { book }
+  end
+
+  def cached_title
+    Rails.cache.fetch([self,"title"]) { title }
+  end
+
+  def self.cached_find(id)
+    Rails.cache.fetch([name, id]) { find(id) }
+  end
   
+  def self.cached_find_by_no_and_bookid(no, bid)
+    Rails.cache.fetch([name, no.to_s+"-"+bid.to_s]) { self.find_by_no_and_book_id(no, bid) }
+  end
+
+  def cached_stanzas
+    Rails.cache.fetch([self,"stanzas"]) { stanzas }
+  end
+
   # searchable do 
   #   text :line
   #   text :no

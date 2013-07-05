@@ -3,17 +3,17 @@
 <div class="row">
   <div class="span3">
     <div class="accordion" id="accordion2">
-      <% Book.all.each do |book| %>
+      <% Book.cached_all.each do |book| %>
       <div class="accordion-group">
             <div class="accordion-heading">
-              <a class="accordion-toggle collapsed navbook" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= book.id %>" id="bk1"><%= book.name %></a>
+              <a class="accordion-toggle collapsed navbook" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= book.cached_number %>" id="bk1"><%= book.cached_name %></a>
             </div>
-            <div id="collapse<%= book.id %>" class="accordion-body collapse" style="height: 0px; ">
+            <div id="collapse<%= book.cached_number %>" class="accordion-body collapse" style="height: 0px; ">
               <div class="accordion-inner">
                  <ul class="nav nav-tabs nav-stacked navcanto">
-                  <% book.cantos.each do |canto| %>
+                  <% book.cached_cantos.each do |canto| %>
                     <li id="leftnav">
-                      <a href="<%= '/read/'+book.id.to_s+"/"+canto.no.to_s+"/1" %>", class="<%= is_active_link params,book.id.to_s,canto.no.to_s %>"><%= canto.title %></a>
+                      <a href="<%= '/read/'+book.cached_number.to_s+"/"+canto.cached_number.to_s+"/1" %>", class="<%= is_active_link params,book.cached_number.to_s,canto.cached_number.to_s %>"><%= canto.cached_title %></a>
                     </li>
                   <% end %>
                  </ul>
@@ -26,25 +26,25 @@
   <div class="span6">
     <div id="cantos">
       <% unless @stanzas.blank? %>
-        <% @section = Section.find(@stanzas.first.section) %>
-        <% @canto = Canto.find(@section.canto_id) %>
-        <% @sections = @canto.sections.order("no") %>
-        <h3 class="cantono">Canto <%= @canto.no %></h3>
-        <h2 class="cantoname"><%= @canto.title %></h2>
+        <% @section = Section.cached_find(@stanzas.first.cached_section) %>
+        <% @canto = Canto.cached_find(@section.cached_cantoid) %>
+        <% @sections = @canto.sections_cache %>
+        <h3 class="cantono">Canto <%= @canto.cached_number %></h3>
+        <h2 class="cantoname"><%= @canto.cached_title %></h2>
         <div class="sections">
           <h4 class="sectionno">
-            <% if @sections.length > 1 %>
+            <% if @sections.size > 1 %>
               <span class="dropdown">
                 <a class="dropdown-toggle" id="dropsection" role="button" data-toggle="dropdown" data-target="#" href="#">
                   <span class="sectionlbl" style="display:none">Section</span>
-                  <%= @section.runningno.to_s + " (" + @section.no.to_s + ")" %>
+                  <%= @section.cached_runningno.to_s + " (" + @section.cached_no.to_s + ")" %>
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu sectionlist" role="menu" aria-labelledby="dropsection">
-                  <% @sections.each do |section| %>
+                  <% @sections.each do |sect| %>
                     <li role="presentation">
-                      <%= link_to "/read/" + @canto.book.no.to_s + "/" + @canto.no.to_s + "/" + section.runningno.to_s do %>
-                        Section <%= section.runningno.to_s + " (" + @canto.sections.where(:runningno=>section.runningno).first.no.to_s + ")" %>
+                      <%= link_to "/read/" + @canto.cached_book.cached_number.to_s + "/" + @canto.cached_number.to_s + "/" + sect.cached_runningno.to_s do %>
+                        Section <%= sect.cached_runningno.to_s + " (" + sect.cached_no.to_s + ")" %>
                       <% end %>
                     </li>
                   <% end %>
@@ -52,17 +52,17 @@
               </span>
             <% else %>
               <span class="sectionlbl" style="display:none">Section</span>
-              <%= @section.runningno.to_s + " (" + @section.no.to_s + ")" %>
+              <%= @section.cached_runningno.to_s + " (" + @section.cached_no.to_s + ")" %>
             <% end %>
           </h4>
           <div id="content">
-            <div id="s<%= @section.runningno %>" class="section">
+            <div id="s<%= @section.cached_runningno %>" class="section">
               <p><%= render @stanzas %></p>
             </div>
           </div>
         </div>
       <% else %>
-        <h2><%= @canto.title %></h2>
+        <h2><%= @canto.cached_title %></h2>
       <% end %>
     </div>
   </div>
