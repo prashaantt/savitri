@@ -3,4 +3,36 @@ class Section < ActiveRecord::Base
   has_many :stanzas
   has_many :lines, :through => :stanzas
   belongs_to :canto
+
+  def cached_stanzas
+  	Rails.cache.fetch([self,"stanzas"]) { stanzas }
+  end
+
+  def flush_cache
+  	Rails.cache.delete([self.class.name,id])
+  end
+
+  def cached_runningno
+    Rails.cache.fetch([self, "runningno"]) { runningno }
+  end
+  
+  def cached_cantoid
+    Rails.cache.fetch([self, "cantoid"]) { canto_id }
+  end
+
+  def cached_canto
+    Rails.cache.fetch([self, "canto"]) { canto }
+  end
+
+  def cached_no
+    Rails.cache.fetch([self, "no"]) { no }
+  end
+
+  def self.cached_find_by_no(no)
+    Rails.cache.fetch([name, "number"]) { find_by_no(no) }
+  end
+
+  def self.cached_find(id)
+  	Rails.cache.fetch([name, id]) { find(id) }
+  end
 end

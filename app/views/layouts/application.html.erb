@@ -52,14 +52,14 @@
                   <i class="icon-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                  <% User.find(1).blogs.order("id").each do |b| %>
+                  <% User.cached_find(1).cached_blogs.each do |b| %>
                     <li>
-                      <%= link_to b.title, blog_posts_path(b) %>
+                      <%= link_to b.cached_title, blog_posts_path(b) %>
                     </li>
                   <% end %>
                 </ul>
               </li>
-                <% @pages = Page.order(:priority).find_all_by_category("Menu") %>
+                <% @pages = Page.cached_menu_pages %>
                 <% unless @pages.count > 1 %>
                 <li><%= link_to @pages.first.name, page_path(@pages.first) %></li>
                 <% else %>
@@ -86,7 +86,7 @@
              <i class="icon-caret-down"></i>
            </a>
            <ul class="dropdown-menu">
-            <% if current_user.blogs.count > 0  %>
+            <% if current_user.cached_blogs.size > 0  %>
             <li><%= link_to "Manage blog(s)", blogs_path %></li>
             <% else %>
             <li><%= link_to "Create a blog", new_blog_path %></li>

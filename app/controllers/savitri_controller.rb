@@ -7,7 +7,7 @@ class SavitriController < ApplicationController
   def show
     @sentence = Stanza.random
     @text = Array.new
-    @sentence.lines.each do |l|
+    @sentence.cached_lines.each do |l|
       @text << l.line
     end
 

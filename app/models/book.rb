@@ -18,6 +18,27 @@ class Book < ActiveRecord::Base
     string :category
   end
 
+  def self.cached_find(id)
+    Rails.cache.fetch([name, id]) { find(id) }
+  end
+
+  def cached_cantos
+    Rails.cache.fetch([self,"cantos"]) { cantos }
+  end
+
+  def cached_number
+    Rails.cache.fetch([self,"number"]) { no }
+  end
+
+  def cached_name
+    Rails.cache.fetch([self,"name"]) { name }
+  end
+
+
+  def self.cached_all
+    Rails.cache.fetch([name,"all"]) { all }
+  end
+
   # def canto
   #   cantos
   # end

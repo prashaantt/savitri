@@ -27,6 +27,12 @@ class PostsController < ApplicationController
     #client = YouTubeIt::Client.new(:dev_key => "AI39si46cUDp-C9EgXCdXZk3zwArq-lZwEDhmscmsAYeQmU-2UOiYXw9LlkmnJw5OyAbtT3-m4VtVcmdUPwN0DJyV4f3ceDFyg")
   end
 
+  def archives
+    #@posts_by_month = Posts.find(:all).group_by { |post| post.created_at.strftime("%B") }
+    @posts = Post.all
+    @post_months = @posts.group_by { |t| t.created_at.beginning_of_month }
+  end
+
   # GET /posts/1
   # GET /posts/1.json
   def show
@@ -70,7 +76,7 @@ class PostsController < ApplicationController
     authorize! :create, @post
     respond_to do |format|
       if @post.save
-        #EmailWorker.perform_async(current_user.id)
+        EmailWorker.perform_async(current_user.id,@post.id)
         format.html { redirect_to blog_posts_path(@post.blog), notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
