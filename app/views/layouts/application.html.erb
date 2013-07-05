@@ -35,16 +35,16 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="<%= is_active 'savitri' %>"><a href="/">Home</a></li>
-              <li class="<%= is_active 'read' %>" style="margin-left: 21px"><a class="brand" href="/read/1/1/1">Savitri</a></li>
+              <li class="<%= is_active 'read' %>"><a href="/read/1/1/1">Savitri</a></li>
               <li class="dropdown" id="Resources">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Media Centre
                   <i class="icon-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="#"><i class="icon-info-sign navicon"></i>Library</a></li>
-                  <li><a href="#"><i class="icon-film navicon"></i>Presentations</a></li>
-                  <li><a href="#"><i class="icon-headphones navicon"></i>Audio</a></li>
-                  <li><a href="#"><i class="icon-picture navicon"></i>Themes</a></li>
+                  <li><a href="/library"><i class="icon-info-sign navicon"></i>Library</a></li>
+                  <li><a href="/presentations"><i class="icon-film navicon"></i>Presentations</a></li>
+                  <li><a href="/audio"><i class="icon-headphones navicon"></i>Audio</a></li>
+                  <li><a href="/themes"><i class="icon-picture navicon"></i>Themes</a></li>
                 </ul>
               </li>
               <li class="dropdown" id="Blogs">
@@ -52,16 +52,16 @@
                   <i class="icon-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="/blogs/light-of-supreme/posts/">The Light of the Supreme</a></li>
-                  <li><a href="/blogs/mirror/posts">Mirror</a></li>
-                  <li><a href="/blogs/parasya-jyotih/posts">परस्य ज्योतिः</a></li>
+                  <% User.find(1).blogs.order("id").each do |b| %>
+                    <li>
+                      <%= link_to b.title, blog_posts_path(b) %>
+                    </li>
+                  <% end %>
                 </ul>
               </li>
                 <% @pages = Page.order(:priority).find_all_by_category("Menu") %>
                 <% unless @pages.count > 1 %>
-                <li>
-                  <a href="<%= page_path("About")%>">About</a>
-                </li>
+                <li><%= link_to @pages.first.name, page_path(@pages.first) %></li>
                 <% else %>
                 <li class="dropdown" id="pages"><a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">About
                   <i class="icon-caret-down"></i>
@@ -76,20 +76,22 @@
               </ul>
           </div><!--/.nav-collapse -->
           <form class="navbar-search pull-left" action="/search/">
-            <%= text_field_tag :q, params[:q], :class=>"search-query span2", :placeholder=>"Search" %>
+            <%= text_field_tag :q, params[:q], :class=>"search-query span4", :placeholder=>"Search" %>
           </form>
           <div class="btn-group pull-right">
             <% if user_signed_in? %> 
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-             <i class="icon-user"></i>
-             <%= current_user.username %>
-             <i class="icon-caret-down"></i>
-           </a>
-           <ul class="dropdown-menu">
-            <% if current_user.blogs.count > 0  %>
-            <li><%= link_to "Manage blog(s)", blogs_path %></li>
+              <i class="icon-user"></i>
+              <%= current_user.username %>
+              <i class="icon-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+            <% if current_user.role == 'Admin' %>
+              <li><%= link_to "Manage blogs & media", blogs_path %></li>
+            <% elsif current_user.blogs.count > 0  %>
+              <li><%= link_to "Manage blog", blogs_path %></li>
             <% else %>
-            <li><%= link_to "Create a blog", new_blog_path %></li>
+              <li><%= link_to "Create blog", new_blog_path %></li>
             <% end %>
             <li class="divider"/>
             <li><%= link_to "Account settings", edit_user_registration_path %> </li>

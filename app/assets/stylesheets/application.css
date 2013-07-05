@@ -21,6 +21,12 @@
   padding-bottom: 6%;
 }
 
+.imgcenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; 
+}
+
 /*article div ol li,
 div ol li {
   font-family: "ITC Garamond W01 Light";

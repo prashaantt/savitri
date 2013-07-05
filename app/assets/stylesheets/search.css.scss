@@ -1,169 +1,102 @@
-// Place all the styles related to the search controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-    
-    .results {
-    	font-size: 18px;
-    	font-size-adjust: 1;
-    	// color: white;
-         color: black; 
-    }    
-    .results a {
-        color: #ccc;
+.search-box {
+  border-color: #369 ;
+  border-radius: 0px  !important;
+  height: 35px !important;
+  float: left !important;
+  border-color: #ccc !important;
+  font-size: 16px !important;
+  margin-left: 0px;
+  width: 87% !important;
+}
+
+.search-button {
+  font-family: "Kepler W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-left: -84px !important;
+  height: 45px !important;
+  border: 1px #000 !important;
+  font-size: 35px !important;
+  font-weight: bolder;
+  width: 10%;
+  float: right;
+
+}
+
+.result-text {
+  width: 470px;
+  padding: 0 0 0 10px;
+  margin-bottom: 30px;
+}
+
+.result-text > p {
+  font-size: 16px !important;
+  font-family: "Myriad W01 Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.ref {
+  font-size: 15px;
+  line-height: 18px;
+  float: right;
+  color: #aaa;
+}
+
+.result {
+  font-size: 16px;
+  padding-bottom: 16px;
+  line-height: 1.5;
+}
+
+.facet {
+  font-size: 16px;
+}
+
+
+.left-filter {
+  margin-top:0px;
+  font-size:16px;
+}
+ 
+
+@media (min-width: 150px) and (max-width: 779px){
+   .search-box {
+    width: 100% !important;
+  }
+  .search-button {
+    width: 100% !important;
+    margin-left:0px !important;
     }
-    
-    /*-------------------------------------*/
-    
- .cf:before, .cf:after{
-      content:"";
-      display:table;
+}
+
+@media (min-width: 1200px) {
+   .search-box {
+    width: 88% !important;
   }
-
-  .cf:after{
-      clear:both;
-  }
-
-  .cf{
-      zoom:1;
-  }
-
-  // .facets{
-  //        color: #aaa; 
-  // }
-
-  /*-------------------------------------*/   
-
-  .form-wrapper {
-    width: 450px;
-    padding: 15px;
-    margin: 50px auto;
-    background: #444;
-    background: rgba(0,0,0,.2);
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    -moz-box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
-    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
-    box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
-}
-
-.form-wrapper input {
-    width: 330px;
-    height: 20px;
-    padding: 10px 5px;
-    float: left;    
-    font: bold 15px 'lucida sans', 'trebuchet MS', 'Tahoma';
-    border: 0;
-    background: #eee;
-    -moz-border-radius: 3px 0 0 3px;
-    -webkit-border-radius: 3px 0 0 3px;
-    border-radius: 3px 0 0 3px;      
-}
-
-.form-wrapper input:focus {
-    outline: 0;
-    background: #fff;
-    -moz-box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
-    -webkit-box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
-    box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
-}
-
-.form-wrapper input::-webkit-input-placeholder {
- color: #999;
- font-weight: normal;
- font-style: italic;
-}
-
-.form-wrapper input:-moz-placeholder {
-    color: #999;
-    font-weight: normal;
-    font-style: italic;
-}
-
-.form-wrapper input:-ms-input-placeholder {
-    color: #999;
-    font-weight: normal;
-    font-style: italic;
-}    
-
-.form-wrapper button {
-    overflow: visible;
-    position: relative;
-    float: right;
-    border: 0;
-    padding: 0;
-    cursor: pointer;
-    height: 40px;
-    width: 110px;
-    font: bold 15px/40px 'lucida sans', 'trebuchet MS', 'Tahoma';
-    color: #fff;
-    text-transform: uppercase;
-    background: #d83c3c;
-    -moz-border-radius: 0 3px 3px 0;
-    -webkit-border-radius: 0 3px 3px 0;
-    border-radius: 0 3px 3px 0;      
-    text-shadow: 0 -1px 0 rgba(0, 0 ,0, .3);
-}   
-
-.form-wrapper button:hover{     
-    background: #e54040;
-}   
-
-.form-wrapper button:active,
-.form-wrapper button:focus{   
-    background: #c42f2f;    
-}
-
-.form-wrapper button:before {
-    content: '';
+  .search-button {
+    width: 4% !important;
+    margin-left: 0px !important;
     position: absolute;
-    border-width: 8px 8px 8px 0;
-    border-style: solid solid solid none;
-    border-color: transparent #d83c3c transparent;
-    top: 12px;
-    left: -6px;
-}
-
-.form-wrapper button:hover:before{
-    border-right-color: #e54040;
-}
-
-.form-wrapper button:focus:before{
-    border-right-color: #c42f2f;
-}    
-
-.form-wrapper button::-moz-focus-inner {
-    border: 0;
-    padding: 0;
-}
-
-@media all and (max-width: 400px) {
-    iframe{
-    width:100% !important;
-    height:0%;
     }
 }
 
-iframe{  
-    width:100% !important;
-    height: normal;
-    overflow:hidden;
-}
+@media (min-width: 780px) and (max-width: 1010px){
+   .search-box {
+    width: 82% !important;
+  }
+  .search-button {
+    width: 5% !important;
+    margin-left: 0px !important;
+    position: absolute;
+    }
+} 
 
-.video {
-    padding-bottom: 56.25%;
-    padding-top: 30px;
-    height: 0;
-    overflow: hidden;
-}
 
-.video iframe, .video object, .video embed {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
 
-.entry-content img, .entry-content iframe, .entry-content object, .entry-content embed {
-    max-width: 100%;
-}
+.filters {
+    margin-bottom: 15px;
+  } 
+.filters > ul {
+    margin-left: 0px; 
+  } 
+.filters > ul > li {
+    list-style: none;
+    /*background: rgb(247, 247, 247);*/
+  }

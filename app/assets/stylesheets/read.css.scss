@@ -12,14 +12,9 @@
   background: #282828;
   }
 
-.navbook {
-  font-family: 'Myriad W01 Lt';
-  color: black;
-}
-
 .navcanto a {
-  font-family: 'Myriad W01 Lt';
-  color: black;
+  font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
 }
 
 .rowread {
@@ -71,8 +66,8 @@
 }
 
 .read-margins {
-  margin-left: 5%;
-  margin-right: 5%;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .stanza {
@@ -258,13 +253,13 @@
   margin-left:-3px;
 }
 
-a:hover, a:focus {
+.navfx:hover {
   color: #A19FA0;
-  text-decoration: underline;
 }
 
 .navbook {
-  font-family: 'Myriad W01 Lt';
+  font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
   color: #fff;
   font-size:100%;
 }
@@ -414,7 +409,7 @@ a:hover, a:focus {
 }
 
 .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
-  background-color: #A19FA0;
+  background-color: #A19FA0 ;
   color: #fff;
 }
 
@@ -449,8 +444,4 @@ a:hover, a:focus {
 
 .go-top:hover {
   background-color: rgba(0, 0, 0, 0.6);
-}
-
-.page-header {
-  text-align: left;
 }

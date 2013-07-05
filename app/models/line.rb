@@ -17,8 +17,8 @@ class Line < ActiveRecord::Base
   end
 
    searchable do 
-     text :line
-     text :no
+     text :line, :stored => true
+     #text :no
      integer :id
 #  --facets below--
      string :section

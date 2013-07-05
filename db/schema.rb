@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130506182451) do
+ActiveRecord::Schema.define(:version => 20130627091213) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -27,6 +27,23 @@ ActiveRecord::Schema.define(:version => 20130506182451) do
   add_index "active_admin_comments", ["author_type", "author_id"], :name => "index_active_admin_comments_on_author_type_and_author_id"
   add_index "active_admin_comments", ["namespace"], :name => "index_active_admin_comments_on_namespace"
   add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_admin_notes_on_resource_type_and_resource_id"
+
+  create_table "audios", :force => true do |t|
+    t.integer  "medium_id"
+    t.string   "title"
+    t.string   "audio_url"
+    t.text     "summary"
+    t.string   "author"
+    t.integer  "seconds"
+    t.integer  "file_size"
+    t.string   "url"
+    t.string   "explicit"
+    t.integer  "order"
+    t.string   "closedcaptioned"
+    t.string   "block"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "blogs", :force => true do |t|
     t.integer  "user_id"
@@ -86,6 +103,21 @@ ActiveRecord::Schema.define(:version => 20130506182451) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "media", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "subtitle"
+    t.text     "summary"
+    t.string   "image_url"
+    t.text     "category"
+    t.string   "language"
+    t.string   "explicit"
+    t.string   "block"
+    t.string   "complete"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "notebooks", :force => true do |t|
     t.string   "line"
     t.string   "quote"
@@ -111,6 +143,8 @@ ActiveRecord::Schema.define(:version => 20130506182451) do
     t.text     "md_content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "parent"
+    t.string   "url"
   end
 
   add_index "pages", ["permalink"], :name => "index_pages_on_permalink"
@@ -123,6 +157,8 @@ ActiveRecord::Schema.define(:version => 20130506182451) do
     t.datetime "updated_at", :null => false
     t.text     "md_content"
     t.string   "photos"
+    t.text     "excerpt"
+    t.string   "url"
   end
 
   create_table "redactor_assets", :force => true do |t|
@@ -184,9 +220,9 @@ ActiveRecord::Schema.define(:version => 20130506182451) do
   create_table "uploads", :force => true do |t|
     t.integer  "post_id"
     t.string   "photo"
-    t.string   "music"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "music"
   end
 
   create_table "users", :force => true do |t|

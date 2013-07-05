@@ -1,5 +1,11 @@
 Savitri::Application.routes.draw do
 
+  resources :audios
+
+
+  resources :media
+
+
   get "search/index"
 
   get "search/results"
@@ -57,20 +63,23 @@ Savitri::Application.routes.draw do
   end
 
   resources :blogs do
-    resources :posts, :name_prefix => "blog_"
+   resources :posts, :name_prefix => "blog_"
   end
 
   resources :posts do
-    resources :comments, :name_prefix => "post_"
+   resources :comments, :name_prefix => "post_"
   end
 
+  resources :media do
+   resources :audios, :name_prefix => "media_"
+  end
 
   get 'blogs/:blog_id/posts/tags/:tag' , to: 'posts#index' , as: :tag
-  
+
   resources :books
 
   resources :sections
-  
+
   resources :cantos
 
   resources :stanzas
@@ -78,12 +87,16 @@ Savitri::Application.routes.draw do
   resources :lines
 
   get 'lines/range/:id', to: 'lines#range'
-  
+
   resources :pages, except: :show
- 
+
   get ':id', to: 'pages#show', as: :page
   put ':id', to: 'pages#update', as: :page
   delete ':id', to: 'pages#destroy', as: :page
 
   root :to => 'savitri#index', :as => 'savitri'
+
+  get '*paths' => 'pages#show', as: :page
+  put '*paths' => 'pages#update', as: :page
+
 end

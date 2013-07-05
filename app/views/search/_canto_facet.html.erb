@@ -1,12 +1,19 @@
-<h4>Canto</h4>
+<% if params[:sbook].blank? ^ params[:lbook].blank? %>
+<% if params[:canto].blank? %>
+	
+<h5 class="left-filter">Canto</h5>
+<% rows = Array.new %>
 	<ul class="facet">
 	<% for row in @search.facet(:canto).rows.each do%>
-		<li>
-			<% if params[:canto].blank? %>
-			<%= link_to row.value, search_path(:q => params[:q], :canto => row.value , :length => params[:length], :lbook => params[:lbook],:sbook => params[:sbook],:section => params[:section] ) %> (<%= row.count %>)
-			<% else %>
-			<strong><%= row.value %></strong> (<%= link_to "remove", :canto => nil, :q => params[:q], :length => params[:length], :lbook => params[:lbook],:sbook => params[:sbook], :q => params[:q],:section => params[:section]  %>)
-			<% end %>
-		</li>
-		<% end %>
+		<% rows << row.value.to_i %>
+	<% end %>
+	<% rows.sort! %>
 	</ul>
+  <% links = Hash.new %>
+	<% for n in rows.each %>
+		<% links[n] = search_path(:q => params[:q], :canto => n, :lbook => params[:lbook], :section => params[:section], :sbook => params[:sbook],:length=>params[:length]) %>
+	<% end %>
+	<%= select_tag "canto", options_for_select(links.keys.each_with_index.map {|name, index| [name,links[name]]}), :class=>"span2",:onChange=>"window.document.location.href=this.options[this.selectedIndex].value;", :prompt => 'Select Canto' %>
+<% end %>
+<% end %>
+
