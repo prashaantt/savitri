@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-gem 'pg'
+#gem 'pg'
 gem 'sqlite3'
 gem 'bigdecimal'
 gem 'acts-as-taggable-on'
@@ -37,6 +37,8 @@ gem 'jquery-rails', '2.1.3'
 
 gem 'unicorn'
 gem 'capistrano'
+
 #gem 'seed_dump'
-gem 'minitest'
+#gem 'minitest'
 gem 'stringex'
+

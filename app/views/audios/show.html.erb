@@ -8,7 +8,7 @@
   <div class="span6 offset3">
     <h1 class="page-header title">
       <%= link_to @medium.title, medium_audios_path %>
-      <%= link_to "", request.protocol + request.host_with_port + medium_audios_path + ".rss", :class => "icon-music", :title => "Subscribe to podcast" %><br>
+      <%= link_to "", request.protocol + request.host_with_port + medium_audios_path + ".rss", :class => "icon-music", :title => "Subscribe to podcast", :style => "font-size: 65%" %><br>
       <small class="blog-subtitle"><%=  @medium.subtitle %></small>
     </h1>
   </div>
