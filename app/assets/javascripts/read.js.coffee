@@ -66,8 +66,6 @@ $ ->
 
   $(window).resize ->
     setSpan($(window).width())
-    console.log($(window).width())
-
  
 $ ->
   # Show or hide the sticky footer button
