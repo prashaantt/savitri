@@ -3,7 +3,7 @@
   <div class="span6 offset3">
     <h1 class="page-header title">
       <%= link_to @post.blog.title, blog_posts_path %>
-      <%= link_to "", request.protocol + request.host_with_port + blog_posts_path + ".atom", :class => "icon-rss", :title => "Subscribe to feed" %><br>
+      <%= link_to "", request.protocol + request.host_with_port + blog_posts_path + ".atom", :class => "icon-rss", :title => "Subscribe to feed", :style => "font-size: 65%"  %><br>
       <small class="blog-subtitle"><%=  @post.blog.subtitle %></small>
     </h1>
   </div>
