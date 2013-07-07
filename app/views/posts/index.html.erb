@@ -41,6 +41,7 @@
               <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "overrideanchor"} %></p>
             <% end %>
           <% end %>
+        </div>
       </section>
     <% end %>
     <div id="paginator">
@@ -49,27 +50,70 @@
   </div>
 <!-- Main Blog Content End -->
 <!--  SideBar Begin -->
-  <div class="span3">
+  <div class="span3 visible-desktop">
     <% if can? :update, @blog %>
-    <div class="span2">
-      <div class="sidebar-title"><span class="badge">Manage blog</span></div><br>
-      <div class="btn-grp sidebar-title">
-        <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
+      <div class="right-sidebar">
+        <div class="sidebar-title"><span class="badge">Manage blog</span></div><br>
+        <div class="btn-grp sidebar-title">
+          <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
+        </div>
       </div>
-      <hr>
-    </div>
     <% end %>
-    <% tag_counts = @blog.posts.tag_counts.order('tags_count desc').first(15) %>
-    <% if tag_counts.length > 0 %>
-      <div class="span2 visible-desktop">
-        <div class="sidebar-title"><span class="badge">Top tags</span></div><br>
-        <% tag_cloud tag_counts, %w[s m l] do |tag| %>
-          <%= link_to tag.name, tag_path(params[:blog_id], tag.name), :class => "label label-info tag" %>
-          <span class="badge pull-right"><%= tag.count %></span>
-          <br>
+      <% tag_counts = [] %>
+      <% if params[:tag] %>
+        <% tag_counts = @posts.tag_counts.sort_by{|tag| tag.name.downcase}.reject{|tag| tag.name == params[:tag]} %>
+        <% if tag_counts.length > 0 %>
+          <div class="right-sidebar" id="tag_cloud">
+            <div class="sidebar-title"><span class="badge">Related tags</span></div><br>
+            <% tag_cloud tag_counts, %w[s m] do |tag, css_class| %>
+              <%= link_to tag_path(params[:blog_id], tag.name) do %>
+                <span class="tag-cloud <%= css_class %>"><%= tag.name %></span>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <% tag_counts = @blog.posts.tag_counts.sort_by{|tag| tag.name.downcase} %>
+        <% if tag_counts.length > 0 %>
+          <div class="right-sidebar" id="tag_cloud">
+            <div class="sidebar-title"><span class="badge">Tags</span></div><br>
+            <% tag_cloud tag_counts, %w[t s m l] do |tag, css_class| %>
+              <%= link_to tag_path(params[:blog_id], tag.name) do %>
+                <span class="tag-cloud <%= css_class %>"><%= tag.name %></span>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    <% unless params[:tag] %>
+      <div class="archives right-sidebar">
+        <% unless @blog.posts.length == 0 %>
+          <div class="sidebar-title"><span class="badge">Archives</span></div><br>
+          <% @post_years = @blog.posts.group_by { |t| t.created_at.beginning_of_year } %>
+            <% @post_years.sort.reverse.each do |year, posts| %>
+              <li class="listi">
+                <label for="f<%= year.strftime("%m%Y") %>"><span class="ltag"><%=h year.strftime("%Y") %></span></label>
+                <input class="textin" type="checkbox" id="f<%= year.strftime("%m%Y") %>"> 
+                <ol>  
+                  <% post_months = posts.group_by {|t| t.created_at.beginning_of_month } %>
+                  <% post_months.each do |month, month_posts| %>
+                    <li class="subfolder">  
+                      <label for="f<%= month_posts.first.created_at %>"><span class="ltag"><%=h month_posts.first.created_at.strftime("%B") %></span></label>
+                      <input class="textin" type="checkbox" id="f<%= month_posts.first.created_at %>"> 
+                      <ol>
+                        <% for post in month_posts %>
+                          <li class="file"><a href="#"><%=h link_to post.title, blog_post_path(post.blog,post.url) %></a></li>
+                        <% end %>
+                      </ol>
+                    </li>
+                  <% end %>
+                </ol>
+              </li>
+            <% end %>
+          <% end %>
         <% end %>
       </div>
-    <% end %>
+    </div>
   </div>
 <!-- End Sidebar Content -->
 </div>
