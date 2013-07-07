@@ -214,8 +214,6 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sql-logging (3.0.8)
-      rails (> 3.0.0)
     sqlite3 (1.3.7)
     stringex (1.5.1)
     subexec (0.2.2)
@@ -286,7 +284,6 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   sidekiq (= 2.6.0)
   simple_form
-  sql-logging
   sqlite3
   stringex
   sunspot_rails

@@ -34,9 +34,9 @@ class Book < ActiveRecord::Base
     Rails.cache.fetch([self,"name"]) { name }
   end
 
-
   def self.cached_all
-    Rails.cache.fetch([name,"all"]) { all }
+    #Rails.cache.fetch([name,"bookall"]) { order('no').to_a }
+    Rails.cache.fetch(["Book","bookall"]) { Book.order('no').to_a }
   end
 
   # def canto

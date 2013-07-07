@@ -32,6 +32,11 @@ class Stanza < ActiveRecord::Base
     Rails.cache.fetch([self,"lines"]) { lines }
   end
 
+  def self.cached_all
+    Rails.cache.fetch([name,"stanzaall"]) { order('no').to_a }
+  end
+
+
   def self.cached_by_section(q)
     Rails.cache.fetch([name, "cached_by_section"+q.to_s]) { self.where(:section_id=>q ).all }
   end
