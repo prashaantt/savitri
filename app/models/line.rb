@@ -32,6 +32,11 @@ class Line < ActiveRecord::Base
     self.class.name + "s"
   end
 
+  def self.cached_all
+    Rails.cache.fetch([name,"lineall"]) { order('no').to_a }
+  end
+
+
   def runningno
     stanza.runningno
   end
@@ -43,13 +48,7 @@ class Line < ActiveRecord::Base
   def self.cached_wheres(q)
     where(:stanza_id=>q)
   end
-  def self.cached_all
-    #Rails.cache.fetch(["lineall"]) { find_by_stanza_id(2) }
-    Rails.cache.fetch(["lineall2"]) { where(:stanza_id=>2) }
-  end
-  def self.cached_all2
-    Rails.cache.fetch(["lineall2"]) { where(:stanza_id=>2).all }
-  end
+
   def cached_line
     Rails.cache.fetch([self, "line"]) { line }
   end

@@ -8,6 +8,10 @@ class Section < ActiveRecord::Base
   	Rails.cache.fetch([self,"stanzas"]) { stanzas }
   end
 
+  def self.cached_all
+    Rails.cache.fetch([name,"sectionall"]) { order('no').to_a }
+  end
+
   def flush_cache
   	Rails.cache.delete([self.class.name,id])
   end
