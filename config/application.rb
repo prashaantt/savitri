@@ -62,6 +62,6 @@ module Savitri
     config.assets.version = '1.0'
 
     # acts_as_taggable_on config
-    ActsAsTaggableOn.force_lowercase = true
+    ActsAsTaggableOn.force_lowercase = false
   end
 end
