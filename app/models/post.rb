@@ -20,7 +20,7 @@ class Post < ActiveRecord::Base
   
   validates :title, :presence => true,
                     :length => { :minimum => 3 }
-  accepts_nested_attributes_for :uploads
+  accepts_nested_attributes_for :uploads #######FIX ME
 
   def photo
     uplods.photo

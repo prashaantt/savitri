@@ -14,7 +14,7 @@ class BlogsController < ApplicationController
 
 	def show
 	  blog = Blog.find_by_slug(params[:id])
-    redirect_to blog_posts_path(blog), status: 301
+	  redirect_to blog_posts_path(blog), status: 301
 	end
 
 	def new

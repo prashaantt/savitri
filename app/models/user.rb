@@ -35,6 +35,19 @@ class User < ActiveRecord::Base
   def init
     self.role_id ||= 3
   end
+
+  def self.cached_find(id)
+    Rails.cache.fetch([name, id]) { find(id) }
+  end
+
+  def cached_blogs
+    Rails.cache.fetch([self, "blogs"]) { blogs.order("id").to_a }
+    #blogs.order('id')
+  end  
+
+  def self.admin_cached_blogs(q=1)
+    Rail.cache.fetch(["User", q]) { User.find_by_id(1).blogs.order('id') }
+  end
   
   def role
     Role.find_by_id(self.role_id).name
