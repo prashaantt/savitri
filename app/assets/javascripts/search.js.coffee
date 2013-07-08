@@ -4,8 +4,6 @@
 
 $ ->
 	path = window.location.pathname.split('/')
-	if(path[1]=='search')
-		$('#q').hide()
-
-$ ->
+	if (path[1] == 'search')
+		$('.searchbox').hide()
 	

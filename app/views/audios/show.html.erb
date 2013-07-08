@@ -38,7 +38,9 @@
       </h5>
       <article class="audio">
         <p><%= @audio.summary.html_safe %></p>
-        <audio controls class="span6" style="margin-left: 0px; margin-top: 20px"><source src=<%= @audio.audio_url %> type="audio/mpeg"></audio>
+        <div class="row">
+          <audio controls class="span6" style="margin-top: 20px"><source src=<%= @audio.audio_url %> type="audio/mpeg"></audio>
+        </div>
         <% tag_counts = @audio.tag_counts %>
         <% if tag_counts.length > 0 %>
           <div class="audio-tags">
