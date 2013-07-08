@@ -5,10 +5,11 @@ class ReadController < ApplicationController
     sectionrunningno=params[:section_id]
     cantoid=params[:canto_id]
     bookid=params[:book_id]
-    @canto = Canto.find_by_no_and_book_id(cantoid,bookid)
-    @sections = @canto.sections.where(:runningno=>sectionrunningno).order("no")
-    @stanzas = Stanza.by_section(@sections.first.id).order("no")
-
+    @canto = Canto.cached_find_by_no_and_bookid(cantoid, bookid)
+    @sections = @canto.sections_cache_with_runningno(sectionrunningno)
+    #@stanzas = Stanza.cached_by_section(@sections.first.id)
+    @stanzas = @sections.first.cached_stanzas
+    
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -25,11 +26,11 @@ class ReadController < ApplicationController
 
   def specific
     query = params[:book_id].split('.')
-    section=Section.find_by_no(query[0])
-    sectionrunningno = section.runningno
-    canto=Section.find_by_no(section.id).canto
-    cantoid = canto.no
-    bookid = Book.find(canto.book_id).id
+    section=Section.cached_find_by_no(query[0])
+    sectionrunningno = section.cached_runningno
+    canto=Section.cached_find_by_no(section.no).cached_canto
+    cantoid = canto.cached_number
+    bookid = Book.cached_find(canto.book_id).no
     redirect_to '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1]
   end
 end

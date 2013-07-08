@@ -33,8 +33,16 @@ GEM
     acts_as_follower (0.1.1)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    better_errors (0.9.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
     bigdecimal (1.1.0)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.0.4)
+    bullet (4.6.0)
+      uniform_notifier
+    callsite (0.0.11)
     cancan (1.6.7)
     capistrano (2.14.2)
       highline
@@ -48,6 +56,7 @@ GEM
     celluloid (0.12.4)
       facter (>= 1.6.12)
       timers (>= 1.0.0)
+    coderay (1.0.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -57,6 +66,7 @@ GEM
     coffee-script-source (1.4.0)
     commonjs (0.2.6)
     connection_pool (0.9.3)
+    debug_inspector (0.0.2)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -107,6 +117,10 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta_request (0.2.7)
+      callsite
+      rack-contrib
+      railties
     mime-types (1.21)
     mini_magick (3.5.0)
       subexec (~> 0.2.1)
@@ -126,6 +140,10 @@ GEM
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
+    rack-mini-profiler (0.1.27)
+      rack (>= 1.1.3)
     rack-ssl (1.3.3)
       rack
     rack-test (0.6.2)
@@ -153,8 +171,24 @@ GEM
       mime-types
       orm_adapter
     redis (3.0.3)
+    redis-actionpack (3.2.3)
+      actionpack (~> 3.2.3)
+      redis-rack (~> 1.4.0)
+      redis-store (~> 1.1.0)
+    redis-activesupport (3.2.3)
+      activesupport (~> 3.2.3)
+      redis-store (~> 1.1.0)
     redis-namespace (1.2.1)
       redis (~> 3.0.0)
+    redis-rack (1.4.2)
+      rack (~> 1.4.1)
+      redis-store (~> 1.1.0)
+    redis-rails (3.2.3)
+      redis-actionpack (~> 3.2.3)
+      redis-activesupport (~> 3.2.3)
+      redis-store (~> 1.1.0)
+    redis-store (1.1.3)
+      redis (>= 2.2.0)
     ref (1.0.4)
     rsolr (1.0.8)
       builder (>= 2.1.2)
@@ -209,6 +243,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uniform_notifier (1.2.0)
     warden (1.2.1)
       rack (>= 1.0)
 
@@ -219,7 +254,10 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_follower
   bcrypt-ruby
+  better_errors
   bigdecimal
+  binding_of_caller
+  bullet
   cancan
   capistrano
   carrierwave
@@ -231,10 +269,14 @@ DEPENDENCIES
   jquery-rails (= 2.1.3)
   kaminari
   less-rails
+  meta_request
   mini_magick
   newrelic_rpm
+  rack-mini-profiler
   rails (= 3.2.13)
   redactor-rails (= 0.3.2)
+  redis-rails
+  redis-store
   sass-rails (~> 3.2.3)
   sidekiq (= 2.6.0)
   simple_form

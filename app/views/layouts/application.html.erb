@@ -52,7 +52,7 @@
                   <i class="icon-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                  <% User.find(1).blogs.order("id").each do |b| %>
+                  <% User.cached_find(1).cached_blogs.each do |b| %>
                     <li>
                       <%= link_to b.title, blog_posts_path(b) %>
                     </li>
@@ -80,6 +80,7 @@
               <%= text_field_tag :q, params[:q], :class => "span3" %>
               <button class="btn" type="submit"><i class="icon-search"></i></button>
             </div>
+
           </form>
           <div class="btn-group pull-right">
             <% if user_signed_in? %> 

@@ -32,8 +32,29 @@ class Line < ActiveRecord::Base
     self.class.name + "s"
   end
 
+  def self.cached_all
+    Rails.cache.fetch([name,"lineall"]) { order('no').to_a }
+  end
+
+
   def runningno
     stanza.runningno
+  end
+
+  def self.cached_wherestan(q)
+    Rails.cache.fetch([name, "stanza"+q.to_s]) { where(:stanza_id=>q) }
+  end
+
+  def self.cached_wheres(q)
+    where(:stanza_id=>q)
+  end
+
+  def cached_line
+    Rails.cache.fetch([self, "line"]) { line }
+  end
+
+  def cached_number
+    Rails.cache.fetch([self, "no"]) { no }
   end
 
   def share_url

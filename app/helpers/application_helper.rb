@@ -19,6 +19,7 @@ module ApplicationHelper
     end
     clas
   end
+
  	def is_active_link(params,bid,cid)
  		claz=""
  		if params[:book_id].eql? bid
@@ -48,9 +49,8 @@ module ApplicationHelper
   end
 
   def share_url(sentence_number)
-    stanza = Stanza.find_by_no(sentence_number)
-    section = Section.find(stanza.section)
-    section_running_no = section.runningno
-    "/read/"+section.no.to_s+"."+stanza.runningno.to_s
+    stanza = Stanza.cached_find_by_no(sentence_number)
+    section = Section.cached_find(stanza.cached_section)
+    "/read/"+section.cached_number.to_s+"."+stanza.cached_runningno.to_s
   end
 end

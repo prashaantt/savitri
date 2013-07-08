@@ -33,13 +33,12 @@
             <p><%= post.excerpt %></p>
             <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "overrideanchor"} %></p>
           <% else %>
-            <% html_content = post.content.gsub(/\r\n?/, "") %>
-            <% markdown_content = post.md_content.gsub(/\r\n?/, "") %>
-            <% if markdown_content.split(" ").length <= 200 %>
-              <%= html_content.html_safe %>
+            <% post_content = post.content.gsub(/\r\n?/, "").html_safe %>
+            <% if post_content.length <= 200 %>
+              <%= post_content %>
             <% else %>
-              <%= html_content.split(" ").first(200).join(" ").html_safe %>
-              <p><%= link_to "Continued", blog_post_path(post.blog, post), {:class => "overrideanchor"} %></p>
+              <%= post_content.split(" ").first(200).join(" ").html_safe %>...
+              <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "overrideanchor"} %></p>
             <% end %>
           <% end %>
         </div>
@@ -60,6 +59,7 @@
         </div>
       </div>
     <% end %>
+      <% tag_counts = [] %>
       <% if params[:tag] %>
         <% tag_counts = @posts.tag_counts.sort_by{|tag| tag.name.downcase}.reject{|tag| tag.name == params[:tag]} %>
         <% if tag_counts.length > 0 %>
@@ -102,7 +102,7 @@
                       <input class="textin" type="checkbox" id="f<%= month_posts.first.created_at %>"> 
                       <ol>
                         <% for post in month_posts %>
-                          <li class="file"><a href="#"><%=h link_to post.title, blog_post_path(post.blog,post.url) %></a></li>
+                          <li class="file"><a href="#"><%=h link_to post.title, blog_post_path(post.blog,post) %></a></li>
                         <% end %>
                       </ol>
                     </li>
