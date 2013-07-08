@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.page-header {
+.page-header.title {
   text-align: center;
 }
 
@@ -48,7 +48,7 @@ article {
 }
 
 .snippet {
-  padding-top: 20px;
+  margin-top: 20px;
   padding-bottom: 20px;
   border-bottom: 2px dotted #eee;
 }
@@ -83,6 +83,7 @@ article {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  border-radius:0px;
 }
 
 .tags {
@@ -109,7 +110,7 @@ table.table.table-condensed {
 
 /* Panels ---------------------- */
 
-.panel { background: #f2f2f2; border: solid 1px #e6e6e6; margin: 0 0 22px 0; padding: 20px; }
+.panel { background:transparent; border: none; margin: 0 0 22px 0; padding: 10px; }
 .panel > :first-child { margin-top: 0; }
 .panel > :last-child { margin-bottom: 0; }
 .panel.callout { background: #2ba6cb; color: #fff; border-color: #2284a1; -webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5); -moz-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5); box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5); }
@@ -164,4 +165,139 @@ table.table.table-condensed {
 
 .subfolder{
     padding-top:5px;
+}
+
+.btn {
+  border-radius: 0;
+  background:#fff;
+}
+
+.pagination ul > li:last-child > a{
+  border-radius:0;
+}
+
+.pagination ul > li:first-child > a, .pagination ul > li:first-child > span {
+  border-left-width: 1px;
+  border-radius:0px;
+}
+
+.btn-success {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#51a351), to(#51a351));
+  background-color: #51a351;
+  border: none;
+}
+
+.btn-danger {
+  border: none;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#bd362f), to(#bd362f));
+}
+
+.btn-warning {
+  border:none;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f89406), to(#f89406));
+}
+
+.btn-info {
+  border:none;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#49afcd), to(#49afcd));
+}
+
+textarea {
+  border-radius: 0;
+}
+
+input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+  
+  border-radius: 0;
+}
+
+.btn-group > .btn + .btn {
+  border-radius: 0;
+  }
+
+td, th {
+  padding: 5px 8px;
+  border: solid 1px #cccccc;
+  border-radius:0px;
+}
+
+.well {
+   border-radius: 0;
+}
+
+.table-bordered tbody:first-child tr:first-child > td:first-child, .table-bordered tbody:first-child tr:first-child > th:first-child {
+  border-top-left-radius: 0px;
+}
+
+.table-bordered {
+  border-radius: 0px;
+}
+
+.table-bordered tbody:last-child tr:last-child > td:first-child, .table-bordered tbody:last-child tr:last-child > th:first-child, .table-bordered tfoot:last-child tr:last-child > td:first-child, .table-bordered tfoot:last-child tr:last-child > th:first-child {
+  border-bottom-left-radius: 0px;
+}
+
+ 
+.table-bordered thead:last-child tr:last-child > th:last-child, .table-bordered tbody:last-child tr:last-child > td:last-child, .table-bordered tbody:last-child tr:last-child > th:last-child, .table-bordered tfoot:last-child tr:last-child > td:last-child, .table-bordered tfoot:last-child tr:last-child > th:last-child {
+  border-bottom-right-radius: 0px;
+}
+
+.table-bordered thead:first-child tr:first-child > th:last-child, .table-bordered tbody:first-child tr:first-child > td:last-child, .table-bordered tbody:first-child tr:first-child > th:last-child {
+  border-top-right-radius: 0px;
+}
+
+.alert {
+  border-radius: 0px;
+}
+
+iframe {  
+    width:100% !important;
+    height: normal;
+    overflow:hidden;
+}
+
+.video {padding-bottom: 56.25%;
+   padding-top: 30px;
+   height: 0;
+   overflow: hidden;
+}
+
+.video iframe, .video object, .video embed {top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+}
+
+.entry-content img, .entry-content iframe, .entry-content object, .entry-content embed {
+  max-width: 100%;
+}
+
+#tag_cloud {
+  text-align: center;
+  line-height: 1.8em;
+  .t {font-size: 1em};
+  .s {font-size: 1.3em};
+  .m {font-size: 1.6em};
+  .l {
+    font-size: 1.9em;
+    font-family: "Myriad W01 Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+  };
+}
+
+.tag-cloud {
+  font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  text-decoration: underline !important;
+}
+
+.tag-cloud:hover {
+  text-decoration: none !important;
+}
+
+.right-sidebar {
+  margin-top: 20px;
+  padding-bottom: 50px;
 }

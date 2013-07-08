@@ -2,29 +2,71 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.activeaccordion {
-  background: #FDF1CA;
+.in {
+  overflow: visible;
+  height:auto !important;
 }
+ 
+.activeaccordion, .dropdown-menu .active > a,  {
+  background: #282828;
+  }
 
-.navbook,
 .navcanto a {
   font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
 }
 
-.sectionno {
-  margin-top: 4%;
-  margin-bottom: 5%;
-
-  .sectionlist {
-    font-size: 80%;
-    min-width: 0px;
-  }
+.rowread {
+  margin-top: 0%;
+  margin-bottom: 7%;
 }
 
-#cantos {
-  margin-left: 5%;
-  margin-right: 5%;
+.cantono {
+  font-size: 150%;
+  line-height: 1em;
+}
+
+.cantoname {
+  font-size: 175%;
+  line-height: 1.2em;
+}
+
+.sectionno {
+  font-size: 125%;
+  margin-top: 4%;
+  margin-bottom: 5%;
+}
+
+.bookcantono {
+  font-size: 125%;
+  margin-bottom: 5%;
+}
+
+#dropsection {
+  color: black;
+  text-decoration: none;
+}
+
+#dropsection:hover {
+  color: #08C;
+}
+
+.sectionlist {
+  font-size: 80%;
+  min-width: 0px;
+}
+
+.section {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.read-margins {
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .stanza {
@@ -39,16 +81,366 @@
   user-select: text;
 }
 
-.section {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
 
 .reference > a {
   font-family: Georgia;
   font-size: 80%;
   float: right;
+}
+ 
+.roundcorner {
+  min-width: 0px;
+  border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  -webkit-border-radius:0px !important;
+}
+
+.dropdown-align {
+  margin-left:-100px;
+}
+
+.tag{
+  min-width: 0px;
+  max-width: 280px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.custom-accordion-inner {
+  padding: 0px;
+}
+
+.navcanto {
+  margin-bottom: 0px;
+}
+
+.navcanto > li > a {
+  border: 0px !important;
+}
+
+ 
+
+@media (min-width: 524px) and (max-width: 554px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 124%;
+  }
+
+  .reference > a {
+    font-size: 96%;
+  }
+
+  .cantoname {
+    font-size: 161%;
+  }
+}
+
+@media (min-width: 490px) and (max-width: 523px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 117%;
+  }
+
+  .reference > a {
+    font-size: 89%;
+  }
+
+  .cantoname {
+    font-size: 154%;
+  }
+}
+
+@media (min-width: 476px) and (max-width: 489px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 110%;
+  }
+
+  .reference > a {
+    font-size: 82%;
+  }
+
+  .cantoname {
+    font-size: 146%;
+  }
+}
+
+@media (min-width: 430px) and (max-width: 475px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 103%;
+  }
+
+  .reference > a {
+    font-size: 74%;
+  }
+
+  .cantoname {
+    font-size: 131%;
+  }
+}
+
+ 
+@media (min-width: 410px) and (max-width: 429px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 96%;
+  }
+
+  .reference > a {
+    font-size: 67%;
+  }
+
+  .cantoname {
+    font-size: 117%;
+  }
+  } 
+
+@media (max-width: 409px) {
+  .line,
+  .bookcantono,
+  .sectionno {
+    font-size: 89%;
+  }
+
+  .reference > a {
+    font-size: 60%;
+  }
+
+  .cantoname {
+    font-size: 103%;
+  }
+}
+
+.accordion-group {
+  margin-bottom: 2px;
+  border: 0px;
+
+}
+
+.sidebar{
+  background:#454546;
+  height:1200px;
+  position:fixed;
+  width:19%;
+  top:0%;
+  left:0%;
+  padding-top:113px;
+  padding-left:1%;
+  padding-right:1%;
+}
+
+.accordion-inner {
+  padding: 9px 7px;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  padding-right:0px;
+}
+
+.navcanto > li > a {
+  border: 0px !important;
+  color: #fff;
+  font-size:100%;
+  padding:3%;
+  width:100%;
+  margin-left:-3px;
+}
+
+.navfx:hover {
+  color: #A19FA0;
+}
+
+.navbook {
+  font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  color: #fff;
+  font-size:100%;
+}
+
+.nav-tabs.nav-stacked > li > a {
+  border: 1px solid #ddd;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0 !important;
+}
+
+.dropdown-submenu > a::after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -30px;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left:12px;;
+  background:#303030;
+  border:none;
+  margin-top:-5px;
+}
+
+.dropdown-submenu > a::after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0px;
+  height: 0px;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: 0px;
+  padding-left: 0px;
+}
+
+
+
+.dropdown-menu > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 20px;
+  color: #000;
+  white-space: nowrap;
+  font-size:100%;
+}
+
+.submenutext > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 20px;
+  color: #fff;
+  font-size:100%;
+}
+
+
+
+> a, .dropdown-submenu:focus > a {
+  text-decoration: none;
+  color: #000;
+  background-color: #95a5a6;
+}
+
+.dropdown-menu .active > a:hover {
+  color: #ffffff;
+  text-decoration: none;
+  outline: 0;
+  background-color: #292929;
+  background-color: #292929;
+  background-image: -moz-linear-gradient(top, #292929, #292929);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#292929), to(#292929));
+  background-image: -webkit-linear-gradient(top, #292929, #292929);
+  background-image: -o-linear-gradient(top, #292929, #292929);
+  background-image: linear-gradient(to bottom, #292929, #292929);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+
+}
+ 
+
+.dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #353535;
+  background-image: -moz-linear-gradient(top, #353535, #353535);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#353535), to(#353535));
+  background-image: -webkit-linear-gradient(top, #353535, #353535);
+  background-image: -o-linear-gradient(top, #353535, #353535);
+  background-image: linear-gradient(to bottom, #353535, #353535);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+}
+
+.dropdown-menu {
+  border-radius:0px;
+  box-shadow: none;
+  margin-top:0px;
+}
+
+.navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner {
+  background: #fff;
+}
+
+.navbar-search .search-query {
+  border-radius: 0px;
+  line-height:normal;
+}
+
+.btn-group > .btn:first-child {
+  margin-left: 0;
+  border-radius: 0px;
+  
+}
+
+.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
+  background-color: #34495e;
+  color:#fff;
+}
+
+.navbar .nav > li > a {
+  float: none;
+  padding: 10px 15px 10px;
+  color: #555555;
+  text-decoration: none;
+  text-shadow: none;
+}
+
+.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
+  background-color: #A19FA0 ;
+  color: #fff;
+}
+
+.btn-group.open .btn.dropdown-toggle {
+  background-color: #e6e6e6;
+  background: #fff;
+  box-shadow: none;
+}
+
+.icon-chevron-up {
+  position: fixed;
+  bottom: 1px;
+  right: 1px;
+  text-decoration: none;
+  color: #303030;
+  font-size: 40px;
+  padding: 0px;
+  border-radius: 100%;
+}
+
+.go-top {
+  position: fixed;
+  bottom: 2px;
+  right: 2px;
+  text-decoration: none;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  font-size: 12px;
+  padding: 1em;
+  display: none;
+}
+
+.go-top:hover {
+  background-color: rgba(0, 0, 0, 0.6);
 }

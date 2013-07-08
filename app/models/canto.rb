@@ -11,8 +11,8 @@ class Canto < ActiveRecord::Base
   	no
   end
 
-  def sections_cache
-    Rails.cache.fetch([self,"sections"]) { self.sections.order("no") }
+  def cached_sections
+    Rails.cache.fetch([self,"sections"]) { self.sections.order("no").to_a }
   end
 
   def self.cached_all
@@ -21,7 +21,7 @@ class Canto < ActiveRecord::Base
 
 
   def sections_cache_with_runningno(q)
-    Rails.cache.fetch([self,"runningno"+q.to_s]) { sections_cache.where(:runningno=>q).to_a }
+    Rails.cache.fetch([self,"runningno"+q.to_s]) { sections.where(:runningno=>q).to_a }
   end
 
   def cached_number

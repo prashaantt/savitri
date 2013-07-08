@@ -53,7 +53,7 @@ class Line < ActiveRecord::Base
     Rails.cache.fetch([self, "line"]) { line }
   end
 
-  def cached_no
+  def cached_number
     Rails.cache.fetch([self, "no"]) { no }
   end
 

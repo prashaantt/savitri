@@ -1,8 +1,9 @@
 <%- model_class = Post -%>
 <div class="row">
   <div class="span6 offset3">
-    <h1 class="page-header">
-      <%= link_to @post.blog.title, blog_posts_path %><br>
+    <h1 class="page-header title">
+      <%= link_to @post.blog.title, blog_posts_path %>
+      <%= link_to "", request.protocol + request.host_with_port + blog_posts_path + ".atom", :class => "icon-rss", :title => "Subscribe to feed", :style => "font-size: 65%"  %><br>
       <small class="blog-subtitle"><%=  @post.blog.subtitle %></small>
     </h1>
   </div>
@@ -38,8 +39,8 @@
       <% if tag_counts.length > 0 %>
         <div class="tags">
           <span class="badge">Tagged as</span>
-          <% tag_cloud tag_counts, %w[s m l] do |tag| %>
-            <span><%= link_to tag.name, tag_path(params[:blog_id],tag.name), :class => "label label-info" %></span>
+          <% tag_cloud tag_counts, %w[t s m l] do |tag| %>
+            <span><%= link_to tag.name, tag_path(params[:blog_id],tag.name), :class => "tag label label-info" %></span>
           <% end %>
         </div>
       <% end %>
