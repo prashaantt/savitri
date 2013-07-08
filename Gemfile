@@ -41,4 +41,13 @@ gem 'capistrano'
 #gem 'seed_dump'
 #gem 'minitest'
 gem 'stringex'
+gem 'redis-store'
+gem 'redis-rails'
 
+group :development do
+  gem 'rack-mini-profiler'
+	gem 'better_errors'
+	gem 'binding_of_caller'
+  gem 'meta_request'
+  gem 'bullet'
+end

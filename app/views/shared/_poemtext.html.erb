@@ -16,7 +16,7 @@
           <div id="book">
            <%= f.label :book, "Book" %>
            <div>
-            <%= f.collection_select(:book, Book.order(:no), :no, :no, {:prompt => 'Select Book'},{:style => "width:75px"}) %>
+            <%= f.collection_select(:book, Book.cached_all, :no, :no, {:prompt => 'Select Book'},{:style => "width:75px"}) %>
            </div>
           </div>
         </td>
@@ -24,7 +24,7 @@
           <div id="canto">
             <%= f.label :canto, "Canto" %>
             <div >
-             <%= f.collection_select(:canto, Canto.order(:no), :no, :no, {:prompt => 'Select Canto'},{:style => "width:75px"}) %>
+             <%= f.collection_select(:canto, Canto.cached_all, :no, :no, {:prompt => 'Select Canto'},{:style => "width:75px"}) %>
            </div>
          </div>
        </td>
@@ -32,7 +32,7 @@
         <div id="section">
         <%= f.label :section, "Section" %>
           <div >
-            <%= f.collection_select(:section, Section.order(:no), :no, :no, {:prompt => 'Select Section'},{:style => "width:75px"}) %>
+            <%= f.collection_select(:section, Section.cached_all, :no, :no, {:prompt => 'Select Section'},{:style => "width:75px"}) %>
           </div>
           </div>
         </td>
@@ -40,7 +40,7 @@
           <div id="from-line">
           <%= f.label :from, "From Line" %>
           <div >
-            <%= f.collection_select(:from, Line.order(:no), :no, :no, {:prompt => 'Select Start Line'},{:style => "width:75px"}) %>
+            <%= f.collection_select(:from, Line.cached_all, :no, :no, {:prompt => 'Select Start Line'},{:style => "width:75px"}) %>
           </div>
         </div>
       </td>
@@ -48,7 +48,7 @@
           <div id="to-line">
           <%= f.label :to, "To Line" %>
           <div >
-            <%= f.collection_select(:to, Line.order(:no), :no, :no, {:prompt => 'Select End Line'},
+            <%= f.collection_select(:to, Line.cached_all, :no, :no, {:prompt => 'Select End Line'},
             {:style => "width:75px"}) %>
           </div>
         </div>
