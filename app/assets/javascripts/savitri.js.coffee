@@ -11,7 +11,20 @@ $ ->
 
     $.get '/savitri/show/', callback, 'json'
 
-jQuery ->
+  historyObj = localStorage["history"]
+  
+  unless typeof historyObj == "undefined"
+    history = JSON.parse(historyObj)
+    if history.length > 0
+      $("#backBtn").removeAttr "disabled"
+    else
+      localStorage.clear()
+      $("#backBtn").attr "disabled", "disabled"
+    
+    if history.length >= 15
+        $("#nextBtn").attr "disabled", "disabled"
+  else
+    $("#backBtn").attr "disabled", "disabled"
 
   $("#playpause").on "click", (event) ->
     if window.timer.isActive
@@ -21,21 +34,50 @@ jQuery ->
 
     window.timer.toggle()
 
-  $("#refresh").on "click", (event) ->
-    window.timer.stop()
-    $("#source").empty()
-    $("#display").remove()
-    $("#playpauseicon").removeClass("icon-play").addClass("icon-pause")
+  $(".btn.refresh").on "click", (event) ->
+    data = ""
+    historyObj = localStorage["history"]
+    
+    if typeof historyObj == "undefined"
+      history = []
+    else
+      history = JSON.parse(historyObj)
+    
+    if this.id == "nextBtn"
+      history.push(window.selectionData)
+      $("#backBtn").removeAttr "disabled"
+      if history.length == 15
+        $("#nextBtn").attr "disabled", "disabled"
+    else
+      if history.length > 0
+        data = history.pop()
+      if history.length == 0
+        $("#backBtn").attr "disabled", "disabled"
+      if history.length < 15
+        $("#nextBtn").removeAttr "disabled"
 
+    localStorage["history"] = JSON.stringify(history);
+    refresh(data)
+
+  $("#context").on "click", (event) ->
+    window.location = "/read/" + window.ref
+
+refresh = (data) ->
+  window.timer.stop()
+  $("#source").empty()
+  $("#display").remove()
+  $("#playpauseicon").removeClass("icon-play").addClass("icon-pause")
+
+  if (data != "")
+    showIntro data
+  else
     callback = (response) ->
       showIntro response
     
     $.get '/savitri/show/', callback, 'json'
 
-  $("#context").on "click", (event) ->
-    window.location = "/read/" + window.ref
-
 showIntro = (selectionData) ->
+  window.selectionData = selectionData
   d = JSON.stringify(selectionData, undefined, 2)
   data = jQuery.parseJSON(d)
   text = data.text

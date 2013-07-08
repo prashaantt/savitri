@@ -45,7 +45,7 @@ class Stanza < ActiveRecord::Base
     Rails.cache.fetch([self, "runningno"]) { runningno }
   end
   
-  def cached_no
+  def cached_number
     Rails.cache.fetch([self, "no"]) { no }
   end
 

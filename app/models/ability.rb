@@ -19,7 +19,7 @@ class Ability
     if user.role == "Admin"
         can :manage, :all
     else
-        can :read, [Post, Blog, Comment, Notebook, Page, User]
+        can :read, [Post, Blog, Comment, Notebook, Page, User, Audio]
         if user.role == "Blogger"
            can :read , Notebook
            can :create, Notebook do |n|
