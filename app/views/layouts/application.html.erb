@@ -76,7 +76,11 @@
               </ul>
           </div><!--/.nav-collapse -->
           <form class="navbar-search pull-left" action="/search/">
-            <%= text_field_tag :q, params[:q], :class=>"search-query span3", :placeholder=>"Search" %>
+            <div class="input-append searchbox" style="margin-bottom: 0px">
+              <%= text_field_tag :q, params[:q], :class => "span3" %>
+              <button class="btn" type="submit"><i class="icon-search"></i></button>
+            </div>
+
           </form>
           <div class="btn-group pull-right">
             <% if user_signed_in? %> 

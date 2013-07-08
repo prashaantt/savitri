@@ -21,7 +21,9 @@
           <h5 class="blog-author"><%= audio.created_at.strftime("%a, %b %d %Y") %> / <%= audio.duration["total"] %>
           </h5>
           <p><%= audio.summary.html_safe %></p>
-          <audio controls class="span6" style="margin-left: 0px; margin-top: 20px"><source src=<%= audio.audio_url %> type="audio/mpeg"></audio>
+          <div class="row">
+            <audio controls class="span6" style="margin-top: 20px; margin-bottom: 20px"><source src=<%= audio.audio_url %> type="audio/mpeg"></audio>
+          </div>
         </div>
       </section>
     <% end %>

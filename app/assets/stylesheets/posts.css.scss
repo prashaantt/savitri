@@ -55,7 +55,6 @@ article {
 
 .audio-snippet {
   @extend .snippet;
-  padding-bottom: 70px;
 }
 
 #comments {
@@ -91,7 +90,7 @@ article {
 }
 
 .audio-tags {
-  padding-top: 80px;
+  margin-top: 20px;
 }
 
 /*.comment:nth-child(odd) {
