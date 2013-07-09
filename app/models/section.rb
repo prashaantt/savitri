@@ -33,7 +33,7 @@ class Section < ActiveRecord::Base
   end
 
   def self.cached_find_by_no(no)
-    Rails.cache.fetch([name, "number"]) { find_by_no(no) }
+    Rails.cache.fetch([name, "findbynumber"+no.to_s]) { find_by_no(no) }
   end
 
   def self.cached_find(id)

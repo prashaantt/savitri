@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-#gem 'pg'
+gem 'pg'
 gem 'sqlite3'
 gem 'bigdecimal'
 gem 'acts-as-taggable-on'
