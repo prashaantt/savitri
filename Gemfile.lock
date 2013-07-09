@@ -135,6 +135,7 @@ GEM
     newrelic_rpm (3.6.0.78)
     nokogiri (1.5.6)
     orm_adapter (0.4.0)
+    pg (0.15.1)
     polyglot (0.3.3)
     pr_geohash (1.0.0)
     rack (1.4.5)
@@ -272,6 +273,7 @@ DEPENDENCIES
   meta_request
   mini_magick
   newrelic_rpm
+  pg
   rack-mini-profiler
   rails (= 3.2.13)
   redactor-rails (= 0.3.2)
