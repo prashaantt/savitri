@@ -141,7 +141,7 @@ table.table.table-condensed {
 
 .file{
     padding-left: 16px;
-    width: 180px;
+    // width: 180px;
 }
     
 .textin + ol> li { display: none; margin-left: 0px !important; padding-left: 0px; }
@@ -299,4 +299,6 @@ iframe {
 .right-sidebar {
   margin-top: 20px;
   padding-bottom: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
 }

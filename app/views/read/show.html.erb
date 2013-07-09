@@ -25,7 +25,7 @@
                     <ul class="dropdown-menu roundcorner submenutext">
                       <% canto.cached_sections.each do |section| %>
                         <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>">
-                          <%= link_to 'Section '+ section.cached_runningno.to_s + ' ('+ section.cached_number.to_s + ')',"/read/" + @canto.cached_book.cached_number.to_s + "/" +canto.cached_number.to_s + "/" + section.cached_runningno.to_s %>
+                          <%= link_to 'Section '+ section.cached_runningno.to_s + ' ('+ section.cached_number.to_s + ')',"/read/" + canto.cached_book.cached_number.to_s + "/" + canto.cached_number.to_s + "/" + section.cached_runningno.to_s %>
                         </li>
                       <% end %>
                     </ul>
