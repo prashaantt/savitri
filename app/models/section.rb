@@ -5,7 +5,7 @@ class Section < ActiveRecord::Base
   belongs_to :canto
 
   def cached_stanzas
-  	Rails.cache.fetch([self,"stanzas"]) { stanzas }
+  	Rails.cache.fetch([self,"stanzas"]) { stanzas.order('no').to_a }
   end
 
   def self.cached_all
