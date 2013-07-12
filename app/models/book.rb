@@ -23,7 +23,7 @@ class Book < ActiveRecord::Base
   end
 
   def cached_cantos
-    Rails.cache.fetch([self,"cantos"]) { cantos }
+    Rails.cache.fetch([self,"cantos"]) { cantos.order('no').to_a }
   end
 
   def cached_number
