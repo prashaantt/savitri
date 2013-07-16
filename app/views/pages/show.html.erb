@@ -1,7 +1,6 @@
 <% title @page.name %>
-<p id="notice"><%= notice %></p>
 <div class="row">
-  <div class="span6 offset3 page-header">
+  <div class="span6 offset3 page-header title">
     <ul class="breadcrumb" style="background: none;">
       <% myparents = @page.myparents %>
         <% myparents.reverse.each_with_index do |p, index| %>
@@ -17,7 +16,7 @@
     <% if user_signed_in? %>
       <% if current_user.role == "Admin" %>
         <%= link_to 'Edit', edit_page_path(@page.id), :class => "btn btn-mini btn-warning" %>
-        <td><%= link_to 'Delete', page_path(@page), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-mini btn-danger" %></td>
+        <td><%= link_to 'Delete', page_path(@page.id, :show => "true"), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-mini btn-danger" %></td>
       <% end %>
     <% end %>
   </div>
