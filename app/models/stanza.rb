@@ -29,7 +29,7 @@ class Stanza < ActiveRecord::Base
   end
 
   def cached_lines
-    Rails.cache.fetch([self,"lines"]) { lines }
+    Rails.cache.fetch([self,"lines"]) { lines.order('no').to_a }
   end
 
   def self.cached_all
