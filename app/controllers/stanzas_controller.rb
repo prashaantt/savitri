@@ -1,7 +1,7 @@
 class StanzasController < ApplicationController
   # GET /stanzas
   # GET /stanzas.json
-  load_and_authorize_resource
+  before_filter :authenticate_user!, :except => [:range]
   
   def index
     @stanzas = Stanza.order(:no)
@@ -9,6 +9,23 @@ class StanzasController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @stanzas }
+    end
+  end
+
+  # GET /stanzas/range/1..20
+  # GET /stanzas/range/1..20.json
+  def range
+    #@lines = Line.where(:no=> params[:id])
+    line_range = params[:id].split("-")
+    fstan = Stanza.find_by_runningno_and_section_id(line_range[1],line_range[0])
+    sstan = Stanza.find_by_runningno_and_section_id(line_range[3],line_range[2])
+    @stanzas = Stanza.where(:no=>fstan.no..sstan.no)
+    lines = Array.new
+    #@stanzas.each {|s| lines << s.cached_lines }
+    @stanzas.each {|s| lines << s.lines }
+    respond_to do |format|
+      format.html #range.html.erb
+      format.json {render :json => lines.to_json(:only =>[:line],:methods=>[:section,:runningno,:share_url,:no])}
     end
   end
 

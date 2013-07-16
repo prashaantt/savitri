@@ -1,15 +1,11 @@
 Savitri::Application.routes.draw do
 
   resources :audios
-
-
   resources :media
-
 
   get "search/index"
 
   get "search/results"
-
 
   get 'search' => 'search#index'
   get 'search/search' => 'search#search'
@@ -17,7 +13,8 @@ Savitri::Application.routes.draw do
 
   resources :notebooks
 
-  mount RedactorRails::Engine => '/redactor_rails'
+  get 'lines/range/:id', to: 'lines#range'
+  get 'stanzas/range/:id', to: 'stanzas#range'
 
   devise_for :users
   
@@ -85,8 +82,6 @@ Savitri::Application.routes.draw do
   resources :stanzas
 
   resources :lines
-
-  get 'lines/range/:id', to: 'lines#range'
 
   resources :pages, except: :show
 

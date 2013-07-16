@@ -1,75 +1,39 @@
 <%= form_for Post.new, :html => { :class => 'form-inline' } do |f| %>
 <div class="span10">
 <!--   <p><a href="#myModal" role="button" class="btn" data-toggle="modal">Import Text from Savitri</a></p>
- -->  <!-- Modal -->
-  <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <!--Modal Header -->
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">Import Text from Savitri</h3>
+-->  <!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <!--Modal Header -->
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Import Text from Savitri</h3>
+  </div>
+  <!--Modal Body -->
+  <div class="modal-body">
+    <div id="from-line" style="float: left; margin-right: 20px;">
+      <%= f.label :from, "From" %>
+      <div>
+        <%= f.text_field :from, :class => 'text_field span1' %>
+      </div>
     </div>
-    <!--Modal Body -->
-    <div class="modal-body">
-      <table class="table table-condensed"> 
-      <tr>
-        <td>
-          <div id="book">
-           <%= f.label :book, "Book" %>
-           <div>
-            <%= f.collection_select(:book, Book.cached_all, :no, :no, {:prompt => 'Select Book'},{:style => "width:75px"}) %>
-           </div>
-          </div>
-        </td>
-        <td>
-          <div id="canto">
-            <%= f.label :canto, "Canto" %>
-            <div >
-             <%= f.collection_select(:canto, Canto.cached_all, :no, :no, {:prompt => 'Select Canto'},{:style => "width:75px"}) %>
-           </div>
-         </div>
-       </td>
-       <td>
-        <div id="section">
-        <%= f.label :section, "Section" %>
-          <div >
-            <%= f.collection_select(:section, Section.cached_all, :no, :no, {:prompt => 'Select Section'},{:style => "width:75px"}) %>
-          </div>
-          </div>
-        </td>
-        <td>
-          <div id="from-line">
-          <%= f.label :from, "From Line" %>
-          <div >
-            <%= f.collection_select(:from, Line.cached_all, :no, :no, {:prompt => 'Select Start Line'},{:style => "width:75px"}) %>
-          </div>
-        </div>
-      </td>
-        <td>
-          <div id="to-line">
-          <%= f.label :to, "To Line" %>
-          <div >
-            <%= f.collection_select(:to, Line.cached_all, :no, :no, {:prompt => 'Select End Line'},
-            {:style => "width:75px"}) %>
-          </div>
-        </div>
-      </td>
-  </tr>
-  <tr>
-    <td colspan="5" align="left">
-      <hr/>
-      <div id="poem-html">
+    <div id="to-line" style="float: left; margin-right: 20px;">
+      <%= f.label :to, "To" %>
+      <div>
+        <%= f.text_field :to, :class => 'text_field span1' %>
       </div>
-      <div id="poem-text", style="display: none">
-      </div>
-    </td>
-  </tr>
-</table>
-</div>
-<!--Modal Footer -->
-<div class="modal-footer">
-  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-  <button class="btn" id="insert_into_post">Insert into Post</button>
-</div>
+    </div>
+    <%= button_to("View", {:controller => "stanzas", :action => "range", :id => 6}, :id=>"view-poemtext",:style=>"margin-top: 25px;height: 30px;", :remote => true) %>
+    <hr/>
+    <div id="poem-html">
+    </div>
+    <div id="poem-text", style="display: none">
+    </div>
+  </div>
+  <!--Modal Footer -->
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn" id="insert_into_post">Insert into Post</button>
+  </div>
 </div>
 </div>
 <% end %>
