@@ -60,7 +60,7 @@
       </div>
     <% end %>
       <% if params[:tag] %>
-        <% tags = @posts.tag_counts.reject{|tag| tag.name == params[:tag]}.order('tags_count desc').first(50).sort_by{|tag| tag.name.downcase} %>
+        <% tags = @posts.tag_counts.order('tags_count desc').reject{|tag| tag.name.downcase == params[:tag].downcase}.first(50).sort_by{|tag| tag.name.downcase} %>
         <% if tags.length > 0 %>
           <div class="right-sidebar" id="tag_cloud">
             <div class="sidebar-title"><span class="badge">Related tags</span></div><br>

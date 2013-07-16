@@ -13,24 +13,28 @@
     <% end %>
     <div class="field">
       <%= f.label :name %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, :class => "span6" %>
     </div>
     <div class="field">
       <%= f.label :url %>
-      <%= f.text_field :url %>
+      <%= f.text_field :url, :class => "span6"  %>
     </div>
     <div class="field">
       <%= f.label :permalink %>
-      <%= f.text_field :permalink, :readonly=>:true %>
+      <%= f.text_field :permalink, :readonly=>:true, :class => "span6" %>
     </div>
     <%= f.hidden_field :id %>
     <div class="field">
       <%= f.label :category %>
-      <%= f.select(:category,[["Menu","Menu"],["Non-Menu","Non-Menu"]]) %>
+      <%= f.select(:category,[["Non-Menu","Non-Menu"], ["Menu","Menu"]]) %>
     </div>
-    <div class="field">
+    <div class="field" id="parent">
       <%= f.label :parent %>
-      <%= f.collection_select(:parent,Page.all,:id,:name,:prompt => 'Select Parent') %>
+      <% if is_edit === "true" %>
+        <%= f.collection_select(:parent, Page.find(:all, :conditions => ["id <> (?) and category <> 'Menu'", @page.id]), :id, :name, :prompt => 'Select Parent') %>
+      <% else %>
+        <%= f.collection_select(:parent, Page.find(:all, :conditions => ["category <> 'Menu'"]), :id, :name, :prompt => 'Select Parent') %>
+      <% end %>
     </div>
     <div class="field" id="page-priority">
       <%= f.label :priority %> 

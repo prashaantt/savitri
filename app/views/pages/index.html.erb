@@ -1,6 +1,6 @@
 <div class="row">
   <div class="span6 offset3">
-    <div class="page-header">
+    <div class="page-header title">
       <h1>Listing pages</h1>
   </div>
 </div>
@@ -11,9 +11,9 @@
       <thead>
           <tr>
             <th>Name</th>
+            <th>Category</th>
             <th>Link</th>
             <th>Parent</th>
-            <th>Category</th>
             <th>Priority</th>
             <th colspan="2"></th>
         </tr>
@@ -22,16 +22,16 @@
       <% @pages.each do |page| %>
       <tr>
         <td><%= page.name %></td>
+        <td><%= page.category %></td>
         <td><%= link_to "/" + page.permalink,"/" + page.permalink %></td>
         <td>
           <% unless page.parent.blank? %>
             <%= Page.find(page.parent).name %>
           <% end %>
         </td>
-        <td><%= page.category %></td>
         <td><%= page.priority %></td>
         <td style="text-align: center"><%= link_to 'Edit', edit_page_path(page.id), :class => "btn btn-mini btn-warning" %></td>
-        <td style="text-align: center"><%= link_to 'Delete', page.permalink, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-mini btn-danger" %></td>
+        <td style="text-align: center"><%= link_to 'Delete', page_path(page.id), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-mini btn-danger" %></td>
       </tr>
       <% end %>
     </tbody>
