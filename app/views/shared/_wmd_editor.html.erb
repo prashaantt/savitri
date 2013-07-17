@@ -8,18 +8,33 @@
               });
             editor.hooks.chain("postBlockquoteCreation", function (text) {
               setTimeout(function () {
-              if (!/^>/.test(text))
+                if (!/^>/.test(text))
                   return text; // the blockquote button was clicked to remove a blockquote -- no change
 
-              $("#myModal").modal();
-              $("#insert_into_post").click(function(e){
-                e.preventDefault();
-                text = $("#poem-text").text();
-                mdbox = $("#wmd-input");
-                mdbox.val(mdbox.val() + text);
-                $("#poem-text").text('');
-                $("#myModal").modal("hide");
-              });
+                $("#myModal").modal();
+
+                $("#insert_into_post").click(function(e){
+                  e.preventDefault();
+                  timeot=2000;
+                  if ($("#poem-text").text().trim() == "") {
+                    $("#view-poemtext").click();
+                    setTimeout(function() {
+                      text = $("#poem-text").text();
+                      mdbox = $("#wmd-input");
+                      mdbox.val(mdbox.val() + text);
+                      $("#poem-text").text('');
+                      $("#poem-html").text('');
+                      $("#myModal").modal("hide");
+                    }, 2000);
+                  } else {
+                    text = $("#poem-text").text();
+                    mdbox = $("#wmd-input");
+                    mdbox.val(mdbox.val() + text);
+                    $("#poem-text").text('');
+                    $("#poem-html").text('');
+                    $("#myModal").modal("hide");
+                  }
+                });
               }, 0);
               return ""
             });
