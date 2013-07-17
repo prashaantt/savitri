@@ -31,46 +31,51 @@ $ ->
 	    $(this).text "Preview"
 	    $(this).removeClass("btn-warning").addClass "btn-info"
 
-$ -> 
-	$("#myModal").css
-	  width: ($(this).width() / 3)
-	  "margin-left": ->
-	    -($(this).width() / 1.5)
-
 $ ->
 	$("#view-poemtext").click (event) ->
 	  event.preventDefault()
 	  linefrom = $("#post_from").val()
 	  lineto = $("#post_to").val()
+	  if linefrom == ""
+	  	alert "From is mandatory"
+	  	return ""
+	  if lineto == ""
+	  	lineto = linefrom
+	  if linefrom.split(/\./).length > 2 or lineto.split(/\./).length > 2 or not linefrom.match(/^\d+(\.\d+)*$/) or not lineto.match(/^\d+(\.\d+)*$/)
+		  alert "Invalid from or to values"
+		  return ""
 	  callback = (response) -> 
 	  			$("#poem-text").empty()
 	  			$("#poem-html").empty()
 	  			links = new Array()
 	  			$.each response, (val1) -> 
 	  				lastsentence = response[val1][response[val1].length - 1].no
+	  				poem_html = "<p>"
 		  			$.each response[val1], (val, te) ->
 		  				if(lastsentence==te.no)
 		  					$("#poem-text").append("\r\n")
 			  				$("#poem-text").append(">" + te.line + "  ")
-			  				$("#poem-html").append("<br/><p>" + te.line + "</p>")
+			  				poem_html += "<br/>" + te.line + " ||"+te.section+"."+te.runningno+"||"
 			  				$("#poem-text").append("[||"+te.section+"."+te.runningno+"||]["+count+"]\r\n")
 		  					count++
 		  					links.push te.share_url
 			  			else
 			  				$("#poem-text").append("\r\n")
 			  				$("#poem-text").append(">" + te.line + "  ")
-			  				$("#poem-html").append("<br/><p>" + te.line + "</p>")
-			  				$("#poem-text").append("\r\n")
-	  			
+			  				poem_html += "<br/>" + te.line
+			  		poem_html += "</p>"
+	  				$("#poem-html").append(poem_html)
 	  			if(i!=0)
 	  				total=links.length + count-1
 	  			else
 	  				total=links.length
 	  			$("#poem-text").append("\r\n\r\n\r\n\r\n\r\n")
+	  			
 	  			j=0
 	  			while i < total
 	  				$("#poem-text").append("["+i+"]: "+links[j]+"\r\n")
 	  				i++
 	  				j++
+
 
 	  $.get '/stanzas/range/'+ linefrom.replace(".","-") + '-' + lineto.replace(".","-"), callback, 'json'
