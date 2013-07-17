@@ -25,7 +25,7 @@ class StanzasController < ApplicationController
     @stanzas.each {|s| lines << s.lines }
     respond_to do |format|
       format.html #range.html.erb
-      format.json {render :json => lines.to_json(:only =>[:line],:methods=>[:section,:runningno,:share_url,:no])}
+      format.json {render :json => lines.to_json(:only =>[:line, :stanza_id],:methods=>[:section,:runningno,:share_url,:no])}
     end
   end
 
