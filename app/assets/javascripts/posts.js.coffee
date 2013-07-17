@@ -2,8 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 #seconds
-count=0
-i=0
 $ ->
 	$("#new-blog-post").click (e) ->
 	  $("#post_content").html($('.wmd-preview').html())
@@ -48,16 +46,18 @@ $ ->
 	  			$("#poem-text").empty()
 	  			$("#poem-html").empty()
 	  			links = new Array()
+	  			nums = new Array()
 	  			$.each response, (val1) -> 
 	  				lastsentence = response[val1][response[val1].length - 1].no
 	  				poem_html = "<p>"
 		  			$.each response[val1], (val, te) ->
+		  				linknum = te.stanza_id + 100
 		  				if(lastsentence==te.no)
 		  					$("#poem-text").append("\r\n")
 			  				$("#poem-text").append(">" + te.line + "  ")
 			  				poem_html += "<br/>" + te.line + " ||"+te.section+"."+te.runningno+"||"
-			  				$("#poem-text").append("[||"+te.section+"."+te.runningno+"||]["+count+"]\r\n")
-		  					count++
+			  				$("#poem-text").append("[||"+te.section+"."+te.runningno+"||]["+linknum+"]\r\n")
+		  					nums.push linknum
 		  					links.push te.share_url
 			  			else
 			  				$("#poem-text").append("\r\n")
@@ -65,17 +65,12 @@ $ ->
 			  				poem_html += "<br/>" + te.line
 			  		poem_html += "</p>"
 	  				$("#poem-html").append(poem_html)
-	  			if(i!=0)
-	  				total=links.length + count-1
-	  			else
-	  				total=links.length
-	  			$("#poem-text").append("\r\n\r\n\r\n\r\n\r\n")
-	  			
-	  			j=0
+
+  				total=nums.length
+	  			i=0
 	  			while i < total
-	  				$("#poem-text").append("["+i+"]: "+links[j]+"\r\n")
+	  				$("#poem-text").append("["+nums[i]+"]: "+links[i]+"\r\n")
 	  				i++
-	  				j++
 
 
 	  $.get '/stanzas/range/'+ linefrom.replace(".","-") + '-' + lineto.replace(".","-"), callback, 'json'
