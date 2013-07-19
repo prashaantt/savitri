@@ -1,9 +1,15 @@
 class SavitriController < ApplicationController
   
   def index
-
   end
-
+  
+  # text4 = "{ \"text\": 
+  #     [\"There is a deeper seeing from within\",
+  #      \"And, when we have left these small purlieus of mind,\",
+  #        \"A greater vision meets us on the heights\",
+  #        \"In the luminous wideness of the Spirit’s gaze.\"
+  #     ], 
+  #     \"source\": \"47.3\" }"
   def show
     @sentence = Stanza.random
     @text = Array.new
@@ -17,12 +23,3 @@ class SavitriController < ApplicationController
     end
   end
 end
-
-
-# text4 = "{ \"text\": 
-#			[\"There is a deeper seeing from within\",
-#			 \"And, when we have left these small purlieus of mind,\",
-# 			 \"A greater vision meets us on the heights\",
-# 			 \"In the luminous wideness of the Spirit’s gaze.\"
-#			], 
-#			\"source\": \"47.3\" }"
