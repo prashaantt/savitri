@@ -76,11 +76,13 @@
               </ul>
           </div><!--/.nav-collapse -->
           <form class="navbar-search pull-left" action="/search/">
-            <div class="input-append searchbox" style="margin-bottom: 0px">
+            <div class="input-append searchbox">
               <%= text_field_tag :q, params[:q], :class => "span3" %>
               <button class="btn" type="submit"><i class="icon-search"></i></button>
             </div>
-
+            <a href="#" id="removeicon" class="removeicon" style="display:none;">
+              <i class="icon-remove"></i>
+            </a>
           </form>
           <div class="btn-group pull-right">
             <% if user_signed_in? %> 
