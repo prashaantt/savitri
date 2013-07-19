@@ -10,5 +10,7 @@ $ ->
   $("#page_category").change ->
   	if $("#page_category").val() == "Non-Menu"
       $("#page-priority").hide()
+      $("#parent").show()
     else
-        $("#page-priority").show()
+       $("#page-priority").show()
+       $("#parent").hide()

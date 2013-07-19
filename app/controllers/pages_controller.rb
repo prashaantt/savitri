@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
+  before_filter :store_location
   before_filter :authenticate_user!, :except => [:show,:parents]
 
   def index
@@ -49,6 +50,12 @@ class PagesController < ApplicationController
   def create
     @page = Page.new(params[:page])
 
+    if (params[:page][:category] == "Non-Menu")
+      params[:page][:priority] = nil
+    else
+      params[:page][:parent] = nil
+    end
+
     respond_to do |format|
       if @page.save
         format.html { redirect_to pages_path, notice: 'Page was successfully created.' }
@@ -63,13 +70,16 @@ class PagesController < ApplicationController
   # PUT /pages/1
   # PUT /pages/1.json
   def update
-    puts "--------------------------------"
-    puts params.inspect
-    puts "--------------------------------"
     if params[:paths].nil?
       @page = Page.find(params[:page][:id])  
     else
       @page = Page.find_by_permalink!(params[:paths])
+    end
+
+    if (params[:page][:category] == "Non-Menu")
+      params[:page][:priority] = nil
+    else
+      params[:page][:parent] = nil
     end
 
     respond_to do |format|
@@ -86,12 +96,23 @@ class PagesController < ApplicationController
   # DELETE /pages/1
   # DELETE /pages/1.json
   def destroy
-    @page = Page.find_by_permalink!(params[:id])
-    @page.destroy
-
-    respond_to do |format|
-      format.html { redirect_to pages_path }
-      format.json { head :no_content }
+    @page = Page.find(params[:id])
+    child = Page.find_by_parent(params[:id])
+    if child.nil?
+      @page.destroy
+      respond_to do |format|
+        format.html { redirect_to pages_path }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        if params[:show].nil?
+          format.html { redirect_to pages_path, notice: 'This page is a parent of one or more pages and cannot be deleted before all its subpages are removed.' }
+        else
+          format.html { redirect_to page_path(@page.permalink), notice: 'This page is a parent of one or more pages and cannot be deleted before all its subpages are removed.' }
+        end
+        format.json { head :no_content }
+      end
     end
   end
 end

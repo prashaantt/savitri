@@ -39,7 +39,7 @@ gem 'unicorn'
 gem 'capistrano'
 
 #gem 'seed_dump'
-#gem 'minitest'
+gem 'minitest'
 gem 'stringex'
 gem 'redis-store'
 gem 'redis-rails'
