@@ -32,3 +32,13 @@ $(window).resize(function() {
 $(function() {
   showBrand($(window).width());
 });
+
+$(function(){
+$('input[name=q]').on('propertychange keyup keydown input paste focus', function(){
+  $(this).val().length ? $("#removeicon").css("display","inline") :  $("#removeicon").css("display","none");
+});
+$("#removeicon").on('click', function() {
+    $('input[name=q]').val('');
+    $("#removeicon").css("display","none");
+});
+});
