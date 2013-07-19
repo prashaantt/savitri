@@ -25,12 +25,15 @@ class Post < ActiveRecord::Base
   def photo
     uplods.photo
   end
+
   def category
     self.class.name + "s"
   end
+
   def author
     blog.user.username
   end
+  
   def posted
     updated_at.strftime("%B") + ' ' + updated_at.strftime("%Y")
   end

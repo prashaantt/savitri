@@ -1,0 +1,24 @@
+<h1>Listing stanzas</h1>
+
+<table>
+  <tr>
+    <th>no</th>
+    <th>Section (No)</th>
+    <th>Canto (No) Name</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @stanzas.each do |stanza| %>
+  <tr>
+    <td><%= stanza.no %></td>
+     <% @section = Section.find(stanza.section_id) %>
+     <td><%= @section.no %></td>
+     <% @canto = Canto.find(@section.canto_id) %>
+    <td>(<%= @canto.no %>)
+      <%= @canto.title %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
