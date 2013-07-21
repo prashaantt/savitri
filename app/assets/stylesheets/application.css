@@ -12,6 +12,21 @@
  *= require_tree .
  */
 
+.removeicon {
+  margin-left: -55px;
+  position: absolute;
+  margin-top: 6px;
+}
+
+.searchbox {
+  margin-bottom: 0px !important;
+  float: left;
+  display: block;
+  position: relative;
+  background: none;
+  border: none;
+}
+
 .navicon {
   padding-right: 5px;
 }
