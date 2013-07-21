@@ -16,26 +16,5 @@ class ApplicationController < ActionController::Base
 
   def after_sign_out_path_for(resource_or_scope)
     savitri_path 
-  end
-
-
-=begin
-  helper_method :javascript_include_view_js 
-
-  #http://stackoverflow.com/a/12903463/156775
-  def javascript_include_view_js
-      if FileTest.exists? "app/assets/javascripts/"+params[:controller]+".js.coffee"
-        if params[:controller].to_s == 'read'
-          unless current_user.nil?
-            return javascript_include_tag params[:controller]
-          end
-        else
-          return javascript_include_tag params[:controller]
-        end
-          
-      end
-  end
-
-=end
- 
+  end 
 end

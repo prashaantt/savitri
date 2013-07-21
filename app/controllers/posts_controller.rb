@@ -3,8 +3,6 @@ class PostsController < ApplicationController
   before_filter :store_location
   before_filter :authenticate_user!, :except => [:show, :index, :latest]
 
-  #load_and_authorize_resource
-  # load_resource / authorize_resource
   # GET /posts
   # GET /posts.json
   def index
@@ -24,13 +22,6 @@ class PostsController < ApplicationController
 
   def latest
     @posts = Post.order("created_at DESC").limit(4)
-    #client = YouTubeIt::Client.new(:dev_key => "AI39si46cUDp-C9EgXCdXZk3zwArq-lZwEDhmscmsAYeQmU-2UOiYXw9LlkmnJw5OyAbtT3-m4VtVcmdUPwN0DJyV4f3ceDFyg")
-  end
-
-  def archives
-    #@posts_by_month = Posts.find(:all).group_by { |post| post.created_at.strftime("%B") }
-    @posts = Post.all
-    @post_months = @posts.group_by { |t| t.created_at.beginning_of_month }
   end
 
   # GET /posts/1
@@ -68,11 +59,6 @@ class PostsController < ApplicationController
   def create
     puts params.inspect
     @post = Post.new(params[:post])
-    #@blog=Blog.find_by_slug(params[:post].first[:blog_id])
-    #@post.blog_id = @blog.id   
-    #@post = @blog.build(params[:post])
-    #@blog = current_user.blogs.build(params[:blog])
-    #@post = @blog.posts.build(params[:post])
     authorize! :create, @post
     respond_to do |format|
       if @post.save
@@ -81,9 +67,6 @@ class PostsController < ApplicationController
         format.json { render json: @post, status: :created, location: @post }
       else
         format.html { render 'posts/new'}
-        #format.html { render new_blog_post_path(@post.blog) }
-        #format.html { redirect_to new_blog_post_path(:blog_id => Blog.find_by_id(@slug).slug,) }
-        #format.html { redirect_to blog_posts_path(Blog.find(params[:post][:blog_id])) }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
