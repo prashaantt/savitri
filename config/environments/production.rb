@@ -66,7 +66,7 @@ Savitri::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.action_mailer.default_url_options = { :host => 'alpha.savitri.in' }
+  config.action_mailer.default_url_options = { :host => 'savitri.in' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
   :address              => "smtp.sendgrid.net",
