@@ -64,11 +64,6 @@
   user-select: none;
 }
 
-.read-margins {
-  padding-left: 5%;
-  padding-right: 5%;
-}
-
 .stanza {
   margin-bottom: 2%;
 }
@@ -83,9 +78,16 @@
 
 
 .reference > a {
-  font-family: Georgia;
   font-size: 80%;
   float: right;
+}
+
+.pipes:before {
+  content: "||";
+}
+
+.pipes:after {
+  content: "||";
 }
  
 .roundcorner {
@@ -134,6 +136,13 @@
 
   .cantoname {
     font-size: 161%;
+  }
+}
+
+@media (max-width: 554px) {
+  #read-row {
+    margin-left: -10px;
+    margin-right: -10px;
   }
 }
 
@@ -200,7 +209,7 @@
   .cantoname {
     font-size: 117%;
   }
-  } 
+} 
 
 @media (max-width: 409px) {
   .line,

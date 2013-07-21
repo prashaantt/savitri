@@ -32,3 +32,14 @@ $(window).resize(function() {
 $(function() {
   showBrand($(window).width());
 });
+
+WebFontConfig = {
+  google: {
+    families: ['Satisfy']
+  },
+  monotype: {
+    projectId: '1add1a27-fd5a-4a23-82f9-eaf3b73d689a',
+    version: 12345 // (optional, flushes the CDN cache)
+  },
+  timeout: 2000 // Set the timeout to two seconds
+};

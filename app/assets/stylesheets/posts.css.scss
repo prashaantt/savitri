@@ -7,13 +7,27 @@
 }
 
 .blog-subtitle {
-  font-family: "Kepler W01 Lt It", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Minion Pro 1167263", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-decoration: none;
+  -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
+  -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  -ms-font-feature-settings : 'liga= 1,onum= 1','calt=0';
+  -o-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
 }
 
 .author {
-  font-family: "Kepler W01 Lt It", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Minion Pro 1167263", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 120%;
   color: #999999;
+  text-decoration: none;
+  -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
+  -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  -ms-font-feature-settings : 'liga= 1,onum= 1','calt=0';
+  -o-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
 }
 
 .blog-author {
@@ -28,8 +42,14 @@
 }
 
 .overrideanchor {
-  font-family: "Kepler W01 Lt It", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Minion Pro 1167263", "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-decoration: underline !important;
+  -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
+  -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  -ms-font-feature-settings : 'liga= 1,onum= 1','calt=0';
+  -o-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
 }
 
 .overrideinheritanchor {

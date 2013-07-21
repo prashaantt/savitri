@@ -34,7 +34,7 @@
 				 	<% end %>
 				<span class="ref">
 					<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
-					<%= link_to "||"+anchor_t+"||", l.share_url  %>
+					<%= link_to anchor_t, l.share_url, :class => "pipes" %>
 				</span>
 				<% else %>
 				<% if l.is_a?(Book) %>
