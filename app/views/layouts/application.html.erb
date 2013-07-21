@@ -12,7 +12,9 @@
       <%= yield :head %>
       <%= stylesheet_link_tag    "application", :media => "all" %>
       <%= javascript_include_tag "application" %>
-      <link type="text/css" rel="stylesheet" href="http://fast.fonts.com/cssapi/8b9becaf-4f33-4214-83ca-084c4a14579f.css"/>
+      <!-- <link type="text/css" rel="stylesheet" href="http://fast.fonts.com/cssapi/8b9becaf-4f33-4214-83ca-084c4a14579f.css"/> -->
+      <!-- <link type="text/css" rel="stylesheet" href="http://fast.fonts.net/cssapi/1add1a27-fd5a-4a23-82f9-eaf3b73d689a.css"/> -->
+      <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.8/webfont.js"></script>
       <%= favicon_link_tag 'favicon.ico' %>
       <%  if params[:controller].to_s == 'read' %>
         <% unless current_user.nil? %>

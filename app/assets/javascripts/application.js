@@ -32,3 +32,10 @@ $(window).resize(function() {
 $(function() {
   showBrand($(window).width());
 });
+
+WebFontConfig = {
+  google: {
+    families: ['Satisfy']
+  },
+  timeout: 2000 // Set the timeout to two seconds
+};

@@ -12,8 +12,9 @@
   }
 
 .navcanto a {
-  font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
+  font-style: normal;
 }
 
 .rowread {
@@ -64,11 +65,6 @@
   user-select: none;
 }
 
-.read-margins {
-  padding-left: 5%;
-  padding-right: 5%;
-}
-
 .stanza {
   margin-bottom: 2%;
 }
@@ -83,9 +79,16 @@
 
 
 .reference > a {
-  font-family: Georgia;
-  font-size: 80%;
+  font-size: 100%;
   float: right;
+}
+
+.pipes:before {
+  content: "||";
+}
+
+.pipes:after {
+  content: "||";
 }
  
 .roundcorner {
@@ -257,8 +260,9 @@
 }
 
 .navbook {
-  font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
+  font-style: normal;
   color: #fff;
   font-size:100%;
 }

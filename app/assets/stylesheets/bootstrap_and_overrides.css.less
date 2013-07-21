@@ -17,7 +17,9 @@
 body,
 .navbar-search .search-query,
 input, button, select {
-  font-family: "Myriad W01 Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 300;
 }
 
 h1,
@@ -26,8 +28,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Myriad W01 SmBd", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: normal;
+  font-family: "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 600;
 }
 
 h2 {
@@ -47,11 +50,20 @@ h4 {
 p,
 blockquote.quotable p,
 textarea {
-  font-family: "Kepler W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Minion Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
   font-size: 125%;
   line-height: 1.4em;
   word-break: hyphenate;
   margin: 0 0 10px !important;
+  text-decoration: none;
+  -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
+  -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  -ms-font-feature-settings : 'liga= 1,onum= 1','calt=0';
+  -o-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+  font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
 }
 
 p#display {

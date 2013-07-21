@@ -65,5 +65,9 @@ module Savitri
 
     # acts_as_taggable_on config
     ActsAsTaggableOn.force_lowercase = false
+
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+
+    config.assets.precompile += %w( .svg .eot .woff .ttf )
   end
 end
