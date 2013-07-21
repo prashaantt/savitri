@@ -34,7 +34,7 @@ $(function() {
 });
 
 $(function() {
-  $('input[name=q]').on('propertychange keyup keydown input paste focus', function() {
+  $('#search-menu').on('propertychange keyup keydown input paste focus', function() {
     $(this).val().length ? $("#removeicon").css("display","inline") :  $("#removeicon").css("display","none");
   });
   $("#removeicon").on('click', function() {
