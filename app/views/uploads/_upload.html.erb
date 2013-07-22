@@ -5,7 +5,7 @@
     !-->
     <label for="size">Select Image Size</label>
     <% [ 'small', 'medium', 'large' ].each do |size| %>
-      <%= radio_button_tag 'size', size, @size == size, size.eql?("medium")  %>
+      <%= radio_button_tag 'size', size, size == "medium"  %>
       <%= size.humanize %>
     <% end %>
   </div>
