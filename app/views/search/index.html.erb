@@ -48,7 +48,7 @@
 					<% count = 0 %>
 					<% l.lines.each_with_index do |line, index| %>
 						<% (count += 1) %>
-						<%= line.line %><!--.gsub!(highlights[index].to_s,"<b>"+highlights[index]. to_s+"</b>").to_s.html_safe %>-->
+						<%= line.line %>
 						<% if count < l.length.to_i %>
 							<br>
 						<% end %>
@@ -67,8 +67,7 @@
 			       ...<%= hit.highlight(:content).format { |fragment| content_tag(:b, strip_tags(fragment)) }.html_safe %>...
 			    <% else %>
 			       <%= strip_tags(l.content).first(150).html_safe %>
-			    <% end %>
-					
+			    <% end %>					
 				</div>
 				<% end %>
 				<% end %>
