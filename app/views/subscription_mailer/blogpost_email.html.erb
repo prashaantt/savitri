@@ -4,11 +4,9 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h4><% unless @sender.name.blank? %><%= @sender.name %><% else %><%= @sender.username %><% end %> just posted on the blog.</h4>
-     <p>
-        Link to the blogpost   <%= blog_post_url(@blog, @post) %>
-    </p>
+    <h4><% unless @sender.name.blank? %><%= @sender.name %><% else %><%= @sender.username %><% end %> wrote a post titled "<%= link_to @post.title, blog_post_url(@blog, @post) %>" on <%= link_to @blog.title, blog_url(@blog) %>.</h4>
     <p>
+      <p>Excerpt:</p>
 			<% unless @post.excerpt.blank? %>
       	<p><%= @post.excerpt %></p>
         <p><%= link_to "Read more", blog_post_url(@blog, @post), {:class => "overrideanchor"} %></p>

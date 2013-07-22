@@ -7,6 +7,11 @@ class SubscriptionMailer < ActionMailer::Base
     @blog = blog
     @post = post 
     @url  = "http://savitri.in"
-    mail(:to => reciever.email, :subject => "#{sender.username} just posted on the blog")
+    if @sender.name.blank?
+      name = @sender.name 
+    else
+      name = @sender.username
+  	end
+    mail(:to => reciever.email, :subject => "#{name} wrote a new post on '#{blog.title}'")
   end
 end

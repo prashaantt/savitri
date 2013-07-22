@@ -34,6 +34,7 @@ $ ->
 	  event.preventDefault()
 	  linefrom = $("#post_from").val()
 	  lineto = $("#post_to").val()
+	  rooturl = window.location.origin
 	  if linefrom == ""
 	  	alert "From is mandatory"
 	  	return ""
@@ -58,7 +59,7 @@ $ ->
 			  				poem_html += "<br/>" + te.line + " ||"+te.section+"."+te.runningno+"||"
 			  				$("#poem-text").append("[||"+te.section+"."+te.runningno+"||]["+linknum+"]\r\n")
 		  					nums.push linknum
-		  					links.push te.share_url
+		  					links.push rooturl+te.share_url
 			  			else
 			  				$("#poem-text").append("\r\n")
 			  				$("#poem-text").append(">" + te.line + "  ")
@@ -68,6 +69,7 @@ $ ->
 
   				total=nums.length
 	  			i=0
+	  			$("#poem-text").append("\r\n")
 	  			while i < total
 	  				$("#poem-text").append("["+nums[i]+"]: "+links[i]+"\r\n")
 	  				i++

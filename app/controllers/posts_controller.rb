@@ -57,7 +57,6 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    puts params.inspect
     @post = Post.new(params[:post])
     authorize! :create, @post
     respond_to do |format|
