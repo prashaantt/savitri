@@ -21,8 +21,7 @@ class StanzasController < ApplicationController
     sstan = Stanza.find_by_runningno_and_section_id(line_range[3],line_range[2])
     @stanzas = Stanza.where(:no=>fstan.no..sstan.no)
     lines = Array.new
-    #@stanzas.each {|s| lines << s.cached_lines }
-    @stanzas.each {|s| lines << s.lines }
+    @stanzas.each {|s| lines << s.cached_lines }
     respond_to do |format|
       format.html #range.html.erb
       format.json {render :json => lines.to_json(:only =>[:line, :stanza_id],:methods=>[:section,:runningno,:share_url,:no])}
