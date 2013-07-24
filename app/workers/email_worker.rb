@@ -7,7 +7,6 @@ class EmailWorker
   	@post = Post.find_by_id(post)
   	@blog = Blog.find(@post.blog_id)
     @users.each do |reciever|
-      p @blog
       SubscriptionMailer.blogpost_email(reciever, @sender, @blog, @post).deliver
     end 
   end
