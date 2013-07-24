@@ -88,7 +88,7 @@
       <div class="archives right-sidebar">
         <% unless @blog.posts.length == 0 %>
           <div class="sidebar-title"><span class="badge">Archives</span></div><br>
-          <% @post_years = @blog.posts.group_by { |t| t.created_at.beginning_of_year } %>
+          <% @post_years = @blog.posts.order('created_at').group_by { |t| t.created_at.beginning_of_year } %>
             <% @post_years.sort.reverse.each do |year, posts| %>
               <li class="listi">
                 <label for="f<%= year.strftime("%m%Y") %>"><span class="ltag"><%=h year.strftime("%Y") %></span></label>
