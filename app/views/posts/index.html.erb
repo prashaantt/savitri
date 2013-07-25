@@ -85,7 +85,7 @@
         <% end %>
       <% end %>
       <!-- Begin Latest Comments -->
-      <% recentcomments = Comment.cached_recent %>
+      <% recentcomments = Comment.cached_recent(@blog) %>
       <% unless recentcomments.count.zero? %>
         <div class="archives right-sidebar">
           <%= render 'shared/recent_comment' %>
