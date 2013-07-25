@@ -1,0 +1,6 @@
+<div class="sidebar-title"><span class="badge">Recent Comments</span></div><br>
+<ul>
+	<% Comment.cached_recent.each do |c| %>
+	<li><%= link_to c.user.name + " on " + c.post.title, blog_post_path(c.post.blog, c.post, :anchor => "comment-"+c.id.to_s ) %></li>
+	<% end %>
+</ul>
