@@ -84,6 +84,13 @@
           </div>
         <% end %>
       <% end %>
+      <!-- Begin Latest Comments -->
+      <% recentcomments = Comment.cached_recent %>
+      <% unless recentcomments.count.zero? %>
+        <div class="archives right-sidebar">
+          <%= render 'shared/recent_comment' %>
+        </div>
+      <% end %>
     <% unless params[:tag] %>
       <div class="archives right-sidebar">
         <% unless @blog.posts.length == 0 %>

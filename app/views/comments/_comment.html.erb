@@ -1,9 +1,9 @@
 <div class="comment">
-  <% user = User.find(comment.user_id) %>
   <div class="comment-author">
     <span class="author">
-      <%= link_to user.name, profile_path(user), {:class => "overrideanchor"} %>
-      on <%= comment.created_at.strftime("%b %d %Y at %l:%M %p") %>:
+      <%= link_to comment.user.name, profile_path(comment.user), {:class => "overrideanchor"} %>
+      on <%= link_to comment.created_at.strftime("%b %d %Y at %l:%M %p"),
+      blog_post_path(comment.post.blog, comment.post, :anchor => "comment-"+comment.id.to_s )%>:
     </span>
     <span style="float:right">
       <% if can? :destroy, comment %>
@@ -14,5 +14,7 @@
       <% end %>
     </span>
   </div>
-  <p><%= comment.body %></p>
+  <div id="comment-<%= comment.id %>">
+    <p><%= comment.body %></p>
+  </div>
 </div>
