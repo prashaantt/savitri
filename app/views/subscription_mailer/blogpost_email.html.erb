@@ -8,7 +8,7 @@
     <p>
       <p>Excerpt:</p>
 			<% unless @post.excerpt.blank? %>
-      	<p><%= @post.excerpt %></p>
+      	<p><%= @post.excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
         <p><%= link_to "Read more", blog_post_url(@blog, @post), {:class => "overrideanchor"} %></p>
       <% else %>
         <% post_content = @post.content.gsub(/\r\n?/, "").html_safe %>
