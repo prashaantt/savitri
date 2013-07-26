@@ -1,13 +1,10 @@
 <%= render 'filters' %>
 <div class="facets">
 	<h5 class="left-filter">
-		Filter By
+		Filter by
 	</h5>
 	<% unless @search.facet(:category).nil? %>
 		<%= render 'category_facet' %>
-	<% end %>
-	<% unless @search.facet(:book).nil? %>
-		<%= render 'book_facet' %>
 	<% end %>
 	<% unless @search.facet(:sbook).nil? %>
 		<%= render 'sbook_facet' %>

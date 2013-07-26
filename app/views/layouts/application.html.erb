@@ -12,7 +12,7 @@
       <%= yield :head %>
       <%= stylesheet_link_tag    "application", :media => "all" %>
       <%= javascript_include_tag "application" %>
-      <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.8/webfont.js"></script>
+      <link type="text/css" rel="stylesheet" href="http://fast.fonts.net/cssapi/1add1a27-fd5a-4a23-82f9-eaf3b73d689a.css"/>
       <%= favicon_link_tag 'favicon.ico' %>
       <%  if params[:controller].to_s == 'read' %>
         <% unless current_user.nil? %>
@@ -35,7 +35,7 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="<%= is_active 'savitri' %>"><a href="/">Home</a></li>
-              <li class="<%= is_active 'read' %>"><a href="/read/1/1/1">Savitri</a></li>
+              <li class="<%= is_active 'read' %> visible-desktop"><a href="/read/1/1/1">Savitri</a></li>
               <li class="dropdown" id="Resources">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Media Centre
                   <i class="icon-caret-down"></i>
@@ -75,7 +75,7 @@
                 <% end %>
               </ul>
           </div><!--/.nav-collapse -->
-          <form class="navbar-search pull-left" action="/search/">
+          <form class="navbar-search pull-left"  id="search-form" action="/search/">
             <div class="input-append searchbox">
               <%= text_field_tag :q, params[:q], :class => "span3" , :id=>"search-menu" %>
               <button class="btn" type="submit"><i class="icon-search"></i></button>

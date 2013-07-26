@@ -8,7 +8,7 @@
 <% @blog = Blog.find_by_slug(params[:blog_id]) %>
 <% title @blog.title %>
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span6 offset3 dynamicspan">
     <h1 class="page-header title" style="margin-bottom: 20px">
       <%= link_to @blog.title, blog_posts_path %>
       <%= link_to "", request.protocol + request.host_with_port + blog_posts_path + ".atom", :class => "icon-rss", :title => "Subscribe to feed", :style => "font-size: 65%" %><br>
@@ -18,7 +18,7 @@
 </div>
 <!-- Main Blog Content -->
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span6 offset3 dynamicspan">
     <% @posts.each do |post| %>
       <section class="snippet">
         <h2><%= link_to post.title,  blog_post_path(post.blog,post) %></h2>

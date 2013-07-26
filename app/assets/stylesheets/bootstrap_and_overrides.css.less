@@ -79,9 +79,19 @@ a:hover {
   color: "#08C";
 }
 
-.badge {
- background-color: #A19FA0;
+small {
+  font-size: 100%;
+  -moz-font-feature-settings : 'smcp= 1','calt=0';
+  -moz-font-feature-settings : "smcp" 1,"calt" 0;
+  -webkit-font-feature-settings : "smcp" 1,"calt" 0;
+  -ms-font-feature-settings : 'smcp= 1','calt=0';
+  -o-font-feature-settings : "smcp" 1,"calt" 0;
+  font-feature-settings : "smcp" 1,"calt" 0;
 }
+
+/*.badge {
+ background-color: #A19FA0;
+}*/
 
 /*.pagination ul > li > span {
   float: left;
