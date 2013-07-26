@@ -6,6 +6,7 @@ class Blog < ActiveRecord::Base
 
   belongs_to :user
   has_many :posts, :dependent => :delete_all
+  has_many :comments, :through => :posts
 
   def to_param
   	"#{slug}"
