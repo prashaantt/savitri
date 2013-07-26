@@ -30,7 +30,7 @@
           </span>
           <h5 class="blog-author">by <%= link_to post.blog.user.username, post.blog.user, {:class => "overrideanchor"} %> on <%= post.created_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize post.comments.count, "comment") , blog_post_path(post.blog, post) + "#comments", {:class => "overrideanchor"} %></h5>
           <% unless post.excerpt.blank? %>
-            <p><%= post.excerpt %></p>
+            <p><%= post.excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
             <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "overrideanchor"} %></p>
           <% else %>
             <% post_content = post.content.gsub(/\r\n?/, "").html_safe %>
@@ -66,7 +66,7 @@
           <div class="sidebar-title"><span class="badge">Related tags</span></div><br>
           <% tag_cloud tags, %w[t s m l] do |tag, css_class| %>
             <%= link_to tag_path(params[:blog_id], tag.name) do %>
-              <span class="tag-cloud <%= css_class %>"><%= tag.name %></span>
+              <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
             <% end %>
           <% end %>
         </div>
@@ -78,7 +78,7 @@
           <div class="sidebar-title"><span class="badge">Top tags</span></div><br>
           <% tag_cloud tags, %w[t s m l] do |tag, css_class| %>
             <%= link_to tag_path(params[:blog_id], tag.name) do %>
-              <span class="tag-cloud <%= css_class %>"><%= tag.name %></span>
+              <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
             <% end %>
           <% end %>
         </div>
@@ -87,7 +87,7 @@
     <!-- Begin Latest Comments -->
     <% recentcomments = Comment.cached_recent(@blog) %>
     <% unless recentcomments.count.zero? %>
-      <div class="archives right-sidebar">
+      <div class="archives right-sidebar" id="recent_comments">
         <%= render 'shared/recent_comment' %>
       </div>
     <% end %>
@@ -95,7 +95,7 @@
       <div class="archives right-sidebar">
         <% unless @blog.posts.length == 0 %>
           <div class="sidebar-title"><span class="badge">Archives</span></div><br>
-          <% @post_years = @blog.posts.order('created_at').group_by { |t| t.created_at.beginning_of_year } %>
+          <% @post_years = @blog.posts.order('created_at desc').group_by { |t| t.created_at.beginning_of_year } %>
           <% @post_years.sort.reverse.each do |year, posts| %>
             <li class="listi">
               <label for="f<%= year.strftime("%m%Y") %>"><span class="ltag"><%=h year.strftime("%Y") %></span></label>
@@ -108,7 +108,7 @@
                     <input class="textin" type="checkbox" id="f<%= month_posts.first.created_at %>"> 
                     <ol>
                       <% for post in month_posts %>
-                        <li class="file"><a href="#"><%=h link_to post.title, blog_post_path(post.blog,post) %></a></li>
+                        <li class="file sidebar-links"><a href="#"><%=h link_to post.title, blog_post_path(post.blog,post) %></a></li>
                       <% end %>
                     </ol>
                   </li>

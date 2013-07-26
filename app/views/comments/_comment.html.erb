@@ -15,6 +15,6 @@
     </span>
   </div>
   <div id="comment-<%= comment.id %>">
-    <p><%= comment.body %></p>
+    <p><%= comment.body.gsub(/\r\n?/,"<br>").html_safe %></p>
   </div>
 </div>
