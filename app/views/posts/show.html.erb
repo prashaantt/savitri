@@ -1,6 +1,6 @@
 <%- model_class = Post -%>
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span6 offset3 dynamicspan">
     <h1 class="page-header title">
       <%= link_to @post.blog.title, blog_posts_path %>
       <%= link_to "", request.protocol + request.host_with_port + blog_posts_path + ".atom", :class => "icon-rss", :title => "Subscribe to feed", :style => "font-size: 65%"  %><br>
@@ -10,8 +10,7 @@
 </div>
 <!-- Main Blog Content -->
 <div class="row">
-  <div class="span3"></div>
-  <div class="span6" role="content" id="redactor_content">
+  <div class="span6 offset3 dynamicspan" role="content" id="redactor_content">
     <article>
       <h2><a href="#"><%= link_to @post.title,  blog_post_path(@post.blog,@post) %></a></h2>
       <div>

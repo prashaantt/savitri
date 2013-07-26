@@ -9,6 +9,7 @@ class SearchController < ApplicationController
     # god awake in:lines book:1 canto:1
     if params[:q].to_s.include?("in:")
       query = params[:q].split("in:")
+      unless query.length > 2
         case query[1].downcase
           when "books"
             @search = Sunspot.search Book do
@@ -56,6 +57,7 @@ class SearchController < ApplicationController
               paginate :page => params[:page], :per_page => 5
             end
         end
+      end
     else
        @search = Sunspot.search Line, Book, Stanza, Post do
         fulltext params[:q], :highlight => true

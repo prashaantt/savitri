@@ -7,14 +7,15 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @blog_id = Blog.find_by_slug(params[:blog_id]).id
+    @blogposts = Post.where(:blog_id=>@blog_id).order("posts.created_at DESC")
     if params[:tag]
-      @posts = Post.tagged_with(params[:tag]).where(:blog_id=>@blog_id).page(params[:page]).per(5)
+      @posts = @blogposts.tagged_with(params[:tag]).page(params[:page]).per(5)
     else
-      @posts = Post.where(:blog_id=>@blog_id).order("created_at DESC").page(params[:page]).per(5)
+      @posts = @blogposts.page(params[:page]).per(5)
     end
     respond_to do |format|
       format.html # index.html.erb
-      format.atom { render :layout => false }
+      format.atom { render :layout => false, :content_type=>"application/xml" }
       format.rss { redirect_to blog_posts_path(:format => :atom), :status => :moved_permanently }
       format.json { render json: @posts }
     end

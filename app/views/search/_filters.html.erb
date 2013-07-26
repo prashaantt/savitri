@@ -6,22 +6,31 @@
 				<% if params[:q].to_s.include?("in:") %>
 					<% woplus = params[:q].gsub('\+','').to_s %>
 					<% query = woplus.split("in:") %>
+					<% query[0] = query[0].strip %>
 					<% unless query[0].blank? %>
-						<p><%= link_to "x",search_path(:q => "in:"+query[1]) %> &nbsp; <%= query[0] %> </p>
+						<% keywords = query[0].to_s.split(" ") %>
+						<% keywords.each do |keyword| %>
+							<% excludes = keywords.reject{|key| key == keyword}.join(' ') %>
+							<span class="badge"><a href="<%= search_path(:utf8 => params[:utf8], :q => excludes << " in:" + query[1]) %>"><i class="icon-remove"></i></a><%= keyword %></span>
+							<br>
+						<% end %>
 					<% end %>
-					<p><%= link_to "x", search_path(:q =>query[0].gsub(' ','')) %> &nbsp; <%= "in:" + query[1] %> </p>
+					<span class="badge"><a href="<%= search_path(:utf8 => params[:utf8], :q =>query[0]) %>"><i class="icon-remove"></i></a>in:<%= query[1] %></span>
+					<br>
 				<% else %>
-					<p><%= link_to "x", search_path(:q => nil) %> &nbsp; <%= params[:q] %> </p>
+					<% keywords = params[:q].to_s.split(" ") %>
+					<% keywords.each do |keyword| %>
+						<% excludes = keywords.reject{|key| key == keyword}.join(' ') %>
+						<span class="badge"><a href="<%= search_path(:utf8 => params[:utf8], :q => excludes) %>"><i class="icon-remove"></i></a><%= keyword %></span>
+						<br>
+					<% end %>
 				<% end %>
 			</li>
 			<!--sBook Filter Selected -->
 			<% unless params[:sbook].blank? %>
 				<% for row in @search.facet(:sbook).rows.each do %>
 					<li>
-						<p>
-							<%= link_to "x", search_path(:sbook => nil , :length => params[:length], :canto => params[:canto], :q => params[:q], :section => params[:section]) %>
-							&nbsp;Book <%= row.value %>
-						</p>
+						<span class="badge"><a href="<%= search_path(:sbook => nil , :length => params[:length], :canto => params[:canto], :q => params[:q], :section => params[:section]) %>"><i class="icon-remove"></i></a> Book <%= row.value %></span>
 					</li>
 				<% end %>
 			<% end %>
@@ -29,10 +38,7 @@
 			<% unless params[:lbook].blank? %>
 				<% for row in @search.facet(:lbook).rows.each do %>
 					<li>
-						<p>
-							<%= link_to "x", search_path(:lbook => nil , :length => params[:length], :q => params[:q]) %>
-							&nbsp;Book <%= row.value %>
-						</p>
+						<span class="badge"><a href="<%= search_path(:lbook => nil , :length => params[:length], :q => params[:q]) %>"><i class="icon-remove"></i></a> Book <%= row.value %></span>
 					</li>
 				<% end %>
 			<% end %>
@@ -40,10 +46,7 @@
 			<% unless params[:book].blank? %>
 				<% for row in @search.facet(:book).rows.each do%>
 					<li>
-						<p>
-							<%= link_to "x", :book => nil  %>
-							&nbsp;Book <%= row.value %> 
-						</p>
+						<span class="badge"><a href="<%= search_path(:book => nil) %>"><i class="icon-remove"></i></a> Book <%= row.value %></span>
 					</li>
 				<% end %>
 			<% end %>
@@ -51,10 +54,7 @@
 			<% unless params[:canto].blank? %>
 				<% for row in @search.facet(:canto).rows.each do %>
 					<li>
-						<p>
-							<%= link_to "x", search_path(:canto => nil ,:q=>params[:q], :length => params[:length], :lbook => params[:lbook], :sbook=>params[:sbook], :book=>params[:book]) %>
-							&nbsp;Canto <%= row.value %>
-						</p>
+						<span class="badge"><a href="<%= search_path(:canto => nil ,:q=>params[:q], :length => params[:length], :lbook => params[:lbook], :sbook=>params[:sbook], :book=>params[:book]) %>"><i class="icon-remove"></i></a> Canto <%= row.value %></span>
 					</li>
 				<% end %>
 			<% end %>
@@ -62,10 +62,7 @@
 			<% unless params[:section].blank? %>
 				<% for row in @search.facet(:section).rows.each do%>
 					<li>
-						<p>
-							<%= link_to "x", search_path(:section => nil, :canto => params[:canto] , :lbook => params[:lbook], :q => params[:q],:sbook => params[:sbook],:length=>params[:length])  %>
-							&nbsp;Section <%= row.value %> 
-						</p>
+						<span class="badge"><a href="<%= search_path(:section => nil, :canto => params[:canto] , :lbook => params[:lbook], :q => params[:q],:sbook => params[:sbook],:length=>params[:length]) %>"><i class="icon-remove"></i></a> Section <%= row.value %></span>
 					</li>
 				<% end %>
 			<% end %>
@@ -73,10 +70,7 @@
 			<% unless params[:length].blank? %>
 				<% for row in @search.facet(:length).rows.each do %>
 					<li>
-						<p>
-							<%= link_to "x", search_path(:canto => params[:canto] , :length => nil, :lbook => params[:lbook], :sbook=>params[:sbook], :book=>params[:book], :q=>params[:q], :section => params[:section]) %>
-							&nbsp;Length of Sentence <%= row.value %>
-						</p>
+						<span class="badge"><a href="<%= search_path(:canto => params[:canto] , :length => nil, :lbook => params[:lbook], :sbook=>params[:sbook], :book=>params[:book], :q=>params[:q], :section => params[:section]) %>"><i class="icon-remove"></i></a> Sentence length <%= row.value %></span>
 					</li>
 				<% end %>
 			<% end %>
@@ -84,10 +78,7 @@
 			<% unless params[:blogname].blank? %>
 				<% for row in @search.facet(:blogname).rows.each do%>
 					<li>
-						<p>
-							<%= link_to "x", search_path(:blogname => nil, :q => params[:q],:posted => params[:posted],:author=>params[:author])  %>
-							&nbsp;Blog <%= row.value %> 
-						</p>
+						<span class="badge"><a href="<%= search_path(:blogname => nil, :q => params[:q],:posted => params[:posted],:author=>params[:author]) %>"><i class="icon-remove"></i></a> Blog <%= row.value %></span>
 					</li>
 				<% end %>
 			<% end %>
@@ -95,10 +86,7 @@
 			<% unless params[:author].blank? %>
 				<% for row in @search.facet(:author).rows.each do%>
 					<li>
-						<p>
-							<%= link_to "x", search_path(:author => nil, :q => params[:q],:posted => params[:posted],:blogname=>params[:blogname])  %>
-							&nbsp;Author <%= row.value %> 
-						</p>
+						<span class="badge"><a href="<%= search_path(:author => nil, :q => params[:q],:posted => params[:posted],:blogname=>params[:blogname]) %>"><i class="icon-remove"></i></a> Author <%= row.value %></span>
 					</li>
 				<% end %>
 			<% end %>
@@ -106,10 +94,7 @@
 			<% unless params[:posted].blank? %>
 				<% for row in @search.facet(:posted).rows.each do%>
 					<li>
-						<p>
-							<%= link_to "x", search_path(:posted => nil, :q => params[:q],:author => params[:author],:blogname=>params[:blogname])  %>
-							&nbsp;Posted in <%= row.value %> 
-						</p>
+						<span class="badge"><a href="<%= search_path(:posted => nil, :q => params[:q],:author => params[:author],:blogname=>params[:blogname]) %>"><i class="icon-remove"></i></a> Posted in <%= row.value %></span>
 					</li>
 				<% end %>
 			<% end %>

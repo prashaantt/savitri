@@ -3,16 +3,16 @@ class AudiosController < ApplicationController
   # GET /audios.json
   def index
     @medium = Medium.find_by_url(params[:medium_id])
-    
+    @mediumaudios = @medium.audios.order("audios.created_at DESC")
     if params[:tag]
-      @audios = Audio.tagged_with(params[:tag]).where(:medium_id => @medium.id).page(params[:page]).per(5)
+      @audios = @mediumaudios.tagged_with(params[:tag]).page(params[:page]).per(5)
     else
-      @audios = @medium.audios.order("created_at DESC").page(params[:page]).per(5)
+      @audios = @mediumaudios.page(params[:page]).per(5)
     end
 
     respond_to do |format|
       format.html # index.html.erb
-      format.rss
+      format.rss { render :layout => false, :content_type=>"application/xml" }
       format.json { render json: @audios }
     end
   end

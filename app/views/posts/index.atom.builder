@@ -1,9 +1,9 @@
-atom_feed :language => 'en-US', :id => request.protocol + request.host_with_port + '/blogs/' + @posts.first.blog.slug do |feed|
+atom_feed :language => 'en-US', :id => request.protocol + request.host_with_port + '/blogs/' + @blogposts.first.blog.slug do |feed|
 
-  feed.title @posts.first.blog.title
-  feed.updated @posts.first.updated_at
+  feed.title @blogposts.first.blog.title
+  feed.updated @blogposts.first.updated_at
 
-  @posts.each do |post|
+  @blogposts.first(15).each do |post|
     next if post.updated_at.blank?
     @link = request.protocol + request.host_with_port + blog_post_path(post.blog, post)
     feed.entry(post, :url => @link, :id => request.protocol + request.host_with_port + blog_post_path(post.blog, post)) do |entry|

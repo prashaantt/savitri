@@ -20,8 +20,10 @@
 function showBrand(window_width) {
   if (window_width >= 980) {
     $("#brandid").hide();
+    $("#search-menu").removeClass("span5").addClass("span3");
   } else {
     $("#brandid").show();
+    $("#search-menu").removeClass("span3").addClass("span5");
   }
 };
 
@@ -31,6 +33,7 @@ $(window).resize(function() {
 
 $(function() {
   showBrand($(window).width());
+  setSpan($(window).width());
 });
 
 $(function() {
@@ -43,7 +46,33 @@ $(function() {
   });
 });
 
-WebFontConfig = {
+setSpan = function(window_width) {
+  if (window_width >= 1200) {
+    $("#read").removeClass().addClass("span6").addClass("offset1");
+    $(".dynamicspan").removeClass().addClass("dynamicspan span6 offset3");
+  } else if (window_width >= 980 && window_width < 1200) {
+    $("#read").removeClass().addClass("span6").addClass("offset3");
+    $(".dynamicspan").removeClass().addClass("dynamicspan span6 offset3");
+  } else if (window_width > 767 && window_width < 980) {
+    $("#read").removeClass().addClass("span10").addClass("offset1");
+    $(".dynamicspan").removeClass().addClass("dynamicspan span10 offset1");
+  } else {
+    $("#read").removeClass().addClass("span6");
+    $(".dynamicspan").removeClass().addClass("dynamicspan span6 offset3");
+  }
+  if (window_width > 611 && window_width < 768) {
+    return $("#read").addClass("read-margins");
+  } else {
+    return $("#read").removeClass("read-margins");
+  }
+};
+
+$(window).resize(function() {
+  return setSpan($(window).width());
+});
+
+
+/*WebFontConfig = {
   google: {
     families: ['Satisfy']
   },
@@ -53,3 +82,4 @@ WebFontConfig = {
   },
   timeout: 2000 // Set the timeout to two seconds
 };
+*/
