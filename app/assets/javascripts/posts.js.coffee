@@ -3,6 +3,12 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 #seconds
 $ ->
+	$("#wmd-input").bind "input propertychange", ->
+    if $(this).val()
+      $("#new-blog-post").removeAttr "disabled"
+    else
+      $("#new-blog-post").attr "disabled", "disabled"
+
 	$("#new-blog-post").click (e) ->
 	  $("#post_content").html($('.wmd-preview').html())
 	  $("#wmd-input").html($('.wmd-input').val())
