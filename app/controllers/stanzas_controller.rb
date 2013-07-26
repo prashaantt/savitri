@@ -17,9 +17,7 @@ class StanzasController < ApplicationController
   def range
     #@lines = Line.where(:no=> params[:id])
     line_range = params[:id].split("-")
-    fstan = Stanza.find_by_runningno_and_section_id(line_range[1],line_range[0])
-    sstan = Stanza.find_by_runningno_and_section_id(line_range[3],line_range[2])
-    @stanzas = Stanza.where(:no=>fstan.no..sstan.no)
+    @stanzas = Stanza.where(:section_id=>line_range[0]..line_range[2],:runningno=>line_range[1]..line_range[3])
     lines = Array.new
     @stanzas.each {|s| lines << s.cached_lines }
     respond_to do |format|
