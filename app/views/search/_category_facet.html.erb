@@ -1,7 +1,7 @@
 	<% for row in @search.facet(:category).rows.each do%>
 		<% if params[:category].blank? %>
 		<% query = params[:q].to_s + " in:" + row.value.to_s.downcase %>
-		<span class="badge"><a href="<%= search_path(:q => query) %>"><i class="icon-plus"></i></a> <%= row.value %></span>
+		<span class="label"><a href="<%= search_path(:q => query) %>"><i class="icon-plus"></i></a> <%= row.value %></span>
 		<br>
 		<% else %>
 		<strong><%= row.value %></strong> (<%= link_to "remove", :category => "" %>)

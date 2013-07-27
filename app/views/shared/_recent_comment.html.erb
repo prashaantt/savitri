@@ -1,4 +1,4 @@
-<div class="sidebar-title"><span class="badge">Recent comments</span></div><br>
+<div class="sidebar-title"><span class="label">Recent comments</span></div><br>
 <ul>
 	<% Comment.cached_recent(@blog).each do |c| %>
 	<li><%= link_to c.user.name + ": \"" + c.post.title + "\"", blog_post_path(c.post.blog, c.post, :anchor => "comment-"+c.id.to_s ), :class => "sidebar-links" %></li>
