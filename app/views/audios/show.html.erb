@@ -44,7 +44,7 @@
         <% tag_counts = @audio.tag_counts %>
         <% if tag_counts.length > 0 %>
           <div class="audio-tags">
-            <span class="badge">Tagged as</span>
+            <span class="label">Tagged as</span>
             <% tag_cloud tag_counts, %w[s m l] do |tag| %>
               <!-- <span><%= link_to tag.name, tag_path(params[:medium_id], tag.name), :class => "label label-info" %></span> -->
               <span class="label label-info"><%= tag.name %></span>

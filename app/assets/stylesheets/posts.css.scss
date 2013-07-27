@@ -141,6 +141,7 @@ table.table.table-condensed {
  
 .listi{
   list-style:none;
+  margin-top: 3px;
 }
 
 .ltag{
@@ -163,6 +164,7 @@ table.table.table-condensed {
 .file{
     padding-left: 21px !important;
     text-indent: -13px;
+    margin-top: 6px !important;
 }
     
 .textin + ol > li { display: none; margin-left: 0px !important; padding-left: 8px; }
@@ -170,18 +172,24 @@ table.table.table-condensed {
 .textin + ol{
     background: url(collapsed.gif) 40px -2px no-repeat;
     background-position: left top;
-    margin: -42px 0 -8px 0px;
-    padding: 1.963em 0 1px 40px;
+    margin: -42px 0 -10px 0px;
+    padding: 2.163em 0 1px 40px;
 }
 
 .textin:checked + ol{
     background: url(expanded.gif) 40px -2px no-repeat;
     background-position: left top;
-    padding: 20px 0 0 12px;
+    padding: 20px 0 13px 12px;
 }
     
-.textin:checked + ol > li { display: block; margin: 7px 0 0.125em;}
-.textin:checked + ol > li:last-child { margin: 0 0 0 0.090em;}
+.textin:checked + ol > li {
+    display: block; 
+    margin: 0px 0 0.125em;
+}
+
+.textin:checked + ol > li:last-child {
+    margin: 0 0 0 0.090em;
+}
 
 .subfolder{
     padding-top:5px;
@@ -189,7 +197,7 @@ table.table.table-condensed {
 
 .btn {
   border-radius: 0;
-  background:#fff;
+  background: #fff;  
 }
 
 .pagination ul > li:last-child > a{
@@ -235,6 +243,7 @@ input[type="text"], input[type="password"], input[type="datetime"], input[type="
 
 .btn-group > .btn + .btn {
   border-radius: 0;
+  background: #fff;
   }
 
 td, th {

@@ -31,7 +31,7 @@
   <div class="span3">
     <% if can? :update, @medium %>
     <div class="span2">
-      <div class="sidebar-title"><span class="badge">Manage podcast</span></div><br>
+      <div class="sidebar-title"><span class="label">Manage podcast</span></div><br>
       <div class="btn-grp sidebar-title">
         <%= link_to 'New podcast', new_medium_audio_path, :class => 'btn btn-info' %>
       </div>
@@ -41,13 +41,13 @@
     <% tag_counts = @medium.audios.tag_counts.order('tags_count desc').first(15) %>
     <% if tag_counts.length > 0 %>
       <div class="span2 visible-desktop">
-        <div class="sidebar-title"><span class="badge">Top tags</span></div><br>
+        <div class="sidebar-title"><span class="label">Top tags</span></div><br>
         <% tag_cloud tag_counts, %w[s m l] do |tag| %>
           <% if false %>
             <%= link_to tag.name, tag_path(params[:blog_id], tag.name), :class => "label label-info tag" %>
           <% end %>
           <span class="label label-info"><%= tag.name %></span>
-          <span class="badge pull-right"><%= tag.count %></span>
+          <span class="label pull-right"><%= tag.count %></span>
           <br>
         <% end %>
       </div>
