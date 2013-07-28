@@ -9,9 +9,9 @@ class PostsController < ApplicationController
     @blog_id = Blog.find_by_slug(params[:blog_id]).id
     @blogposts = Post.where(:blog_id=>@blog_id).order("posts.created_at DESC")
     if params[:tag]
-      @posts = @blogposts.tagged_with(params[:tag]).page(params[:page]).per(5)
+      @posts = @blogposts.tagged_with(params[:tag]).page(params[:page]).per(10)
     else
-      @posts = @blogposts.page(params[:page]).per(5)
+      @posts = @blogposts.page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html # index.html.erb
