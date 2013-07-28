@@ -38,7 +38,11 @@
       <% tag_counts = @post.tag_counts %>
       <% if tag_counts.length > 0 %>
         <div class="tags">
-          <span class="badge">Tagged as</span>
+          <% unless tag_counts.length > 1 %>
+            <span class="label">Tag</span>
+          <% else %>
+            <span class="label">Tags</span>
+          <% end %>
           <% tag_cloud tag_counts, %w[t s m l] do |tag| %>
             <span><%= link_to tag.name, tag_path(params[:blog_id],tag.name), :class => "tag label label-info" %></span>
           <% end %>

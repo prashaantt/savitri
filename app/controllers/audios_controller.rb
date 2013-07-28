@@ -5,9 +5,9 @@ class AudiosController < ApplicationController
     @medium = Medium.find_by_url(params[:medium_id])
     @mediumaudios = @medium.audios.order("audios.created_at DESC")
     if params[:tag]
-      @audios = @mediumaudios.tagged_with(params[:tag]).page(params[:page]).per(5)
+      @audios = @mediumaudios.tagged_with(params[:tag]).page(params[:page]).per(10)
     else
-      @audios = @mediumaudios.page(params[:page]).per(5)
+      @audios = @mediumaudios.page(params[:page]).per(10)
     end
 
     respond_to do |format|

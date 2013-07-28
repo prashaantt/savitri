@@ -1082,14 +1082,14 @@
 
             // The ok button
             var okButton = doc.createElement("button");
-            okButton.className = "btn btn-primary";
+            okButton.className = "btn";
             okButton.type = "button";
             okButton.onclick = function () { return close(false); };
             okButton.innerHTML = "OK";
 
             // The cancel button
             var cancelButton = doc.createElement("button");
-            cancelButton.className = "btn btn-primary";
+            cancelButton.className = "btn";
             cancelButton.type = "button";
             cancelButton.onclick = function () { return close(true); };
             cancelButton.innerHTML = "Cancel";
