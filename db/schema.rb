@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627091213) do
+ActiveRecord::Schema.define(:version => 20130729070130) do
 
   create_table "audios", :force => true do |t|
     t.integer  "medium_id"
@@ -105,9 +105,9 @@ ActiveRecord::Schema.define(:version => 20130627091213) do
   end
 
   create_table "notebooks", :force => true do |t|
-    t.string   "line"
-    t.string   "quote"
-    t.string   "annotation"
+    t.text     "line"
+    t.text     "quote"
+    t.text     "annotation"
     t.string   "start"
     t.integer  "startoffset"
     t.string   "end"
@@ -137,13 +137,16 @@ ActiveRecord::Schema.define(:version => 20130627091213) do
 
   create_table "posts", :force => true do |t|
     t.integer  "blog_id"
-    t.string   "title",      :null => false
+    t.string   "title",                          :null => false
     t.text     "content"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.text     "md_content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "photos"
     t.text     "excerpt"
     t.string   "url"
+    t.datetime "published_at"
+    t.boolean  "draft",        :default => true
   end
 
   create_table "redactor_assets", :force => true do |t|
@@ -205,9 +208,9 @@ ActiveRecord::Schema.define(:version => 20130627091213) do
   create_table "uploads", :force => true do |t|
     t.integer  "post_id"
     t.string   "photo"
+    t.string   "music"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "music"
   end
 
   create_table "users", :force => true do |t|
