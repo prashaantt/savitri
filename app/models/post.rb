@@ -1,12 +1,17 @@
 class Post < ActiveRecord::Base
   #FIXME: Remove :created_at from attr_accessible after migration
-  attr_accessible :content, :title, :tag_list, :blog_id, :section, :book, :canto, :from, :to, :md_content, :photo, :uploads_attributes, :created_at, :excerpt, :url
+  attr_accessible :content, :title, :tag_list, :blog_id, :section, :book, :canto, :from, :to, :md_content, :photo, :uploads_attributes, :created_at, :excerpt, :url, :published_at
   acts_as_taggable
   acts_as_url :title
   belongs_to :blog
   has_many :comments, :dependent => :destroy
   has_many :uploads
   has_many :tags
+
+  scope :draft, where(:draft => true)
+  scope :published, proc {
+    where(:draft => false).where('published_at <= ?', Time.zone.now)
+  }
 
   searchable do 
     text :title, :stored => true
@@ -22,6 +27,11 @@ class Post < ActiveRecord::Base
                     :length => { :minimum => 3 }
   validates :content, :presence => true
   accepts_nested_attributes_for :uploads #######FIX ME
+
+  def publish!
+    self.draft = false
+    self.save!
+  end
 
   def photo
     uplods.photo

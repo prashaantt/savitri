@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @blog_id = Blog.find_by_slug(params[:blog_id]).id
-    @blogposts = Post.where(:blog_id=>@blog_id).order("posts.created_at DESC")
+    @blogposts = Post.published.where(:blog_id=>@blog_id).order("posts.created_at DESC")
     if params[:tag]
       @posts = @blogposts.tagged_with(params[:tag]).page(params[:page]).per(10)
     else
@@ -29,7 +29,6 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @post = Post.find_by_url(params[:id])
-    puts @post.inspect
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post }
@@ -39,7 +38,6 @@ class PostsController < ApplicationController
   # GET /posts/new
   # GET /posts/new.json
   def new
-    puts params.inspect
     @post = Post.new(:blog_id=>Blog.find_by_slug(params[:blog_id]).id)
     #logger.info "count is"+@counter.count
     authorize! :new, @post
@@ -60,9 +58,23 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(params[:post])
     authorize! :create, @post
+
+    if @post.published_at > Time.now - 300
+      #advanced / now posting. 5 minute min. difference
+      @post.draft = true
+    else 
+      #Backdated posts
+      @post.created_at = @post.published_at
+      @post.draft = false
+    end
+
     respond_to do |format|
       if @post.save
-        EmailWorker.perform_async(current_user.id,@post.id)
+        
+        if @post.draft?
+          EmailWorker.perform_at(@post.published_at,current_user.id,@post.id)
+        end
+
         format.html { redirect_to blog_posts_path(@post.blog), notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else

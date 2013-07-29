@@ -1,5 +1,9 @@
 Savitri::Application.routes.draw do
 
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   resources :audios
   resources :media
 

@@ -56,4 +56,8 @@ class User < ActiveRecord::Base
   def role?(user)
     Role.find_by_id(self.role_id).name
   end
+
+  def admin?
+    "Admin" == (role?(self))
+  end
 end

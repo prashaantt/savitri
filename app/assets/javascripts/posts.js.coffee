@@ -80,3 +80,12 @@ $ ->
 
 
 	  $.get '/stanzas/range/'+ linefrom.replace(".","-") + '-' + lineto.replace(".","-"), callback, 'json'
+
+
+$ ->
+	$("#size_later").click ->
+  	$("#publishat").css("display","inline")
+
+$ ->
+	$("#size_now").click ->
+  	$("#publishat").css("display","none")
