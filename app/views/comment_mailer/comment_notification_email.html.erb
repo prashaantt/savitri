@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h4><% unless @sender.name.blank? %><%= @sender.name %><% else %><%= @sender.username %><% end %> wrote a comment on "<%= link_to @post.title, blog_post_url(@blog, @post, :anchor => "comment-"+@comment.id.to_s) %>" at <%= link_to @blog.title, blog_url(@blog) %>.</h4>
+    <p>
+      <p>Comment:</p>
+      <%= @comment.body.html_safe %>
+    </p>
+  </body>
+</html>
