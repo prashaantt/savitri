@@ -49,6 +49,7 @@
         </div>
       <% end %>
     </article>
+    <% unless @post.draft %>
     <section class="comments">
       <h3 id="comments"><%= pluralize(@post.comments.count, "comment") %></h3>
       <%= render @post.comments %>
@@ -62,6 +63,7 @@
       </div>
       <% end %>
     </section>
+    <% end %>
   </div>
 <!-- Main Blog Content End -->
 <!--  SideBar Begin -->

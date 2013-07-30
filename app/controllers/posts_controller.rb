@@ -25,6 +25,15 @@ class PostsController < ApplicationController
     @posts = Post.order("created_at DESC").limit(4)
   end
 
+  def scheduled
+    @blogposts = Post.draft.order('posts.published_at DESC')
+    @posts = @blogposts.page(params[:page]).per(10)
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @posts }
+    end
+  end
+
   # GET /posts/1
   # GET /posts/1.json
   def show
