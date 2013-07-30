@@ -214,21 +214,18 @@ table.table.table-condensed {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#51a351), to(#51a351));
   background-color: #51a351;
-  border: none;
+  
 }
 
 .btn-danger {
-  border: none;
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#bd362f), to(#bd362f));
 }
 
 .btn-warning {
-  border:none;
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f89406), to(#f89406));
 }
 
 .btn-info {
-  border:none;
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#49afcd), to(#49afcd));
 }
 
@@ -243,7 +240,7 @@ input[type="text"], input[type="password"], input[type="datetime"], input[type="
 
 .btn-group > .btn + .btn {
   border-radius: 0;
-  background: #fff;
+ 
   }
 
 td, th {
