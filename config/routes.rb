@@ -76,6 +76,7 @@ Savitri::Application.routes.draw do
   end
 
   get 'blogs/:blog_id/posts/tags/:tag' , to: 'posts#index' , as: :tag
+  get 'blogs/:blog_id/scheduled-posts/', to: 'posts#scheduled'
 
   resources :books
 
