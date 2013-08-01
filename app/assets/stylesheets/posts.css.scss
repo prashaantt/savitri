@@ -195,40 +195,6 @@ table.table.table-condensed {
     padding-top:5px;
 }
 
-.btn {
-  border-radius: 0;
-  background: #fff;  
-}
-
-.pagination ul > li:last-child > a{
-  border-radius:0;
-}
-
-.pagination ul > li:first-child > a, .pagination ul > li:first-child > span {
-  border-left-width: 1px;
-  border-radius:0px;
-}
-
-.btn-success {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#51a351), to(#51a351));
-  background-color: #51a351;
-  
-}
-
-.btn-danger {
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#bd362f), to(#bd362f));
-}
-
-.btn-warning {
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f89406), to(#f89406));
-}
-
-.btn-info {
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#49afcd), to(#49afcd));
-}
-
 textarea {
   border-radius: 0;
 }
@@ -240,8 +206,7 @@ input[type="text"], input[type="password"], input[type="datetime"], input[type="
 
 .btn-group > .btn + .btn {
   border-radius: 0;
- 
-  }
+}
 
 td, th {
   padding: 5px 8px;
@@ -279,21 +244,21 @@ td, th {
 }
 
 iframe {  
-    width:100% !important;
-    height: normal;
-    overflow:hidden;
+  width:100% !important;
+  height: normal;
+  overflow:hidden;
 }
 
 .video {padding-bottom: 56.25%;
-   padding-top: 30px;
-   height: 0;
-   overflow: hidden;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
 }
 
 .video iframe, .video object, .video embed {top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .entry-content img, .entry-content iframe, .entry-content object, .entry-content embed {
