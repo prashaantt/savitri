@@ -1,9 +1,8 @@
 <div class="comment">
   <div class="comment-author">
     <span class="author">
-      <%= link_to comment.user.name, profile_path(comment.user), {:class => "overrideanchor"} %>
-      on <%= link_to comment.created_at.strftime("%b %d %Y at %l:%M %p"),
-      blog_post_path(comment.post.blog, comment.post, :anchor => "comment-"+comment.id.to_s )%>:
+      <%= link_to comment.user.name, profile_path(comment.user), {:class => "underline"} %>
+      on <%= comment.created_at.strftime("%b %d %Y at ") %> <%= link_to comment.created_at.strftime("%l:%M %p"), blog_post_path(comment.post.blog, comment.post, :anchor => "comment-" + comment.id.to_s), {:class => "underline"} %>:
     </span>
     <span style="float:right">
       <% if can? :destroy, comment %>
@@ -15,6 +14,7 @@
     </span>
   </div>
   <div id="comment-<%= comment.id %>">
-    <p><%= comment.body.gsub(/\r\n?/,"<br>").html_safe %></p>
+    <p><%= auto_link(comment.body.gsub(/\r\n?/,"<br>").html_safe, :html => { :target => '_blank', :class => "underline" }) %>
+  </p>
   </div>
 </div>

@@ -168,6 +168,8 @@ GEM
       activesupport (= 3.2.13)
       bundler (~> 1.0)
       railties (= 3.2.13)
+    rails_autolink (1.1.0)
+      rails (> 3.1)
     railties (3.2.13)
       actionpack (= 3.2.13)
       activesupport (= 3.2.13)
@@ -297,6 +299,7 @@ DEPENDENCIES
   pg
   rack-mini-profiler
   rails (= 3.2.13)
+  rails_autolink
   redactor-rails (= 0.3.2)
   redis-rails
   redis-store
