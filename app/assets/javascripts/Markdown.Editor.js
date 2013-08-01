@@ -1366,8 +1366,8 @@
             buttons.link = makeButton("wmd-link-button", "Link - Ctrl+L", "icon-link", bindCommand(function (chunk, postProcessing) {
                 return this.doLinkOrImage(chunk, postProcessing, false);
             }), group2);
-            buttons.quote = makeButton("wmd-quote-button", "Blockquote - Ctrl+Q", " icon-asterisk", bindCommand("doBlockquote"), group2);
             buttons.code = makeButton("wmd-code-button", "Code Sample - Ctrl+K", "icon-edit", bindCommand("doCode"), group2);
+            buttons.quote = makeButton("wmd-quote-button", "Auto Import - Ctrl+Q", " icon-book", bindCommand("doBlockquote"), group2);
             buttons.image = makeButton("wmd-image-button", "Image - Ctrl+G", "icon-picture", bindCommand(function (chunk, postProcessing) {
                 return this.doLinkOrImage(chunk, postProcessing, true);
             }), group2);

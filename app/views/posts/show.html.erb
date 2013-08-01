@@ -2,7 +2,7 @@
 <% title @post.title + " | " + @post.blog.title %>
 <div class="row">
   <div class="span6 offset3 dynamicspan">
-    <h1 class="page-header title">
+    <h1 class="page-header title" style="margin-bottom: 20px">
       <%= link_to @post.blog.title, blog_posts_path %>
       <%= link_to "", request.protocol + request.host_with_port + blog_posts_path + ".atom", :class => "icon-rss", :title => "Subscribe to feed", :style => "font-size: 65%"  %><br>
       <small class="blog-subtitle"><%=  @post.blog.subtitle %></small>
@@ -12,7 +12,7 @@
 <!-- Main Blog Content -->
 <div class="row">
   <div class="span6 offset3 dynamicspan" role="content" id="redactor_content">
-    <article>
+    <article style="margin-top: 20px">
       <h2><a href="#"><%= link_to @post.title,  blog_post_path(@post.blog,@post) %></a></h2>
       <div>
         <span class="pull-right">
@@ -26,7 +26,7 @@
               :class => 'btn btn-mini btn-danger' %>
           <% end %>
         </span>
-        <h5 class="blog-author">by <%= link_to @post.blog.user.username, @post.blog.user, {:class => "overrideanchor"} %> on <%= @post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize @post.comments.count, "comment"), "#comments", {:class => "overrideanchor"} %>
+        <h5 class="blog-author">by <%= link_to @post.blog.user.username, @post.blog.user, {:class => "underline"} %> on <%= @post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize @post.comments.count, "comment"), "#comments", {:class => "underline"} %>
         </h5>
       </div>
       <%= @post.content.html_safe.gsub(/\r\n?/,"").html_safe %>
@@ -37,13 +37,13 @@
       <% end %>
       <% tag_counts = @post.tag_counts %>
       <% if tag_counts.length > 0 %>
-        <div class="tags">
+        <div class="tags hidden-desktop">
           <% unless tag_counts.length > 1 %>
             <span class="label">Tag</span>
           <% else %>
             <span class="label">Tags</span>
           <% end %>
-          <% tag_cloud tag_counts, %w[t s m l] do |tag| %>
+          <% tag_cloud tag_counts, %w[m] do |tag| %>
             <span><%= link_to tag.name, tag_path(params[:blog_id],tag.name), :class => "tag label label-info" %></span>
           <% end %>
         </div>
@@ -67,7 +67,24 @@
   </div>
 <!-- Main Blog Content End -->
 <!--  SideBar Begin -->
-<!-- <div class="span3">
-</div> -->
+  <div class="span3 visible-desktop">
+      <% tag_counts = @post.tag_counts %>
+      <% if tag_counts.length > 0 %>
+        <div class="right-sidebar" id="tag_cloud">
+          <div class="sidebar-title"><span class="label">Tags</span></div><br>
+          <% count = 0 %>
+          <% tag_cloud tag_counts, %w[m] do |tag, css_class| %>
+            <%= link_to tag_path(params[:blog_id], tag.name) do %>
+              <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
+            <% end %>
+            <% unless count == tag_counts.length - 1 %>
+              <span class="tag-sep">&bull;</span>
+            <% end %>
+            <% count += 1 %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 <!--  SideBar End -->
 </div>

@@ -6,9 +6,8 @@
   text-align: center;
 }
 
-.blog-subtitle {
+.italics {
   font-family: "Minion Pro 1167263", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-decoration: none;
   -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
   -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
   -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
@@ -17,17 +16,16 @@
   font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
 }
 
+.blog-subtitle {
+  @extend .italics;
+  text-decoration: none;
+}
+
 .author {
-  font-family: "Minion Pro 1167263", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  @extend .italics;
   font-size: 120%;
   color: #999999;
   text-decoration: none;
-  -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -ms-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -o-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
 }
 
 .blog-author {
@@ -41,25 +39,12 @@
   margin-bottom: 2%;
 }
 
-.overrideanchor {
-  font-family: "Minion Pro 1167263", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-decoration: underline !important;
-  -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -ms-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -o-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+.underline {
+  text-decoration: underline;
 }
 
-.overrideinheritanchor {
-  font-family: inherit;
-  text-decoration: underline !important;
-}
-
-.overrideanchor:hover,
-.overrideinheritanchor:hover {
-  text-decoration: none !important;
+.underline:hover {
+  text-decoration: none;
 }
 
 article {
@@ -195,40 +180,6 @@ table.table.table-condensed {
     padding-top:5px;
 }
 
-.btn {
-  border-radius: 0;
-  background: #fff;  
-}
-
-.pagination ul > li:last-child > a{
-  border-radius:0;
-}
-
-.pagination ul > li:first-child > a, .pagination ul > li:first-child > span {
-  border-left-width: 1px;
-  border-radius:0px;
-}
-
-.btn-success {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#51a351), to(#51a351));
-  background-color: #51a351;
-  
-}
-
-.btn-danger {
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#bd362f), to(#bd362f));
-}
-
-.btn-warning {
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f89406), to(#f89406));
-}
-
-.btn-info {
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#49afcd), to(#49afcd));
-}
-
 textarea {
   border-radius: 0;
 }
@@ -240,8 +191,7 @@ input[type="text"], input[type="password"], input[type="datetime"], input[type="
 
 .btn-group > .btn + .btn {
   border-radius: 0;
- 
-  }
+}
 
 td, th {
   padding: 5px 8px;
@@ -279,21 +229,21 @@ td, th {
 }
 
 iframe {  
-    width:100% !important;
-    height: normal;
-    overflow:hidden;
+  width:100% !important;
+  height: normal;
+  overflow:hidden;
 }
 
 .video {padding-bottom: 56.25%;
-   padding-top: 30px;
-   height: 0;
-   overflow: hidden;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
 }
 
 .video iframe, .video object, .video embed {top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .entry-content img, .entry-content iframe, .entry-content object, .entry-content embed {
@@ -310,15 +260,13 @@ iframe {
   .l {font-size: 2em;};
 }
 
+.tag-sep {
+  margin: -1px -1px;
+}
+
 .sidebar-links {
   font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
-  text-decoration: none !important;
-  
-}
-
-.sidebar-links:hover {
-  text-decoration: underline !important;
 }
 
 .right-sidebar {
@@ -326,4 +274,9 @@ iframe {
   padding-bottom: 50px;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.comment-indent {
+  text-indent: -25px;
+  margin-bottom: 5px;
 }
