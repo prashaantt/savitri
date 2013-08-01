@@ -48,7 +48,7 @@
                 </ul>
               </li>
               <li class="dropdown" id="Blogs">
-                <a href="/latest-posts">Blogs
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu2">Blogs
                   <i class="icon-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
@@ -94,12 +94,16 @@
             <ul class="dropdown-menu">
             <% if current_user.role == 'Admin' %>
               <li><%= link_to "Manage blogs & media", blogs_path %></li>
+              <li class="divider"/>
             <% elsif current_user.blogs.count > 0  %>
               <li><%= link_to "Manage blog", blogs_path %></li>
+              <li class="divider"/>
             <% else %>
-              <li><%= link_to "Create blog", new_blog_path %></li>
+              <% if can? :create, @blog %>
+                <li><%= link_to "Create blog", new_blog_path %></li>
+                <li class="divider"/>
+              <% end %>
             <% end %>
-            <li class="divider"/>
             <li><%= link_to "Account settings", edit_user_registration_path %> </li>
             <li class="divider"/>
             <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
