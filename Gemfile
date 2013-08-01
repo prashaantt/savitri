@@ -11,6 +11,7 @@ gem 'devise_invitable'
 gem 'simple_form'
 gem 'cancan'
 gem 'kaminari'
+gem 'rails_autolink'
 
 gem 'newrelic_rpm'
 gem 'bcrypt-ruby'
