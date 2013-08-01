@@ -62,6 +62,10 @@
         <div class="sidebar-title"><span class="label">Manage blog</span></div><br>
         <div class="btn-grp sidebar-title">
           <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
+          <% unless Post.draft.count.zero? %>
+            <br/><br/>
+            <%= link_to 'Manage Scheduled Posts', {:controller => "posts", :action => "scheduled" }, :class => 'btn btn-success' %>
+          <% end %>
         </div>
       </div>
     <% end %>
@@ -139,4 +143,4 @@
   </div>
 </div>
 <!-- End Sidebar Content -->
-z
+
