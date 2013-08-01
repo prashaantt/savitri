@@ -24,16 +24,6 @@
         <%= f.text_area :excerpt, :class => "text_field span6", :style => "resize: none", :rows => "5" %>
       </div>
     </div>
-    <!-- FIXME: Remove ability to set created_at after migration -->
-    <% if current_user.name == "nm" %>
-      <div class="control-group">
-      <%= f.label :created_at, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.datetime_select :created_at,{:use_short_month=>"true", :end_year=>Time.now.year,:order => [:day, :month, :year, :hour, :minute]}, {:class=>"span1"} %>
-      </div>
-    </div>
-    <% end %>
-    <!-- End -->
     <div class="control-group">
       <%= f.label :content, :class => 'control-label' %>
       <div class='wmd-panel'>
