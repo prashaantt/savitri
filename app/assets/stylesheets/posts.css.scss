@@ -6,9 +6,8 @@
   text-align: center;
 }
 
-.blog-subtitle {
+.italics {
   font-family: "Minion Pro 1167263", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-decoration: none;
   -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
   -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
   -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
@@ -17,17 +16,16 @@
   font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
 }
 
+.blog-subtitle {
+  @extend .italics;
+  text-decoration: none;
+}
+
 .author {
-  font-family: "Minion Pro 1167263", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  @extend .italics;
   font-size: 120%;
   color: #999999;
   text-decoration: none;
-  -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -ms-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -o-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
 }
 
 .blog-author {
@@ -41,25 +39,12 @@
   margin-bottom: 2%;
 }
 
-.overrideanchor {
-  font-family: "Minion Pro 1167263", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-decoration: underline !important;
-  -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -ms-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -o-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
+.underline {
+  text-decoration: underline;
 }
 
-.overrideinheritanchor {
-  font-family: inherit;
-  text-decoration: underline !important;
-}
-
-.overrideanchor:hover,
-.overrideinheritanchor:hover {
-  text-decoration: none !important;
+.underline:hover {
+  text-decoration: none;
 }
 
 article {
@@ -275,15 +260,13 @@ iframe {
   .l {font-size: 2em;};
 }
 
+.tag-sep {
+  margin: -1px -1px;
+}
+
 .sidebar-links {
   font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
-  text-decoration: none !important;
-  
-}
-
-.sidebar-links:hover {
-  text-decoration: underline !important;
 }
 
 .right-sidebar {
@@ -291,4 +274,9 @@ iframe {
   padding-bottom: 50px;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.comment-indent {
+  text-indent: -25px;
+  margin-bottom: 5px;
 }

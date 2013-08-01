@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @blog_id = Blog.find_by_slug(params[:blog_id]).id
-    @blogposts = Post.published.where(:blog_id=>@blog_id).order("posts.created_at DESC")
+    @blogposts = Post.published.where(:blog_id=>@blog_id).order("posts.published_at DESC")
     if params[:tag]
       @posts = @blogposts.tagged_with(params[:tag]).page(params[:page]).per(10)
     else
@@ -23,6 +23,15 @@ class PostsController < ApplicationController
 
   def latest
     @posts = Post.order("created_at DESC").limit(4)
+  end
+
+  def scheduled
+    @blogposts = Post.draft.order('posts.published_at DESC')
+    @posts = @blogposts.page(params[:page]).per(10)
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @posts }
+    end
   end
 
   # GET /posts/1
