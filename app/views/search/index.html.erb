@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="span2 offset1">
-		<h1>Search</h1>
+		<h1 class="visible-desktop">Search</h1>
 	</div>
 	<div class="span6">
 		<%= render 'search' %>
@@ -20,8 +20,7 @@
 	<div class="span6">
 		<% unless params[:q].blank? %>
 		<% unless @search.total.to_i == 0 %>
-			<p class="announce">Showing <%= @search.total %> matches</p>
-		<% else %>
+			<p class="announce">Showing <%= @search.total %> matches</p> <% else %>
 			<p class="announce">No results found</p>
 			<p>Try searching for something else.</p>
 		<% end %>

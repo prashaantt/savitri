@@ -45,7 +45,6 @@ h4 {
 }
 
 p,
-blockquote.quotable p,
 textarea {
   font-family: "Minion Pro 1167271", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 125%;
@@ -104,7 +103,81 @@ small {
 
 .btn-primary {
   color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background: #006dcc !important;
-  border-radius: 0px !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  border-color: #0044cc #0044cc #002a80;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+
+}
+
+.btn {
+  border-radius: 0;
+  background:#fff;  
+}
+
+.pagination ul > li:last-child > a{
+  border-radius:0;
+}
+
+.pagination ul > li:first-child > a, .pagination ul > li:first-child > span {
+  border-left-width: 1px;
+  border-radius:0px;
+}
+
+.btn-success {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #5bb75b;
+  border-color: #51a351 #51a351 #387038;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.btn-danger {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #da4f49;
+  border-color: #bd362f #bd362f #802420;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.btn-warning {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #faa732;
+  border-color: #f89406 #f89406 #ad6704;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.btn-info {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #49afcd;
+  border-color: #2f96b4 #2f96b4 #1f6377;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+
+
+blockquote {
+  padding: 0 0 0 30px;
+  margin: 0 0 0px;
+  border-left: 0px solid #eeeeee;
+  margin-bottom: 15px;
+}
+
+blockquote p:before {
+  content: '\201c';
+  color: #999;
+  font-size: 52px;
+  margin-left: -32px;
+  padding-left: -14px;
+  position: absolute;
+  margin-top: -13px;
+}
+
+blockquote p {
+  margin-bottom: 15px !important;
+  font-size: 17.5px;
+  font-weight: 300;
+  line-height: 1.25;
 }
