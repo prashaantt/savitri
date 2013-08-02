@@ -19,34 +19,44 @@
 <!-- Main Blog Content -->
 <div class="row">
   <div class="span6 offset3 dynamicspan">
-    <% @posts.each do |post| %>
-      <section class="snippet">
-        <h2><%= link_to post.title,  blog_post_path(post.blog,post) %></h2>
-        <div>
-          <span class="pull-right">
-            <% if can? :update, post %>
-              <%= link_to 'Edit', edit_blog_post_path(post.blog,post), :class => 'btn btn-mini btn-warning' %>
-            <% end %>
-          </span>
-          <h5 class="blog-author"><span class="label">Scheduled</span> by <%= link_to post.blog.user.username, post.blog.user, {:class => "overrideanchor"} %>  for <%= post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %></h5>
-          <% unless post.excerpt.blank? %>
-            <p><%= post.excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
-            <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "overrideanchor"} %></p>
-          <% else %>
-            <% post_content = post.content.gsub(/\r\n?/, "").html_safe %>
-            <% if post_content.length <= 200 %>
-              <%= post_content %>
+    <% unless @posts.empty? %>
+      <% @posts.each do |post| %>
+        <section class="snippet">
+          <h2><%= link_to post.title,  blog_post_path(post.blog,post) %></h2>
+          <div>
+            <span class="pull-right">
+              <% if can? :update, post %>
+                <%= link_to 'Edit', edit_blog_post_path(post.blog,post), :class => 'btn btn-mini btn-warning' %>
+              <% end %>
+            </span>
+            <h5><span class="label label-success">Scheduled</span><span class="blog-author"> by <%= link_to post.blog.user.username, post.blog.user, {:class => "underline"} %>  for <%= post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %></h5>
+            <% unless post.excerpt.blank? %>
+              <p><%= post.excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
+              <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "italics underline"} %></p>
             <% else %>
-              <%= post_content.split(" ").first(200).join(" ").html_safe %>...
-              <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "overrideanchor"} %></p>
+              <% post_content = post.content.gsub(/\r\n?/, "").html_safe %>
+              <% if post_content.length <= 200 %>
+                <%= post_content %>
+              <% else %>
+                <%= post_content.split(" ").first(200).join(" ").html_safe %>...
+                <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "underline"} %></p>
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
-      </section>
+          </div>
+        </section>
+      <% end %>
+    <% else %>
+      <p class="italics">You have no scheduled posts.</p>
     <% end %>
-    <div id="paginator">
-      <%= paginate @posts, :param_name => :page %>
-    </div>
+    <nav id="paginator">
+      <ul class="pager">
+        <li class="previous">
+          <%= link_to_previous_page @posts, "‹ Newer" %>
+        </li>
+        <li class="next">
+          <%= link_to_next_page @posts, "Older ›" %>
+        </li>
+    </nav>
   </div>
 <!-- Main Blog Content End -->
 <!--  SideBar Begin -->
@@ -56,10 +66,6 @@
         <div class="sidebar-title"><span class="label">Manage blog</span></div><br>
         <div class="btn-grp sidebar-title">
           <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
-          <% unless Post.draft.count.zero? %>
-            <br/><br/>
-              <%= link_to 'Manage Scheduled Posts', {:controller => "posts", :action => "scheduled" }, :class => 'btn btn-success' %>
-          <% end %>
         </div>
       </div>
     <% end %>

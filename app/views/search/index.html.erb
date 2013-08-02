@@ -25,7 +25,7 @@
 				<h3 class="announce">Showing <%= @search.total %> matches</h3>
 			<% else %>
 				<h3 class="announce">No results found</h3>
-				<p>Try searching for something else.</p>
+				<p class="italics">Try searching for something else.</p>
 			<% end %>
 			<div class="results">
 				<% @search.each_hit_with_result do |hit,l| %>
@@ -51,7 +51,10 @@
 							<% count = 0 %>
 							<% l.lines.each_with_index do |line, index| %>
 								<% (count += 1) %>
-								<p class="snip"><%= line.line %>
+								<% if count == 1 %>
+									<p class="snip">
+								<% end %>
+								<%= line.line %>
 								<% if count < l.length.to_i %>
 									<br>
 								<% end %>
