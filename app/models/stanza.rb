@@ -71,7 +71,7 @@ class Stanza < ActiveRecord::Base
   end
 
   def sbook
-    Book.find(Canto.find_by_no(canto).book_id).no
+    Section.find_by_no(section).canto.book.no
   end
 
   def length
