@@ -12,6 +12,7 @@ gem 'simple_form'
 gem 'cancan'
 gem 'kaminari'
 gem 'rails_autolink'
+gem 'sanitize'
 
 gem 'newrelic_rpm'
 gem 'bcrypt-ruby'

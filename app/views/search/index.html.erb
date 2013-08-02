@@ -6,79 +6,77 @@
 		<%= render 'search' %>
 	</div>
 </div>
+
 <div class="row">
 	<div class="span10 offset1">
 		<hr>
 	</div>
 </div>
+
 <div class="row">
 	<div class="span2 offset1">
 		<% unless params[:q].blank? %>
-		<%= render 'facet' %>
+			<%= render 'facet' %>
 		<% end %>
 	</div>
 	<div class="span6">
 		<% unless params[:q].blank? %>
-		<% unless @search.total.to_i == 0 %>
-			<p class="announce">Showing <%= @search.total %> matches</p> <% else %>
-			<p class="announce">No results found</p>
-			<p>Try searching for something else.</p>
-		<% end %>
-		<div class="results">
-			<% @search.each_hit_with_result do |hit,l| %>
-			<% logger.debug { l.inspect }%>
-			<div class="result">
-				<% if l.is_a?(Line) %>
-				 <% if highlight = hit.highlight(:line) %>
-					<%= hit.highlight(:line).format { |fragment| content_tag(:strong, fragment) }.html_safe %>
-				 <% else %>
-				 	<%= l.line %>
-				 	<% end %>
-				<span class="ref">
-					<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
-					<%= link_to anchor_t, l.share_url, :class => "pipes" %>
-				</span>
-				<% else %>
-				<% if l.is_a?(Book) %>
-				(Book <%= l.no %>) <%= link_to l.name,'read/'+l.no.to_s+'/1/1' %>
-				<% else %>
-				<% if l.is_a?(Stanza) %>
-				  <% highlights = Array.new %>
-					<% hit.highlight(:lines).format do |r| %>
-					<% highlights << r %>
-					<% end %>
-					<% count = 0 %>
-					<% l.lines.each_with_index do |line, index| %>
-						<% (count += 1) %>
-						<%= line.line %>
-						<% if count < l.length.to_i %>
-							<br>
+			<% unless @search.total.to_i == 0 %>
+				<h3 class="announce">Showing <%= @search.total %> matches</h3>
+			<% else %>
+				<h3 class="announce">No results found</h3>
+				<p>Try searching for something else.</p>
+			<% end %>
+			<div class="results">
+				<% @search.each_hit_with_result do |hit,l| %>
+					<% logger.debug { l.inspect }%>
+					<div class="result">
+						<% if l.is_a?(Line) %>
+							<% if highlight = hit.highlight(:line) %>
+								<p class="snip"><%= highlight.format { |fragment| content_tag(:strong, fragment) }.html_safe %>
+						 	<% else %>
+						 		<p class="snip"><%= l.line %>
+						 	<% end %>
+							<span class="ref">
+								<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
+								<%= link_to anchor_t, l.share_url, :class => "pipes" %>
+							</span></p>
+						<% elsif l.is_a?(Book) %>
+							<p class="snip">Book <%= l.no %>: <%= link_to l.name,'read/'+l.no.to_s+'/1/1' %></p>
+						<% elsif l.is_a?(Stanza) %>
+						  <% highlights = Array.new %>
+							<% hit.highlight(:lines).format do |r| %>
+								<% highlights << r %>
+							<% end %>
+							<% count = 0 %>
+							<% l.lines.each_with_index do |line, index| %>
+								<% (count += 1) %>
+								<p class="snip"><%= line.line %>
+								<% if count < l.length.to_i %>
+									<br>
+								<% end %>
+							<% end %>
+							<span class="ref">
+								<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
+								<%= link_to anchor_t, share_url(l.no), :class => "pipes", :rel => "nofollow" %>
+							</span></p>
+						<% elsif l.is_a?(Post) %>
+							<div class="result-title">
+								<h2><%= link_to l.title, blog_post_path(l.blog,l) %></h2>
+							</div>
+							<div class="result-text">
+								<% if highlight = hit.highlight(:content) %>
+									<% sanit_html = Sanitize.clean(highlight.format { |fragment| content_tag(:strong, fragment) }.split("\n").join(""), Sanitize::Config::RESTRICTED) %>
+									<p class="snip">...<%= sanit_html.strip.html_safe %>...</p>
+						    <% else %>
+						    	<p class="snip"><%= strip_tags(l.content).first(150).html_safe %></p>
+						    <% end %>					
+							</div>
 						<% end %>
-					<% end %>
-					<span class="ref">
-						<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
-						<%= link_to anchor_t, share_url(l.no), :class => "pipes" %>
-					</span>
-				<% else %>
-				<% if l.is_a?(Post) %>
-				<div class="result-title">
-					<h3><%= link_to l.title, blog_post_path(l.blog,l) %></h3>
-				</div>
-				<div class="result-text">
-					<% if highlight = hit.highlight(:content) %>
-			       ...<%= hit.highlight(:content).format { |fragment| content_tag(:b, strip_tags(fragment)) }.html_safe %>...
-			    <% else %>
-			       <%= strip_tags(l.content).first(150).html_safe %>
-			    <% end %>					
-				</div>
-				<% end %>
-				<% end %>
-				<% end %>
+					</div>
 				<% end %>
 			</div>
-			<% end %>
 			<%= paginate @search.results, :param_name => :page %>
-		</div>
-		<% end %>	
+		<% end %>
 	</div>
 </div>
