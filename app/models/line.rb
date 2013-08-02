@@ -70,7 +70,7 @@ class Line < ActiveRecord::Base
   end
 
   def book
-    Book.find(Canto.find_by_no(canto).book_id).no
+    Canto.find_by_no(canto).book.no
   end
 
   def lbook

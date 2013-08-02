@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 
   before_filter :store_location
-  before_filter :authenticate_user!, :except => [:show, :index, :latest]
+  before_filter :authenticate_user!, :except => [:show, :index]
 
   # GET /posts
   # GET /posts.json
@@ -19,10 +19,6 @@ class PostsController < ApplicationController
       format.rss { redirect_to blog_posts_path(:format => :atom), :status => :moved_permanently }
       format.json { render json: @posts }
     end
-  end
-
-  def latest
-    @posts = Post.order("created_at DESC").limit(4)
   end
 
   def scheduled

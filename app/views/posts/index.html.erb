@@ -116,17 +116,17 @@
       <div class="archives right-sidebar">
         <% unless @blogposts.length == 0 %>
           <div class="sidebar-title"><span class="label">Archives</span></div><br>
-          <% @post_years = @blogposts.group_by { |t| t.created_at.beginning_of_year } %>
+          <% @post_years = @blogposts.group_by { |t| t.published_at.beginning_of_year } %>
           <% @post_years.sort.reverse.each do |year, posts| %>
             <li class="listi">
               <label for="f<%= year.strftime("%m%Y") %>"><span class="ltag"><%=h year.strftime("%Y") %> (<%= posts.length %>)</span></label>
               <input class="textin" type="checkbox" id="f<%= year.strftime("%m%Y") %>"> 
               <ol>  
-                <% post_months = posts.group_by {|t| t.created_at.beginning_of_month } %>
+                <% post_months = posts.group_by {|t| t.published_at.beginning_of_month } %>
                 <% post_months.each do |month, month_posts| %>
                   <li class="subfolder">  
-                    <label for="f<%= month_posts.first.created_at %>"><span class="ltag"><%=h month_posts.first.created_at.strftime("%B") %> (<%= month_posts.length %>)</span></label>
-                    <input class="textin" type="checkbox" id="f<%= month_posts.first.created_at %>"> 
+                    <label for="f<%= month_posts.first.published_at %>"><span class="ltag"><%=h month_posts.first.published_at.strftime("%B") %> (<%= month_posts.length %>)</span></label>
+                    <input class="textin" type="checkbox" id="f<%= month_posts.first.published_at %>"> 
                     <ol>
                       <% for post in month_posts %>
                         <li class="file sidebar-links"><a href="#"><%=h link_to post.title, blog_post_path(post.blog,post) %></a></li>
