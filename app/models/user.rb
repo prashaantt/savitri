@@ -31,6 +31,11 @@ class User < ActiveRecord::Base
   end
 
   after_initialize :init
+  after_commit :follow_admin, :on => :create
+
+  def follow_admin
+    self.follow(User.find(1))
+  end
 
   def init
     self.role_id ||= 3
