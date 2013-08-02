@@ -15,8 +15,6 @@
 }
 
 .announce{
-  font-size: 20px;
-  font-family: "Myriad W01 SmBd", "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding-bottom: 15px;
 }
 
@@ -28,19 +26,10 @@
 }
 
 .result {
-  font-size: 18px;
-  padding-bottom: 16px;
-  font-family: "Minion Pro 1167271", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-bottom: 10px;
   line-height: 1.4em;
   word-break: hyphenate;
   margin: 0 0 10px !important;
-  text-decoration: none;
-  -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -ms-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -o-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
 }
 
 .facet {
@@ -132,4 +121,10 @@
     margin-left: -1px !important;
     position: absolute;
   }
+}
+
+.snip:before {
+  content: "↪";
+  margin-left: -25px;
+  margin-right: 7px;
 }
