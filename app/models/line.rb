@@ -70,11 +70,11 @@ class Line < ActiveRecord::Base
   end
 
   def book
-    Canto.find_by_no(canto).book.no
+    Section.find_by_no(section).canto.book.no
   end
 
   def lbook
-    book
+    Section.find_by_no(section).canto.book.no
   end
 
   def length
