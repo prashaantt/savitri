@@ -20,11 +20,6 @@
   padding-bottom: 15px;
 }
 
-.result-text > p {
-  font-size: 18px;
-  font-family: "Myriad W01 Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
 .ref {
   font-size: 15px;
   line-height: 18px;
@@ -33,10 +28,9 @@
 }
 
 .result {
-  font-size: 16px;
+  font-size: 18px;
   padding-bottom: 16px;
   font-family: "Minion Pro 1167271", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 125%;
   line-height: 1.4em;
   word-break: hyphenate;
   margin: 0 0 10px !important;
@@ -102,7 +96,7 @@
     margin-left:-5px !important;
     position:absolute;
     float:left;
-    }
+  }
 }
 
 @media (min-width: 706px) {
@@ -120,13 +114,13 @@
 @media (min-width: 743px) and (max-width: 1199px){
   .search-box {
     width: 73% !important;
-}
+  }
   .search-button {
     width: 10% !important;
     margin-left:-5px !important;
     position:absolute;
     float:left;
-    }
+  }
 }
 
 @media (min-width: 1200px) {
