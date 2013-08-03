@@ -72,8 +72,11 @@ Savitri::Application.routes.draw do
    resources :audios, :name_prefix => "media_"
   end
 
+  get 'blogs/:blog_id/posts/tags/:tag/feed', to: 'posts#index', as: :tag, :format=> false, :defaults => {:format => :atom}
   get 'blogs/:blog_id/posts/tags/:tag' , to: 'posts#index' , as: :tag
   get 'blogs/:blog_id/scheduled-posts/', to: 'posts#scheduled'
+  get 'blogs/:blog_id/feed', to: 'posts#index', :format=> false, :defaults => {:format => :atom}
+  get 'media/:medium_id/feed', to: 'audios#index', :format=> false, :defaults => {:format => :rss}
 
   resources :books
 
