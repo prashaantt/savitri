@@ -77,7 +77,7 @@
           </div><!--/.nav-collapse -->
           <form class="navbar-search pull-left"  id="search-form" action="/search/">
             <div class="input-append searchbox">
-              <%= text_field_tag :q, params[:q], :class => "span3" , :id=>"search-menu" %>
+              <%= text_field_tag :q, params[:q], :class => "span3" , :id=>"search-menu", :accesskey=>"q" %>
               <button class="btn" type="submit"><i class="icon-search"></i></button>
             </div>
             <a href="#" id="removeicon" class="removeicon" style="display:none;">
