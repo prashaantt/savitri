@@ -41,10 +41,24 @@ $(function() {
     $(this).val().length ? $("#removeicon").css("display","inline") :  $("#removeicon").css("display","none");
   });
   $("#removeicon").on('click', function() {
-      $('input[name=q]').val('');
-      $("#removeicon").css("display","none");
+    $('input[name=q]').val('');
+    $("#removeicon").css("display","none");
   });
 });
+
+$(function(){
+  $('input[name=q]').keypress(function(e) {
+    if(e.which == 13) {
+      var loc = $('#search-menu').val();
+      if (loc.search(/\d+\.\d+$/)!=-1)
+      {
+        document.location.href="/read/"+loc;
+        return false;
+      }
+    }
+  });
+});
+
 
 setSpan = function(window_width) {
   if (window_width >= 1200) {
