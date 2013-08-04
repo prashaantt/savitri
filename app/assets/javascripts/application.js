@@ -47,6 +47,15 @@ $(function() {
 });
 
 $(function(){
+  $('#search-submit').click(function(e){
+    var loc = $('#search-menu').val();
+      if (loc.search(/\d+\.\d+$/)!=-1)
+      {
+        document.location.href="/read/"+loc;
+        return false;
+      }
+    }
+    );
   $('input[name=q]').keypress(function(e) {
     if(e.which == 13) {
       var loc = $('#search-menu').val();
