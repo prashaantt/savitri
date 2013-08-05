@@ -91,10 +91,13 @@
       <% tags = @blogposts.tag_counts.order('tags_count desc').first(50).sort_by{|tag| tag.name.downcase} %>
       <% if tags.length > 0 %>
         <div class="right-sidebar" id="tag_cloud">
-          <div class="sidebar-title"><span class="label">Top tags</span></div><br>
+          <label for="top-tag" class="sidebar-title"><span class="label">Top tags</span></label>
+          <input class="arcin" type="checkbox" id="top-tag" /> 
+          <ol>
           <% count = 0 %>
           <% tag_cloud tags, %w[t s m l] do |tag, css_class| %>
             <%= link_to tag_path(params[:blog_id], tag.name) do %>
+            <li class="listi">
               <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
             <% end %>
             <% unless count == tags.length - 1 %>
@@ -102,6 +105,8 @@
             <% end %>
             <% count += 1 %>
           <% end %>
+        </li>
+      </ol>
         </div>
       <% end %>
     <% end %>
@@ -116,7 +121,9 @@
       <!-- end latest comments -->
       <div class="archives right-sidebar">
         <% unless @blogposts.length == 0 %>
-          <div class="sidebar-title"><span class="label">Archives</span></div><br>
+          <label for="archtag" class="sidebar-title"><span class="label">Archives</span></label>
+          <input class="arcin" type="checkbox" id="archtag" /> 
+          <ol>
           <% @post_years = @blogposts.group_by { |t| t.published_at.beginning_of_year } %>
           <% @post_years.sort.reverse.each do |year, posts| %>
             <li class="listi">
@@ -138,7 +145,7 @@
               </ol>
             </li>
           <% end %>
-        <% end %>
+        <% end %></ol>
       </div>
     <% end %>
   </div>

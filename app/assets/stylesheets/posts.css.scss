@@ -79,7 +79,9 @@ article {
 }
 
 .sidebar-title {
-  text-align: center;
+  text-align: left;
+  position: relative;
+  padding-left: 32%;
 }
 
 .tag {
@@ -253,7 +255,7 @@ iframe {
 #tag_cloud {
   text-align: center;
   color: #666;
-  line-height: 1.8em;
+  line-height: auto;
   .t {font-size: 1em};
   .s {font-size: 1.3em};
   .m {font-size: 1.6em};
@@ -271,12 +273,78 @@ iframe {
 
 .right-sidebar {
   margin-top: 20px;
-  padding-bottom: 50px;
+  padding-bottom: 5px;
   padding-left: 10px;
   padding-right: 10px;
 }
 
 .comment-indent {
   text-indent: -25px;
-  margin-bottom: 5px;
+  padding-left: 20px !important;
+
+}
+
+.rcin{
+    position: relative;
+    left: 20px;
+    top: 0px;
+    margin-left: 0;
+    opacity: 0;
+    z-index: -999;
+    cursor: pointer;
+}
+
+.rcin + ol > li { display: none; margin-left: 10px !important; padding-left: 8px; }
+    
+.rcin + ol{
+    background: url(collapsed.gif) 58px 0px no-repeat;
+    margin: -42px 0 -10px 0px;
+    padding: 2.163em 0 1px 11px;
+}
+
+.rcin:checked + ol{
+    background: url(expanded.gif) 58px 0px no-repeat;
+    padding: 20px 0 0px 77px;
+    padding-top: 25px;
+}
+    
+.rcin:checked + ol > li {
+    display: block; 
+    margin: 0px 0 0.125em;
+    padding-top: 8px;
+
+}
+
+.rcin:checked + ol > li:last-child {
+    margin: 0 0 0 0.090em;
+}
+
+.arcin + ol > li { display: none; margin-left: 0px !important; padding-left: 29%; }
+    
+.arcin + ol{
+    background: url(collapsed.gif) 58px 0px no-repeat;
+    margin: -42px 0 -10px 0px;
+    padding: 2.163em 0 1px 11px;
+}
+
+.arcin:checked + ol{
+    background: url(expanded.gif) 58px 0px no-repeat;
+    padding: 20px 0 13px 12px;
+    padding-top: 25px;
+}
+    
+.arcin:checked + ol > li {
+    display: block; 
+    margin: 0px 0 0.125em;
+    padding-top: 8px;
+}
+
+.arcin{
+    position: relative;
+    left: 20px;
+    top: 0px;
+    margin-left: 0;
+    opacity: 0;
+    z-index: -999;
+    cursor: pointer;
 }
