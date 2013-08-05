@@ -17,13 +17,13 @@
       <div>
         <span class="pull-right">
           <% if can? :destroy, @post.blog %>
-            <%= link_to 'Edit', edit_blog_post_path(@post.blog,@post), :class => 'btn btn-mini btn-warning' %>
+          <%= link_to 'Edit', edit_blog_post_path(@post.blog,@post), :class => 'btn btn-mini btn-warning' %>
           <% end %>
           <% if can? :destroy, @post %>
-            <%= link_to 'Delete', blog_post_path(@post.blog,@post),
-              :method => :delete,
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-mini btn-danger' %>
+          <%= link_to 'Delete', blog_post_path(@post.blog,@post),
+          :method => :delete,
+          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+          :class => 'btn btn-mini btn-danger' %>
           <% end %>
         </span>
         <h5 class="blog-author">by <%= link_to @post.blog.user.username, @post.blog.user, {:class => "underline"} %> on <%= @post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize @post.comments.count, "comment"), "#comments", {:class => "underline"} %>
@@ -31,22 +31,22 @@
       </div>
       <%= @post.content.html_safe.gsub(/\r\n?/,"").html_safe %>
       <% if @post.updated_at > @post.published_at + 20 %>
-        <p class="author muted" style="padding-top: 20px">
-          (Updated on <%= @post.updated_at.strftime("%b %d %Y at %l:%M %p") %>)
-        </p>
+      <p class="author muted" style="padding-top: 20px">
+        (Updated on <%= @post.updated_at.strftime("%b %d %Y at %l:%M %p") %>)
+      </p>
       <% end %>
       <% tag_counts = @post.tag_counts %>
       <% if tag_counts.length > 0 %>
-        <div class="tags hidden-desktop">
-          <% unless tag_counts.length > 1 %>
-            <span class="label">Tag</span>
-          <% else %>
-            <span class="label">Tags</span>
-          <% end %>
-          <% tag_cloud tag_counts, %w[m] do |tag| %>
-            <span><%= link_to tag.name, tag_path(params[:blog_id],tag.name), :class => "tag label label-info" %></span>
-          <% end %>
-        </div>
+      <div class="tags hidden-desktop">
+        <% unless tag_counts.length > 1 %>
+        <span class="label">Tag</span>
+        <% else %>
+        <span class="label">Tags</span>
+        <% end %>
+        <% tag_cloud tag_counts, %w[m] do |tag| %>
+        <span><%= link_to tag.name, tag_path(params[:blog_id],tag.name), :class => "tag label label-info" %></span>
+        <% end %>
+      </div>
       <% end %>
     </article>
     <% unless @post.draft %>
@@ -54,9 +54,9 @@
       <h3 id="comments"><%= pluralize(@post.comments.count, "comment") %></h3>
       <%= render @post.comments %>
       <% if user_signed_in? %>
-        <% if can? :create, Comment %>
-          <%= render "comments/form" %>
-        <% end %>
+      <% if can? :create, Comment %>
+      <%= render "comments/form" %>
+      <% end %>
       <% else %>
       <div class="btn-grp" style="text-align: center">
         <%= link_to "Log in to comment", new_user_session_path, :class => 'btn' %>
@@ -65,26 +65,31 @@
     </section>
     <% end %>
   </div>
-<!-- Main Blog Content End -->
-<!--  SideBar Begin -->
+  <!-- Main Blog Content End -->
+  <!--  SideBar Begin -->
   <div class="span3 visible-desktop">
-      <% tag_counts = @post.tag_counts %>
-      <% if tag_counts.length > 0 %>
-        <div class="right-sidebar" id="tag_cloud">
-          <div class="sidebar-title"><span class="label">Tags</span></div><br>
-          <% count = 0 %>
+    <% tag_counts = @post.tag_counts %>
+    <% if tag_counts.length > 0 %>
+    <div class="right-sidebar" id="tag_cloud">
+      <label for="related-tag" class="sidebar-title"><span class="label">Tags</span></label>
+      <input class="arcin" type="checkbox" id="related-tag" /> 
+      <ol>
+        <% count = 0 %>
+        <li class="listi">
           <% tag_cloud tag_counts, %w[m] do |tag, css_class| %>
-            <%= link_to tag_path(params[:blog_id], tag.name) do %>
-              <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
-            <% end %>
-            <% unless count == tag_counts.length - 1 %>
-              <span class="tag-sep">&bull;</span>
-            <% end %>
-            <% count += 1 %>
+          <%= link_to tag_path(params[:blog_id], tag.name) do %>
+          <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
           <% end %>
-        </div>
-      <% end %>
+          <% unless count == tag_counts.length - 1 %>
+          <span class="tag-sep">&bull;</span>
+          <% end %>
+          <% count += 1 %>
+          <% end %>
+        </li>
+      </ol>
     </div>
+    <% end %>
   </div>
+</div>
 <!--  SideBar End -->
 </div>
