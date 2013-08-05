@@ -1,6 +1,8 @@
-<div class="sidebar-title"><span class="label">Recent comments</span></div><br>
-<ul style="list-style: none">
-	<% Comment.cached_recent(@blog).each do |c| %>
-	<li class="comment-indent"><%= link_to c.user.name + ": \"" + c.post.title + "\"", blog_post_path(c.post.blog, c.post, :anchor => "comment-"+c.id.to_s ), :class => "sidebar-links" %></li>
-	<% end %>
-</ul>
+<label for="recent" class="sidebar-title"><span class="label">Recent comments</span></label>
+	<input class="rcin" type="checkbox" id="recent" /> 
+	<ol>
+		<% Comment.cached_recent(@blog).each do |c| %>
+		<li class="comment-indent"><%= link_to c.user.name + ": \"" + c.post.title + "\"", blog_post_path(c.post.blog, c.post, :anchor => "comment-"+c.id.to_s ), :class => "sidebar-links" %></li>
+		<% end %>
+	</ol>
+	
