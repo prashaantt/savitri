@@ -41,24 +41,51 @@ $(function() {
     $(this).val().length ? $("#removeicon").css("display","inline") :  $("#removeicon").css("display","none");
   });
   $("#removeicon").on('click', function() {
-      $('input[name=q]').val('');
-      $("#removeicon").css("display","none");
+    $('input[name=q]').val('');
+    $("#removeicon").css("display","none");
   });
 });
+
+$(function(){
+  $('#search-submit').click(function(e){
+    var loc = $('#search-menu').val();
+      if (loc.search(/\d+\.\d+$/)!=-1)
+      {
+        document.location.href="/read/"+loc;
+        return false;
+      }
+    }
+    );
+  $('input[name=q]').keypress(function(e) {
+    if(e.which == 13) {
+      var loc = $('#search-menu').val();
+      if (loc.search(/\d+\.\d+$/)!=-1)
+      {
+        document.location.href="/read/"+loc;
+        return false;
+      }
+    }
+  });
+});
+
 
 setSpan = function(window_width) {
   if (window_width >= 1200) {
     $("#read").removeClass().addClass("span6").addClass("offset1");
     $(".dynamicspan").removeClass().addClass("dynamicspan span6 offset3");
+    $(".dynaudiospan").removeClass().addClass("dynaudiospan span6");
   } else if (window_width >= 980 && window_width < 1200) {
     $("#read").removeClass().addClass("span6").addClass("offset3");
     $(".dynamicspan").removeClass().addClass("dynamicspan span6 offset3");
+    $(".dynaudiospan").removeClass().addClass("dynaudiospan span6");
   } else if (window_width > 767 && window_width < 980) {
     $("#read").removeClass().addClass("span10").addClass("offset1");
     $(".dynamicspan").removeClass().addClass("dynamicspan span10 offset1");
+    $(".dynaudiospan").removeClass().addClass("dynaudiospan span10");
   } else {
     $("#read").removeClass().addClass("span6");
     $(".dynamicspan").removeClass().addClass("dynamicspan span6 offset3");
+    $(".dynaudiospan").removeClass().addClass("dynaudiospan span6");
   }
   if (window_width > 611 && window_width < 768) {
     return $("#read").addClass("read-margins");

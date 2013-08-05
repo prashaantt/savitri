@@ -1,13 +1,20 @@
 class AudiosController < ApplicationController
+  
+  before_filter :store_location
+  before_filter :authenticate_user!, :except => [:show, :index]
+
   # GET /audios
   # GET /audios.json
   def index
     @medium = Medium.find_by_url(params[:medium_id])
     @mediumaudios = @medium.audios.order("audios.created_at DESC")
+    @tagaudios = @mediumaudios.tagged_with(params[:tag])
     if params[:tag]
-      @audios = @mediumaudios.tagged_with(params[:tag]).page(params[:page]).per(10)
+      @audios = @tagaudios.page(params[:page]).per(10)
+      @feedsrc = @tagaudios
     else
       @audios = @mediumaudios.page(params[:page]).per(10)
+      @feedsrc = @mediumaudios
     end
 
     respond_to do |format|
