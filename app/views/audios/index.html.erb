@@ -1,14 +1,20 @@
+<% content_for :head do %>
+  <% @current_link = request.protocol + request.host_with_port + params[:medium].to_s + medium_audios_path %>
+  <%= auto_discovery_link_tag :atom, @current_link + ".atom" %>
+  <%= auto_discovery_link_tag :rss,  @current_link + ".rss" %>
+<% end %>
+<% title @medium.title %>
 <div class="row">
-  <div class="span6 offset3">
-    <h1 class="page-header title">
+  <div class="span6 offset3 dynamicspan">
+    <h1 class="page-header title" style="margin-bottom: 20px">
       <%= link_to @medium.title, medium_audios_path %>
-      <%= link_to "", request.protocol + request.host_with_port + medium_audios_path + ".rss", :class => "icon-music", :title => "Subscribe to podcast", :style => "font-size: 65%"  %><br>
+      <%= link_to "", request.protocol + request.host_with_port + medium_path(@medium) + "/feed", :class => "icon-music", :title => "Subscribe to podcast", :style => "font-size: 65%"  %><br>
       <small class="blog-subtitle"><%= @medium.subtitle %></small>
     </h1>
   </div>
 </div>
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span6 offset3 dynamicspan">
     <% @audios.each do |audio| %>
       <section class="audio-snippet">
         <h2><%= link_to audio.title,  medium_audio_path(@medium, audio) %></h2>
@@ -22,33 +28,90 @@
           </h5>
           <p><%= audio.summary.html_safe %></p>
           <div class="row">
-            <audio controls class="span6" style="margin-top: 20px; margin-bottom: 20px"><source src=<%= audio.audio_url %> type="audio/mpeg"></audio>
+            <audio controls class="span6 dynaudiospan" style="margin-top: 20px; margin-bottom: 20px"><source src=<%= audio.audio_url %> type="audio/mpeg"></audio>
           </div>
         </div>
       </section>
     <% end %>
+    <nav id="paginator">
+      <ul class="pager">
+        <li class="previous">
+          <%= link_to_previous_page @audios, "‹ Newer" %>
+        </li>
+        <li class="next">
+          <%= link_to_next_page @audios, "Older ›" %>
+        </li>
+    </nav>
   </div>
-  <div class="span3">
+  <div class="span3 visible-desktop">
     <% if can? :update, @medium %>
-    <div class="span2">
-      <div class="sidebar-title"><span class="label">Manage podcast</span></div><br>
-      <div class="btn-grp sidebar-title">
-        <%= link_to 'New podcast', new_medium_audio_path, :class => 'btn btn-info' %>
+      <div class="right-sidebar">
+        <div class="sidebar-title"><span class="label">Manage podcast</span></div><br>
+        <div class="btn-grp sidebar-title">
+          <%= link_to 'New podcast', new_medium_audio_path, :class => 'btn btn-info' %>
+        </div>
       </div>
-      <hr>
-    </div>
     <% end %>
-    <% tag_counts = @medium.audios.tag_counts.order('tags_count desc').first(15) %>
-    <% if tag_counts.length > 0 %>
-      <div class="span2 visible-desktop">
-        <div class="sidebar-title"><span class="label">Top tags</span></div><br>
-        <% tag_cloud tag_counts, %w[s m l] do |tag| %>
-          <% if false %>
-            <%= link_to tag.name, tag_path(params[:blog_id], tag.name), :class => "label label-info tag" %>
+    <% if params[:tag] %>
+      <% tags = @audios.tag_counts.order('tags_count desc').reject{|tag| tag.name.downcase == params[:tag].downcase}.first(50).sort_by{|tag| tag.name.downcase} %>
+      <% if tags.length > 0 %>
+        <div class="right-sidebar" id="tag_cloud">
+          <div class="sidebar-title"><span class="label">Related tags</span></div><br>
+          <% count = 0 %>
+          <% tag_cloud tags, %w[t s m l] do |tag, css_class| %>
+            <%= link_to tag_path(params[:medium_id], tag.name) do %>
+              <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
+            <% end %>
+            <% unless count == tags.length - 1 %>
+              <span class="tag-sep">&bull;</span>
+            <% end %>
+            <% count += 1 %>
           <% end %>
-          <span class="label label-info"><%= tag.name %></span>
-          <span class="label pull-right"><%= tag.count %></span>
-          <br>
+        </div>
+      <% end %>
+    <% else %>
+      <% tags = @mediumaudios.tag_counts.order('tags_count desc').first(50).sort_by{|tag| tag.name.downcase} %>
+      <% if tags.length > 0 %>
+        <div class="right-sidebar" id="tag_cloud">
+          <div class="sidebar-title"><span class="label">Top tags</span></div><br>
+          <% count = 0 %>
+          <% tag_cloud tags, %w[t s m l] do |tag, css_class| %>
+            <%= link_to tag_path(params[:medium_id], tag.name) do %>
+              <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
+            <% end %>
+            <% unless count == tags.length - 1 %>
+              <span class="tag-sep">&bull;</span>
+            <% end %>
+            <% count += 1 %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+    <% unless params[:tag] %>
+      <div class="archives right-sidebar">
+        <% unless @mediumaudios.length == 0 %>
+          <div class="sidebar-title"><span class="label">Archives</span></div><br>
+          <% @audio_years = @mediumaudios.group_by { |t| t.created_at.beginning_of_year } %>
+          <% @audio_years.sort.reverse.each do |year, audios| %>
+            <li class="listi">
+              <label for="f<%= year.strftime("%m%Y") %>"><span class="ltag"><%=h year.strftime("%Y") %> (<%= audios.length %>)</span></label>
+              <input class="textin" type="checkbox" id="f<%= year.strftime("%m%Y") %>"> 
+              <ol>  
+                <% audio_months = audios.group_by {|t| t.created_at.beginning_of_month } %>
+                <% audio_months.each do |month, month_audios| %>
+                  <li class="subfolder">  
+                    <label for="f<%= month_audios.first.created_at %>"><span class="ltag"><%=h month_audios.first.created_at.strftime("%B") %> (<%= month_audios.length %>)</span></label>
+                    <input class="textin" type="checkbox" id="f<%= month_audios.first.created_at %>"> 
+                    <ol>
+                      <% for audio in month_audios %>
+                        <li class="file sidebar-links"><a href="#"><%=h link_to audio.title, medium_audio_path(@medium, audio) %></a></li>
+                      <% end %>
+                    </ol>
+                  </li>
+                <% end %>
+              </ol>
+            </li>
+          <% end %>
         <% end %>
       </div>
     <% end %>

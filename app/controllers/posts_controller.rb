@@ -8,10 +8,13 @@ class PostsController < ApplicationController
   def index
     @blog_id = Blog.find_by_slug(params[:blog_id]).id
     @blogposts = Post.published.where(:blog_id=>@blog_id).order("posts.published_at DESC")
+    @tagposts = @blogposts.tagged_with(params[:tag])
     if params[:tag]
-      @posts = @blogposts.tagged_with(params[:tag]).page(params[:page]).per(10)
+      @posts = @tagposts.page(params[:page]).per(10)
+      @feedsrc = @tagposts
     else
       @posts = @blogposts.page(params[:page]).per(10)
+      @feedsrc = @blogposts
     end
     respond_to do |format|
       format.html # index.html.erb

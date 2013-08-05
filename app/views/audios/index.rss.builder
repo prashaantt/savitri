@@ -1,9 +1,11 @@
 xml.instruct! :xml, version: "1.0" 
 xml.rss "xmlns:itunes" => "http://www.itunes.com/dtds/podcast-1.0.dtd", "xmlns:media" => "http://search.yahoo.com/mrss/", "xmlns:atom" => "http://www.w3.org/2005/Atom", :version => "2.0" do
-  unless @mediumaudios.first.nil?
-    feed_url = request.protocol + request.host_with_port + medium_audios_path
+  unless @feedsrc.first.nil?
+    base_path = request.protocol + request.host_with_port
+    feed_url = base_path + medium_path(@medium) + "/feed"
+    media_base_path = base_path + medium_audios_path
     xml.channel do
-      xml.tag! "atom:link", :rel => "self", :type => "application/rss+xml", :href => feed_url + ".rss"
+      xml.tag! "atom:link", :rel => "self", :type => "application/rss+xml", :href => feed_url
       xml.title @medium.title
       xml.link feed_url
       xml.description @medium.summary
@@ -12,7 +14,7 @@ xml.rss "xmlns:itunes" => "http://www.itunes.com/dtds/podcast-1.0.dtd", "xmlns:m
       else
         xml.language "en"
       end
-      xml.pubDate @mediumaudios.first.updated_at.to_s(:rfc822)
+      xml.pubDate @feedsrc.first.updated_at.to_s(:rfc822)
       xml.itunes :summary, @medium.summary
       xml.itunes :subtitle, @medium.subtitle
       xml.itunes :author, @medium.user.name
@@ -33,7 +35,7 @@ xml.rss "xmlns:itunes" => "http://www.itunes.com/dtds/podcast-1.0.dtd", "xmlns:m
       else
         xml.itunes :explicit, "no"
       end
-      @mediumaudios.first(15).each do |audio|
+      @feedsrc.first(15).each do |audio|
         xml.item do
           xml.title audio.title
           xml.pubDate audio.updated_at.to_s(:rfc822)
@@ -45,7 +47,7 @@ xml.rss "xmlns:itunes" => "http://www.itunes.com/dtds/podcast-1.0.dtd", "xmlns:m
             xml.itunes :author, @medium.user.name
           end
           xml.itunes :image, :href => @medium.image_url
-          xml.guid({:isPermaLink => "true"}, feed_url + "/" + audio.url)
+          xml.guid({:isPermaLink => "true"}, media_base_path + "/" + audio.url)
           xml.enclosure :url => audio.audio_url, :type => "audio/mpeg", :length => audio.file_size
           xml.itunes :duration, audio.duration["total"]
           if audio.explicit?
