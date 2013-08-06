@@ -44,7 +44,8 @@ Savitri::Application.configure do
   config.cache_store = :redis_store, "redis://localhost:6379/0/cache"
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  # config.action_controller.asset_host = "http://assets.example.com"
+  # config.action_controller.asset_host = "d1690v0dyp03hf.cloudfront.net"
+  config.action_controller.asset_host = "cdn.savitri.in"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
