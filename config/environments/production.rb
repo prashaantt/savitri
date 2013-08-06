@@ -69,10 +69,10 @@ Savitri::Application.configure do
   config.action_mailer.default_url_options = { :host => 'savitri.in' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  :address              => "smtp.sendgrid.net",
+  :address              => "email-smtp.us-east-1.amazonaws.com",
   :port                 => 587,
-  :user_name            => 'nishantmodak',
-  :password             => 'X0Ro2ai5oyrq',
+  :user_name            => 'AKIAIJAGW2Y65MTYABAA',
+  :password             => 'Aoz2/HsoIrFVPmnj4d4qlnSri2x6mNcTAWkZngnKBQYL',
   :authentication       => 'plain',
   :enable_starttls_auto => true  }
 end
