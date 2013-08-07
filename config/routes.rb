@@ -1,5 +1,7 @@
 Savitri::Application.routes.draw do
 
+  match '/ping' => "health#ping"
+
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
