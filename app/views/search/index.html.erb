@@ -52,9 +52,10 @@
 							<% l.lines.each_with_index do |line, index| %>
 								<% (count += 1) %>
 								<% if count == 1 %>
-									<p class="snip">
+									<p class="snip"><%= line.line %>
+								<% else %>
+									<%= line.line %>
 								<% end %>
-								<%= line.line %>
 								<% if count < l.length.to_i %>
 									<br>
 								<% end %>
