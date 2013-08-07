@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
   acts_as_url :title
 
   belongs_to :blog
-  has_many :comments, :dependent => :destroy
+  has_many :comments, :dependent => :destroy, :order => 'comments.created_at'
   has_many :uploads
   has_many :tags
 
