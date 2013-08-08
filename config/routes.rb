@@ -1,5 +1,7 @@
 Savitri::Application.routes.draw do
 
+  match '/ping' => "health#ping"
+
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
@@ -50,15 +52,6 @@ Savitri::Application.routes.draw do
   
   get "savitri/index"
   match '/savitri/show' => "savitri#show"
-  # resources :users do
-  #   resources :posts do
-  #     resources :comments
-  #   end
-  # end
-
-  resources :users do
-   resources :blogs, :name_prefix => "user_"
-  end
 
   resources :blogs do
    resources :posts, :name_prefix => "blog_"
