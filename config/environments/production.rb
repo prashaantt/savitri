@@ -44,7 +44,8 @@ Savitri::Application.configure do
   config.cache_store = :redis_store, "redis://localhost:6379/0/cache"
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  # config.action_controller.asset_host = "http://assets.example.com"
+  # config.action_controller.asset_host = "d1690v0dyp03hf.cloudfront.net"
+  config.action_controller.asset_host = "cdn.savitri.in"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
@@ -69,10 +70,10 @@ Savitri::Application.configure do
   config.action_mailer.default_url_options = { :host => 'savitri.in' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  :address              => "smtp.sendgrid.net",
+  :address              => "email-smtp.us-east-1.amazonaws.com",
   :port                 => 587,
-  :user_name            => 'nishantmodak',
-  :password             => 'X0Ro2ai5oyrq',
+  :user_name            => 'AKIAIJAGW2Y65MTYABAA',
+  :password             => 'Aoz2/HsoIrFVPmnj4d4qlnSri2x6mNcTAWkZngnKBQYL',
   :authentication       => 'plain',
   :enable_starttls_auto => true  }
 end
