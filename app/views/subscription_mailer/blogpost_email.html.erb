@@ -5,20 +5,19 @@
   </head>
   <body>
     <h4><% unless @sender.name.blank? %><%= @sender.name %><% else %><%= @sender.username %><% end %> wrote a post titled "<%= link_to @post.title, blog_post_url(@blog, @post) %>" on <%= link_to @blog.title, blog_url(@blog) %>.</h4>
-    <p>
+		<% unless @post.excerpt.blank? %>
       <p>Excerpt:</p>
-			<% unless @post.excerpt.blank? %>
-      	<p><%= @post.excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
-        <p><%= link_to "Read more", blog_post_url(@blog, @post) %></p>
+    	<p><%= @post.excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
+      <p><%= link_to "Read more", blog_post_url(@blog, @post) %></p>
+    <% else %>
+      <% post_content = @post.content.gsub(/\r\n?/, "") %>
+      <% stripped_content = strip_tags(post.content) %>
+      <% if stripped_content.split(" ").length > 200 %>
+        <%= post_content.split(" ").first(200).join(" ").html_safe %>...
+        <p><%= link_to "Read more", blog_post_path(post.blog, post), {:class => "italics underline"} %></p>
       <% else %>
-        <% post_content = @post.content.gsub(/\r\n?/, "").html_safe %>
-        <% if post_content.length <= 200 %>
-         	<%= post_content %>
-        <% else %>
-          <%= post_content.split(" ").first(200).join(" ").html_safe %>...
-        	<p><%= link_to "Read more", blog_post_url(@blog, @post) %></p>
-        <% end %>
+        <%= post_content.split(" ").first(200).join(" ").html_safe %>
       <% end %>
-    </p>
+    <% end %>
   </body>
 </html>
