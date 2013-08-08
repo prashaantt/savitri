@@ -14,6 +14,11 @@
       <%= javascript_include_tag "application" %>
       <link type="text/css" rel="stylesheet" href="http://fast.fonts.net/cssapi/1add1a27-fd5a-4a23-82f9-eaf3b73d689a.css"/>
       <%= favicon_link_tag 'favicon.ico' %>
+      <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-precomposed.png">
+      <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-144-precomposed.png">
+      <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-114-precomposed.png">
+      <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-72-precomposed.png">
+      <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-57-precomposed.png">
       <%  if params[:controller].to_s == 'read' %>
         <% unless current_user.nil? %>
           <script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>
