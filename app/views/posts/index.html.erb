@@ -99,11 +99,11 @@
           <label for="top-tag" class="sidebar-title"><span class="label">Top tags</span></label>
           <input class="arcin" type="checkbox" id="top-tag" /> 
           <ol>
+            <li class="listi">
           <% count = 0 %>
           <li class="listi">
           <% tag_cloud tags, %w[t s m l] do |tag, css_class| %>
-            <%= link_to tag_path(params[:blog_id], tag.name) do %>
-            
+            <%= link_to tag_path(params[:blog_id], tag.name) do %>            
               <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
             <% end %>
             <% unless count == tags.length - 1 %>
