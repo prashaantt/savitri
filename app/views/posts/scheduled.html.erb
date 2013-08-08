@@ -40,6 +40,13 @@
               <% else %>
                 <%= post_content.split(" ").first(200).join(" ").html_safe %>...
                 <p><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></p>
+              <% post_content = post.cached_content.gsub(/\r\n?/, "") %>
+              <% stripped_content = strip_tags(post.cached_content) %>
+              <% if stripped_content.split(" ").length > 200 %>
+                <%= post_content.split(" ").first(200).join(" ").html_safe %>...
+                <p><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "italics underline"} %></p>
+              <% else %>
+                <%= post_content.split(" ").first(200).join(" ").html_safe %>
               <% end %>
             <% end %>
           </div>
