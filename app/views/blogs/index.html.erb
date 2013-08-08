@@ -13,7 +13,7 @@
       <% @blogs.each do |blog| %>
       <div class="well well-small">
         <h3>
-          <%= link_to blog.title, blog_posts_path(blog) %>
+          <%= link_to blog.cached_title, blog_posts_path(blog) %>
           <br>
           <small><%= link_to (pluralize blog.posts.count, "post"), blog_posts_path(blog) %></small>
         </h3>
@@ -28,7 +28,7 @@
       <% end %>
     </section>
     	<% if current_user.role == 'Admin'%>
-        <% if current_user.blogs.count < 3 %>
+        <% if current_user.cached_blogs_count < 3 %>
           <section>
             <h3><small>You can host up to 3 blogs.</small></h3>
             <%= link_to 'New blog', new_blog_path, :class => "btn btn-info" %>
@@ -52,7 +52,7 @@
           <h3><small>Invite new users or migrate existing ones.</small></h3>
           <%= link_to 'Send invitation', new_user_invitation_path, :class => "btn btn-info" %>
         </section>        
-      <% elsif current_user.blogs.count < 1 %>
+      <% elsif current_user.cached_blogs_count < 1 %>
         <h3><small>You can host 1 blog.</small></h3>
         <%= link_to 'New blog', new_blog_path, :class => "btn btn-info"  %>
       <% end %>

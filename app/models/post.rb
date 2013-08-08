@@ -9,9 +9,11 @@ class Post < ActiveRecord::Base
   has_many :uploads
   has_many :tags
 
+  after_commit :flush_cache
+
   scope :draft, where(:draft => true)
   scope :published, proc {
-    where(:draft => false).where('published_at <= ?', Time.zone.now)
+    where(:draft => false)
   }
 
   searchable do 
@@ -65,4 +67,59 @@ class Post < ActiveRecord::Base
   def to_param
     "#{url}"
   end
+
+  def cached_comments
+    Rails.cache.fetch([self,"comments"]) { comments }
+  end
+
+  def cached_comments_count
+    Rails.cache.fetch([self,"commentscount"]) { comments.count }
+  end
+
+  def flush_comments_cache
+    Rails.cache.delete([self, "commentscount"])
+    Rails.cache.delete([self, "comments"])
+  end
+
+  def self.cached_draft_count
+    Rails.cache.fetch([name,"draftcount"]) { draft.count }
+  end
+
+  def self.cached_find_by_url(url)
+    Rails.cache.fetch([name,"findbyurl"+url]) { find_by_url(url) }
+  end
+
+  def cached_title
+    Rails.cache.fetch([self,"title"]) { title }
+  end
+
+  def cached_blog
+    Rails.cache.fetch([self,"blog"]) { blog }
+  end
+
+  def cached_excerpt
+    Rails.cache.fetch([self,"excerpt"]) { excerpt }
+  end
+
+  def cached_content
+    Rails.cache.fetch([self,"content"]) { content }
+  end
+
+  def cached_published_at
+    Rails.cache.fetch([self,"published_at"]) { published_at }
+  end
+
+  def flush_cache
+    Rails.cache.delete([self.class.name,"draftcount"])
+    Rails.cache.delete([self.class.name,"findbyurl"+url])
+    
+    Rails.cache.delete([self,"title"])
+    Rails.cache.delete([self,"blog"])
+    Rails.cache.delete([self,"excerpt"])
+    Rails.cache.delete([self,"content"])
+    Rails.cache.delete([self,"published_at"])
+
+    flush_comments_cache
+  end
+
 end
