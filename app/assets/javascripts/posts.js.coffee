@@ -89,3 +89,13 @@ $ ->
 $ ->
 	$("#size_now").click ->
   	$("#publishat").css("display","none")
+
+$ ->
+	if ( $.browser.mozilla == true )
+		if ( window.location.pathname.search(/posts/)!=-1 )
+				audiofiles = $("audio")
+				audiofiles.each ->
+					audiodiv = $(this).find(">:first-child")
+					fileloc = audiodiv.attr('src')
+					closetdiv = $(this).parent()
+					$(closetdiv).append($("<div class=\"span6\"><b><a href=\""+fileloc+"\">Download Audio <i class=\"icon-download-alt\"></i></a></b><br/></div>"))
