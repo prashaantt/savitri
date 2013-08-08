@@ -1,11 +1,11 @@
 <%- model_class = Post -%>
-<% title @post.title + " | " + @post.blog.title %>
+<% title @post.cached_title + " | " + @post.cached_blog.cached_title %>
 <div class="row">
   <div class="span6 offset3 dynamicspan">
     <h1 class="page-header title" style="margin-bottom: 20px">
-      <%= link_to @post.blog.title, blog_posts_path %>
-      <%= link_to "", request.protocol + request.host_with_port + blog_path(@post.blog) + "/feed", :class => "icon-rss", :title => "Subscribe to feed", :style => "font-size: 65%"  %><br>
-      <small class="blog-subtitle"><%=  @post.blog.subtitle %></small>
+      <%= link_to @post.cached_blog.cached_title, blog_posts_path %>
+      <%= link_to "", request.protocol + request.host_with_port + blog_path(@post.cached_blog) + "/feed", :class => "icon-rss", :title => "Subscribe to feed", :style => "font-size: 65%"  %><br>
+      <small class="blog-subtitle"><%=  @post.cached_blog.cached_subtitle %></small>
     </h1>
   </div>
 </div>
@@ -13,23 +13,23 @@
 <div class="row">
   <div class="span6 offset3 dynamicspan" role="content">
     <article style="margin-top: 20px">
-      <h2><a href="#"><%= link_to @post.title,  blog_post_path(@post.blog,@post) %></a></h2>
+      <h2><a href="#"><%= link_to @post.cached_title,  blog_post_path(@post.cached_blog,@post) %></a></h2>
       <div>
         <span class="pull-right">
-          <% if can? :destroy, @post.blog %>
-          <%= link_to 'Edit', edit_blog_post_path(@post.blog,@post), :class => 'btn btn-mini btn-warning' %>
+          <% if can? :destroy, @post.cached_blog %>
+          <%= link_to 'Edit', edit_blog_post_path(@post.cached_blog,@post), :class => 'btn btn-mini btn-warning' %>
           <% end %>
           <% if can? :destroy, @post %>
-          <%= link_to 'Delete', blog_post_path(@post.blog,@post),
+          <%= link_to 'Delete', blog_post_path(@post.cached_blog,@post),
           :method => :delete,
           :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
           :class => 'btn btn-mini btn-danger' %>
           <% end %>
         </span>
-        <h5 class="blog-author">by <%= link_to @post.blog.user.username, @post.blog.user, {:class => "underline"} %> on <%= @post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize @post.comments.count, "comment"), "#comments", {:class => "underline"} %>
+        <h5 class="blog-author">by <%= link_to @post.cached_blog.cached_user.cached_username, @post.cached_blog.cached_user, {:class => "underline"} %> on <%= @post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize @post.cached_comments_count, "comment"), "#comments", {:class => "underline"} %>
         </h5>
       </div>
-      <%= @post.content.html_safe.gsub(/\r\n?/,"").html_safe %>
+      <%= @post.cached_content.html_safe.gsub(/\r\n?/,"").html_safe %>
       <% if @post.updated_at > @post.published_at + 20 %>
       <p class="author muted" style="padding-top: 20px">
         (Updated on <%= @post.updated_at.strftime("%b %d %Y at %l:%M %p") %>)
@@ -51,8 +51,8 @@
     </article>
     <% unless @post.draft %>
     <section class="comments">
-      <h3 id="comments"><%= pluralize(@post.comments.count, "comment") %></h3>
-      <%= render @post.comments %>
+      <h3 id="comments"><%= pluralize(@post.cached_comments_count, "comment") %></h3>
+      <%= render @post.cached_comments %>
       <% if user_signed_in? %>
       <% if can? :create, Comment %>
       <%= render "comments/form" %>

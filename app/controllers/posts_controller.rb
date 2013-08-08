@@ -6,15 +6,15 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @blog_id = Blog.find_by_slug(params[:blog_id]).id
-    @blogposts = Post.published.where(:blog_id=>@blog_id).order("posts.published_at DESC")
-    @tagposts = @blogposts.tagged_with(params[:tag])
+    @blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
+    @blogposts= Post.published.where(:blog_id=>@blog_id).order("posts.published_at DESC")
     if params[:tag]
-      @posts = @tagposts.page(params[:page]).per(10)
-      @feedsrc = @tagposts
+      @tagposts = @blogposts.tagged_with(params[:tag])
+      @posts    = @tagposts.page(params[:page]).per(10)
+      @feedsrc  = @tagposts
     else
-      @posts = @blogposts.page(params[:page]).per(10)
-      @feedsrc = @blogposts
+      @posts    = @blogposts.page(params[:page]).per(10)
+      @feedsrc  = @blogposts
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -36,7 +36,7 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @post = Post.find_by_url(params[:id])
+    @post = Post.cached_find_by_url(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post }
@@ -46,8 +46,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   # GET /posts/new.json
   def new
-    @post = Post.new(:blog_id=>Blog.find_by_slug(params[:blog_id]).id)
-    #logger.info "count is"+@counter.count
+    @post = Post.new(:blog_id=>Blog.cached_find_by_slug(params[:blog_id]).id)
     authorize! :new, @post
     respond_to do |format|
       format.html # new.html.erb
@@ -57,7 +56,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    @post = Post.find_by_url(params[:id])
+    @post = Post.cached_find_by_url(params[:id])
     authorize! :edit, @post
   end
 
@@ -95,8 +94,8 @@ class PostsController < ApplicationController
   # PUT /posts/1
   # PUT /posts/1.json
   def update
-    @post = Post.find_by_url(params[:id])
-    @blog = Blog.find_by_slug(params[:post][:blog_id])
+    @post = Post.cached_find_by_url(params[:id])
+    @blog = Blog.cached_find_by_slug(params[:post][:blog_id])
     authorize! :update, @post
     respond_to do |format|
       if @post.update_attributes(params[:post])
