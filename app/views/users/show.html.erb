@@ -1,55 +1,61 @@
 <%- model_class = User -%>
-<div class="page-header">
+<div style="text-align:center;">
 </div>
 <div class="content">
   <div class="row">
-    <div class="span1">&nbsp;</div>
-      <div class="span4">
-        <h3><%= image_tag(@user.photo_url(:thumb).to_s, :height => "100", :width => "100") %>
-        <%=t '.title', :default => @user.name %></h3>
+    <div class="span3 left-pan">
+      <h3><%= image_tag(@user.photo_url(:thumb).to_s, :height => "100", :width => "100", :class => "pic") %>
+        <br/>
+        <span class="user-name"><%=t '.title', :default => @user.name %></span></h3>
         <div id="follow_user">
-            <%= render :partial => "shared/follow_user", :locals => {:user => @user} %>
+          <%= render :partial => "shared/follow_user", :locals => {:user => @user} %>
+        </div>
       </div>
+      <div class="span9">
+        <div class="row">
+          <div class="span9 top-pan">&nbsp;</div>
+          <div class="span3">
+            <dt class="recent-post">Recent Posts:</dt>
+            <dd>
+              <ol>
+                <% @user.blogs.each do |blog| %>
+                <% blog.posts.each do |post| %>
+                <li class="comment-space">
+                  <%= link_to post.title, blog_post_path(blog,post) %>
+                  <span class="muted comment-tag"><%= link_to (pluralize post.comments.count, "comment"), blog_post_path(blog,post) %>
+                    <% end %>
+                    <% end %>
+                  </span>
+                </li>
+              </ol>
+            </dd>
+          </div>
+          <div class="span3">
+            <dt class="recent-post">Recent Comments:</dt>
+            <dd>
+              <ol>
+                <% @user.comments.each do |comment| %>
+                <li class="comment-space">
+                  <%= link_to comment.body , blog_post_path(comment.post.blog,comment.post_id) %>
+                  on <i><%= link_to Post.find(comment.post_id).title, blog_post_path(User.find(comment.post.blog.user_id),Post.find(comment.post_id)) %> </i>
+                  <% end %>
+                </li>
+              </ol>
+            </dd>
+          </div>
+          <div class="span3">
+            <dt class="recent-post">Latest Notebook Entries</dt>
+            <dd>
+              <ol>
+                <% @user.notebooks.limit(10).each  do |note| %>
+                <li class="comment-space">
+                  <%=  note.quote  %>  <i>annotated</i> as <%=  note.annotation  %>
+                  <% end %>
+                </li>
+              </ol>
+            </dd>
+          </div>
+        </div>
       </div>
     </div>
-    <br/>;
-  <div class="row">
-    <div class="span1">&nbsp;</div>
-    <div class="span3">    
-        <dt>Recent Posts:</dt>
-        <dd>
-          <ol>
-            <% @user.blogs.each do |blog| %>
-            <% blog.posts.each do |post| %>
-              <%= link_to post.title, blog_post_path(blog,post) %>
-              <%= link_to (pluralize post.comments.count, "comment"), blog_post_path(blog,post) %>
-               <br/> 
-               <% end %>
-            <% end %>
-        </dd>
-   </div>
-   <div class="span3">
-      <dt>Recent Comments:</dt>
-      <dd>
-        <ol>
-          <% @user.comments.each do |comment| %>
-             <%= link_to comment.body , blog_post_path(comment.post.blog,comment.post_id) %> 
-             on <i><%= link_to Post.find(comment.post_id).title, blog_post_path(User.find(comment.post.blog.user_id),Post.find(comment.post_id)) %> </i>
-             <br/> 
-          <% end %>
-      </dd>
   </div>
-   <div class="span3">    
-        <dt>Latest Notebook Entries</dt>
-        <dd>
-          <ol>
-            <% @user.notebooks.limit(10).each  do |note| %>
-               <%=  note.quote  %>  <i>annotated</i> as <%=  note.annotation  %>
-               <br/> 
-            <% end %>
-        </dd>
-   </div>
-</div>
- </dl>
-</div>
-</div>

@@ -1,3 +1,48 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.recent-post{
+	margin-bottom: 20px;
+	margin-top: 20px;
+	background: #eee;
+	padding: 5px;
+	padding-left: 7px;
+
+}
+
+.comment-space{
+	margin-bottom: 10px;
+	list-style-type: none;
+	padding-bottom: 5px;
+	margin-left: -30px;
+}
+
+.comment-tag{
+	float:right;
+	padding-left: 3px;
+	font-size: 13px;
+}
+
+.user-name{
+	
+	margin-top: 15px;
+}
+
+.left-pan{
+	background: #eee;
+	height: 250px;
+	text-align: center;
+	margin-bottom: 15px;
+
+}
+
+.top-pan{
+	height: 198px;
+	border: 1px solid #999;
+}
+
+.pic{
+	margin-bottom: 12px;
+	
+}
