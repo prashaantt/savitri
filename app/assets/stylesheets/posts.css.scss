@@ -211,6 +211,7 @@ td, th {
 
 .table-bordered {
   border-radius: 0px;
+  border-collapse: initial;
 }
 
 .table-bordered tbody:last-child tr:last-child > td:first-child, .table-bordered tbody:last-child tr:last-child > th:first-child, .table-bordered tfoot:last-child tr:last-child > td:first-child, .table-bordered tfoot:last-child tr:last-child > th:first-child {
@@ -347,4 +348,26 @@ iframe {
     opacity: 0;
     z-index: -999;
     cursor: pointer;
+}
+
+.table-align{
+  
+    border-radius: 0px;
+    border:1px solid #ccc;
+    
+}
+
+.upload-set{
+    font-size: 20px;
+    line-height: 1em;
+    text-align: left !important;
+    background: #eee;
+    padding-left: 10px;
+}
+
+.progress_bar{
+    width: 100%;
+    border-radius: 0px;
+    margin-right: 20px;
+    margin-top: 20px;
 }

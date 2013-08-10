@@ -5,43 +5,44 @@
 <% end %>
 <div class="span6 offset3">
 	<form action='http://<%= @bucket %>.s3.amazonaws.com' class='direct-upload' enctype='multipart/form-data' method='post'>
-	<table class="table-bordered">
-	<tbody>
-		<tr>
-			<td>Upload audio</td>
-			<td>
-				<input name='key' type='hidden'>
-				<input name='AWSAccessKeyId' type='hidden' value='AKIAJRJLL5KWIITWOWWA'>
-				<input name='acl' type='hidden' value='public-read'>
-				<input name='policy' type='hidden'>
-				<input name='signature' type='hidden'>
-				<input name='success_action_status' type='hidden' value='201'>
-				<input name='file' type='file'  style="float: left; margin-right: 20px;" >
-				</input>
-			</td>
-	</tr>
-	<tr>
-			<td>
-				<div class="previewmusic"></div>
-			</td>
-			<td>
-				<div class="progress progress-info" style="width: 400px; margin-right: 20px;">
-					<div class="bar"></div>
-				</div>
-				<div class="previewmusic" id="previewmusic" style="margin-right: 20px;" >
-				</div>
-			</td>
-	</tr>
-	<tr>
-		<td>
-			<div class="embedurl">Embed Code</div>
-		</td>
-		<td>
-			<textarea class="embedurl" id="embedurl">
-			</textarea>
-		</td>
-	</tr>
-	</tbody>
+	  <table class="table table-bordered table-align">
+	  	<thead >
+	  		<tr>
+	  			<td colspan="2" class="upload-set">Upload Audio <i class="icon-upload" style="margin-top: 5px;"></i></td>
+	  		</tr>
+	  	</thead>
+
+	  	<tbody>
+	  		
+	  		<tr>
+	  			<td style="border:0px; width:100%;" colspan="2">
+	  				<div class="progress progress-info progress_bar">
+	  					<div class="bar"></div>
+	  				</div>
+	  			</td>
+	  		</tr>
+	  		<tr>
+	  			<td><div class="previewmusic" id="previewmusic" style="margin-right: 20px;"></div></td>
+	  			<td style="border:0px;">
+	  				<textarea class="embedurl" id="embedurl">
+	  				</textarea>
+	  			</td>
+	  		</tr>
+
+	  		<tr>
+	  			<td colspan="3" style="text-align:center;">
+	  				<input name='key' type='hidden'>
+	  				<input name='AWSAccessKeyId' type='hidden' value='AKIAJRJLL5KWIITWOWWA'>
+	  				<input name='acl' type='hidden' value='public-read'>
+	  				<input name='policy' type='hidden'>
+	  				<input name='signature' type='hidden'>
+	  				<input name='success_action_status' type='hidden' value='201'>
+	  				<input name='file' type='file' style="width:190px; line-height: 0;"></input>
+	  				<div class="previewmusic"></div>
+	  			</td>
+	  		</tr>
+
+		</tbody>
 	</table>
 </div>
 </form>
