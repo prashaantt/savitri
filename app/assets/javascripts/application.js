@@ -20,10 +20,10 @@
 function showBrand(window_width) {
   if (window_width >= 980) {
     $("#brandid").hide();
-    $("#search-menu").removeClass("span5").addClass("span3");
+    $("#query").removeClass("span5").addClass("span3");
   } else {
     $("#brandid").show();
-    $("#search-menu").removeClass("span3").addClass("span5");
+    $("#query").removeClass("span3").addClass("span5");
   }
 };
 
@@ -37,7 +37,7 @@ $(function() {
 });
 
 $(function() {
-  $('#search-menu').on('propertychange keyup keydown input paste focus', function() {
+  $('#query').on('propertychange keyup keydown input paste focus', function() {
     $(this).val().length ? $("#removeicon").css("display","inline") :  $("#removeicon").css("display","none");
   });
   $("#removeicon").on('click', function() {
@@ -48,17 +48,16 @@ $(function() {
 
 $(function(){
   $('#search-submit').click(function(e){
-    var loc = $('#search-menu').val();
+    var loc = $('input[name=q]').val().trim();
       if (loc.search(/\d+\.\d+$/)!=-1)
       {
         document.location.href="/read/"+loc;
         return false;
       }
-    }
-    );
+  });
   $('input[name=q]').keypress(function(e) {
     if(e.which == 13) {
-      var loc = $('#search-menu').val();
+      var loc = $('input[name=q]').val().trim();
       if (loc.search(/\d+\.\d+$/)!=-1)
       {
         document.location.href="/read/"+loc;
