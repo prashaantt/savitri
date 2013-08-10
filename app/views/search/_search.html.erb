@@ -1,4 +1,4 @@
 <%= form_tag("/search/", :method => "get", :class=>"form-horizontal search-align") do  %>
-  <%= text_field_tag :q, params[:q] ,:placeholder=>"Search here...", :class=>"span5 search-box", :id=>"query" %>
-  <button type="submit", class="btn search-button"><i class="icon-search"></i></button>
+  <%= text_field_tag :q, params[:q] ,:placeholder=>"Search here...", :class=>"span5 search-box", :id=>"query", :accesskey=>"q" %>
+  <button type="submit", class="btn search-button", id="search-submit" ><i class="icon-search"></i></button>
 <% end %>

@@ -5,10 +5,10 @@
 $ ->
 	path = window.location.pathname.split('/')
 	if (path[1] == 'search')
-	  $('.searchbox').hide()
+	  $('#search-form').remove()
 
   $("#search-form").submit ->
-    unless $("#search-menu").val().indexOf("in:") is $("#search-menu").val().lastIndexOf("in:")
+    unless $("#query").val().indexOf("in:") is $("#query").val().lastIndexOf("in:")
       alert "in: filters can be used only once in a query"
       return false
 
