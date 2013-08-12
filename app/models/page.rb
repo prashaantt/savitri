@@ -8,8 +8,28 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :priority, :unless => Proc.new {|m| m.category != "Menu"}
   validates :priority, :numericality => {:only_integer => true}, :unless => Proc.new {|m| m.category != "Menu"}
 
+  after_commit :flush_cache
+
   def to_param
   	"#{permalink}"
+  end
+
+  def self.cached_all
+    Rails.cache.fetch([self.class.name,"cachedall"]) { all.to_a }
+  end
+
+  def self.cached_menu
+    Rails.cache.fetch([self.class.name,"menupages"]) { order(:priority).find_all_by_category("Menu") }
+  end
+
+  def cached_name
+    Rails.cache.fetch([self,"name"]) { name }
+  end
+
+  def flush_cache
+    Rails.cache.delete([self.class.name,"cachedall"])
+    Rails.cache.delete([self.class.name,"menupages"])
+    Rails.cache.delete([self,"name"])
   end
 
   def myparents(parents=Array.new)

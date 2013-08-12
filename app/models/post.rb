@@ -111,7 +111,7 @@ class Post < ActiveRecord::Base
 
   def flush_cache
     Rails.cache.delete([self.class.name,"draftcount"])
-    Rails.cache.delete([self.class.name,"findbyurl"+url])
+    Rails.cache.delete([self.class.name,"findbyurl"+self.url])
     
     Rails.cache.delete([self,"title"])
     Rails.cache.delete([self,"blog"])
