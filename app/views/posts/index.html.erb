@@ -35,11 +35,10 @@
           <% else %>
             <% post_content = post.cached_content.gsub(/\r\n?/, "") %>
             <% stripped_content = strip_tags(post.cached_content) %>
+            <%= post_content.split(" ").first(200).join(" ").html_safe %>
             <% if stripped_content.split(" ").length > 200 %>
-              <%= post_content.split(" ").first(200).join(" ").html_safe %>...
+              ...
               <p><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "italics underline"} %></p>
-            <% else %>
-              <%= post_content.split(" ").first(200).join(" ").html_safe %>
             <% end %>
           <% end %>
         </div>
@@ -71,52 +70,48 @@
       </div>
     <% end %>
     <% if params[:tag] %>
-      <% tags = @posts.tag_counts.order('tags_count desc').reject{|tag| tag.name.downcase == params[:tag].downcase}.first(50).sort_by{|tag| tag.name.downcase} %>
-      <% if tags.length > 0 %>
+      <% if @tags.length > 0 %>
         <div class="right-sidebar" id="tag_cloud">
           <label for="related-tag" class="sidebar-title"><span class="label">Related tags</span></label>
           <input class="arcin" type="checkbox" id="related-tag" /> 
           <ol>
-          <% count = 0 %>
-          <li class="listi">
-          <% tag_cloud tags, %w[t s m l] do |tag, css_class| %>
-            <%= link_to tag_path(params[:blog_id], tag.name) do %>
-              <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
+            <% count = 0 %>
+            <li class="listi">
+            <% tag_cloud @tags, %w[t s m l] do |tag, css_class| %>
+              <%= link_to tag_path(params[:blog_id], tag.name) do %>
+                <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
+              <% end %>
+              <% unless count == @tags.length - 1 %>
+                <span class="tag-sep">&bull;</span>
+              <% end %>
+              <% count += 1 %>
             <% end %>
-            <% unless count == tags.length - 1 %>
-              <span class="tag-sep">&bull;</span>
-            <% end %>
-            <% count += 1 %>
-          <% end %>
-          </li>
-      </ol>
+            </li>
+          </ol>
         </div>
       <% end %>
     <% else %>
-      <% tags = @blogposts.tag_counts.order('tags_count desc').first(50).sort_by{|tag| tag.name.downcase} %>
-      <% if tags.length > 0 %>
+      <% if @tags.length > 0 %>
         <div class="right-sidebar" id="tag_cloud">
           <label for="top-tag" class="sidebar-title"><span class="label">Top tags</span></label>
           <input class="arcin" type="checkbox" id="top-tag" /> 
           <ol>
             <li class="listi">
-          <% count = 0 %>
-          <li class="listi">
-          <% tag_cloud tags, %w[t s m l] do |tag, css_class| %>
-            <%= link_to tag_path(params[:blog_id], tag.name) do %>            
-              <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
+            <% count = 0 %>
+            <li class="listi">
+            <% tag_cloud @tags, %w[t s m l] do |tag, css_class| %>
+              <%= link_to tag_path(params[:blog_id], tag.name) do %>            
+                <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
+              <% end %>
+              <% unless count == @tags.length - 1 %>
+                <span class="tag-sep">&bull;</span>
+              <% end %>
+              <% count += 1 %>
             <% end %>
-            <% unless count == tags.length - 1 %>
-              <span class="tag-sep">&bull;</span>
-            <% end %>
-            <% count += 1 %>
-          <% end %>
-        </li>
-      </ol>
+            </li>
+          </ol>
         </div>
       <% end %>
-    <% end %>
-    <% unless params[:tag] %>
       <!-- Begin Latest Comments -->
       <% recentcomments = Comment.cached_recent(@blog).first(15) %>
       <% unless recentcomments.count.zero? %>
@@ -130,8 +125,8 @@
           <label for="archtag" class="sidebar-title"><span class="label">Archives</span></label>
           <input class="arcin" type="checkbox" id="archtag" /> 
           <ol>
-          <% @post_years = @blogposts.group_by { |t| t.published_at.beginning_of_year } %>
-          <% @post_years.sort.reverse.each do |year, posts| %>
+          <% @post_years = @blogposts.group_by { |t| t.published_at.beginning_of_year }.sort.reverse %>
+          <% @post_years.each do |year, posts| %>
             <li class="listi">
               <label for="f<%= year.strftime("%m%Y") %>"><span class="ltag"><%=h year.strftime("%Y") %> (<%= posts.length %>)</span></label>
               <input class="textin" type="checkbox" id="f<%= year.strftime("%m%Y") %>"> 
@@ -151,7 +146,8 @@
               </ol>
             </li>
           <% end %>
-        <% end %></ol>
+        <% end %>
+      </ol>
       </div>
     <% end %>
   </div>

@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
   if typeof window["Annotator"] isnt "undefined"
+    $("#content").annotator().annotator "addPlugin", "Tags"
     $("#content").annotator().annotator "addPlugin", "Store",
       urls:
         create: "/notebooks"

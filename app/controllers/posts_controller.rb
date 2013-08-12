@@ -12,10 +12,14 @@ class PostsController < ApplicationController
       @tagposts = @blogposts.tagged_with(params[:tag])
       @posts    = @tagposts.page(params[:page]).per(10)
       @feedsrc  = @tagposts
+      @tags     = @posts.tag_counts.order('tags_count desc').reject{|tag| tag.name.downcase == params[:tag].downcase}
+                  .first(50).sort_by{|tag| tag.name.downcase} 
     else
       @posts    = @blogposts.page(params[:page]).per(10)
       @feedsrc  = @blogposts
+      @tags     = @blogposts.tag_counts.order('tags_count desc').first(50).sort_by{|tag| tag.name.downcase}
     end
+    #@post_years_reverse=@blogposts.group_by { |t| t.published_at.beginning_of_year }.sort.reverse.each
     respond_to do |format|
       format.html # index.html.erb
       format.atom { render :layout => false, :content_type=>"application/xml" }
