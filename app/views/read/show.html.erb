@@ -76,7 +76,7 @@
               </a>
               <ul class="dropdown-menu size sectionlist dropdown-align" role="menu" aria-labelledby="dropsection">
                 <% @book.cached_cantos.each do |canto| %>
-                  <li role="presentation" class="<%= is_active_link params,canto.cached_number.to_s,canto.cached_number.to_s %>">
+                  <li role="presentation" class="<%= is_active_section params,canto.cached_book.cached_number.to_s,canto.cached_number.to_s %>">
                     <% *title = canto.cached_title.split(/(: )/) %>
                     <% if title.length == 1%>
                       <% canto_title = title[0] %>
@@ -113,7 +113,7 @@
                 </a>
                 <ul class="dropdown-menu sectionlist" role="menu" aria-labelledby="dropsection">
                   <% @sections.each do |section| %>
-                  <li role="presentation" class="<%= is_active_section params,section.runningno.to_s,section.no.to_s %>">
+                  <li role="presentation" class="<%= is_active_section params,section.cached_canto.cached_number.to_s,section.cached_number.to_s %>">
                     <%= link_to "/read/" + @canto.cached_book.cached_number.to_s + "/" + @canto.cached_number.to_s + "/" + section.cached_runningno.to_s do %>
                     Section <%= section.cached_runningno.to_s + " (" + section.cached_number.to_s + ")" %>
                     <% end %>
