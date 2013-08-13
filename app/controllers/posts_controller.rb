@@ -79,6 +79,12 @@ class PostsController < ApplicationController
       @post.draft = false
     end
 
+    @post.title = @post.title.strip
+    
+    @post.series_title = @post.series_title.strip unless @post.series_title.nil?
+    
+    @post.subtitle = @post.subtitle.strip unless @post.subtitle.nil?
+
     respond_to do |format|
       if @post.save
         
@@ -101,6 +107,13 @@ class PostsController < ApplicationController
     @post = Post.cached_find_by_url(params[:id])
     @blog = Blog.cached_find_by_slug(params[:post][:blog_id])
     authorize! :update, @post
+
+    @post.title = @post.title.strip
+    
+    @post.series_title = @post.series_title.strip unless @post.series_title.nil?
+    
+    @post.subtitle = @post.subtitle.strip unless @post.subtitle.nil?
+
     respond_to do |format|
       if @post.update_attributes(params[:post])
         format.html { redirect_to blog_post_path(@post.blog,@post), notice: 'Post was successfully updated.' }

@@ -4,7 +4,18 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h4><% unless @sender.name.blank? %><%= @sender.name %><% else %><%= @sender.username %><% end %> wrote a post titled "<%= link_to @post.title, blog_post_url(@blog, @post) %>" on <%= link_to @blog.title, blog_url(@blog) %>.</h4>
+    <h4>
+      <% unless @sender.name.blank? %>
+        <%= @sender.name %> 
+      <% else %>
+        <%= @sender.username %> 
+      <% end %>
+      <% unless @post.series_title.blank? %>
+        wrote a post 
+      <% else %>
+        wrote a new post in the series "<%= @post.series_title %>" 
+      <% end %>
+      titled "<%= link_to @post.title, blog_post_url(@blog, @post) %>" on <%= link_to @blog.title, blog_url(@blog) %>.</h4>
 		<% unless @post.excerpt.blank? %>
       <p>Excerpt:</p>
     	<p><%= @post.excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>

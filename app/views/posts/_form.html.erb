@@ -3,26 +3,34 @@
   <div class="span6 offset3">
     <%= f.hidden_field :blog_id, :class=> 'text_field', :value=> @post.blog_id %>
     <div class="control-group">
+      <%= f.label :series_title, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :series_title, :class => 'text_field span6' %>
+      </div>
+    </div>
+    <div class="control-group">
       <%= f.label :title, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :title, :class => 'text_field span6' %>
       </div>
     </div>
-    <% if current_user.admin? && act == "new" %>
     <div class="control-group">
-      <%= f.label "Publish ", :class => 'control-label', :style=>"float: left;" %> &nbsp;
-      <%= radio_button_tag 'size', "now", true, :style => "vertical-align: baseline" %><span class="label" style="margin-right: 10px; margin-left: 10px">Immediately</span> 
-      <%= radio_button_tag 'size', "later", false, :style => "vertical-align: baseline" %><span class="label label-inverse" style="margin-right: 10px; margin-left: 10px">Schedule</span> <br/><br/>
-      <div class="controls", id="publishat", style="display:none;" >
-        <%= f.datetime_select :published_at, {:use_short_month=>"true", :start_month => Time.now.month, :end_year=>Time.now.year,:order => [:day, :month, :year, :hour, :minute], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
+      <%= f.label :subtitle, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :subtitle, :class => 'text_field span6' %>
       </div>
     </div>
-    <% end %>
     <div class="control-group">
-      <%= f.label :excerpt, :class => "control-label" %>
+      <%= f.label :excerpt, "Excerpt (plain-text)", :class => "control-label" %>
       <div class="controls">
         <%= f.text_area :excerpt, :class => "text_field span6", :style => "resize: none", :rows => "5" %>
       </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :show_excerpt, :class => 'control-label', :style=>"float: left;" %> &nbsp;
+      <%= f.radio_button :show_excerpt, "false", options = {checked: true, :style => "vertical-align: baseline"} %><label class="label" for="post_show_excerpt_false" style="margin-right: 10px; margin-left: 10px">Only on blog index</label>
+      <%= f.radio_button :show_excerpt, "prefix", :style => "vertical-align: baseline" %><label class="label" for="post_show_excerpt_prefix" style="margin-right: 10px; margin-left: 10px">Prefixed to post</label>
+      <%= f.radio_button :show_excerpt, "suffix", :style => "vertical-align: baseline" %><label class="label" for="post_show_excerpt_suffix" style="margin-right: 10px; margin-left: 10px">Suffixed to post</label>
     </div>
     <div class="control-group">
       <%= f.label :content, :class => 'control-label' %>
@@ -41,12 +49,22 @@
         <%= f.text_field :tag_list, :class => 'text_area span6' %>
       </div>
     </div>
+    <% if current_user.admin? && act == "new" %>
+      <div class="control-group">
+        <%= f.label "Publish ", :class => 'control-label', :style=>"float: left;" %> &nbsp;
+        <%= radio_button_tag 'size', "now", true, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
+        <%= radio_button_tag 'size', "later", false, :style => "vertical-align: baseline" %><label class="label" for="size_later" style="margin-right: 10px; margin-left: 10px">Schedule</label> <br/><br/>
+        <div class="controls", id="publishat", style="display:none;" >
+          <%= f.datetime_select :published_at, {:use_short_month=>"true", :start_month => Time.now.month, :end_year=>Time.now.year,:order => [:day, :month, :year, :hour, :minute], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
 <div class="row">
   <div class="span6 offset3">
     <div class="control-grp" style="text-align: center">
-      <%= f.submit nil, :class => 'btn btn-success', :id=>"new-blog-post", :disabled=>"disabled" %>
+      <%= f.submit nil, :class => 'btn btn-success', :id=>"new-blog-post" %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")), blog_posts_path, :class => 'btn' %>
     </div>
   </div>

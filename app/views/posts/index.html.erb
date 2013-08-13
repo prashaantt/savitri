@@ -21,6 +21,8 @@
   <div class="span6 offset3 dynamicspan">
     <% @posts.each do |post| %>
       <section class="snippet">
+        <h4 class="post-series span2 visible-desktop post-series-sidebar"><%= post.cached_series_title %></h4>
+        <h4 class="post-series hidden-desktop"><%= post.cached_series_title %></h4>
         <h2><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %></h2>
         <div>
           <span class="pull-right">
@@ -35,10 +37,11 @@
           <% else %>
             <% post_content = post.cached_content.gsub(/\r\n?/, "") %>
             <% stripped_content = strip_tags(post.cached_content) %>
-            <%= post_content.split(" ").first(200).join(" ").html_safe %>
             <% if stripped_content.split(" ").length > 200 %>
-              ...
+              <%= post_content.split(" ").first(200).join(" ").html_safe %>...
               <p><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "italics underline"} %></p>
+            <% else %>
+              <%= post_content.split(" ").first(200).join(" ").html_safe %>
             <% end %>
           <% end %>
         </div>
