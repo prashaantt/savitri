@@ -147,6 +147,9 @@ ActiveRecord::Schema.define(:version => 20130729070130) do
     t.string   "url"
     t.datetime "published_at"
     t.boolean  "draft",        :default => true
+    t.string   "series_title"
+    t.string   "subtitle"
+    t.string   "show_excerpt"
   end
 
   create_table "redactor_assets", :force => true do |t|

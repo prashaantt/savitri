@@ -1,6 +1,6 @@
 class Post < ActiveRecord::Base
 
-  attr_accessible :content, :title, :tag_list, :blog_id, :section, :book, :canto, :from, :to, :md_content, :photo, :uploads_attributes, :excerpt, :url, :published_at
+  attr_accessible :content, :title, :tag_list, :blog_id, :section, :book, :canto, :from, :to, :md_content, :photo, :uploads_attributes, :excerpt, :url, :published_at, :series_title, :subtitle, :show_excerpt
   acts_as_taggable
   acts_as_url :title
 
@@ -109,6 +109,14 @@ class Post < ActiveRecord::Base
     Rails.cache.fetch([self,"published_at"]) { published_at }
   end
 
+  def cached_series_title
+    Rails.cache.fetch([self,"series_title"]) { series_title }
+  end
+
+  def cached_subtitle
+    Rails.cache.fetch([self,"subtitle"]) { subtitle }
+  end
+
   def flush_cache
     Rails.cache.delete([self.class.name,"draftcount"])
     Rails.cache.delete([self.class.name,"findbyurl"+self.url])
@@ -118,6 +126,8 @@ class Post < ActiveRecord::Base
     Rails.cache.delete([self,"excerpt"])
     Rails.cache.delete([self,"content"])
     Rails.cache.delete([self,"published_at"])
+    Rails.cache.delete([self,"cached_series_title"])
+    Rails.cache.delete([self,"cached_subtitle"])
 
     flush_comments_cache
   end
