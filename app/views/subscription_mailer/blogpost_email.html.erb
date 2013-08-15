@@ -10,7 +10,7 @@
       <% else %>
         <%= @sender.username %> 
       <% end %>
-      <% unless @post.series_title.blank? %>
+      <% if @post.series_title.blank? %>
         wrote a post 
       <% else %>
         wrote a new post in the series "<%= @post.series_title %>" 

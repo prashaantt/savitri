@@ -28,7 +28,7 @@
     </div>
     <div class="control-group">
       <%= f.label :show_excerpt, :class => 'control-label', :style=>"float: left;" %> &nbsp;
-      <%= f.radio_button :show_excerpt, "false", options = {checked: true, :style => "vertical-align: baseline"} %><label class="label" for="post_show_excerpt_false" style="margin-right: 10px; margin-left: 10px">Only on blog index</label>
+      <%= f.radio_button :show_excerpt, "none", options = {checked: true, :style => "vertical-align: baseline"} %><label class="label" for="post_show_excerpt_none" style="margin-right: 10px; margin-left: 10px">Only on blog index</label>
       <%= f.radio_button :show_excerpt, "prefix", :style => "vertical-align: baseline" %><label class="label" for="post_show_excerpt_prefix" style="margin-right: 10px; margin-left: 10px">Prefixed to post</label>
       <%= f.radio_button :show_excerpt, "suffix", :style => "vertical-align: baseline" %><label class="label" for="post_show_excerpt_suffix" style="margin-right: 10px; margin-left: 10px">Suffixed to post</label>
     </div>

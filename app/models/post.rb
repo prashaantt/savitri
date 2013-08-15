@@ -1,5 +1,7 @@
 class Post < ActiveRecord::Base
 
+  before_save :trim
+
   attr_accessible :content, :title, :tag_list, :blog_id, :section, :book, :canto, :from, :to, :md_content, :photo, :uploads_attributes, :excerpt, :url, :published_at, :series_title, :subtitle, :show_excerpt
   acts_as_taggable
   acts_as_url :title
@@ -117,6 +119,10 @@ class Post < ActiveRecord::Base
     Rails.cache.fetch([self,"subtitle"]) { subtitle }
   end
 
+  def cached_show_excerpt
+    Rails.cache.fetch([self,"show_excerpt"]) { show_excerpt }
+  end
+
   def flush_cache
     Rails.cache.delete([self.class.name,"draftcount"])
     Rails.cache.delete([self.class.name,"findbyurl"+self.url])
@@ -131,5 +137,12 @@ class Post < ActiveRecord::Base
 
     flush_comments_cache
   end
+
+  private
+    def trim
+      self.title = self.title.strip
+      self.series_title = self.series_title.strip
+      self.subtitle = self.subtitle.strip
+    end
 
 end
