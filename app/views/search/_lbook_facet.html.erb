@@ -9,7 +9,7 @@
 	</ul>
 	<% links = Hash.new %>
 	<% for n in rows.each %>
-		<% links[n] = search_path(:q => params[:q], :lbook => n, :sbook => params[:sbook],:length=>params[:length]) %>
+		<% links[n] = search_path(:q => params[:q], :lbook => n,:length=>params[:length], :canto => params[:canto], :section => params[:section]) %>
 	<% end %>
 	<%= select_tag "lbook", options_for_select(links.keys.each_with_index.map {|name, index| [name,links[name]]}), :class=>"span2",:onChange=>"window.document.location.href=this.options[this.selectedIndex].value;" , :prompt => 'Select Book' %>
 <% end %>

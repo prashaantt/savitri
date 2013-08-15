@@ -1,4 +1,3 @@
-
 <% if params[:sbook].blank? %>
 <h5 class="left-filter">Book</h5>
 <% rows = Array.new %>
@@ -8,9 +7,9 @@
 	<% end %>
 	<% rows.sort! %>
 	</ul>
-	<% links = Array.new %>
+	<% links = Hash.new %>
 	<% for n in rows.each %>
-		<% links << search_path(:q => params[:q], :sbook => n,:length => params[:length], :canto => params[:canto], :section => params[:section]) %>
+		<% links[n] = search_path(:q => params[:q], :sbook => n,:length => params[:length], :canto => params[:canto], :section => params[:section]) %>
 	<% end %>
-	<%= select_tag "sbook", options_for_select(links.each_with_index.map {|name, index| [index+1,name]}), :class=>"span2",:onChange=>"window.document.location.href=this.options[this.selectedIndex].value;" , :prompt => 'Select Book' %>
+	<%= select_tag "sbook", options_for_select(links.keys.each_with_index.map {|name, index| [name,links[name]]}), :class=>"span2",:onChange=>"window.document.location.href=this.options[this.selectedIndex].value;" , :prompt => 'Select Book' %>
 <% end %>
