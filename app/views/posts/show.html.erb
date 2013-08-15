@@ -33,11 +33,11 @@
         </h5>
       </div>
       <div class="main-content">
-        <% if @post.show_excerpt === "prefix" %>
+        <% if @post.cached_show_excerpt === "prefix" %>
           <p><%= @post.cached_excerpt %></p>
         <% end %>
         <%= @post.cached_content.html_safe.gsub(/\r\n?/,"").html_safe %>
-        <% if @post.show_excerpt === "suffix" %>
+        <% if @post.cached_show_excerpt === "suffix" %>
           <p><%= @post.cached_excerpt %></p>
         <% end %>
       </div>

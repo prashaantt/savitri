@@ -8,16 +8,12 @@ atom_feed :language => 'en-US', :id => request.protocol + request.host_with_port
     @link = request.protocol + request.host_with_port + blog_post_path(post.cached_blog, post)
     feed.entry(post, :url => @link, :id => request.protocol + request.host_with_port + blog_post_path(post.cached_blog, post)) do |entry|
       title = ""
-      unless post.cached_series_title.nil?
-        unless post.cached_series_title.blank?
-          title += post.cached_series_title + ": "
-        end
+      unless post.cached_series_title.blank?
+        title += post.cached_series_title + ": "
       end
       title += post.cached_title
-      unless post.cached_subtitle.nil?
-        unless post.cached_subtitle.blank?
-          title += " — " + post.cached_subtitle
-        end
+      unless post.cached_subtitle.blank?
+        title += " — " + post.cached_subtitle
       end
       entry.title title
       if (post.excerpt && post.cached_excerpt.length > 0)
@@ -32,11 +28,11 @@ atom_feed :language => 'en-US', :id => request.protocol + request.host_with_port
         end
       end
       content = ""
-      if post.show_excerpt === "prefix"
+      if post.cached_show_excerpt === "prefix"
         content = "<p>" + post.cached_excerpt + "</p>"
       end
       content += post.cached_content
-      if post.show_excerpt === "suffix"
+      if post.cached_show_excerpt === "suffix"
         content += "<p>" + post.cached_excerpt + "</p>"
       end
       entry.content content, :type => "html"
