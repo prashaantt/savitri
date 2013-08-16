@@ -131,9 +131,9 @@ class Post < ActiveRecord::Base
     Rails.cache.delete([self,"excerpt"])
     Rails.cache.delete([self,"content"])
     Rails.cache.delete([self,"published_at"])
-    Rails.cache.delete([self,"cached_series_title"])
-    Rails.cache.delete([self,"cached_subtitle"])
-
+    Rails.cache.delete([self,"series_title"])
+    Rails.cache.delete([self,"subtitle"])
+    Rails.cache.delete([self,"show_excerpt"])
     flush_comments_cache
   end
 
