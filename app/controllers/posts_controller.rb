@@ -70,7 +70,7 @@ class PostsController < ApplicationController
     @post = Post.new(params[:post])
     authorize! :create, @post
 
-    if @post.published_at > Time.now - 300
+    if @post.published_at > Time.zone.now - 300
       #advanced / now posting. 5 minute min. difference
       @post.draft = true
     else 

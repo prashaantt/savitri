@@ -1,7 +1,5 @@
 class Post < ActiveRecord::Base
 
-  before_save :trim
-
   attr_accessible :content, :title, :tag_list, :blog_id, :section, :book, :canto, :from, :to, :md_content, :photo, :uploads_attributes, :excerpt, :url, :published_at, :series_title, :subtitle, :show_excerpt
   acts_as_taggable
   acts_as_url :title
@@ -11,6 +9,7 @@ class Post < ActiveRecord::Base
   has_many :uploads
   has_many :tags
 
+  before_save :trim
   after_commit :flush_cache
 
   scope :draft, where(:draft => true)
@@ -140,9 +139,9 @@ class Post < ActiveRecord::Base
 
   private
     def trim
-      self.title = self.title.strip
-      self.series_title = self.series_title.strip
-      self.subtitle = self.subtitle.strip
+      self.title = self.title.strip unless self.title.nil?
+      self.series_title = self.series_title.strip unless self.series_title.nil?
+      self.subtitle = self.subtitle.strip unless self.subtitle.nil?
     end
 
 end
