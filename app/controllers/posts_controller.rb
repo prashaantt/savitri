@@ -29,7 +29,8 @@ class PostsController < ApplicationController
   end
 
   def scheduled
-    @blogposts = Post.draft.order('posts.published_at DESC')
+    @blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
+    @blogposts = Post.cached_drafts(@blog_id)
     @posts = @blogposts.page(params[:page]).per(10)
     respond_to do |format|
       format.html # index.html.erb
