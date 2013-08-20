@@ -12,7 +12,6 @@ class Post < ActiveRecord::Base
   before_save :trim
   after_commit :flush_cache
 
-  scope :draft, where(:draft => true)
   scope :published, proc {
     where(:draft => false)
   }
@@ -52,6 +51,7 @@ class Post < ActiveRecord::Base
   def posted
     updated_at.strftime("%B") + ' ' + updated_at.strftime("%Y")
   end
+
   def blogname
     blog.title
   end
@@ -82,8 +82,12 @@ class Post < ActiveRecord::Base
     Rails.cache.delete([self, "comments"])
   end
 
-  def self.cached_draft_count
-    Rails.cache.fetch([name,"draftcount"]) { draft.count }
+  def self.cached_draft_count(blogid)
+    Rails.cache.fetch([name,"draftcount"+blogid.to_s]) { cached_drafts(blogid).count }
+  end
+
+  def self.cached_drafts(blogid)
+    Rails.cache.fetch([name,"drafts"+blogid.to_s]) { where(:blog_id=>blogid, :draft => true).order('posts.published_at DESC') }
   end
 
   def self.cached_find_by_url(url)
@@ -123,7 +127,8 @@ class Post < ActiveRecord::Base
   end
 
   def flush_cache
-    Rails.cache.delete([self.class.name,"draftcount"])
+    Rails.cache.delete([self.class.name,"draftcount"+self.blog_id.to_s])
+    Rails.cache.delete([self.class.name,"drafts"+self.blog_id.to_s])
     Rails.cache.delete([self.class.name,"findbyurl"+self.url])
     
     Rails.cache.delete([self,"title"])

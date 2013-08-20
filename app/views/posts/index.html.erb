@@ -7,9 +7,9 @@
 <% end %>
 <% @blog = Blog.cached_find_by_slug(params[:blog_id]) %>
 <% title @blog.cached_title %>
-<div class="row">
+<div itemscope itemtype="http://schema.org/Article" class="row">
   <div class="span6 offset3 dynamicspan">
-    <h1 class="page-header title" style="margin-bottom: 20px">
+    <h1 itemprop="name" class="page-header title" style="margin-bottom: 20px">
       <%= link_to @blog.cached_title, blog_posts_path %>
       <%= link_to "", blog_path(@blog) + "/feed", :class => "icon-rss", :title => "Subscribe to feed", :style => "font-size: 65%" %><br>
       <small class="blog-subtitle"><%= @blog.cached_subtitle %></small>
@@ -65,7 +65,7 @@
         <div class="sidebar-title"><span class="label">Manage blog</span></div><br>
         <div class="btn-grp sidebar-title">
           <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
-          <% unless Post.cached_draft_count.zero? %>
+          <% unless Post.cached_draft_count(@blog.id).zero? %>
             <br/><br/>
             <%= link_to 'Scheduled posts', {:controller => "posts", :action => "scheduled" }, :class => 'btn btn-success' %>
           <% end %>
@@ -128,8 +128,8 @@
           <label for="archtag" class="sidebar-title"><span class="label">Archives</span></label>
           <input class="arcin" type="checkbox" id="archtag" /> 
           <ol>
-          <% @post_years = @blogposts.group_by { |t| t.published_at.beginning_of_year }.sort.reverse %>
-          <% @post_years.each do |year, posts| %>
+          <% post_years = @blogposts.group_by { |t| t.published_at.beginning_of_year }.sort.reverse %>
+          <% post_years.each do |year, posts| %>
             <li class="listi">
               <label for="f<%= year.strftime("%m%Y") %>"><span class="ltag"><%=h year.strftime("%Y") %> (<%= posts.length %>)</span></label>
               <input class="textin" type="checkbox" id="f<%= year.strftime("%m%Y") %>"> 
