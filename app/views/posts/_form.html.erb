@@ -49,13 +49,19 @@
         <%= f.text_field :tag_list, :class => 'text_area span6' %>
       </div>
     </div>
-    <% if current_user.admin? && act == "new" %>
+    <% if current_user.admin? && (act == "new" || (act=="edit" && @post.published_at > Time.zone.now)) %>
       <div class="control-group">
         <%= f.label "Publish ", :class => 'control-label', :style=>"float: left;" %> &nbsp;
-        <%= radio_button_tag 'size', "now", true, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
-        <%= radio_button_tag 'size', "later", false, :style => "vertical-align: baseline" %><label class="label" for="size_later" style="margin-right: 10px; margin-left: 10px">Schedule</label> <br/><br/>
+        <% unless @post.published_at.nil?  %>
+          <%= radio_button_tag 'size', "now", false, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
+          <%= radio_button_tag 'size', "later", @post.published_at > Time.zone.now, :style => "vertical-align: baseline" %>
+        <% else %>
+          <%= radio_button_tag 'size', "now", true, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
+          <%= radio_button_tag 'size', "later", false, :style => "vertical-align: baseline" %>
+        <% end %>
+        <label class="label" for="size_later" style="margin-right: 10px; margin-left: 10px">Schedule</label> <br/><br/>
         <div class="controls", id="publishat", style="display:none;" >
-          <%= f.datetime_select :published_at, {:use_short_month=>"true", :start_month => Time.now.month, :end_year=>Time.now.year,:order => [:day, :month, :year, :hour, :minute], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
+          <%= f.datetime_select :published_at, {:use_short_month=>"true", :start_month => Time.now.month, :end_year=>Time.now.year+3,:order => [:day, :month, :year, :hour, :minute], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
         </div>
       </div>
     <% end %>

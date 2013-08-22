@@ -13,7 +13,7 @@ class PostsController < ApplicationController
       @posts    = @tagposts.page(params[:page]).per(10)
       @feedsrc  = @tagposts
       @tags     = @posts.tag_counts.order('tags_count desc').reject{|tag| tag.name.downcase == params[:tag].downcase}
-                  .first(50).sort_by{|tag| tag.name.downcase} 
+      .first(50).sort_by{|tag| tag.name.downcase} 
     else
       @posts    = @blogposts.page(params[:page]).per(10)
       @feedsrc  = @blogposts
@@ -82,7 +82,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        
+
         if @post.draft?
           EmailWorker.perform_at(@post.published_at,current_user.id,@post.id)
         end
@@ -103,8 +103,11 @@ class PostsController < ApplicationController
     @blog = Blog.cached_find_by_slug(params[:post][:blog_id])
     authorize! :update, @post
 
+    delete_if_scheduled_post
+
     respond_to do |format|
       if @post.update_attributes(params[:post])
+        reschedule_post
         format.html { redirect_to blog_post_path(@post.blog,@post), notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
@@ -119,12 +122,42 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find_by_url(params[:id])
     authorize! :destroy, @post
-    @post.destroy
 
+    delete_if_scheduled_post
+    @post.destroy
+    
     respond_to do |format|
       format.html { redirect_to blog_posts_path(@post.blog) }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def delete_if_scheduled_post
+    schedposts = Sidekiq::ScheduledSet.new
+    schedposts.select do |sched|
+      if(sched.args==[@post.cached_blog.cached_user.id,@post.id])
+        sched.delete
+      end
+    end
+  end
+
+  def reschedule_post
+    somedate = DateTime.new(params[:post]["published_at(1i)"].to_i, 
+                params[:post]["published_at(2i)"].to_i,
+                params[:post]["published_at(3i)"].to_i,
+                params[:post]["published_at(4i)"].to_i,
+                params[:post]["published_at(5i)"].to_i)
+    if(somedate > Time.zone.now - 300)
+      @post.draft=true
+      EmailWorker.perform_at(somedate,@post.cached_blog.cached_user.id,@post.id)
+    else
+      #Backdated posts
+      @post.created_at = @post.published_at
+      @post.draft = false
+    end
+    @post.save
   end
 
 end
