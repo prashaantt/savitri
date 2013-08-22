@@ -81,10 +81,18 @@ $ ->
 $ ->
 	$("#size_later").click ->
   	$("#publishat").css("display","inline")
+  if($("#size_later").is(":checked"))
+  	$("#publishat").css("display","inline")
 
 $ ->
 	$("#size_now").click ->
   	$("#publishat").css("display","none")
+  	now = new Date()
+  	$("#post_published_at_3i").val(now.getDate())
+  	$("#post_published_at_2i").val(now.getMonth()+1)
+  	$("#post_published_at_1i").val(now.getFullYear())
+  	$("#post_published_at_4i").val(now.getHours())
+  	$("#post_published_at_5i").val(now.getMinutes())
 
 $ ->
 	if ( $.browser.mozilla == true )
