@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
   
   def index
+    authorize! :index, @users
     @users = User.all
 
     respond_to do |format|
