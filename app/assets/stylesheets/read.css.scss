@@ -7,9 +7,9 @@
   height:auto !important;
 }
  
-.activeaccordion, .dropdown-menu .active > a,  {
+.activeaccordion, .dropdown-menu .active > a {
   background: #282828;
-  }
+}
 
 .navcanto a {
   font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -346,7 +346,7 @@
 
 
 
-> a, .dropdown-submenu:focus > a {
+.dropdown-submenu:focus > a {
   text-decoration: none;
   color: #000;
   background-color: #95a5a6;
@@ -356,7 +356,6 @@
   color: #ffffff;
   text-decoration: none;
   outline: 0;
-  background-color: #292929;
   background-color: #292929;
   background-image: -moz-linear-gradient(top, #292929, #292929);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#292929), to(#292929));
@@ -372,14 +371,14 @@
 .dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a {
   text-decoration: none;
   color: #ffffff;
-  background-color: #353535;
+  background: #353535;
   background-image: -moz-linear-gradient(top, #353535, #353535);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#353535), to(#353535));
   background-image: -webkit-linear-gradient(top, #353535, #353535);
   background-image: -o-linear-gradient(top, #353535, #353535);
   background-image: linear-gradient(to bottom, #353535, #353535);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+
 }
 
 .dropdown-menu {
@@ -436,6 +435,7 @@
   font-size: 40px;
   padding: 0px;
   border-radius: 100%;
+  opacity: 1 !important;
 }
 
 .go-top {

@@ -24,7 +24,7 @@ module ApplicationHelper
  		claz=""
  		if params[:book_id].eql? bid
  			if params[:canto_id].eql? cid
- 				claz="activeaccordion"
+ 				claz="activeaccordion active"
  			else
  				claz="inactiveaccordion"
  			end
