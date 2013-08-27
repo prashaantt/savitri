@@ -144,14 +144,9 @@ class PostsController < ApplicationController
   end
 
   def reschedule_post
-    somedate = DateTime.new(params[:post]["published_at(1i)"].to_i, 
-                params[:post]["published_at(2i)"].to_i,
-                params[:post]["published_at(3i)"].to_i,
-                params[:post]["published_at(4i)"].to_i,
-                params[:post]["published_at(5i)"].to_i)
-    if(somedate > Time.zone.now - 300)
+    if(@post.published_at > Time.zone.now - 300)
       @post.draft=true
-      EmailWorker.perform_at(somedate,@post.cached_blog.cached_user.id,@post.id)
+      EmailWorker.perform_at(@post.published_at,@post.cached_blog.cached_user.id,@post.id)
     else
       #Backdated posts
       @post.created_at = @post.published_at
