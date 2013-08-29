@@ -95,6 +95,10 @@ class Post < ActiveRecord::Base
     Rails.cache.fetch([name,"findbyurl"+url]) { find_by_url(url) }
   end
 
+  def self.cached_find_by_blog_id_and_url(blogid,url)
+    Rails.cache.fetch([name,"findbyurl"+blogid.to_s+url]) { find_by_blog_id_and_url(blogid,url) }
+  end
+
   def cached_title
     Rails.cache.fetch([self,"title"]) { title }
   end
@@ -135,6 +139,7 @@ class Post < ActiveRecord::Base
     Rails.cache.delete([self.class.name,"draftcount"+self.blog_id.to_s])
     Rails.cache.delete([self.class.name,"drafts"+self.blog_id.to_s])
     Rails.cache.delete([self.class.name,"findbyurl"+self.url])
+    Rails.cache.delete([self.class.name,"findbyurl"+self.blog_id.to_s+self.url])
     
     Rails.cache.delete([self,"title"])
     Rails.cache.delete([self,"blog"])

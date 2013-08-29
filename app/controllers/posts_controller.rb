@@ -41,7 +41,8 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @post = Post.cached_find_by_url(params[:id])
+    blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
+    @post = Post.cached_find_by_blog_id_and_url(blog_id,params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post }
@@ -61,7 +62,8 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    @post = Post.cached_find_by_url(params[:id])
+    blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
+    @post = Post.cached_find_by_blog_id_and_url(blog_id,params[:id])
     authorize! :edit, @post
   end
 
@@ -71,7 +73,7 @@ class PostsController < ApplicationController
     @post = Post.new(params[:post])
     authorize! :create, @post
 
-    if @post.published_at > Time.zone.now - 300
+    if params[:size] == "now" || @post.published_at > Time.zone.now
       #advanced / now posting. 5 minute min. difference
       @post.draft = true
     else 
@@ -100,7 +102,6 @@ class PostsController < ApplicationController
   # PUT /posts/1.json
   def update
     @post = Post.cached_find_by_url(params[:id])
-    @blog = Blog.cached_find_by_slug(params[:post][:blog_id])
     authorize! :update, @post
 
     delete_if_scheduled_post
@@ -144,7 +145,7 @@ class PostsController < ApplicationController
   end
 
   def reschedule_post
-    if(@post.published_at > Time.zone.now - 300)
+    if(params[:size] == "now" || @post.published_at > Time.zone.now)
       @post.draft=true
       EmailWorker.perform_at(@post.published_at,@post.cached_blog.cached_user.id,@post.id)
     else
