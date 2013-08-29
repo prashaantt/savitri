@@ -21,6 +21,8 @@ Savitri::Application.routes.draw do
 
   get 'lines/range/:id', to: 'lines#range'
   get 'stanzas/range/:id', to: 'stanzas#range'
+  get 'blogs/:blog_id/recentcomments', to: 'blogs#recentcomments', :defaults => {:format => :json}
+  get 'blogs/:blog_id/recentposts', to: 'blogs#recentposts', :defaults => {:format => :json}
 
   devise_for :users
   

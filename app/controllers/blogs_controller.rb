@@ -21,6 +21,22 @@ class BlogsController < ApplicationController
  	  end
 	end
 
+  def recentcomments
+    blog = Blog.cached_find_by_slug(params[:blog_id])
+    @comments = blog.cached_recentcomments
+    respond_to do |format|
+      format.json {render :json => @comments.to_json(:only =>[:commenter],:methods=>[:cached_share_url, :cached_post_title])}
+    end
+  end
+
+  def recentposts
+    blog = Blog.cached_find_by_slug(params[:blog_id])
+    @posts = blog.cached_recentposts
+    respond_to do |format|
+      format.json {render :json => @posts.to_json(:only =>[:title],:methods=>[:cached_share_url])}
+    end
+  end
+
 	def create
 		@blog = current_user.blogs.build(params[:blog])
 		authorize! :create, @blog

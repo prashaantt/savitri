@@ -6,10 +6,6 @@ class Comment < ActiveRecord::Base
 
   validates :body, :presence => true
 
-  def self.cached_recent(blog)
-    Rails.cache.fetch([name, "recentcomments"+blog.title]) { blog.comments.limit(10).order('created_at desc').to_a }
-  end
-
   def cached_body
     Rails.cache.fetch([self,"body"]) { body }
   end
@@ -18,15 +14,24 @@ class Comment < ActiveRecord::Base
     Rails.cache.fetch([self,"post"]) { post }
   end
 
+  def cached_post_title
+    Rails.cache.fetch([self,"posttitle"]) { post.title }
+  end
+
   def cached_user
     Rails.cache.fetch([self,"user"]) { user }
   end
 
+  def cached_share_url
+    Rails.cache.fetch([self,"share_url"]) { "/blogs/"+post.blog.slug.to_s+"/posts/"+post.url.to_s+"#comment-"+id.to_s }
+  end
+
   def flush_cache
-    Rails.cache.delete([self.class.name, "recentcomments"+Post.find_by_id(self.post_id).blog.title])
     Rails.cache.delete([self,"body"])
     Rails.cache.delete([self,"post"])
+    Rails.cache.delete([self,"posttitle"])
     Rails.cache.delete([self,"user"])
+    Rails.cache.delete([self,"share_url"])
     Post.find(self.post_id).flush_comments_cache
   end
 end
