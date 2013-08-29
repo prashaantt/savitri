@@ -80,6 +80,7 @@ class Post < ActiveRecord::Base
   def flush_comments_cache
     Rails.cache.delete([self, "commentscount"])
     Rails.cache.delete([self, "comments"])
+    Blog.find(blog_id).flush_dependent_cache
   end
 
   def self.cached_draft_count(blogid)
@@ -126,6 +127,10 @@ class Post < ActiveRecord::Base
     Rails.cache.fetch([self,"show_excerpt"]) { show_excerpt }
   end
 
+  def cached_share_url
+    Rails.cache.fetch([self,"share_url"]) { "/blogs/"+blog.slug+"/posts/"+url }
+  end
+
   def flush_cache
     Rails.cache.delete([self.class.name,"draftcount"+self.blog_id.to_s])
     Rails.cache.delete([self.class.name,"drafts"+self.blog_id.to_s])
@@ -139,6 +144,7 @@ class Post < ActiveRecord::Base
     Rails.cache.delete([self,"series_title"])
     Rails.cache.delete([self,"subtitle"])
     Rails.cache.delete([self,"show_excerpt"])
+    Rails.cache.delete([self,"share_url"])
     flush_comments_cache
   end
 

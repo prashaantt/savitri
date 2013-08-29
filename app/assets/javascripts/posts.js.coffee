@@ -102,4 +102,44 @@ $ ->
 					audiodiv = $(this).find(">:first-child")
 					fileloc = audiodiv.attr('src')
 					closetdiv = $(this).parent()
-					$(closetdiv).append($("<div class=\"span6\"><b><a href=\""+fileloc+"\">Download Audio <i class=\"icon-download-alt\"></i></a></b><br/></div>"))
+					$(closetdiv).append($("<div class=\"span6\"><b><a href=\""+fileloc+"\"
+							>Download Audio <i class=\"icon-download-alt\"></i></a></b><br/></div>"))
+
+	$("#recentcomments").click (event) ->
+		if ($("#rcom").find("li").length == 0)
+				callback = (response) -> 
+					recentcomdiv = $("#rcom")
+					commentsdiv = ""
+					if(response.length != 0)
+						$.each response, (val1) -> 
+							comment = response[val1]
+							commentsdiv=commentsdiv.concat("<li class=\"content-indent\"\>")
+							commentsdiv=commentsdiv.concat("<a href=\""+comment.cached_share_url+"\" 
+								class=\"sidebar-links\">"+comment.commenter+": \""+comment.cached_post_title+"\"")
+						recentcomdiv.append(commentsdiv)
+					else
+						recentcomdiv.append("<li>No Recent Comments</li>")
+
+
+				$.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentcomments/', callback, 'json'
+
+$ ->
+	$("#recentposts").click (event) ->
+		if ($("#rpos").find("li").length == 0)
+				callback = (response) -> 
+					recentpostsdiv = $("#rpos")
+					postsdiv = ""
+					if (response.length != 0)
+						$.each response, (val1) -> 
+							post = response[val1]
+							postsdiv=postsdiv.concat("<li class=\"content-indent\"\>")
+							postsdiv=postsdiv.concat("<a href=\""+post.cached_share_url+"\" 
+								class=\"sidebar-links\">"+post.title+"\"")
+
+						recentpostsdiv.append(postsdiv)
+					else
+						recentpostsdiv.append("<li>No Recent Posts</li>")
+
+
+
+				$.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentposts/', callback, 'json'

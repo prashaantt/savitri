@@ -115,14 +115,20 @@
           </ol>
         </div>
       <% end %>
-      <!-- Begin Latest Comments -->
-      <% recentcomments = Comment.cached_recent(@blog).first(15) %>
-      <% unless recentcomments.count.zero? %>
-        <div class="archives right-sidebar" id="recent_comments">
-          <%= render 'shared/recent_comment' %>
-        </div>
-      <% end %>
-      <!-- end latest comments -->
+      <!-- Begin Latest comments -->
+      <div class="archives right-sidebar" id="recent_comments">
+        <label for="recentcomments" class="sidebar-title"><span class="label">Recent comments</span></label>
+        <input class="rcin" type="checkbox" id="recentcomments" />
+        <ol id="rcom"></ol>
+      </div><!-- end Latest comments -->
+
+      <!-- Begin Latest posts -->
+      <div class="archives right-sidebar" id="recent_posts">
+        <label for="recentposts" class="sidebar-title"><span class="label">Recent posts</span></label>
+        <input class="rcin" type="checkbox" id="recentposts" />
+        <ol id="rpos"></ol>
+      </div><!-- end Latest posts -->
+
       <div class="archives right-sidebar">
         <% unless @blogposts.length == 0 %>
           <label for="archtag" class="sidebar-title"><span class="label">Archives</span></label>
@@ -156,4 +162,3 @@
   </div>
 </div>
 <!-- End Sidebar Content -->
-
