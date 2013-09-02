@@ -17,9 +17,9 @@ class PagesController < ApplicationController
   # GET /pages/1.json
   def show
     if params[:paths].nil?
-      @page = Page.find_by_permalink!(params[:id])  
+      @page = Page.find_by_permalink!(params[:id]) || not_found
     else
-      @page = Page.find_by_permalink!(params[:paths])
+      @page = Page.find_by_permalink!(params[:paths]) || not_found
     end
 
     respond_to do |format|
@@ -41,7 +41,7 @@ class PagesController < ApplicationController
 
   # GET /pages/1/edit
   def edit
-    @page = Page.find(params[:id]) 
+    @page = Page.find(params[:id]) || not_found
     @page.url = @page.permalink.split("/").last
   end
 

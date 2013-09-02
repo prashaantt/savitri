@@ -27,7 +27,7 @@ class AudiosController < ApplicationController
   # GET /audios/1
   # GET /audios/1.json
   def show
-    @medium = Medium.find_by_url(params[:medium_id])
+    @medium = Medium.find_by_url(params[:medium_id]) || not_found
     @audio = Audio.find_by_medium_id_and_url(@medium.id, params[:id])
 
     respond_to do |format|
@@ -51,7 +51,7 @@ class AudiosController < ApplicationController
   # GET /audios/1/edit
   def edit
     authorize! :create, @media
-    @medium = Medium.find_by_url(params[:medium_id])
+    @medium = Medium.find_by_url(params[:medium_id]) || not_found
     @audio = Audio.find_by_medium_id_and_url(@medium.id, params[:id])
   end
 
