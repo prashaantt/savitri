@@ -15,7 +15,7 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
-    @book = Book.includes("cantos").find_by_no(params[:id])
+    @book = Book.includes("cantos").find_by_no(params[:id])|| not_found
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,7 +37,7 @@ class BooksController < ApplicationController
 
   # GET /books/1/edit
   def edit
-    @book = Book.find_by_no(params[:id])
+    @book = Book.find_by_no(params[:id]) || not_found
   end
 
   # POST /books

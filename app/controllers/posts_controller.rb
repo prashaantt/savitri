@@ -63,8 +63,12 @@ class PostsController < ApplicationController
   # GET /posts/1/edit
   def edit
     blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
-    @post = Post.cached_find_by_blog_id_and_url(blog_id,params[:id])
+    @post = Post.cached_find_by_blog_id_and_url(blog_id,params[:id]) || not_found
     authorize! :edit, @post
+    respond_to do |format|
+      format.html # edit.html.erb
+      format.json { render json: @post }
+    end
   end
 
   # POST /posts
