@@ -1,7 +1,7 @@
 class BlogsController < ApplicationController
 
 	before_filter :store_location
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :authenticate_user!, :except => [:show, :recentcomments, :recentposts]
 
 	def index
 	  @blogs = current_user.cached_blogs
