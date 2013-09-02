@@ -66,5 +66,7 @@ module Savitri
 
     # acts_as_taggable_on config
     ActsAsTaggableOn.force_lowercase = false
+
+    config.exceptions_app = self.routes
   end
 end
