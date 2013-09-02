@@ -17,4 +17,8 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource_or_scope)
     savitri_path 
   end 
+
+  def not_found
+    raise ActionController::RoutingError.new('Couldn\'t find the page you were looking for.')
+  end
 end
