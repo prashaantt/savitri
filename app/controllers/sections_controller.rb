@@ -15,7 +15,7 @@ class SectionsController < ApplicationController
   # GET /sections/1
   # GET /sections/1.json
   def show
-    @section = Section.find(params[:id])
+    @section = Section.find(params[:id]) || not_found
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,7 +37,7 @@ class SectionsController < ApplicationController
 
   # GET /sections/1/edit
   def edit
-    @section = Section.find(params[:id])
+    @section = Section.find(params[:id]) || not_found
   end
 
   # POST /sections

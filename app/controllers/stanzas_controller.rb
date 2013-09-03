@@ -31,7 +31,7 @@ class StanzasController < ApplicationController
   def show
     #@stanza = Stanza.find(params[:id])
     #@stanza = Stanza.where(:stanzno=>params[:id])
-    @stanza = Stanza.find_by_no(params[:id])
+    @stanza = Stanza.find_by_no(params[:id]) || not_found
     logger.info @stanza
 
     respond_to do |format|
@@ -53,7 +53,7 @@ class StanzasController < ApplicationController
 
   # GET /stanzas/1/edit
   def edit
-    @stanza = Stanza.find_by_no(params[:id])
+    @stanza = Stanza.find_by_no(params[:id]) || not_found
   end
 
   # POST /stanzas

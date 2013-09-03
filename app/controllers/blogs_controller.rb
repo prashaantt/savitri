@@ -8,7 +8,7 @@ class BlogsController < ApplicationController
 	end
 
 	def show
-	  blog = Blog.cached_find_by_slug(params[:id])
+	  blog = Blog.cached_find_by_slug(params[:id]) || not_found
 	  redirect_to blog_posts_path(blog), status: 301
 	end
 
@@ -53,7 +53,7 @@ class BlogsController < ApplicationController
 	end
 
 	def edit
-    @blog = Blog.cached_find_by_slug(params[:id])
+    @blog = Blog.cached_find_by_slug(params[:id]) || not_found
     authorize! :edit, @blog
 	end
 
