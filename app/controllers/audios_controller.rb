@@ -6,7 +6,7 @@ class AudiosController < ApplicationController
   # GET /audios
   # GET /audios.json
   def index
-    @medium = Medium.find_by_url(params[:medium_id])
+    @medium = Medium.find_by_url(params[:medium_id]) || not_found
     @mediumaudios = @medium.audios.order("audios.created_at DESC")
     @tagaudios = @mediumaudios.tagged_with(params[:tag])
     if params[:tag]
