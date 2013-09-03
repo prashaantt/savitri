@@ -7,7 +7,10 @@
 }
 
 .italics {
-  font-family: "Minion Pro 1167263", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "minion-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+  text-decoration: none;
   -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
   -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
   -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
@@ -18,16 +21,17 @@
 
 .blog-subtitle {
   @extend .italics;
-  text-decoration: none;
 }
 
 .post-series {
-  font-family: "Myriad W01 It";
+  font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: italic;
+  font-weight: 300;
   color: #999999;
 }
 
 .post-series-sidebar {
-  margin-left:-170px;
+  margin-left:-190px;
   margin-top:5px
 }
 
@@ -38,11 +42,20 @@
   margin-bottom: 15px !important;
 }
 
+.main-content a {
+  text-decoration: none;
+  border-bottom: 1px #999 dotted;
+}
+
+.main-content a:hover {
+  text-decoration: none;
+  border-bottom: none;
+}
+
 .author {
   @extend .italics;
   font-size: 120%;
   color: #999999;
-  text-decoration: none;
 }
 
 .blog-author {
@@ -58,6 +71,7 @@
 
 .underline {
   text-decoration: underline;
+  color: #999;
 }
 
 .underline:hover {
@@ -149,8 +163,9 @@ table.table.table-condensed {
 }
 
 .ltag{
-    font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 300;
+    font-style: normal;
     list-style: none;
     padding-left: 20px;
 }
@@ -284,8 +299,9 @@ iframe {
 }
 
 .sidebar-links {
-  font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
+  font-style: normal;
 }
 
 .right-sidebar {

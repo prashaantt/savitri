@@ -12,8 +12,9 @@
   }
 
 .navcanto a {
-  font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
+  font-style: normal;
 }
 
 .rowread {
@@ -263,11 +264,13 @@
 
 .navfx:hover {
   color: #666;
+  text-decoration: none;
 }
 
 .navbook {
-  font-family: "Myriad W01 Lt", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
+  font-style: normal;
   color: #fff;
   font-size:100%;
 }
@@ -323,11 +326,11 @@
 
 
 
-.dropdown-menu > li > a {
+.dd-menu > li > a {
   display: block;
   padding: 3px 20px;
   clear: both;
-  font-weight: normal;
+  font-weight: 300;
   line-height: 20px;
   color: #000;
   white-space: nowrap;
@@ -338,7 +341,7 @@
   display: block;
   padding: 3px 20px;
   clear: both;
-  font-weight: normal;
+  font-weight: 300;
   line-height: 20px;
   color: #fff;
   font-size:100%;

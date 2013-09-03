@@ -12,6 +12,8 @@
  *= require_tree .
  */
 
+@import "fonts.css.scss"
+
 .removeicon {
   margin-left: -55px;
   position: absolute;
