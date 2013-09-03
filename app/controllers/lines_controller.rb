@@ -16,7 +16,7 @@ class LinesController < ApplicationController
   # GET /lines/1
   # GET /lines/1.json
   def show
-    @line = Line.find_by_no(params[:id])
+    @line = Line.find_by_no(params[:id]) || not_found
     authorize! :index, @line
     respond_to do |format|
       format.html # show.html.erb
@@ -53,7 +53,7 @@ class LinesController < ApplicationController
 
   # GET /lines/1/edit
   def edit
-    @line = Line.find_by_no(params[:id])
+    @line = Line.find_by_no(params[:id]) || not_found
     authorize! :edit, @line
   end
 

@@ -15,7 +15,7 @@ class CantosController < ApplicationController
   # GET /cantos/1
   # GET /cantos/1.json
   def show
-    @canto = Canto.find_by_no(params[:id])
+    @canto = Canto.find_by_no(params[:id]) || not_found
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,7 +37,7 @@ class CantosController < ApplicationController
 
   # GET /cantos/1/edit
   def edit
-    @canto = Canto.find_by_no(params[:id])
+    @canto = Canto.find_by_no(params[:id]) || not_found
   end
 
   # POST /cantos
