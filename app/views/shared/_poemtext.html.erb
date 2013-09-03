@@ -1,4 +1,4 @@
-<%= form_for Post.new, :html => { :class => 'form-inline' } do |f| %>
+<%= form_tag '', :html => { :class => 'form-inline' } do %>
 <div class="span10">
 <!--   <p><a href="#myModal" role="button" class="btn" data-toggle="modal">Import Text from Savitri</a></p>
 -->  <!-- Modal -->
@@ -12,15 +12,15 @@
   <div class="modal-body">
     <div class="row" style="margin-left: 10px">
       <div id="from-line" style="float: left; margin-right: 20px;">
-        <%= f.label :from, "From" %>
+        <%= label :quote_from, "From" %>
         <div>
-          <%= f.text_field :from, :class => 'text_field span1' %>
+          <%= text_field_tag :quote_from, '', :class => 'text_field span1' %>
         </div>
       </div>
       <div id="to-line" style="float: left; margin-left: 20px;">
-        <%= f.label :to, "To" %>
+        <%= label :quote_to, "To" %>
         <div>
-          <%= f.text_field :to, :class => 'text_field span1' %>
+          <%= text_field_tag :quote_to, '', :class => 'text_field span1' %>
         </div>
       </div>
       <%= button_to("View", {:controller => "stanzas", :action => "range", :id => 6}, :id=>"view-poemtext",:style=>"margin-top: 25px;height: 30px; margin-right: 10px", :remote => true, :class => "btn pull-right") %>

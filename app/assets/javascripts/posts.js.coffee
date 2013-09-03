@@ -32,8 +32,8 @@ $ ->
 $ ->
 	$("#view-poemtext").click (event) ->
 	  event.preventDefault()
-	  linefrom = $("#post_from").val()
-	  lineto = $("#post_to").val()
+	  linefrom = $("#quote_from").val()
+	  lineto = $("#quote_to").val()
 	  rooturl = window.location.origin
 	  if linefrom == ""
 	  	alert "From is mandatory"

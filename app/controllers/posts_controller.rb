@@ -6,8 +6,8 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
-    @blogposts= Post.published.where(:blog_id=>@blog_id).order("posts.published_at DESC")
+    blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
+    @blogposts= Post.published.where(:blog_id=>blog_id.id).order("posts.published_at DESC")
     if params[:tag]
       @tagposts = @blogposts.tagged_with(params[:tag])
       @posts    = @tagposts.page(params[:page]).per(10)
@@ -41,8 +41,8 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
-    @post = Post.cached_find_by_blog_id_and_url(blog_id,params[:id]) || not_found
+    blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
+    @post = Post.cached_find_by_blog_id_and_url(blog_id.id,params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post }
@@ -62,8 +62,8 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
-    @post = Post.cached_find_by_blog_id_and_url(blog_id,params[:id]) || not_found
+    blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
+    @post = Post.cached_find_by_blog_id_and_url(blog_id.id,params[:id]) 
     authorize! :edit, @post
     respond_to do |format|
       format.html # edit.html.erb
@@ -77,22 +77,10 @@ class PostsController < ApplicationController
     @post = Post.new(params[:post])
     authorize! :create, @post
 
-    if params[:size] == "now" || @post.published_at > Time.zone.now
-      #advanced / now posting. 5 minute min. difference
-      @post.draft = true
-    else 
-      #Backdated posts
-      @post.created_at = @post.published_at
-      @post.draft = false
-    end
+    @post.update_draft_status(params)
 
     respond_to do |format|
       if @post.save
-
-        if @post.draft?
-          EmailWorker.perform_at(@post.published_at,current_user.id,@post.id)
-        end
-
         format.html { redirect_to blog_posts_path(@post.blog), notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
@@ -108,11 +96,11 @@ class PostsController < ApplicationController
     @post = Post.cached_find_by_url(params[:id])
     authorize! :update, @post
 
-    delete_if_scheduled_post
+    @post.delete_if_scheduled
+    @post.update_draft_status(params)
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        reschedule_post
         format.html { redirect_to blog_post_path(@post.blog,@post), notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
@@ -128,36 +116,13 @@ class PostsController < ApplicationController
     @post = Post.find_by_url(params[:id])
     authorize! :destroy, @post
 
-    delete_if_scheduled_post
+    @post.delete_if_scheduled
     @post.destroy
     
     respond_to do |format|
       format.html { redirect_to blog_posts_path(@post.blog) }
       format.json { head :no_content }
     end
-  end
-
-  private
-
-  def delete_if_scheduled_post
-    schedposts = Sidekiq::ScheduledSet.new
-    schedposts.select do |sched|
-      if(sched.args==[@post.cached_blog.cached_user.id,@post.id])
-        sched.delete
-      end
-    end
-  end
-
-  def reschedule_post
-    if(params[:size] == "now" || @post.published_at > Time.zone.now)
-      @post.draft=true
-      EmailWorker.perform_at(@post.published_at,@post.cached_blog.cached_user.id,@post.id)
-    else
-      #Backdated posts
-      @post.created_at = @post.published_at
-      @post.draft = false
-    end
-    @post.save
   end
 
 end

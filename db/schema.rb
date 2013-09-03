@@ -142,7 +142,6 @@ ActiveRecord::Schema.define(:version => 20130729070130) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
     t.text     "md_content"
-    t.string   "photos"
     t.text     "excerpt"
     t.string   "url"
     t.datetime "published_at"

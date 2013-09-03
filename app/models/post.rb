@@ -1,8 +1,10 @@
 class Post < ActiveRecord::Base
 
-  attr_accessible :content, :title, :tag_list, :blog_id, :section, :book, :canto, :from, :to, :md_content, :photo, :uploads_attributes, :excerpt, :url, :published_at, :series_title, :subtitle, :show_excerpt
+  attr_accessible :content, :title, :tag_list, :blog_id, :md_content, :uploads_attributes,
+                  :excerpt, :url, :published_at, :series_title, :subtitle, :show_excerpt
+
   acts_as_taggable
-  acts_as_url :title
+  acts_as_url :title, :scope => :blog_id
 
   belongs_to :blog
   has_many :comments, :dependent => :destroy, :order => 'comments.created_at'
@@ -11,6 +13,7 @@ class Post < ActiveRecord::Base
 
   before_save :trim
   after_commit :flush_cache
+  after_commit :setup_notifications, :if => :persisted?
 
   scope :published, proc {
     where(:draft => false)
@@ -29,15 +32,29 @@ class Post < ActiveRecord::Base
   validates :title, :presence => true,
                     :length => { :minimum => 3 }
   validates :content, :presence => true
-  accepts_nested_attributes_for :uploads #######FIX ME
 
   def publish!
     self.draft = false
     self.save!
   end
 
-  def photo
-    uplods.photo
+  def update_draft_status(params)
+    if(params[:size] == "now" || published_at > Time.zone.now)
+      draft=true
+    else
+      #Backdated posts
+      created_at = published_at
+      draft = false
+    end
+  end
+
+  def delete_if_scheduled
+    schedposts = Sidekiq::ScheduledSet.new
+    schedposts.select do |sched|
+      if(sched.args==[cached_blog.cached_user.id,id])
+        sched.delete
+      end
+    end
   end
 
   def category
@@ -55,16 +72,7 @@ class Post < ActiveRecord::Base
   def blogname
     blog.title
   end
-  def section
-  end
-  def canto
-  end
-	def book
-  end
-  def from
-  end
-  def to
-  end
+
   def to_param
     "#{url}"
   end
@@ -160,4 +168,9 @@ class Post < ActiveRecord::Base
       self.subtitle = self.subtitle.strip unless self.subtitle.nil?
     end
 
+    def setup_notifications
+      if draft?
+        EmailWorker.perform_at(published_at,cached_blog.cached_user.id,id)
+      end
+    end
 end
