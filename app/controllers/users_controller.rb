@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
   
   def index
+    authorize! :index, @users
     @users = User.all
 
     respond_to do |format|
@@ -15,7 +16,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]) || not_found
 
     respond_to do |format|
       format.html # show.html.erb
@@ -36,7 +37,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]) || not_found
   end
 
   # POST /users

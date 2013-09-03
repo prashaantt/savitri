@@ -1,14 +1,14 @@
 class BlogsController < ApplicationController
 
 	before_filter :store_location
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :authenticate_user!, :except => [:show, :recentcomments, :recentposts]
 
 	def index
 	  @blogs = current_user.cached_blogs
 	end
 
 	def show
-	  blog = Blog.cached_find_by_slug(params[:id])
+	  blog = Blog.cached_find_by_slug(params[:id]) || not_found
 	  redirect_to blog_posts_path(blog), status: 301
 	end
 
@@ -20,6 +20,22 @@ class BlogsController < ApplicationController
       format.json { render json: @blog }
  	  end
 	end
+
+  def recentcomments
+    blog = Blog.cached_find_by_slug(params[:blog_id])
+    @comments = blog.cached_recentcomments
+    respond_to do |format|
+      format.json {render :json => @comments.to_json(:only =>[:commenter],:methods=>[:cached_share_url, :cached_post_title])}
+    end
+  end
+
+  def recentposts
+    blog = Blog.cached_find_by_slug(params[:blog_id])
+    @posts = blog.cached_recentposts
+    respond_to do |format|
+      format.json {render :json => @posts.to_json(:only =>[:title],:methods=>[:cached_share_url])}
+    end
+  end
 
 	def create
 		@blog = current_user.blogs.build(params[:blog])
@@ -37,7 +53,7 @@ class BlogsController < ApplicationController
 	end
 
 	def edit
-    @blog = Blog.cached_find_by_slug(params[:id])
+    @blog = Blog.cached_find_by_slug(params[:id]) || not_found
     authorize! :edit, @blog
 	end
 

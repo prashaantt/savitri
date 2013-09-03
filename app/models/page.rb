@@ -3,7 +3,7 @@ class Page < ActiveRecord::Base
 
   validates_length_of :permalink,:url, :minimum => 3
   validates_presence_of :content, :name, :permalink, :md_content
-  validates_uniqueness_of  :url,:permalink
+  validates_uniqueness_of  :permalink
   validates_presence_of :priority, :unless => Proc.new {|m| m.category != "Menu"}
   validates_uniqueness_of :priority, :unless => Proc.new {|m| m.category != "Menu"}
   validates :priority, :numericality => {:only_integer => true}, :unless => Proc.new {|m| m.category != "Menu"}
