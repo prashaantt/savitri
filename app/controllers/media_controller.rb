@@ -14,7 +14,7 @@ class MediaController < ApplicationController
   # GET /media/1
   # GET /media/1.json
   def show
-    medium = Medium.find_by_url(params[:id])
+    medium = Medium.find_by_url(params[:id]) || not_found
     redirect_to medium_audios_path(medium), status: 301
   end
 
@@ -33,7 +33,7 @@ class MediaController < ApplicationController
   # GET /media/1/edit
   def edit
     authorize! :create, @media
-    @medium = Medium.find_by_url(params[:id])
+    @medium = Medium.find_by_url(params[:id]) || not_found
   end
 
   # POST /media

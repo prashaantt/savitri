@@ -5,7 +5,7 @@ class ReadController < ApplicationController
     sectionrunningno=params[:section_id]
     cantoid=params[:canto_id]
     bookid=params[:book_id]
-    @canto = Canto.cached_find_by_no_and_bookid(cantoid, bookid)
+    @canto = Canto.cached_find_by_no_and_bookid(cantoid, bookid) || not_found
     @sections = @canto.sections_cache_with_runningno(sectionrunningno)
     #@stanzas = Stanza.cached_by_section(@sections.first.id)
     @stanzas = @sections.first.cached_stanzas
