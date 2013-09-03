@@ -25,7 +25,7 @@
 				<h3 class="announce">Showing <%= @search.total %> matches</h3>
 			<% else %>
 				<h3 class="announce">No results found</h3>
-				<p class="italics">Try searching for something else.</p>
+				<p><em>Try searching for something else.</em></p>
 			<% end %>
 			<div class="results">
 				<% @search.each_hit_with_result do |hit,l| %>

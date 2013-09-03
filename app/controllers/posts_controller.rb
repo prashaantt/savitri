@@ -31,6 +31,9 @@ class PostsController < ApplicationController
   def scheduled
     @blogposts = Post.draft.order('posts.published_at DESC')
     @posts = @blogposts.page(params[:page]).per(10)
+    if @posts.empty?
+      @noscheduled = true;
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @posts }
