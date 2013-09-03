@@ -77,6 +77,7 @@ refresh = (data) ->
     $.get '/savitri/show/', callback, 'json'
 
 showIntro = (selectionData) ->
+  $(".top").css("padding-bottom", "0");
   window.selectionData = selectionData
   d = JSON.stringify(selectionData, undefined, 2)
   data = jQuery.parseJSON(d)

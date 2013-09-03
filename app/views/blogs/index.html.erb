@@ -1,7 +1,7 @@
 <%- model_class = Blog -%>
 <div class="row">
   <div class="span6 offset3">
-    <div class="page-header">
+    <div class="page-header title">
       <h1>Manage Blogs</h1>
     </div>
   </div>
@@ -30,30 +30,30 @@
     	<% if current_user.role == 'Admin'%>
         <% if current_user.cached_blogs_count < 3 %>
           <section>
-            <h3><small>You can host up to 3 blogs.</small></h3>
+            <p class="muted"><em>You can host up to 3 blogs.</em></p>
             <%= link_to 'New blog', new_blog_path, :class => "btn btn-info" %>
           </section>
           <hr>
         <% end %>
         <section>
           <h2>Pages</h2>
-          <h3><small>Create static files.</small></h3>
+          <p class="muted"><em>Create static files.</em></p>
           <%= link_to 'Manage pages', pages_path, :class => "btn btn-info" %>
         </section>
         <hr>
         <section>
           <h2>Media</h2>
-          <h3><small>Create podcasts.</small></h3>
+          <p class="muted"><em>Create podcasts.</em></p>
           <%= link_to 'Manage media', media_path, :class => "btn btn-info" %>
         </section>
         <hr>
         <section>
           <h2>Invitations</h2>
-          <h3><small>Invite new users or migrate existing ones.</small></h3>
+          <p class="muted"><em>Invite new users or migrate existing ones.</em></p>
           <%= link_to 'Send invitation', new_user_invitation_path, :class => "btn btn-info" %>
         </section>        
       <% elsif current_user.cached_blogs_count < 1 %>
-        <h3><small>You can host 1 blog.</small></h3>
+        <p class="muted"><em>You can host 1 blog.</em></p>
         <%= link_to 'New blog', new_blog_path, :class => "btn btn-info"  %>
       <% end %>
     </section>

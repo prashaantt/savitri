@@ -23,7 +23,7 @@
                         <%= title[2] %>
                       <% end %>
                     </a>
-                    <ul class="dropdown-menu roundcorner submenutext">
+                    <ul class="dropdown-menu roundcorner submenutext dd-menu">
                       <% canto.cached_sections.each do |section| %>
                         <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>">
                           <%= link_to 'Section '+ section.cached_runningno.to_s + ' ('+ section.cached_number.to_s + ')',"/read/" + canto.cached_book.cached_number.to_s + "/" + canto.cached_number.to_s + "/" + section.cached_runningno.to_s %>
@@ -58,7 +58,7 @@
                 <%= params[:book_id]%>
                 <span class="caret"></span>
               </a>
-              <ul class="dropdown-menu sectionlist size">
+              <ul class="dropdown-menu sectionlist size dd-menu">
                 <% Book.cached_all.each do |book| %>
                   <li>
                     <%= link_to 'Book ' + book.cached_number.to_s + ': ' + book.cached_name.to_s, '/read/' + book.cached_number.to_s + '/'+ book.cached_cantos.first.cached_number.to_s + '/1', :class=>"tag" %>
@@ -74,7 +74,7 @@
                 <%= params[:canto_id]%>
                 <span class="caret"></span>
               </a>
-              <ul class="dropdown-menu size sectionlist dropdown-align" role="menu" aria-labelledby="dropsection">
+              <ul class="dropdown-menu size sectionlist dropdown-align dd-menu" role="menu" aria-labelledby="dropsection">
                 <% @book.cached_cantos.each do |canto| %>
                   <li role="presentation">
                     <% *title = canto.cached_title.split(/(: )/) %>
@@ -111,7 +111,7 @@
                
                   <span class="caret"></span>
                 </a>
-                <ul class="dropdown-menu sectionlist" role="menu" aria-labelledby="dropsection">
+                <ul class="dropdown-menu sectionlist dd-menu" role="menu" aria-labelledby="dropsection">
                   <% @sections.each do |section| %>
                   <li role="presentation" class="hidden-desktop">
                     <%= link_to "/read/" + @canto.cached_book.cached_number.to_s + "/" + @canto.cached_number.to_s + "/" + section.cached_runningno.to_s do %>

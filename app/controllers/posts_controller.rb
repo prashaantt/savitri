@@ -32,6 +32,9 @@ class PostsController < ApplicationController
     @blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
     @blogposts = Post.cached_drafts(@blog_id)
     @posts = @blogposts.page(params[:page]).per(10)
+    if @posts.empty?
+      @noscheduled = true;
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @posts }
