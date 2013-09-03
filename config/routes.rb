@@ -83,6 +83,8 @@ Savitri::Application.routes.draw do
 
   resources :lines
 
+  match '(errors)/:status', to: 'errors#show', constraints: {status: /\d{3}/}
+
   resources :pages, except: :show
 
   get ':id', to: 'pages#show', as: :page
