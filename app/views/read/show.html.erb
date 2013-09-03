@@ -1,4 +1,5 @@
-<!-- dynamic fetch of books and cantos -->
+<% @book = Book.cached_find(params[:book_id]) %>
+<% title @book.name %>
 <div class="row" id="read-row">
   <div class="span2 visible-desktop">
     <div class="accordion sidebar" id="accordion2">
@@ -42,7 +43,6 @@
   <div class="span6 offset1" id="read">
     <div id="cantos">
       <% unless @stanzas.blank? %>
-        <% @book = Book.cached_find(params[:book_id]) %>
         <% @section = Section.cached_find(@stanzas.first.cached_section) %>
         <% @canto = Canto.cached_find(@section.cached_cantoid) %>
         <% @sections = @canto.cached_sections %>
@@ -61,7 +61,7 @@
               <ul class="dropdown-menu sectionlist size dd-menu">
                 <% Book.cached_all.each do |book| %>
                   <li>
-                    <%= link_to 'Book ' + book.cached_number.to_s + ': ' + book.cached_name.to_s, '/read/' + book.cached_number.to_s + '/1/1', :class=>"tag" %>
+                    <%= link_to 'Book ' + book.cached_number.to_s + ': ' + book.cached_name.to_s, '/read/' + book.cached_number.to_s + '/'+ book.cached_cantos.first.cached_number.to_s + '/1', :class=>"tag" %>
                   </li>
                 <% end %>
                   <!-- dropdown menu links -->
@@ -143,4 +143,3 @@
   </div>
 </div>
 <i href="#" class="icon-chevron-up go-top visible-desktop" style="float:right;"></i>
- 

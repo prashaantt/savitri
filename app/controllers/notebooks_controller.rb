@@ -39,7 +39,7 @@ class NotebooksController < ApplicationController
   # GET /notebooks/1
   # GET /notebooks/1.json
   def show
-    @notebook = Notebook.find(params[:id])
+    @notebook = Notebook.find(params[:id]) || not_found
 
     respond_to do |format|
       format.html # show.html.erb
@@ -59,7 +59,7 @@ class NotebooksController < ApplicationController
 
   # GET /notebooks/1/edit
   def edit
-    @notebook = Notebook.find(params[:id])
+    @notebook = Notebook.find(params[:id]) || not_found
   end
 
   # POST /notebooks

@@ -18,6 +18,14 @@ class Blog < ActiveRecord::Base
     Rails.cache.fetch([name,"findbyslug"+blogid.to_s]) { find_by_slug(blogid) }
   end
 
+  def cached_recentcomments
+    Rails.cache.fetch([self, "recentcomments"]) { comments.limit(10).order('created_at desc').to_a }
+  end
+
+  def cached_recentposts
+    Rails.cache.fetch([self, "recentposts"]) { posts.where(:draft=>false).limit(20).order('created_at desc').to_a }
+  end
+
   def cached_title
     Rails.cache.fetch([self, "title"]) { title }
   end
@@ -30,12 +38,19 @@ class Blog < ActiveRecord::Base
     Rails.cache.fetch([self,"user"]) { user }
   end
 
+  def flush_dependent_cache
+    Rails.cache.delete([self, "recentcomments"])
+    Rails.cache.delete([self, "recentposts"])
+  end
+
   def flush_cache
     Rails.cache.delete([self.class.name, "findbyslug"+self.slug])
     Rails.cache.delete([self, "title"]) 
     Rails.cache.delete([self, "subtitle"]) 
     Rails.cache.delete([self, "user"])
     User.find(self.user).flush_cache
+
+    flush_dependent_cache
   end
 
 end
