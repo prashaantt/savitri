@@ -1,7 +1,7 @@
 <div class="comment">
   <div class="comment-author">
     <span class="author">
-      <%= link_to comment.cached_user.cached_name, profile_path(comment.cached_user), {:class => "underline"} %>
+      <%= link_to comment.commenter.present? ? comment.commenter : comment.cached_user.username, profile_path(comment.cached_user), {:class => "underline"} %>
       on <%= comment.created_at.strftime("%b %d %Y at ") %> <%= link_to comment.created_at.strftime("%l:%M %p"), blog_post_path(comment.cached_post.cached_blog, comment.cached_post, :anchor => "comment-" + comment.id.to_s), {:class => "underline"} %>:
     </span>
     <span style="float:right">
@@ -13,8 +13,8 @@
       <% end %>
     </span>
   </div>
-  <div id="comment-<%= comment.id %>">
-    <p><%= auto_link(comment.cached_body.gsub(/\r\n?/,"<br>").html_safe, :html => { :target => '_blank', :class => "underline" }) %>
+  <div id="comment-<%= comment.id %>" class="main-content">
+    <p><%= auto_link(comment.cached_body.gsub(/\r\n?/,"<br>").html_safe, :html => { :target => '_blank' }) %>
   </p>
   </div>
 </div>
