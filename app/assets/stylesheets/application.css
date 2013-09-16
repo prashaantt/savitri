@@ -10,9 +10,8 @@
  *
  *= require_self
  *= require_tree .
+ *= require_fonts
  */
-
-@import "fonts.css.scss"
 
 .removeicon {
   margin-left: -55px;
