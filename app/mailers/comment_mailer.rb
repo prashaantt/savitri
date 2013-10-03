@@ -1,5 +1,6 @@
 class CommentMailer < ActionMailer::Base
-  default from: "admin@savitri.in"
+  default :from => "admin@savitri.in"
+  	   :reply_to => "admin@savitri.in"
 
   def comment_notification_email(reciever, sender, blog, post, comment)
     @reciever = reciever
