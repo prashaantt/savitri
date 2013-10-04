@@ -1,5 +1,6 @@
 class SubscriptionMailer < ActionMailer::Base
-  default from: "admin@savitri.in"
+  default :from => "admin@savitri.in",
+          :reply_to => "admin@savitri.in"
 
   def blogpost_email(reciever, sender, blog, post)
     @reciever = reciever
