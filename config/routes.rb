@@ -16,6 +16,7 @@ Savitri::Application.routes.draw do
   get 'search' => 'search#index'
   get 'search/search' => 'search#search'
   get 'search/results' => 'search#results'
+  get 'search/download' => 'search#download'
 
   resources :notebooks
 
