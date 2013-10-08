@@ -31,3 +31,6 @@
 		<%= render 'posted_facet' %>
 	<% end %>
 </div>
+
+<h5><%= link_to "Download Results in MD", search_download_path(:q => params[:q], :lbook => params[:lbook],:length => params[:length], :sbook => params[:sbook], :canto => params[:canto], :section => params[:section]) %>
+</h5>
