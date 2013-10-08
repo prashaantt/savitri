@@ -11,21 +11,15 @@
   <!--Modal Body -->
   <div class="modal-body">
     <div class="row" style="margin-left: 10px">
-      <div id="from-line" style="float: left; margin-right: 20px;">
-        <%= label :quote_from, "From" %>
+      <div id="ranges-field" style="float: left;">
+        <%= label :ranges, "References" %>
         <div>
-          <%= text_field_tag :quote_from, '', :class => 'text_field span1' %>
-        </div>
-      </div>
-      <div id="to-line" style="float: left; margin-left: 20px;">
-        <%= label :quote_to, "To" %>
-        <div>
-          <%= text_field_tag :quote_to, '', :class => 'text_field span1' %>
+          <%= text_field_tag :ranges, '', :class => 'text_field span3' %>
         </div>
       </div>
       <%= button_to("View", {:controller => "stanzas", :action => "range", :id => 6}, :id=>"view-poemtext",:style=>"margin-top: 25px;height: 30px; margin-right: 10px", :remote => true, :class => "btn pull-right") %>
     </div>
-    <div style="margin-top: 20px; margin-left: 10px" id="modal-help">Enter from and to values as section.sentence. E.g. 71.39.</div>
+    <div style="margin-top: 20px; margin-left: 10px" id="modal-help">Enter reference number(s) as section.sentence individually (71.39) or as a range (1.39,1.43-1.46,2.1-2.4,2.10,2.23)</div>
     <hr/>
     <div id="poem-html"></div>
     <div id="poem-text" style="display: none">
