@@ -1150,57 +1150,61 @@
         util.addEvent(inputBox, keyEvent, function (key) {
 
             // Check to see if we have a button key and, if so execute the callback.
-            if ((key.ctrlKey || key.metaKey) && !key.altKey && !key.shiftKey) {
-
+            if (key.ctrlKey || key.metaKey) {
+              
                 var keyCode = key.charCode || key.keyCode;
                 var keyCodeStr = String.fromCharCode(keyCode).toLowerCase();
-
-                switch (keyCodeStr) {
-                    case "b":
-                        doClick(buttons.bold);
-                        break;
-                    case "i":
-                        doClick(buttons.italic);
-                        break;
-                    case "l":
-                        doClick(buttons.link);
-                        break;
-                    case "q":
-                        doClick(buttons.quote);
-                        break;
-                    case "k":
-                        doClick(buttons.code);
-                        break;
-                    case "g":
-                        doClick(buttons.image);
-                        break;
-                    case "o":
-                        doClick(buttons.olist);
-                        break;
-                    case "u":
-                        doClick(buttons.ulist);
-                        break;
-                    case "h":
-                        doClick(buttons.heading);
-                        break;
-                    case "r":
-                        doClick(buttons.hr);
-                        break;
-                    case "y":
-                        doClick(buttons.redo);
-                        break;
-                    case "z":
-                        if (key.shiftKey) {
-                            doClick(buttons.redo);
-                        }
-                        else {
-                            doClick(buttons.undo);
-                        }
-                        break;
-                    default:
-                        return;
+                
+                if (!key.altKey && !key.shiftKey) {
+                  switch (keyCodeStr) {
+                      case "b":
+                          doClick(buttons.bold);
+                          break;
+                      case "i":
+                          doClick(buttons.italic);
+                          break;
+                      case "l":
+                          doClick(buttons.link);
+                          break;
+                      case "e":
+                          doClick(buttons.quote);
+                          break;
+                      case "k":
+                          doClick(buttons.code);
+                          break;
+                      case "g":
+                          doClick(buttons.image);
+                          break;
+                      case "o":
+                          doClick(buttons.olist);
+                          break;
+                      case "u":
+                          doClick(buttons.ulist);
+                          break;
+                      case "h":
+                          doClick(buttons.heading);
+                          break;
+                      case "r":
+                          doClick(buttons.hr);
+                          break;
+                      case "y":
+                          doClick(buttons.redo);
+                          break;
+                      case "z":
+                          doClick(buttons.undo);
+                          break;
+                      default:
+                          return;
+                  }
+                } else if ((key.shiftKey)) {
+                  switch (keyCodeStr) {
+                      case "z":
+                          doClick(buttons.redo);
+                          break;
+                      default:
+                          return;
+                  }
                 }
-
 
                 if (key.preventDefault) {
                     key.preventDefault();
@@ -1359,36 +1363,39 @@
             }
 
             group1 = makeGroup(1);
-            buttons.bold = makeButton("wmd-bold-button", "Bold - Ctrl+B", "icon-bold", bindCommand("doBold"), group1);
-            buttons.italic = makeButton("wmd-italic-button", "Italic - Ctrl+I", "icon-italic", bindCommand("doItalic"), group1);
+
+            isMac = /Mac/.test(navigator.platform)
+            
+            buttons.bold = makeButton("wmd-bold-button", isMac ? "Bold (⌘B)" : "Bold (Ctrl+B)", "icon-bold", bindCommand("doBold"), group1);
+            buttons.italic = makeButton("wmd-italic-button", isMac ? "Italic (⌘I)" : "Italic (Ctrl+I)", "icon-italic", bindCommand("doItalic"), group1);
             
             group2 = makeGroup(2);
-            buttons.link = makeButton("wmd-link-button", "Link - Ctrl+L", "icon-link", bindCommand(function (chunk, postProcessing) {
+            buttons.link = makeButton("wmd-link-button", isMac ? "Link (⌘L)" : "Link (Ctrl+L)", "icon-link", bindCommand(function (chunk, postProcessing) {
                 return this.doLinkOrImage(chunk, postProcessing, false);
             }), group2);
-            buttons.code = makeButton("wmd-code-button", "Code Sample - Ctrl+K", "icon-edit", bindCommand("doCode"), group2);
-            buttons.quote = makeButton("wmd-quote-button", "Auto Import - Ctrl+Q", " icon-book", bindCommand("doBlockquote"), group2);
-            buttons.image = makeButton("wmd-image-button", "Image - Ctrl+G", "icon-picture", bindCommand(function (chunk, postProcessing) {
+            //buttons.code = makeButton("wmd-code-button", "Code Sample - Ctrl+K", "icon-edit", bindCommand("doCode"), group2);
+            buttons.quote = makeButton("wmd-quote-button", isMac ? "References (⌘E)" : "References (Ctrl+E)", "icon-book", bindCommand("doBlockquote"), group2);
+            buttons.image = makeButton("wmd-image-button", isMac ? "Image (⌘G)": "Image (Ctrl+G)", "icon-picture", bindCommand(function (chunk, postProcessing) {
                 return this.doLinkOrImage(chunk, postProcessing, true);
             }), group2);
 
             group3 = makeGroup(3);
-            buttons.olist = makeButton("wmd-olist-button", "Numbered List - Ctrl+O", "icon-list", bindCommand(function (chunk, postProcessing) {
+            buttons.olist = makeButton("wmd-olist-button", isMac ? "Numbered List (⌘O)" : "Numbered List (Ctrl+O)", "icon-list", bindCommand(function (chunk, postProcessing) {
                 this.doList(chunk, postProcessing, true);
             }), group3);
-            buttons.ulist = makeButton("wmd-ulist-button", "Bulleted List - Ctrl+U", "icon-list-ul", bindCommand(function (chunk, postProcessing) {
+            buttons.ulist = makeButton("wmd-ulist-button", isMac ? "Bulleted List (⌘U)" : "Bulleted List (Ctrl+U)", "icon-list-ul", bindCommand(function (chunk, postProcessing) {
                 this.doList(chunk, postProcessing, false);
             }), group3);
-            buttons.heading = makeButton("wmd-heading-button", "Heading - Ctrl+H", "icon-text-height", bindCommand("doHeading"), group3);
-            buttons.hr = makeButton("wmd-hr-button", "Horizontal Rule - Ctrl+R", "icon-minus", bindCommand("doHorizontalRule"), group3);
+            buttons.heading = makeButton("wmd-heading-button", isMac ? "Heading (⌘H)" : "Heading (Ctrl+H)", "icon-text-height", bindCommand("doHeading"), group3);
+            buttons.hr = makeButton("wmd-hr-button", isMac ? "Horizontal Rule (⌘R)" : "Horizontal Rule (Ctrl+R)", "icon-minus", bindCommand("doHorizontalRule"), group3);
             
             group4 = makeGroup(4);
-            buttons.undo = makeButton("wmd-undo-button", "Undo - Ctrl+Z", "icon-undo", null, group4);
+            buttons.undo = makeButton("wmd-undo-button", isMac ? "Undo (⌘Z)" : "Undo (Ctrl+Z)", "icon-undo", null, group4);
             buttons.undo.execute = function (manager) { if (manager) manager.undo(); };
 
             var redoTitle = /win/.test(nav.platform.toLowerCase()) ?
-                "Redo - Ctrl+Y" :
-                "Redo - Ctrl+Shift+Z"; // mac and other non-Windows platforms
+                "Redo (Ctrl+Y)" : isMac ? "Redo (⌘Z)" :
+                "Redo (Ctrl+Shift+Z)"; // mac and other non-Windows platforms
 
             buttons.redo = makeButton("wmd-redo-button", redoTitle, "icon-repeat", null, group4);
             buttons.redo.execute = function (manager) { if (manager) manager.redo(); };
