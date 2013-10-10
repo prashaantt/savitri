@@ -1,10 +1,13 @@
 <%= render 'filters' %>
+<% @category_enabled = false %>
 <div class="facets">
 	<h5 class="left-filter">
 		Filter by
 	</h5>
 	<% unless @search.facet(:category).nil? %>
 		<%= render 'category_facet' %>
+	<% else %>
+		<%= @category_enabled = true %>
 	<% end %>
 	<% unless @search.facet(:sbook).nil? %>
 		<%= render 'sbook_facet' %>
@@ -31,6 +34,7 @@
 		<%= render 'posted_facet' %>
 	<% end %>
 </div>
-
-<h5><%= link_to "Download Results in MD", search_download_path(:q => params[:q], :lbook => params[:lbook],:length => params[:length], :sbook => params[:sbook], :canto => params[:canto], :section => params[:section]) %>
-</h5>
+<% if @category_enabled %>
+	<h5><%= link_to "Download Results in MD", search_download_path(:q => params[:q], :lbook => params[:lbook],:length => params[:length], :sbook => params[:sbook], :canto => params[:canto], :section => params[:section]) %>
+	</h5>
+<% end %>
