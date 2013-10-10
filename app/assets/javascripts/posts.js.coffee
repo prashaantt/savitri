@@ -29,54 +29,112 @@ $ ->
 	    $(this).text "Preview"
 	    $(this).removeClass("btn-warning").addClass "btn-info"
 
+isValidRange = (ranges) ->
+  valid = 0;
+  $.each ranges, (k, v) ->
+    range = v.split("-")
+
+    unless range[0].match(/^\d+\.\d+$/)
+      valid = 1
+      return false
+    
+    unless typeof range[1] == "undefined"
+      unless range[1].match(/^\d+\.\d+$/)
+        valid = 1
+        return false
+      range_from = range[0].split(".")
+      range_to = range[1].split(".")
+      if parseInt(range_to[0]) < parseInt(range_from[0])
+        valid = 2
+        return false
+      else if (parseInt(range_to[0]) == parseInt(range_from[0]) and parseInt(range_to[1]) < parseInt(range_from[1]))
+        valid = 2
+        return false
+  
+  return valid
+
 $ ->
-	$("#view-poemtext").click (event) ->
-	  event.preventDefault()
-	  linefrom = $("#quote_from").val()
-	  lineto = $("#quote_to").val()
-	  rooturl = window.location.origin
-	  if linefrom == ""
-	  	alert "From is mandatory"
-	  	return ""
-	  if lineto == ""
-	  	lineto = linefrom
-	  if linefrom.split(/\./).length > 2 or lineto.split(/\./).length > 2 or not linefrom.match(/^\d+(\.\d+)*$/) or not lineto.match(/^\d+(\.\d+)*$/)
-		  alert "Invalid from or to values"
-		  return ""
-	  callback = (response) -> 
-	  			$("#poem-text").empty()
-	  			$("#poem-html").empty()
-	  			links = new Array()
-	  			nums = new Array()
-	  			$.each response, (val1) -> 
-	  				lastsentence = response[val1][response[val1].length - 1].no
-	  				poem_html = "<p>"
-		  			$.each response[val1], (val, te) ->
-		  				linknum = te.stanza_id + 100
-		  				if(lastsentence==te.no)
-		  					$("#poem-text").append("\r\n")
-			  				$("#poem-text").append(">" + te.line + "  ")
-			  				poem_html += "<br/>" + te.line + " ||"+te.section+"."+te.runningno+"||"
-			  				$("#poem-text").append("[||"+te.section+"."+te.runningno+"||]["+linknum+"]\r\n")
-		  					nums.push linknum
-		  					links.push rooturl+te.share_url
-			  			else
-			  				$("#poem-text").append("\r\n")
-			  				$("#poem-text").append(">" + te.line + "  ")
-			  				poem_html += "<br/>" + te.line
-			  		poem_html += "</p>"
-	  				$("#poem-html").append(poem_html)
+  $("#view-poemtext").click (event) ->
+    event.preventDefault()
+    rooturl = window.location.origin
+    ranges = $("#ranges").val().replace(/\s/g, "").split(",")
+    valid = isValidRange(ranges)
+    unless valid == 0
+      if valid == 1
+        alert "Enter values as 71.39"
+      else if valid == 2
+        alert "Ensure the \"to\" value in the range is greater than the \"from\" value"
+      return
+    $("#poem-text").empty()
+    $("#poem-html").empty()
+    range_counter = 0
+    references = {}
+    $.each ranges, (range_index, range_value) ->
+      range = range_value.split("-")
+      # maintain order of references
+      references[range] = []
+      linefrom = range[0]
+      lineto = ""
+      if typeof range[1] != "undefined"
+        lineto = range[1]
+      else
+        lineto = range[0]
 
-  				total=nums.length
-	  			i=0
-	  			$("#poem-text").append("\r\n")
-	  			while i < total
-	  				$("#poem-text").append("["+nums[i]+"]: "+links[i]+"\r\n")
-	  				i++
+      callback = (response) ->
+        html = ""
+        text = ""
+        link = ""
+        $.each response, (index) -> 
+          lastsentence = response[index][response[index].length - 1].no
+          html += "<p>"
+          $.each response[index], (val, te) ->
+            text += "\r\n>" + te.line + "  "
+            html += "<br>" + te.line
+            if lastsentence == te.no
+              html += " ||" + te.section + "." + te.runningno + "||" + "</p>"
+              linknum = te.stanza_id + 100
+              text += "[||" + te.section + "." + te.runningno + "||][" + linknum + "]\r\n"
+              link += "[" + linknum + "]: " + rooturl + te.share_url + "\r\n"
+          references[range][0] = html
+          references[range][1] = text
+          references[range][2] = link
 
+      xhr = $.get '/stanzas/range/'+ linefrom.replace(".", "-") + '-' + lineto.replace(".", "-"), callback, 'json'
+      xhr.done ->
+        ++range_counter
+        if range_counter == ranges.length
+          poem_html = ""
+          poem_text = ""
+          links_text = "\r\n"
+          $.each references, (range) ->
+            poem_html += references[range][0]
+            poem_text += references[range][1]
+            links_text += references[range][2]
+          $("#poem-text").append(poem_text + links_text)
+          $("#poem-html").append(poem_html)
 
-	  $.get '/stanzas/range/'+ linefrom.replace(".","-") + '-' + lineto.replace(".","-"), callback, 'json'
-
+$ ->
+  $("#insert_into_post").click (event) ->
+    event.preventDefault()
+    if $("#poem-text").text().trim() is ""
+      $("#view-poemtext").click()
+      setTimeout (->
+        text = $("#poem-text").text()
+        if text.trim().length > 0
+          mdbox = $("#wmd-input")
+          mdbox.val(mdbox.val() + text)
+          $("#poem-text").empty()
+          $("#poem-html").empty()
+          $("#myModal").modal "hide"
+      ), 2000
+    else
+      text = $("#poem-text").text()
+      if text.trim().length > 0
+        mdbox = $("#wmd-input")
+        mdbox.val mdbox.val() + text
+        $("#poem-text").empty()
+        $("#poem-html").empty()
+        $("#myModal").modal "hide"
 
 $ ->
 	$("#size_later").click ->
