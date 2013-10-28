@@ -27,6 +27,7 @@ class Post < ActiveRecord::Base
     string :author
     string :posted
     string :blogname
+    time   :published_at
   end
   
   validates :title, :presence => true,
