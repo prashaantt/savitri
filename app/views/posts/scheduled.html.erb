@@ -6,7 +6,7 @@
 <%= auto_discovery_link_tag :rss,  current_link+".rss" %>
 <% end %>
 <% @blog = Blog.cached_find_by_slug(params[:blog_id]) %>
-<% title @blog.cached_title %>
+<%= link_to @blog.cached_title, blog_posts_path %><br/>
 <div class="row">
   <div class="span6 offset3 dynamicspan">
     <h1 class="page-header title" style="margin-bottom: 20px">

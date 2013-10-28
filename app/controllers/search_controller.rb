@@ -49,6 +49,7 @@ class SearchController < ApplicationController
           when "posts"
             @search = Sunspot.search Post do
               fulltext query[0], :highlight => true
+              with(:published_at).less_than Time.now
               facet(:posted)
               facet(:author)
               facet(:blogname)
@@ -62,6 +63,7 @@ class SearchController < ApplicationController
     else
        @search = Sunspot.search Line, Book, Stanza, Post do
         fulltext params[:q], :highlight => true
+        with(:published_at).less_than Time.now
         facet(:category)
          if params[:category].present?
            with(:category).equal_to(params[:category])
