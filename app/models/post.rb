@@ -40,19 +40,19 @@ class Post < ActiveRecord::Base
   end
 
   def update_draft_status(params)
-    if(params[:size] == "now" || published_at > Time.zone.now)
-      draft=true
+    if(params[:size] == "now" || self.published_at > Time.zone.now)
+      self.draft = true
     else
       #Backdated posts
       created_at = published_at
-      draft = false
+      self.draft = false
     end
   end
 
   def delete_if_scheduled
     schedposts = Sidekiq::ScheduledSet.new
     schedposts.select do |sched|
-      if(sched.args==[cached_blog.cached_user.id,id])
+      if(sched.args == [cached_blog.cached_user.id,id])
         sched.delete
       end
     end
@@ -170,7 +170,7 @@ class Post < ActiveRecord::Base
     end
 
     def setup_notifications
-      if draft?
+      if self.draft?
         EmailWorker.perform_at(published_at,cached_blog.cached_user.id,id)
       end
     end
