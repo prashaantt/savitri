@@ -3,7 +3,7 @@
 <head>
 
   <title>Savitri <%= yield(:title) %> </title>
-            <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
      <!--[IF IE]>
      <![endif]-->
       <!--[if lt IE 9]>
@@ -19,10 +19,10 @@
       <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-72-precomposed.png">
       <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-57-precomposed.png">
       <%  if params[:controller].to_s == 'read' %>
-        <% unless current_user.nil? %>
-          <script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>
-          <link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.1.0/annotator.min.css">
-        <% end %>
+      <% unless current_user.nil? %>
+      <script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>
+      <link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.1.0/annotator.min.css">
+      <% end %>
       <% end %>
       <%= csrf_meta_tags %>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,77 +51,87 @@
                   <li><a href="/themes"><i class="icon-picture navicon"></i>Themes</a></li>
                 </ul>
               </li>
-              <li class="dropdown" id="Blogs">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu2">Journals
-                  <i class="icon-caret-down"></i>
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Journals 
+                  <b class="caret"></b>
                 </a>
-                <ul class="dropdown-menu">
-                  <% User.cached_find(1).cached_blogs.each do |b| %>
-                    <li>
-                      <%= link_to b.title, blog_posts_path(b) %>
-                    </li>
-                  <% end %>
-                </ul>
-              </li>
-                <% @pages = Page.cached_menu %>
-                <% unless @pages.count > 1 %>
-                <li><%= link_to @pages.first.cached_name, page_path(@pages.first) %></li>
+              <ul class="dropdown-menu">
+                <% User.cached_find(1).cached_blogs.each do |b| %>
+                <% if user_signed_in? && current_user.admin? %>
+                  <li class="dropdown-submenu">
+                    <a href="#"><%= b.title %></a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to 'New post', new_blog_post_path(b) %></li>
+                      <li><%= link_to 'Scheduled posts', {:controller => "posts", :action => "scheduled", :blog_id => b.slug } %></li>
+                    </ul>
+                  </li>
                 <% else %>
-                <li class="dropdown" id="pages"><a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">About
-                  <i class="icon-caret-down"></i>
-                </a>
-                  <ul class="dropdown-menu">
-                    <% @pages.each do |page| %>
-                      <li><%= link_to page.cached_name, page_path(page) %></li>
-                    <% end %>
-                  </ul>
-                </li>
+                  <li><a href="#"><%= b.title %></a></li>
+                <% end %>
                 <% end %>
               </ul>
-          </div><!--/.nav-collapse -->
-          <form class="navbar-search pull-left"  id="search-form" action="/search/">
-            <div class="input-append searchbox">
-              <%= text_field_tag :q, params[:q], :class => "span3" , :id=>"query", :accesskey=>"q" %>
-              <button class="btn" type="submit" id="search-submit"><i class="icon-search"></i></button>
-            </div>
-            <a href="#" id="removeicon" class="removeicon" style="display:none;">
-              <i class="icon-remove"></i>
-            </a>
-          </form>
-          <div class="btn-group pull-right">
-            <% if user_signed_in? %> 
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="icon-user"></i>
-              <%= current_user.username %>
-              <i class="icon-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu">
-            <% if current_user.role == 'Admin' %>
-              <li><%= link_to "Manage blogs & media", blogs_path %></li>
-              <li class="divider"/>
-            <% elsif current_user.blogs.count > 0  %>
-              <li><%= link_to "Manage blog", blogs_path %></li>
-              <li class="divider"/>
-            <% else %>
-              <% if can? :create, @blog %>
-                <li><%= link_to "Create blog", new_blog_path %></li>
-                <li class="divider"/>
-              <% end %>
-            <% end %>
-            <li><%= link_to "Account settings", edit_user_registration_path %> </li>
-            <li class="divider"/>
-            <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-          </ul>
-          <% else %> 
-          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-            <i class="icon-user"></i>
-            Sign in
+            </li>
+
+          </li>
+          <% @pages = Page.cached_menu %>
+          <% unless @pages.count > 1 %>
+          <li><%= link_to @pages.first.cached_name, page_path(@pages.first) %></li>
+          <% else %>
+          <li class="dropdown" id="pages"><a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">About
             <i class="icon-caret-down"></i>
           </a>
           <ul class="dropdown-menu">
-            <li> <%= link_to "Sign in", new_user_session_path %></li>
-            <li class="divider"></li>
-            <li><%= link_to "Sign up", new_user_registration_path %></li>
+            <% @pages.each do |page| %>
+            <li><%= link_to page.cached_name, page_path(page) %></li>
+            <% end %>
+          </ul>
+        </li>
+        <% end %>
+      </ul>
+    </div><!--/.nav-collapse -->
+    <form class="navbar-search pull-left"  id="search-form" action="/search/">
+      <div class="input-append searchbox">
+        <%= text_field_tag :q, params[:q], :class => "span3" , :id=>"query", :accesskey=>"q" %>
+        <button class="btn" type="submit" id="search-submit"><i class="icon-search"></i></button>
+      </div>
+      <a href="#" id="removeicon" class="removeicon" style="display:none;">
+        <i class="icon-remove"></i>
+      </a>
+    </form>
+    <div class="btn-group pull-right">
+      <% if user_signed_in? %> 
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="icon-user"></i>
+        <%= current_user.username %>
+        <i class="icon-caret-down"></i>
+      </a>
+      <ul class="dropdown-menu">
+        <% if current_user.role == 'Admin' %>
+        <li><%= link_to "Manage blogs & media", blogs_path %></li>
+        <li class="divider"/>
+        <% elsif current_user.blogs.count > 0  %>
+        <li><%= link_to "Manage blog", blogs_path %></li>
+        <li class="divider"/>
+        <% else %>
+        <% if can? :create, @blog %>
+        <li><%= link_to "Create blog", new_blog_path %></li>
+        <li class="divider"/>
+        <% end %>
+        <% end %>
+        <li><%= link_to "Account settings", edit_user_registration_path %> </li>
+        <li class="divider"/>
+        <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+      </ul>
+      <% else %> 
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="icon-user"></i>
+        Sign in
+        <i class="icon-caret-down"></i>
+      </a>
+      <ul class="dropdown-menu">
+        <li> <%= link_to "Sign in", new_user_session_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to "Sign up", new_user_registration_path %></li>
            <!-- 
               <li class="divider" />
            Edit to add Login Modal Box
