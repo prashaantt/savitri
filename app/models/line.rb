@@ -26,6 +26,9 @@ class Line < ActiveRecord::Base
      string :lbook
      string :length
      string :category
+     time :published_at do
+      Time.zone.now
+     end
    end
 
   def category

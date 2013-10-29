@@ -26,6 +26,9 @@ class Stanza < ActiveRecord::Base
     string :canto
     string :sbook
     string :length
+    time :published_at do
+     Time.zone.now
+    end
   end
 
   def cached_lines
