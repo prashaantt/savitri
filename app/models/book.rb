@@ -16,6 +16,9 @@ class Book < ActiveRecord::Base
     text :no
     integer :id
     string :category
+    time :published_at do
+     Time.zone.now
+    end
   end
 
   def self.cached_find(id)
