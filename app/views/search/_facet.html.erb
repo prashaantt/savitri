@@ -7,7 +7,7 @@
 	<% unless @search.facet(:category).nil? %>
 		<%= render 'category_facet' %>
 	<% else %>
-		<%= @category_enabled = true %>
+		<% @category_enabled = true %>
 	<% end %>
 	<% unless @search.facet(:sbook).nil? %>
 		<%= render 'sbook_facet' %>

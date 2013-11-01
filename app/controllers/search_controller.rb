@@ -94,6 +94,7 @@ class SearchController < ApplicationController
             @search = Sunspot.search Stanza do
               fulltext query[0], :highlight => true
               order_by(:id, :asc)
+              paginate :page => 1, :per_page => 720
               facet(:sbook)
               facet(:length)
               facet(:section)
@@ -107,6 +108,7 @@ class SearchController < ApplicationController
             @search = Sunspot.search Line do
               fulltext query[0], :highlight => true
               order_by(:id, :asc)
+              paginate :page => 1, :per_page => 24000
               facet(:section)
               facet(:canto)
               facet(:lbook)
@@ -127,6 +129,7 @@ class SearchController < ApplicationController
          end
       end
     end
+
     query = params[:q].to_s
     query << " lbook="+params[:lbook].to_s if params[:lbook].present?
     query << " sbook=" + params[:sbook].to_s if params[:sbook].present? 
