@@ -201,3 +201,16 @@ $ ->
 
 
 				$.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentposts/', callback, 'json'
+
+$ ->
+  $('.best_in_place').best_in_place()
+  $(".best_in_place").bind "ajax:success", ->
+    @innerHTML = @innerHTML.replace(/\n/g, "<br />")
+  $(".best_in_place").bind "ajax:success", ->
+    $(this).animate
+      backgroundColor: "#FDF1CA"
+    , 1000
+    $(this).animate
+      backgroundColor: "#FFF"
+    , 3000
+
