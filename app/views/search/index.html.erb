@@ -44,10 +44,6 @@
 						<% elsif l.is_a?(Book) %>
 							<p class="snip">Book <%= l.no %>: <%= link_to l.name,'read/'+l.no.to_s+'/1/1' %></p>
 						<% elsif l.is_a?(Stanza) %>
-						  <% highlights = Array.new %>
-							<% hit.highlight(:lines).format do |r| %>
-								<% highlights << r %>
-							<% end %>
 							<% count = 0 %>
 							<% l.lines.each_with_index do |line, index| %>
 								<% (count += 1) %>
