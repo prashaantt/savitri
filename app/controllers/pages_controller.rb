@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
-  before_filter :store_location
+  before_filter :store_location, :last_page
   before_filter :authenticate_user!, :except => [:show,:parents]
 
   def index
@@ -58,7 +58,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       if @page.save
-        format.html { redirect_to pages_path, notice: 'Page was successfully created.' }
+        format.html { redirect_to page_path(@page), notice: 'Page was successfully created.' }
         format.json { render json: @page, status: :created, location: @page }
       else
         format.html { render action: "new" }
@@ -84,7 +84,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       if @page.update_attributes(params[:page])
-        format.html { redirect_to pages_path, notice: 'Page was successfully updated.' }
+        format.html { redirect_to page_path(@page), notice: 'Page was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

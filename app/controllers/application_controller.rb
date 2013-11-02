@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
       session[:resource_return_to] = request.fullpath
   end
 
+  def last_page
+    session[:last_page] = request.env['HTTP_REFERER']
+  end
+
   def after_sign_in_path_for(resource)
     session[:resource_return_to] || savitri_path
   end
