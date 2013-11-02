@@ -205,8 +205,11 @@ $ ->
 $ ->
   $('.best_in_place').best_in_place()
   $(".best_in_place").bind "ajax:success", ->
-    @innerHTML = @innerHTML.replace(/\n/g, "<br />")
-  $(".best_in_place").bind "ajax:success", ->
+    $(".best_in_place").each ->
+      that = $(this)
+      text = that.html()
+      that.html text.autoLink()
+    @innerHTML = @innerHTML.replace(/\r\n|\r|\n/g,"<br />")
     $(this).animate
       backgroundColor: "#FDF1CA"
     , 1000
@@ -214,3 +217,7 @@ $ ->
       backgroundColor: "#FFF"
     , 3000
 
+  $(".best_in_place").each ->
+    that = $(this)
+    text = that.html()
+    that.html text.autoLink()
