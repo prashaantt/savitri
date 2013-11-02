@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 
-  before_filter :store_location
+  before_filter :store_location, :last_page
   before_filter :authenticate_user!, :except => [:show, :index]
 
   # GET /posts
@@ -84,7 +84,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to blog_posts_path(@post.blog), notice: 'Post was successfully created.' }
+        format.html { redirect_to blog_post_path(@post.blog,@post), notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
         format.html { render 'posts/new'}

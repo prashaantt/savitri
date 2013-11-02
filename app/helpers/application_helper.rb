@@ -53,4 +53,16 @@ module ApplicationHelper
     section = Section.cached_find(stanza.cached_section)
     "/read/"+section.cached_number.to_s+"."+stanza.cached_runningno.to_s
   end
+
+  def cancel_page (type)
+    if session[:last_page]
+      link_to "Cancel", session[:last_page], :class => 'btn'
+    else
+      if "Post" == type
+        link_to "Cancel", blog_posts_path, :class => 'btn'
+      elsif "Page" == type
+        link_to "Cancel", pages_path, :class => 'btn'
+      end
+    end
+  end
 end
