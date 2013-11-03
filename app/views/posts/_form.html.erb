@@ -44,9 +44,9 @@
       </div>
     </div>
     <div class="control-group">
-      <%= f.label :tag_list, "Tags (separated by commas)", :class => 'control-label' %>
+      <%= f.label :tag_tokens, "Tags", :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :tag_list, :class => 'text_area span6' %>
+        <%= f.text_field :tag_tokens, "data-pre" => @post.tag_list.map {|tag| {:id => tag, :name => tag } }.to_json, :class => 'text_area span6' %>
       </div>
     </div>
     <% if current_user.admin? && (act == "new" || (act=="edit" && @post.published_at > Time.zone.now)) %>

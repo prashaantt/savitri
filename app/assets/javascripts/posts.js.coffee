@@ -221,3 +221,12 @@ $ ->
     that = $(this)
     text = that.html()
     that.html text.autoLink()
+
+$ ->
+  $("#post_tag_tokens").tokenInput "/blogs/light-of-supreme/tags.json",
+    crossDomain: false
+    prePopulate: $("#post_tag_tokens").data("pre")
+    preventDuplicates: true
+    noResultsText: "No results. Press 'space' to create this."
+    theme: "facebook"
+

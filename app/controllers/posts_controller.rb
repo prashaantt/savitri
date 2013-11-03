@@ -28,6 +28,22 @@ class PostsController < ApplicationController
     end
   end
 
+  def tags
+    query = params[:q]
+    if query[-1,1] == " "
+      #query = query.gsub(" ", "")
+      Tag.find_or_create_by_name(query)
+    end
+
+    #Do the search in memory for better performance
+
+    @tags = ActsAsTaggableOn::Tag.all
+    @tags = @tags.select { |v| v.name =~ /#{query}/i }
+    respond_to do |format|
+      format.json{ render :json => @tags.map(&:attributes) }
+    end
+  end
+
   def scheduled
     @blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
     @blogposts = Post.cached_drafts(@blog_id)
