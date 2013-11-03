@@ -1,7 +1,7 @@
 class Post < ActiveRecord::Base
 
   attr_accessible :content, :title, :tag_list, :blog_id, :md_content, :uploads_attributes,
-                  :excerpt, :url, :published_at, :series_title, :subtitle, :show_excerpt
+                  :excerpt, :url, :published_at, :series_title, :subtitle, :show_excerpt, :tag_tokens
 
   acts_as_taggable
   acts_as_url :title, :scope => :blog_id
@@ -18,6 +18,27 @@ class Post < ActiveRecord::Base
   scope :published, proc {
     where(:draft => false)
   }
+
+  attr_reader :tag_tokens
+
+  ##Instance Methods
+  def tag_tokens=(ids)
+    tags = ids.split(",")
+    #Holder for existing tag ids
+    finder = []
+    #Holder for new tag strings
+    r_tags = []
+    for tag in tags
+      if tag.to_i > 0
+        finder << tag
+      else
+        r_tags << tag
+      end
+    end
+    #Find existing tags from integer ids
+    r_tags  += ActsAsTaggableOn::Tag.select(:name).find(finder).collect(&:name)
+    self.tag_list = r_tags
+  end
 
   searchable do 
     text :title, :stored => true
