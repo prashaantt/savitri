@@ -21,6 +21,7 @@
 
 .blog-subtitle {
   @extend .italics;
+  color: #999;
 }
 
 .post-series {
@@ -47,6 +48,11 @@
   border-bottom: 1px #999 dotted;
 }
 
+.main-content a:hover {
+  text-decoration: none;
+  border-bottom: none;
+}
+
 .main-content hr {
   max-width: 190px;
   margin: auto;
@@ -54,11 +60,6 @@
   margin-bottom: 20px;
   border: none;
   border-top: 4px double #ccc;
-}
-
-.main-content a:hover {
-  text-decoration: none;
-  border-bottom: none;
 }
 
 .author {
@@ -138,6 +139,15 @@ article {
 
 .audio-tags {
   margin-top: 20px;
+}
+
+.muted-anchor {
+  color: #999;
+  text-decoration: none;
+}
+
+.muted-anchor:hover {
+  color: #005580;
 }
 
 /*.comment:nth-child(odd) {

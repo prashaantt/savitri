@@ -1,19 +1,25 @@
 <%- model_class = Post -%>
 <!-- Main Page Content -->
-<% content_for :head do %>
-  <% current_link = request.protocol+request.host_with_port+params[:blog].to_s+blog_posts_path %>
-  <%= auto_discovery_link_tag :atom, current_link+".atom" %>
-  <%= auto_discovery_link_tag :rss,  current_link+".rss" %>
-<% end %>
 <% @blog = Blog.cached_find_by_slug(params[:blog_id]) %>
+<% feed_url = request.protocol + request.host_with_port + blog_path(@blog) + "/feed" %>
+<% tag_feed_url = request.protocol + request.host_with_port + blog_posts_path + "/tags" %>
+<% content_for :head do %>
+  <%= auto_discovery_link_tag :atom, feed_url %>
+  <%= auto_discovery_link_tag :rss,  feed_url %>
+<% end %>
 <% title @blog.cached_title %>
 <div itemscope itemtype="http://schema.org/Article" class="row">
-  <div class="span6 offset3 dynamicspan">
-    <h1 itemprop="name" class="page-header title" style="margin-bottom: 20px">
-      <%= link_to @blog.cached_title, blog_posts_path %>
-      <%= link_to "", blog_path(@blog) + "/feed", :class => "icon-rss", :title => "Subscribe to feed", :style => "font-size: 65%" %><br>
-      <small class="blog-subtitle"><%= @blog.cached_subtitle %></small>
-    </h1>
+  <div class="dynamicspan span6 offset3">
+    <div class="page-header title">
+      <h1 itemprop="name"><%= link_to @blog.cached_title, blog_posts_path %></h1>
+      <h3 class="blog-subtitle"><%= @blog.cached_subtitle %></h3>
+      <div style="margin-top: 20px">
+        <i class="icon-rss muted"></i>
+        <a href=<%= feed_url %> class="muted-anchor">Feed</a>
+        <span class="muted">&bull;</span>
+        <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
+      </div>
+    </div>
   </div>
 </div>
 <!-- Main Blog Content -->
@@ -21,8 +27,16 @@
   <div class="span6 offset3 dynamicspan">
     <% @posts.each do |post| %>
       <section class="snippet">
-        <h4 class="post-series span2 visible-desktop post-series-sidebar"><%= post.cached_series_title %></h4>
-        <h4 class="post-series hidden-desktop"><%= post.cached_series_title %></h4>
+        <% if post.cached_series_title %>
+          <% series_tag_arr = post.tag_counts.select{|tag| tag.name.start_with?("@")} %>
+          <% unless series_tag_arr.empty? %>
+            <% series_tag = "/" + series_tag_arr[0].name %>
+          <% else %>
+            <% series_tag = "" %>
+          <% end %>
+          <h4 class="post-series span2 visible-desktop post-series-sidebar"><%= link_to post.cached_series_title, tag_feed_url + series_tag + "/feed" %></h4>
+          <h4 class="post-series hidden-desktop"><%= link_to post.cached_series_title, tag_feed_url + series_tag %></h4>
+        <% end %>
         <h2><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %></h2>
         <div>
           <span class="pull-right">
