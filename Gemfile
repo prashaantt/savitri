@@ -44,6 +44,7 @@ gem 'minitest'
 gem 'stringex'
 gem 'redis-store'
 gem 'redis-rails'
+gem 'best_in_place'
 
 group :development do
   gem 'rack-mini-profiler'

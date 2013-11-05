@@ -15,6 +15,8 @@
 //= require twitter/bootstrap
 //= require jquery-fileupload/basic
 //= require jquery-fileupload/vendor/tmpl
+//= require jquery.purr
+//= require best_in_place
 //= require_tree .
 
 function showBrand(window_width) {

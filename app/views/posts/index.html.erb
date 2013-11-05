@@ -1,23 +1,55 @@
 <%- model_class = Post -%>
 <!-- Main Page Content -->
 <% @blog = Blog.cached_find_by_slug(params[:blog_id]) %>
-<% feed_url = request.protocol + request.host_with_port + blog_path(@blog) + "/feed" %>
-<% tag_feed_url = request.protocol + request.host_with_port + blog_posts_path + "/tags" %>
+<% base_url = request.protocol + request.host_with_port %>
+<% feed_url = base_url + blog_path(@blog) + "/feed" %>
+<% tag_base_url = base_url + blog_posts_path + "/tags/" %>
+<% tag_feed_url = "" %>
+<% tag_type = "none" %>
+<% if params[:tag] %>
+  <% if params[:tag].start_with?("@") %>
+    <% tag_type = "series" %>
+  <% else %>
+    <% tag_type = "tag" %>
+  <% end %>
+<% end %>
 <% content_for :head do %>
-  <%= auto_discovery_link_tag :atom, feed_url %>
-  <%= auto_discovery_link_tag :rss,  feed_url %>
+  <% if tag_type === "none" %>
+    <%= auto_discovery_link_tag :atom, feed_url %>
+    <%= auto_discovery_link_tag :rss,  feed_url %>
+  <% else %>
+    <% tag_feed_url = tag_base_url + params[:tag] + "/feed"%>
+    <%= auto_discovery_link_tag :atom, tag_feed_url %>
+    <%= auto_discovery_link_tag :rss,  tag_feed_url  %>
+  <% end %>
 <% end %>
 <% title @blog.cached_title %>
 <div itemscope itemtype="http://schema.org/Article" class="row">
   <div class="dynamicspan span6 offset3">
     <div class="page-header title">
       <h1 itemprop="name"><%= link_to @blog.cached_title, blog_posts_path %></h1>
-      <h3 class="blog-subtitle"><%= @blog.cached_subtitle %></h3>
+      <% if tag_type === "none" %>
+        <h3 class="blog-subtitle"><%= @blog.cached_subtitle %></h3>
+      <% elsif tag_type == "series" %>
+        <% unless @posts.empty? %>
+          <h3 class="blog-subtitle">Serialised in “<%= @posts[0].series_title %>”</h3>
+        <% end %>
+      <% else %>
+        <h3 class="blog-subtitle">Filed as “<%= params[:tag] %>”</h3>
+      <% end %>
       <div style="margin-top: 20px">
-        <i class="icon-rss muted"></i>
-        <a href=<%= feed_url %> class="muted-anchor">Feed</a>
-        <span class="muted">&bull;</span>
-        <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
+        <% if tag_type === "none" %>
+          <i class="icon-rss muted"></i>
+          <a href=<%= feed_url %> class="muted-anchor">Feed</a>
+          <span class="muted">&bull;</span>
+          <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
+        <% else %>
+          <i class="icon-rss muted"></i>
+          <a href=<%= tag_feed_url %> class="muted-anchor"><%= tag_type == "series" ? "Series Feed" : "Tag Feed" %></a>
+          <% link_to (tag_type === "series" ? "Series Feed" : "Tag Feed"), tag_feed_url %>
+          <span class="muted">&bull;</span>
+          <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
+        <% end %>
       </div>
     </div>
   </div>
@@ -27,15 +59,21 @@
   <div class="span6 offset3 dynamicspan">
     <% @posts.each do |post| %>
       <section class="snippet">
-        <% if post.cached_series_title %>
-          <% series_tag_arr = post.tag_counts.select{|tag| tag.name.start_with?("@")} %>
-          <% unless series_tag_arr.empty? %>
-            <% series_tag = "/" + series_tag_arr[0].name %>
-          <% else %>
-            <% series_tag = "" %>
+        <% unless tag_type === "series" %>
+          <% if post.cached_series_title %>
+            <% series_tag_arr = post.tag_counts.select{|tag| tag.name.start_with?("@")} %>
+            <% unless series_tag_arr.empty? %>
+              <% series_tag = series_tag_arr[0].name %>
+            <% end %>
+            <% if series_tag %>
+              <div class="visible-desktop post-series-sidebar span2">
+                <h4 class="post-series"><%= link_to post.cached_series_title + " ↩", tag_base_url + series_tag, { :title => "View series" } %></h4>
+              </div>
+            <% else %>
+              <h4 class="post-series span2 visible-desktop post-series-sidebar"><%= post.cached_series_title %></h4>
+              <h4 class="post-series hidden-desktop"><%= post.cached_series_title %></h4>
+            <% end %>
           <% end %>
-          <h4 class="post-series span2 visible-desktop post-series-sidebar"><%= link_to post.cached_series_title, tag_feed_url + series_tag + "/feed" %></h4>
-          <h4 class="post-series hidden-desktop"><%= link_to post.cached_series_title, tag_feed_url + series_tag %></h4>
         <% end %>
         <h2><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %></h2>
         <div>

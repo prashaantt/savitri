@@ -202,4 +202,32 @@ $ ->
 
 				$.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentposts/', callback, 'json'
 
+$ ->
+  $('.best_in_place').best_in_place()
+  $(".best_in_place").bind "ajax:success", ->
+    $(".best_in_place").each ->
+      that = $(this)
+      text = that.html()
+      that.html text.autoLink()
+    @innerHTML = @innerHTML.replace(/\r\n|\r|\n/g,"<br />")
+    $(this).animate
+      backgroundColor: "#FDF1CA"
+    , 1000
+    $(this).animate
+      backgroundColor: "#FFF"
+    , 3000
+
+  $(".best_in_place").each ->
+    that = $(this)
+    text = that.html()
+    that.html text.autoLink()
+
+$ ->
+  $("#post_tag_tokens").tokenInput "/blogs/light-of-supreme/tags.json",
+    crossDomain: false
+    prePopulate: $("#post_tag_tokens").data("pre")
+    preventDuplicates: true
+    noResultsText: "No results. Press 'space' to create this."
+    theme: "facebook"
+
 window.subtome = {suggestedUrl: 'http://cloud.feedly.com/#subscription/feed/{feed}', suggestedName: 'Feedly'};
