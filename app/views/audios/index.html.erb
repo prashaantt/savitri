@@ -1,16 +1,21 @@
+<% feed_url = request.protocol + request.host_with_port + medium_path(@medium) + "/feed" %>
 <% content_for :head do %>
-  <% @current_link = request.protocol + request.host_with_port + params[:medium].to_s + medium_audios_path %>
-  <%= auto_discovery_link_tag :atom, @current_link + ".atom" %>
-  <%= auto_discovery_link_tag :rss,  @current_link + ".rss" %>
+  <%= auto_discovery_link_tag :atom, feed_url %>
+  <%= auto_discovery_link_tag :rss,  feed_url %>
 <% end %>
 <% title @medium.title %>
 <div class="row">
   <div class="span6 offset3 dynamicspan">
-    <h1 class="page-header title" style="margin-bottom: 20px">
-      <%= link_to @medium.title, medium_audios_path %>
-      <%= link_to "", request.protocol + request.host_with_port + medium_path(@medium) + "/feed", :class => "icon-music", :title => "Subscribe to podcast", :style => "font-size: 65%"  %><br>
-      <small class="blog-subtitle"><%= @medium.subtitle %></small>
-    </h1>
+    <div class="page-header title">
+      <h1 itemprop="name"><%= link_to @medium.cached_title, medium_audios_path %></h1>
+      <h3 class="blog-subtitle"><%= @medium.cached_subtitle %></h3>
+      <div style="margin-top: 20px">
+        <i class="icon-music muted"></i>
+        <a href=<%= feed_url %> class="muted-anchor">Feed</a>
+        <span class="muted">&bull;</span>
+        <a href="#" class="muted-anchor">iTunes</a>
+      </div>
+    </div>
   </div>
 </div>
 <div class="row">

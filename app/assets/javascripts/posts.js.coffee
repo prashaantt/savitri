@@ -201,3 +201,5 @@ $ ->
 
 
 				$.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentposts/', callback, 'json'
+
+window.subtome = {suggestedUrl: 'http://cloud.feedly.com/#subscription/feed/{feed}', suggestedName: 'Feedly'};
