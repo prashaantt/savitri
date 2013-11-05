@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 
-  before_filter :store_location
+  before_filter :store_location, :last_page
   before_filter :authenticate_user!, :except => [:show, :index]
 
   # GET /posts
@@ -12,7 +12,7 @@ class PostsController < ApplicationController
       @tagposts = @blogposts.tagged_with(params[:tag])
       @posts    = @tagposts.page(params[:page]).per(10)
       @feedsrc  = @tagposts
-      @tags     = @posts.tag_counts.order('tags_count desc').reject{|tag| tag.name.downcase == params[:tag].downcase}
+      @tags     = @posts.tag_counts.order('tags_count desc').reject{|tag| tag.name.downcase == params[:tag].downcase || tag.name.start_with?("@")}
       .first(50).sort_by{|tag| tag.name.downcase}
     else
       @posts    = @blogposts.page(params[:page]).per(10)
@@ -25,6 +25,22 @@ class PostsController < ApplicationController
       format.atom { render :layout => false, :content_type=>"application/xml" }
       format.rss { redirect_to blog_posts_path(:format => :atom), :status => :moved_permanently }
       format.json { render json: @posts }
+    end
+  end
+
+  def tags
+    query = params[:q]
+    if query[-1,1] == " "
+      #query = query.gsub(" ", "")
+      Tag.find_or_create_by_name(query)
+    end
+
+    #Do the search in memory for better performance
+
+    @tags = ActsAsTaggableOn::Tag.all
+    @tags = @tags.select { |v| v.name =~ /#{query}/i }
+    respond_to do |format|
+      format.json{ render :json => @tags.map(&:attributes) }
     end
   end
 
@@ -67,8 +83,9 @@ class PostsController < ApplicationController
   def edit
     blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
     @post = Post.cached_find_by_blog_id_and_url(blog_id.id,params[:id])
-    puts ">>>series: " + @post.series_title
-    @post.tag_list = @post.tag_list.reject{|tag| tag.start_with?("@")}
+    unless @post.tag_list.empty?
+      @post.tag_list = @post.tag_list.reject{|tag| tag.start_with?("@")}
+    end
     authorize! :edit, @post
     respond_to do |format|
       format.html # edit.html.erb
@@ -83,8 +100,9 @@ class PostsController < ApplicationController
     puts ">>>series: " + params[:post][:series_title]
     puts ">>>tags: " + params[:post][:tag_list]
     if params[:post][:series_title]
-      @post.update_tag_list
-      puts ">>>updated tags: " + @post.tag_list
+      series = params[:post][:series_title].parameterize
+      params[:post][:tag_list] += ", @" + series
+      puts ">>>new tags: " + params[:post][:tag_list]
     end
     authorize! :create, @post
 
@@ -92,7 +110,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to blog_posts_path(@post.blog), notice: 'Post was successfully created.' }
+        format.html { redirect_to blog_post_path(@post.blog,@post), notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
         format.html { render 'posts/new'}
@@ -106,11 +124,11 @@ class PostsController < ApplicationController
   def update
     @post = Post.cached_find_by_url(params[:id])
     puts ">>>series: " + params[:post][:series_title]
-    puts ">>>tags: " + params[:post][:tag_list]
-    if params[:post][:series_title] and params[:post][:series_title] != @post.series_title
+    puts ">>>tags: " + params[:post][:tag_tokens]
+    if params[:post][:series_title] && (params[:post][:series_title] != @post.series_title || @post.tag_list.select{|tag| tag.start_with?("@")}[0].nil?)
       series = params[:post][:series_title].parameterize
-      params[:post][:tag_list] += ", @" + series
-      puts ">>>new tags: " + params[:post][:tag_list]
+      params[:post][:tag_tokens] += ", @" + series
+      puts ">>>new tags: " + params[:post][:tag_tokens]
     end
     authorize! :update, @post
 

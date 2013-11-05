@@ -1,6 +1,8 @@
 <%- model_class = Post -%>
 <% @blog = @post.cached_blog %>
-<% feed_url = request.protocol + request.host_with_port + blog_path(@blog) + "/feed" %>
+<% base_url = request.protocol + request.host_with_port %>
+<% feed_url = base_url + blog_path(@blog) + "/feed" %>
+<% tag_base_url = base_url + blog_posts_path + "/tags/" %>
 <% content_for :head do %>
   <%= auto_discovery_link_tag :atom, feed_url %>
   <%= auto_discovery_link_tag :rss,  feed_url %>
@@ -24,8 +26,20 @@
 <div class="row">
   <div class="span6 offset3 dynamicspan" role="content">
     <article style="margin-top: 20px">
-      <h4 class="post-series span2 visible-desktop post-series-sidebar"><%= @post.cached_series_title %></h4>
-      <h4 class="post-series hidden-desktop"><%= @post.cached_series_title %></h4>
+      <% if @post.cached_series_title %>
+        <% series_tag_arr = @post.tag_counts.select{|tag| tag.name.start_with?("@")} %>
+        <% unless series_tag_arr.empty? %>
+          <% series_tag = series_tag_arr[0].name %>
+        <% end %>
+        <% if series_tag %>
+          <div class="visible-desktop post-series-sidebar span2">
+            <h4 class="post-series"><%= link_to @post.cached_series_title + " ↩", tag_base_url + series_tag, { :title => "View series" } %></h4>
+          </div>
+        <% else %>
+          <h4 class="post-series span2 visible-desktop post-series-sidebar"><%= @post.cached_series_title %></h4>
+          <h4 class="post-series hidden-desktop"><%= @post.cached_series_title %></h4>
+        <% end %>
+      <% end %>
       <h2><a href="#"><%= link_to @post.cached_title,  blog_post_path(@blog,@post) %></a></h2>
       <h4 class="post-subtitle"><%= @post.cached_subtitle %></h4>
       <div>

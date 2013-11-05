@@ -6,6 +6,7 @@
     </span>
     <span style="float:right">
       <% if can? :destroy, comment %>
+        <%= link_to 'Edit', "#", :id => "editcomment-#{comment.id}", :class => "btn btn-mini btn-warning" %>
         <%= link_to 'Delete', [comment.cached_post, comment],
         :class => "btn btn-mini btn-danger",
         :confirm => 'Are you sure?',
@@ -14,7 +15,6 @@
     </span>
   </div>
   <div id="comment-<%= comment.id %>" class="main-content">
-    <p><%= auto_link(comment.cached_body.gsub(/\r\n?/,"<br>").html_safe, :html => { :target => '_blank' }) %>
-  </p>
+    <%= best_in_place comment, :body, :type => :textarea, :activator => "#editcomment-#{comment.id}", :classes => 'highlight_on_success controls', :path => post_comment_path(comment.post,comment), :display_with => 'simple_format'  %>
   </div>
 </div>
