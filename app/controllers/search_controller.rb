@@ -16,12 +16,14 @@ class SearchController < ApplicationController
             @search = Sunspot.search Book do
               fulltext query[0]
               order_by(:id, :asc)
+              facet(:category)
               paginate :page => params[:page], :per_page => 20
             end
           when "sentences"
             @search = Sunspot.search Stanza do
               fulltext query[0], :highlight => true
               order_by(:id, :asc)
+              facet(:category)
               facet(:sbook)
               facet(:length)
               facet(:section)
@@ -30,12 +32,17 @@ class SearchController < ApplicationController
               with(:canto).equal_to(params[:canto]) if params[:canto].present?
               with(:length).equal_to(params[:length]) if params[:length].present?
               with(:sbook).equal_to(params[:sbook]) if params[:sbook].present?
-              paginate :page => params[:page], :per_page => 5
+              if params[:download]
+                paginate :page => 1, :per_page => 720
+              else
+                paginate :page => params[:page], :per_page => 5
+              end
             end
           when "lines"
             @search = Sunspot.search Line do
               fulltext query[0], :highlight => true
               order_by(:id, :asc)
+              facet(:category)
               facet(:section)
               facet(:canto)
               facet(:lbook)
@@ -44,12 +51,17 @@ class SearchController < ApplicationController
               with(:canto).equal_to(params[:canto]) if params[:canto].present?
               with(:length).equal_to(params[:length]) if params[:length].present?
               with(:lbook).equal_to(params[:lbook]) if params[:lbook].present?
-              paginate :page => params[:page], :per_page => 30
+              if params[:download]
+                paginate :page => 1, :per_page => 24000
+              else
+                paginate :page => params[:page], :per_page => 30
+              end
           end
           when "posts"
             @search = Sunspot.search Post do
               fulltext query[0], :highlight => true
               with(:published_at).less_than Time.now
+              facet(:category)
               facet(:posted)
               facet(:author)
               facet(:blogname)
@@ -72,64 +84,20 @@ class SearchController < ApplicationController
       end
     end
 
+    if params[:download]
+      download
+    else
     @search
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @lines }
     end
   end
+  end
+
+private
 
   def download
-    # Parse Parameters
-    # in:lines , in:books ... in:posts
-    # canto:1 , book:1 , line:1  .. section:1
-
-    #1. Split on spaces. Left side => query , Right side => Operations
-    # god awake in:lines book:1 canto:1
-    if params[:q].to_s.include?("in:")
-      query = params[:q].split("in:")
-      unless query.length > 2
-        case query[1].downcase
-          when "sentences"
-            @search = Sunspot.search Stanza do
-              fulltext query[0], :highlight => true
-              order_by(:id, :asc)
-              paginate :page => 1, :per_page => 720
-              facet(:sbook)
-              facet(:length)
-              facet(:section)
-              facet(:canto)
-              with(:section).equal_to(params[:section]) if params[:section].present?
-              with(:canto).equal_to(params[:canto]) if params[:canto].present?
-              with(:length).equal_to(params[:length]) if params[:length].present?
-              with(:sbook).equal_to(params[:sbook]) if params[:sbook].present?
-            end
-          when "lines"
-            @search = Sunspot.search Line do
-              fulltext query[0], :highlight => true
-              order_by(:id, :asc)
-              paginate :page => 1, :per_page => 24000
-              facet(:section)
-              facet(:canto)
-              facet(:lbook)
-              facet(:length)
-              with(:section).equal_to(params[:section]) if params[:section].present?
-              with(:canto).equal_to(params[:canto]) if params[:canto].present?
-              with(:length).equal_to(params[:length]) if params[:length].present?
-              with(:lbook).equal_to(params[:lbook]) if params[:lbook].present?
-          end
-        end
-      end
-    else
-       @search = Sunspot.search Line, Stanza do
-        fulltext params[:q], :highlight => true
-        facet(:category)
-         if params[:category].present?
-           with(:category).equal_to(params[:category])
-         end
-      end
-    end
-
     query = params[:q].to_s
     query << " lbook="+params[:lbook].to_s if params[:lbook].present?
     query << " sbook=" + params[:sbook].to_s if params[:sbook].present? 
