@@ -1,13 +1,19 @@
 <%= render 'filters' %>
 <% @category_enabled = false %>
 <div class="facets">
+	<% unless @search.facet(:category).rows.count == 1 && @search.facet(:category).rows.any?{|result| result.value == "Books" } ||
+						@search.results.count == 0 %>
 	<h5 class="left-filter">
 		Filter by
 	</h5>
-	<% unless @search.facet(:category).nil? %>
+	<% end %>
+	<% unless @search.facet(:category).rows.count == 1 %>
 		<%= render 'category_facet' %>
 	<% else %>
-		<% @category_enabled = true %>
+		<% if @search.facet(:category).rows.any?{|result| result.value == "Lines" }	||
+					@search.facet(:category).rows.any?{|result| result.value == "Sentences" }	%>
+			<% @category_enabled = true	%>
+		<% end %>
 	<% end %>
 	<% unless @search.facet(:sbook).nil? %>
 		<%= render 'sbook_facet' %>
@@ -35,6 +41,6 @@
 	<% end %>
 </div>
 <% if @category_enabled %>
-	<h5><%= link_to "Download Results in MD", search_download_path(:q => params[:q], :lbook => params[:lbook],:length => params[:length], :sbook => params[:sbook], :canto => params[:canto], :section => params[:section]) %>
+	<h5><%= link_to "Download Results in MD", search_path(:q => params[:q], :lbook => params[:lbook],:length => params[:length], :sbook => params[:sbook], :canto => params[:canto], :section => params[:section], :download => "true") %>
 	</h5>
 <% end %>
