@@ -35,6 +35,7 @@ Savitri::Application.routes.draw do
 
   match "/store/notess" => "notebooks#search"
 
+  match 'read/' => 'read#index'
   match 'read/:book_id/:canto_id/:section_id' => 'read#show'
   match 'read/:book_id/:canto_id' => 'read#bookcantoshow'
   match 'read/:book_id' => 'read#specific', :constraints => {:book_id => /[^\/]+/ }

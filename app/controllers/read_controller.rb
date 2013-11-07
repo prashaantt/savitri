@@ -33,4 +33,8 @@ class ReadController < ApplicationController
     bookid = Book.cached_find(canto.book_id).no
     redirect_to '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1]
   end
+
+  def index
+    redirect_to '/read/1/1/1'
+  end
 end
