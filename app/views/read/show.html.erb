@@ -1,5 +1,11 @@
 <% @book = Book.cached_find(params[:book_id]) %>
-<% title @book.name %>
+<% unless @stanzas.blank? %>
+  <% @section = Section.cached_find(@stanzas.first.cached_section) %>
+  <% @canto = Canto.cached_find(@section.cached_cantoid) %>
+  <% @sections = @canto.cached_sections %>
+  <% @stanzasblank = false %>
+<% end %>
+<% title @book.name + " | " + @canto.title + " | Section " + @section.no.to_s %>
 <div class="row" id="read-row">
   <div class="span2 visible-desktop">
     <div class="accordion sidebar" id="accordion2">
@@ -42,10 +48,7 @@
     <!-- '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1] -->
   <div class="span6 offset1" id="read">
     <div id="cantos">
-      <% unless @stanzas.blank? %>
-        <% @section = Section.cached_find(@stanzas.first.cached_section) %>
-        <% @canto = Canto.cached_find(@section.cached_cantoid) %>
-        <% @sections = @canto.cached_sections %>
+      <% unless @stanzasblank %>
         <div class="page-header visible-desktop">
           <h4>Book <%= @book.cached_number %>: <%= @book.cached_name %></h4>
         </div>
