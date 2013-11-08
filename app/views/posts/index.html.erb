@@ -60,7 +60,7 @@
     <% @posts.each do |post| %>
       <section class="snippet">
         <% unless tag_type === "series" %>
-          <% if post.cached_series_title %>
+          <% unless post.cached_series_title.empty? %>
             <% series_tag_arr = post.tag_counts.select{|tag| tag.name.start_with?("@")} %>
             <% unless series_tag_arr.empty? %>
               <% series_tag = series_tag_arr[0].name %>
