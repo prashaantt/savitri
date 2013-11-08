@@ -33,8 +33,8 @@
       <dd>
         <ol>
           <% @user.comments.each do |comment| %>
-             <%= link_to comment.body , blog_post_path(comment.post.blog,comment.post_id) %> 
-             on <i><%= link_to Post.find(comment.post_id).title, blog_post_path(User.find(comment.post.blog.user_id),Post.find(comment.post_id)) %> </i>
+             <%= link_to comment.body , blog_post_path(comment.post.blog,comment.post) %> 
+             on <i><%= link_to Post.find(comment.post_id).title, blog_post_path(comment.post.blog,Post.find(comment.post_id)) %> </i>
              <br/> 
           <% end %>
       </dd>
