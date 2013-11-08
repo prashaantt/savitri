@@ -97,9 +97,10 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(params[:post])
-    if params[:post][:series_title]
+    unless params[:post][:series_title].blank?
       series = params[:post][:series_title].parameterize
-      params[:post][:tag_list] += ", @" + series
+      series_tag = Tag.find_or_create_by_name("@" + series)
+      @post.tag_list.add(series_tag.name)
     end
     authorize! :create, @post
 
@@ -120,9 +121,14 @@ class PostsController < ApplicationController
   # PUT /posts/1.json
   def update
     @post = Post.cached_find_by_url(params[:id])
-    if params[:post][:series_title] && (params[:post][:series_title] != @post.series_title || @post.tag_list.select{|tag| tag.start_with?("@")}[0].nil?)
+    if params[:post][:series_title]
       series = params[:post][:series_title].parameterize
-      params[:post][:tag_tokens] += ", @" + series
+      series_tag = Tag.find_or_create_by_name("@" + series)
+      unless params[:post][:tag_tokens].blank?
+        params[:post][:tag_tokens] += ", " + series_tag.id.to_s
+      else
+        params[:post][:tag_tokens] = series_tag.id.to_s
+      end
     end
     authorize! :update, @post
 
