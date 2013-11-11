@@ -60,14 +60,14 @@
     <% @posts.each do |post| %>
       <section class="snippet">
         <% unless tag_type === "series" %>
-          <% unless post.cached_series_title.empty? %>
+          <% unless post.cached_series_title.blank? %>
             <% series_tag_arr = post.tag_counts.select{|tag| tag.name.start_with?("@")} %>
             <% unless series_tag_arr.empty? %>
               <% series_tag = series_tag_arr[0].name %>
             <% end %>
             <% if series_tag %>
               <div class="visible-desktop post-series-sidebar span2">
-                <h4 class="post-series"><%= link_to post.cached_series_title + " ↩", tag_base_url + series_tag, { :title => "View series" } %></h4>
+                <h4 class="post-series"><%= link_to post.cached_series_title, tag_base_url + series_tag, { :title => "View series" } %>&nbsp;<i class='icon-link' style="font-size: 75%"></i></h4>
               </div>
             <% else %>
               <h4 class="post-series span2 visible-desktop post-series-sidebar"><%= post.cached_series_title %></h4>
