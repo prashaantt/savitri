@@ -26,7 +26,7 @@
 <div class="row">
   <div class="span6 offset3 dynamicspan" role="content">
     <article style="margin-top: 20px">
-      <% if @post.cached_series_title %>
+      <% unless @post.cached_series_title.blank? %>
         <% series_tag_arr = @post.tag_counts.select{|tag| tag.name.start_with?("@")} %>
         <% unless series_tag_arr.empty? %>
           <% series_tag = series_tag_arr[0].name %>
