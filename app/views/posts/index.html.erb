@@ -35,21 +35,19 @@
           <h3 class="blog-subtitle">Serialised in “<%= @posts[0].series_title %>”</h3>
         <% end %>
       <% else %>
-        <h3 class="blog-subtitle">Filed as “<%= params[:tag] %>”</h3>
+        <h3 class="blog-subtitle">Filed in “<%= params[:tag] %>”</h3>
       <% end %>
       <div style="margin-top: 20px">
         <% if tag_type === "none" %>
           <i class="icon-rss muted"></i>
-          <a href=<%= feed_url %> class="muted-anchor">Feed</a>
+          <%= link_to "Feed", feed_url, {:class => "muted-anchor"} %>
           <span class="muted">&bull;</span>
-          <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
         <% else %>
           <i class="icon-rss muted"></i>
-          <a href=<%= tag_feed_url %> class="muted-anchor"><%= tag_type == "series" ? "Series Feed" : "Tag Feed" %></a>
-          <% link_to (tag_type === "series" ? "Series Feed" : "Tag Feed"), tag_feed_url %>
+          <%= link_to (tag_type === "series" ? "Series Feed" : "Tag Feed"), tag_feed_url, {:class => "muted-anchor"} %>
           <span class="muted">&bull;</span>
-          <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
         <% end %>
+        <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
       </div>
     </div>
   </div>
