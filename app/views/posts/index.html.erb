@@ -23,7 +23,15 @@
     <%= auto_discovery_link_tag :rss,  tag_feed_url  %>
   <% end %>
 <% end %>
-<% title @blog.cached_title %>
+<% pagetitle = "" %>
+<% if params[:tag] %>
+  <% pagetitle += params[:tag] + " | "%>
+<% end %>
+<% pagetitle += @blog.cached_title %>
+<% if params[:page] %>
+  <% pagetitle += " | Page " + params[:page] %>
+<% end %>
+<% title pagetitle %>
 <div itemscope itemtype="http://schema.org/Article" class="row">
   <div class="dynamicspan span6 offset3">
     <div class="page-header title">
