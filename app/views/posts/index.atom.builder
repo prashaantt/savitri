@@ -1,7 +1,22 @@
 unless @feedsrc.empty?
   atom_feed :language => 'en-US', :id => request.protocol + request.host_with_port + '/blogs/' + @feedsrc.first.blog.slug do |feed|
 
-    feed.title @feedsrc.first.blog.cached_title
+    if params[:tag]
+      if params[:tag].starts_with?("@")
+        subtitle = @feedsrc.first.cached_series_title
+        feed.subtitle subtitle
+      else
+        subtitle = params[:tag]
+        feed.subtitle subtitle
+      end
+    end
+    
+    title = @feedsrc.first.blog.cached_title
+    if subtitle
+      title += " — " + subtitle
+    end
+    feed.title title
+
     feed.updated @feedsrc.first.updated_at
 
     @feedsrc.first(15).each do |post|

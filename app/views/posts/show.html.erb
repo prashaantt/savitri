@@ -15,7 +15,7 @@
       <h3 class="blog-subtitle"><%= @blog.cached_subtitle %></h3>
       <div style="margin-top: 20px">
         <i class="icon-rss muted"></i>
-        <a href=<%= feed_url %> class="muted-anchor">Feed</a>
+        <%= link_to "Feed", feed_url, {:class => "muted-anchor"} %>
         <span class="muted">&bull;</span>
         <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
       </div>
@@ -33,7 +33,7 @@
         <% end %>
         <% if series_tag %>
           <div class="visible-desktop post-series-sidebar span2">
-            <h4 class="post-series"><%= link_to @post.cached_series_title + " ↩", tag_base_url + series_tag, { :title => "View series" } %></h4>
+            <h4 class="post-series"><%= link_to @post.cached_series_title, tag_base_url + series_tag, { :title => "View series" } %>&nbsp;<i class='icon-link' style="font-size: 75%"></i></h4>
           </div>
         <% else %>
           <h4 class="post-series span2 visible-desktop post-series-sidebar"><%= @post.cached_series_title %></h4>
@@ -54,8 +54,8 @@
           :class => 'btn btn-mini btn-danger' %>
           <% end %>
         </span>
-        <h5 class="blog-author">by <%= link_to @blog.cached_user.cached_username, @blog.cached_user, {:class => "underline"} %> on <%= @post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize @post.cached_comments_count, "comment"), "#comments", {:class => "underline"} %>
-        </h5>
+        <h5><% if @post.draft && @post.cached_published_at > Time.zone.now %><span class="label">Scheduled</span><% end %><span class="blog-author"> by <%= link_to @blog.cached_user.cached_username, @blog.cached_user, {:class => "underline"} %> on <%= @post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize @post.cached_comments_count, "comment"), "#comments", {:class => "underline"} %>
+        </span></h5>
       </div>
       <div class="main-content">
         <% if @post.cached_show_excerpt === "prefix" %>

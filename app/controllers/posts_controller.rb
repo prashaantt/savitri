@@ -38,7 +38,7 @@ class PostsController < ApplicationController
     #Do the search in memory for better performance
 
     @tags = ActsAsTaggableOn::Tag.all
-    @tags = @tags.select { |v| v.name =~ /#{query}/i }
+    @tags = @tags.select { |v| v.name =~ /#{query}/i }.reject { |v| v.name.start_with?("@")}
     respond_to do |format|
       format.json{ render :json => @tags.map(&:attributes) }
     end
@@ -61,7 +61,7 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
-    @post = Post.cached_find_by_blog_id_and_url(blog_id.id,params[:id])
+    @post = Post.cached_find_by_blog_id_and_url(blog_id.id,params[:id]) || not_found
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post }
@@ -83,9 +83,6 @@ class PostsController < ApplicationController
   def edit
     blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
     @post = Post.cached_find_by_blog_id_and_url(blog_id.id,params[:id])
-    unless @post.tag_list.empty?
-      @post.tag_list = @post.tag_list.reject{|tag| tag.start_with?("@")}
-    end
     authorize! :edit, @post
     respond_to do |format|
       format.html # edit.html.erb
@@ -97,14 +94,18 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(params[:post])
-    unless params[:post][:series_title].blank?
-      series = params[:post][:series_title].parameterize
-      series_tag = Tag.find_or_create_by_name("@" + series)
+    unless params[:post][:series_title].strip.blank?
+      series = "@" + params[:post][:series_title].to_url
+      series_tag = Tag.find_or_create_by_name(series)
       @post.tag_list.add(series_tag.name)
     end
     authorize! :create, @post
 
     @post.update_draft_status(params)
+    
+    if(params[:size] == "now")
+      @post.published_at = Time.zone.now
+    end
 
     respond_to do |format|
       if @post.save
@@ -121,15 +122,37 @@ class PostsController < ApplicationController
   # PUT /posts/1.json
   def update
     @post = Post.cached_find_by_url(params[:id])
-    if params[:post][:series_title]
-      series = params[:post][:series_title].parameterize
-      series_tag = Tag.find_or_create_by_name("@" + series)
-      unless params[:post][:tag_tokens].blank?
-        params[:post][:tag_tokens] += ", " + series_tag.id.to_s
+        
+    #if not blank
+      #if exists and changed: create new and remove existing
+      #elsif doesn't exist: create new
+      #else retain old
+    #else if blank and exists: remove existing
+
+    old_series_tag = @post.tag_list.select{|tag| tag.include?("@")}[0]
+
+    params_tags = params[:post][:tag_tokens].split(",")
+    
+    if params[:post][:series_title].strip.blank?
+      unless old_series_tag.nil?
+        params_tags.delete(old_series_tag)
+      end
+    else
+      new_series_tag = "@" + params[:post][:series_title].to_url
+      if old_series_tag.nil?
+        series = Tag.find_or_create_by_name(new_series_tag)
+        params_tags << series.name
+      elsif old_series_tag != new_series_tag
+        params_tags.delete(old_series_tag)
+        series = Tag.find_or_create_by_name(new_series_tag)
+        params_tags << series.name
       else
-        params[:post][:tag_tokens] = series_tag.id.to_s
+        params_tags << old_series_tag
       end
     end
+
+    params[:post][:tag_tokens] = params_tags.join(",")
+
     authorize! :update, @post
 
     @post.delete_if_scheduled
