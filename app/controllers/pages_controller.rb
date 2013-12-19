@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show,:parents]
 
   def index
-    @pages = Page.cached_all
+    @pages = Page.all
     authorize! :create, @pages 
     respond_to do |format|
       format.html # index.html.erb
