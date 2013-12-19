@@ -222,6 +222,10 @@ $ ->
     text = that.html()
     that.html text.autoLink()
 
+$(document).ready ->
+  $("#recentcomments").trigger( "click" )
+  $("#recentposts").trigger("click")
+
 $ ->
   $("#post_tag_tokens").tokenInput "/blogs/light-of-supreme/tags.json",
     crossDomain: false
