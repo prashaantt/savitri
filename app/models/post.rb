@@ -1,7 +1,7 @@
 class Post < ActiveRecord::Base
 
   attr_accessible :content, :title, :tag_list, :blog_id, :md_content, :uploads_attributes,
-                  :excerpt, :url, :published_at, :series_title, :subtitle, :show_excerpt, :tag_tokens
+                  :excerpt, :url, :published_at, :series_title, :subtitle, :show_excerpt, :tag_tokens, :draft
 
   acts_as_taggable
   acts_as_url :title, :scope => :blog_id
@@ -84,7 +84,7 @@ class Post < ActiveRecord::Base
   end
 
   def author
-    blog.user.username
+   blog.user.username
   end
   
   def posted

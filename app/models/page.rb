@@ -15,7 +15,7 @@ class Page < ActiveRecord::Base
   end
 
   def self.cached_all
-    Rails.cache.fetch([self.class.name,"cachedall"]) { all.to_a }
+    Rails.cache.fetch([self.class.name,"cachedall"]) { Page.all.to_a }
   end
 
   def self.cached_menu
@@ -27,9 +27,9 @@ class Page < ActiveRecord::Base
   end
 
   def flush_cache
-    Rails.cache.delete([self.class.name,"cachedall"])
-    Rails.cache.delete([self.class.name,"menupages"])
-    Rails.cache.delete([self,"name"])
+    Rails.cache.delete([self.class.name, "cachedall"])
+    Rails.cache.delete([self.class.name, "menupages"])
+    Rails.cache.delete([self, "name"])
   end
 
   def myparents(parents=Array.new)
