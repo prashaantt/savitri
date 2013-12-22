@@ -210,11 +210,12 @@ $ ->
       text = that.html()
       that.html text.autoLink()
     @innerHTML = @innerHTML.replace(/\r\n|\r|\n/g,"<br />")
+    defaultBGColor = $("body").css("background-color");
     $(this).animate
-      backgroundColor: "#FDF1CA"
+      backgroundColor: "#FFEAA8"
     , 1000
     $(this).animate
-      backgroundColor: "#FFF"
+      backgroundColor: defaultBGColor
     , 3000
 
   $(".best_in_place").each ->

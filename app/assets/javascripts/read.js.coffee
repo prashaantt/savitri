@@ -35,12 +35,12 @@ $ ->
   #start color animation after page load
   if window.location.hash
     hashvalue = "p" + window.location.hash.split("#")[1]
-    currentColor = jQuery.Color("#" + hashvalue)
+    defaultBGColor = $("body").css("background-color");
     $("#" + hashvalue).animate
-      backgroundColor: "#FDF1CA"
+      backgroundColor: "#FFEAA8"
     , 1000
     $("#" + hashvalue).animate
-      backgroundColor: currentColor
+      backgroundColor: defaultBGColor
     , 3000
  
 $ ->
