@@ -21,7 +21,8 @@
 
 .blog-subtitle {
   @extend .italics;
-  color: #999;
+  #color: #999;
+  color: #9B928B;
 }
 
 .post-series {
@@ -65,7 +66,8 @@
 .author {
   @extend .italics;
   font-size: 120%;
-  color: #999999;
+  #color: #999999;
+  color: #9B928B;
 }
 
 .blog-author {
@@ -81,7 +83,8 @@
 
 .underline {
   text-decoration: underline;
-  color: #999;
+  #color: #999;
+  color: #9B928B;
 }
 
 .underline:hover {
@@ -142,7 +145,8 @@ article {
 }
 
 .muted-anchor {
-  color: #999;
+  #color: #999;
+  color: #9B928B;
   text-decoration: none;
 }
 
