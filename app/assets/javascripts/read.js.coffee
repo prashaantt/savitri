@@ -37,7 +37,8 @@ $ ->
     hashvalue = "p" + window.location.hash.split("#")[1]
     defaultBGColor = $("body").css("background-color");
     $("#" + hashvalue).animate
-      backgroundColor: "#FFEAA8"
+      #backgroundColor: "#FFEAA8"
+      backgroundColor: "#CAB99C"
     , 1000
     $("#" + hashvalue).animate
       backgroundColor: defaultBGColor
