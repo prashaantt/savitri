@@ -129,7 +129,7 @@
           <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
           <% unless Post.cached_draft_count(@blog.id).zero? %>
             <br/><br/>
-            <%= link_to 'Scheduled posts', {:controller => "posts", :action => "scheduled" }, :class => 'btn btn-success' %>
+            <%= link_to 'Scheduled posts', scheduled_posts_path, :class => 'btn btn-success' %>
           <% end %>
         </div>
       </div>
