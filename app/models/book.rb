@@ -4,8 +4,9 @@ class Book < ActiveRecord::Base
   has_many :stanzas , :through => :cantos
   has_many :lines, :through => :stanzas
 
-  validates :no, :name, :uniqueness => true
-  validates :no, :name, :presence=> true
+  validates :no, :name, :presence => true,:uniqueness => true
+
+  after_commit :flush_cache
 
   def to_param
   	no
@@ -53,5 +54,8 @@ class Book < ActiveRecord::Base
   def category
     self.class.name + "s"
   end
-
+  
+  def flush_cache
+    Rails.cache.delete(["Book","bookall"])
+  end
 end
