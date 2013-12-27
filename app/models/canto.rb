@@ -4,8 +4,9 @@ class Canto < ActiveRecord::Base
   has_many :stanzas , :through => :sections
   belongs_to :book
   
-  validates :no, :presence=> true
+  validates :no, :presence=> true, :uniqueness => {:scope => :book_id}
   validates :title,:uniqueness => true, :presence=> true
+  validates :book_id, :presence => true
   
   def to_param
   	no

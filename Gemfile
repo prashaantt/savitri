@@ -58,3 +58,15 @@ end
 gem 'slim', '>= 1.1.0'
 # if you require 'sinatra' you get the DSL extended to Object
 gem 'sinatra', '>= 1.3.0', :require => nil
+
+group :development, :test do
+  gem 'rspec-rails', '~> 2.0'
+  gem 'shoulda-matchers', '1.5.4'
+  gem 'rb-fsevent'
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'mock_redis'
+  gem 'pry-rails'
+end
