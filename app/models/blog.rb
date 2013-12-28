@@ -19,11 +19,11 @@ class Blog < ActiveRecord::Base
   end
 
   def cached_recentcomments
-    Rails.cache.fetch([self, "recentcomments"]) { comments.limit(10).order('created_at desc').to_a }
+    Rails.cache.fetch([self, "recentcomments"]) { comments.order('created_at desc').first(10).to_a }
   end
 
   def cached_recentposts
-    Rails.cache.fetch([self, "recentposts"]) { posts.where(:draft=>false).limit(20).order('created_at desc').to_a }
+    Rails.cache.fetch([self, "recentposts"]) { posts.where(:draft=>false).order('published_at desc').first(20).to_a }
   end
 
   def cached_title
