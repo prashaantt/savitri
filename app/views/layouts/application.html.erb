@@ -12,12 +12,11 @@
       <%= yield :head %>
       <%= stylesheet_link_tag    "application", :media => "all" %>
       <%= javascript_include_tag "application" %>
-      <%= favicon_link_tag 'favicon.ico' %>
-      <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-precomposed.png">
-      <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-144-precomposed.png">
-      <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-114-precomposed.png">
-      <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-72-precomposed.png">
-      <link rel="icon" type="image/ico" href="/assets/apple-touch-icon-57-precomposed.png">
+      <%= favicon_link_tag 'favicon.png' %>
+      <link rel="apple-touch-icon" href="assets/touch-icon-iphone.png">
+      <link rel="apple-touch-icon" sizes="76x76" href="assets/touch-icon-ipad.png">
+      <link rel="apple-touch-icon" sizes="120x120" href="assets/touch-icon-iphone-retina.png">
+      <link rel="apple-touch-icon" sizes="152x152" href="assets/touch-icon-ipad-retina.png">
       <%  if params[:controller].to_s == 'read' %>
       <% unless current_user.nil? %>
       <script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>
