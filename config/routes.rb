@@ -45,6 +45,8 @@ Savitri::Application.routes.draw do
   resources :users do
     get "/users/sign_out" => "devise/sessions#destroy", :as => :destroy_user_session
   end
+
+  get 'users/:id/feed', to: 'users#show', :format=> false, :defaults => {:format => :atom}
   
   get "savitri/index"
   match '/savitri/show' => "savitri#show"

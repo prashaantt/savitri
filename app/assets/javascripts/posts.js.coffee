@@ -212,6 +212,7 @@ $ ->
     @innerHTML = @innerHTML.replace(/\r\n|\r|\n/g,"<br />")
     defaultBGColor = $("body").css("background-color");
     $(this).animate
+      #backgroundColor: "#FFEAA8"
       backgroundColor: "#CAB99C"
     , 1000
     $(this).animate

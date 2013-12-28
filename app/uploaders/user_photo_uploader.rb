@@ -21,7 +21,7 @@ class UserPhotoUploader < CarrierWave::Uploader::Base
   end
 
    def default_url
-    [version_name, "rails.png"].compact.join('_')
+    [version_name, "user.png"].compact.join('_')
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -41,7 +41,7 @@ class UserPhotoUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
    version :thumb do
-     process :resize_to_fit => [50, 50]
+     process :resize_to_fit => [100, 100]
    end
 
   # Add a white list of extensions which are allowed to be uploaded.
