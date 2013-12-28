@@ -1,7 +1,15 @@
 <% unless user == current_user %>
+	&bull;
+	<% unless user.name.empty? %>
+		<% guessed_first_name = user.name.split(" ")[0] %>
+	<% else %>
+		<% guessed_first_name = user.username %>
+	<% end %>
   <% if current_user && current_user.following?(user) %>
-      <%= button_to("Un-Follow #{user.username}", follow_path(user, current_user.get_follow(user).id), :method => :delete, :remote => true) %>
+    <%= link_to "Unfollow", follow_path(user, current_user.get_follow(user).id), :method => :delete, :remote => true %>
+    <div><em>You will receive email notifications for all activity by <%= guessed_first_name %>.</em></div>
   <% else %>
-    <%= button_to("Follow #{user.username}", {:controller => "follows", :action => "create", :id => user.id}, :remote => true) %>
+    <%= link_to "Follow", {:controller => "follows", :action => "create", :id => user.id}, :method => :post, :remote => true %>
+    <div><em>You are not following <%= guessed_first_name %>.</em></div>
   <% end %>
 <% end %>

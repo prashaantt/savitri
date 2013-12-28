@@ -1,3 +1,12 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.user-comment:before {
+  content: '\201c';
+  color: #9B928B;
+  font-size: 52px;
+  margin-left: -32px;
+  padding-left: -14px;
+  position: absolute;
+}
