@@ -29,32 +29,32 @@
         <% end %>
       </div>
     <% end %>
-    <% unless @user.blogs.empty? %>
+    <% unless @user_blogs.empty? %>
       <div>
         <h5 class="pagination-centered" style="margin-top: 40px">RECENT POSTS</h5>
-        <% @user.blogs.each do |blog| %>
+        <% @user_blogs.each do |blog| %>
           <h2 style="margin-top: 30px;margin-bottom: 30px"><strong><%= link_to blog.title, blog_path(blog) %></strong></h2>
-          <% blog.posts.sort_by{|post| post.published_at}.reject{|post| post.draft}.last(10).reverse.each do |post| %>
-            <h3><%= link_to post.title, blog_post_path(blog, post) %></h3>
+          <% blog.posts.reject{|post| post.draft}.sort_by{|post| post.published_at}.last(10).reverse.each do |post| %>
+            <h3><%= link_to post.cached_title, blog_post_path(blog, post) %></h3>
           <% end %>
         <% end %>
         </div>
     <% end %>
-    <% unless @user.comments.empty? %>
+    <% unless @user_comments.empty? %>
       <div>
       <h5 class="pagination-centered" style="margin-top: 40px;margin-bottom: 30px">RECENT COMMENTS</h5>
-        <% @user.comments.sort_by{|comment| comment.updated_at}.reverse.first(10).each do |comment| %>
+        <% @user_comments.sort_by{|comment| comment.updated_at}.reverse.first(10).each do |comment| %>
           <div style="margin-bottom: 30px">
-            <h4 style="margin-bottom: 20px">On <%= link_to Post.find(comment.post_id).title, blog_post_path(comment.post.blog, Post.find(comment.post_id)) + "#comment-#{comment.id}", :class => "underline" %>:</h4>
+            <h4 style="margin-bottom: 20px">On <%= link_to Post.find(comment.post_id).cached_title, blog_post_path(comment.cached_post.cached_blog, Post.find(comment.post_id)) + "#comment-#{comment.id}", :class => "underline" %>:</h4>
             <p class="user-comment"><%= comment.body.length <= 200 ? comment.body : comment.body.first(200) + "..." %></p>
           </div>
         <% end %>
       </div>
     <% end %>
-    <% unless @user.notebooks.empty? %>
+    <% unless @user_notebooks.empty? %>
       <div>
         <h5 class="pagination-centered" style="margin-top: 40px;margin-bottom: 30px">RECENT NOTES</h5>
-        <% @user.notebooks.sort_by{|notebook| notebook.updated_at}.reverse.first(10).each do |note| %>
+        <% @user_notebooks.sort_by{|notebook| notebook.updated_at}.reverse.first(10).each do |note| %>
           <div style="margin-bottom: 30px">
             <% quoted_lines = note.quote.split("\n") %>
             <% quotation_range = quoted_lines.length === 1 ? quoted_lines[0].strip : quoted_lines[0].strip + " ... " + quoted_lines[quoted_lines.length - 1].strip %>

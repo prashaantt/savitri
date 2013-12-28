@@ -24,9 +24,13 @@ class UsersController < ApplicationController
     @series = {}
 
     @feedsrc = []
+
+    @user_blogs = @user.cached_blogs
+    @user_comments = @user.comments
+    @user_notebooks = @user.notebooks
     
-    @user.blogs.each do |blog|
-      blog.posts.reject{|post| post.draft}.sort_by{|post| post.published_at}.reverse.each do |post|
+    @user_blogs.each do |blog|
+      blog.posts.reject{|post| post.draft}.sort_by{|post| post.cached_published_at}.last(300).reverse.each do |post|
         s = post.tag_counts.select{|tag| tag.name.starts_with?("@")}
         @feedsrc << post
         if !s.empty? && @series[s[0].id].nil?
