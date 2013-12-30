@@ -13,6 +13,8 @@ describe Book do
 
   it { should have_many(:lines).through(:stanzas) }
 
+  it { book.should validate_numericality_of(:no).only_integer }
+
   it 'creates a book with no and name successfully' do
     book.save!
   end
@@ -40,7 +42,7 @@ describe Book do
   end
 
   it 'fails validation with no number' do
-    Book.new.should have(1).errors_on(:no)
+    Book.new.should have(2).errors_on(:no)
   end
 
   it 'passes validation with a name' do
@@ -56,17 +58,11 @@ describe Book do
   end
 
   it 'has mandatory name' do
-    # Factory.build() instantiates a new model, but does not save it
     FactoryGirl.build(:book, name: nil).should_not be_valid
   end
 
   it 'has mandatory no' do
     FactoryGirl.build(:book, no: nil).should_not be_valid
-  end
-
-  it 'should have many cantos' do
-    book = Book.reflect_on_association(:cantos)
-    book.macro.should == :has_many
   end
 
   it { should allow_value('', nil).for(:description) }

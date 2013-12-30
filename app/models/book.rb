@@ -6,6 +6,7 @@ class Book < ActiveRecord::Base
   has_many :lines, :through => :stanzas
 
   validates :no, :name, :presence => true, :uniqueness => true
+  validates :no, numericality: { only_integer: true }
 
   after_commit :flush_cache
 

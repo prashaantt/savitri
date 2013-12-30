@@ -9,6 +9,8 @@ describe Section do
 
   it { should have_many(:lines).through(:stanzas) }
 
+  it { section.should validate_numericality_of(:no).only_integer }
+
   it { expect(section).to belong_to :canto }
 
   it 'creates a section with no, name and canto_id successfully' do
@@ -19,14 +21,14 @@ describe Section do
   it { section.should validate_presence_of(:no) }
 
   it { should validate_presence_of(:name) }
-  
+
   it { should validate_presence_of(:canto_id) }
 
   it do
     factory_section = FactoryGirl.create(:section)
     Section.new(no: factory_section.no, name: factory_section.name,
                 canto_id: factory_section.canto_id)
-    should have(1).errors_on(:no)
+    should have(2).errors_on(:no)
   end
 
   it { Section.new.should_not allow_value('', nil).for(:canto_id) }
@@ -37,7 +39,7 @@ describe Section do
   end
 
   it 'fails validation with no number' do
-    Section.new.should have(1).errors_on(:no)
+    Section.new.should have(2).errors_on(:no)
   end
 
   it { Section.new.should_not allow_value('', nil).for(:name) }
@@ -62,17 +64,7 @@ describe Section do
     FactoryGirl.build(:section, no: nil).should_not be_valid
   end
 
-  it 'should have many sections' do
-    section = Section.reflect_on_association(:stanzas)
-    section.macro.should == :has_many
-  end
-
-  it 'should belong to canto' do
-    section = Section.reflect_on_association(:canto)
-    section.macro.should == :belongs_to
-  end
-
   it do
     Section.new(no: 1, name: 1).should_not allow_value('', nil).for(:canto_id)
-  end  
+  end
 end

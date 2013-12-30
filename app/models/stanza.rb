@@ -4,10 +4,10 @@ class Stanza < ActiveRecord::Base
   belongs_to :section
   #scope :_section, lambda { |q| where(:section_id=>q ) }
 
-  validates :no , :uniqueness => true
-
+  validates :no , :uniqueness => true, :presence => true, numericality: { only_integer: true }
+  validates :section_id, :presence => true
   def to_param
-  	no
+    no
   end
 
   # def self.to_s

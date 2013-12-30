@@ -32,14 +32,14 @@ describe Canto do
 
   it { should validate_presence_of(:no) }
 
-  # it { should validate_numericality_of(:no).only_integer }
+  it { canto.should validate_numericality_of(:no).only_integer }
 
   # it 'fails validation with title as integer' do
   #   Canto.new(title:1).should have(1).error_on(:title)
   # end
 
   it 'fails validation with no number' do
-    Canto.new.should have(1).errors_on(:no)
+    Canto.new.should have(2).errors_on(:no)
   end
 
   it { Canto.new.should_not allow_value('', nil).for(:title) }
@@ -62,16 +62,6 @@ describe Canto do
 
   it 'has mandetory no' do
     FactoryGirl.build(:canto, no: nil).should_not be_valid
-  end
-
-  it 'should have many sections' do
-    canto = Canto.reflect_on_association(:sections)
-    canto.macro.should == :has_many
-  end
-
-  it 'should belong to books' do
-    canto = Canto.reflect_on_association(:book)
-    canto.macro.should == :belongs_to
   end
 
   it do
