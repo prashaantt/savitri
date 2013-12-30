@@ -7,7 +7,11 @@
   <%= f.input :email, :required => true %>
   <%= f.input :password, :required => true %>
   <%= f.input :password_confirmation, :required => true %>
-  <div style="text-align: center">
+  <div class="input photo">
+    <label class="photo" for="user_photo">Profile picture</label>
+    <%= f.file_field :photo, :class=>"filestyle" %>
+  </div>
+  <div style="text-align: center; margin-top: 20px">
     <%= f.button :submit, 'Sign up', :class => 'btn btn-success' %>
   </div>
 <% end %>

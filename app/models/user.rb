@@ -26,10 +26,6 @@ class User < ActiveRecord::Base
   acts_as_follower
   acts_as_followable
 
-  def to_param
-    "#{id}-#{username}"
-  end
-
   after_initialize :init
   after_commit :follow_admin, :on => :create
   after_commit :flush_cache

@@ -18,9 +18,34 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id]) || not_found
 
+    base_url = request.protocol + request.host_with_port
+    @feed_url = base_url + user_path(params[:id]) + "/feed"
+
+    @series = {}
+
+    @feedsrc = []
+
+    @user_blogs = @user.cached_blogs
+    @user_comments = @user.comments
+    @user_notebooks = @user.notebooks
+    
+    @user_blogs.each do |blog|
+      blog.posts.reject{|post| post.draft}.sort_by{|post| post.cached_published_at}.last(300).reverse.each do |post|
+        s = post.tag_counts.select{|tag| tag.name.starts_with?("@")}
+        @feedsrc << post
+        if !s.empty? && @series[s[0].id].nil?
+          @series[s[0].id] = {:name => s[0].name, :title => post.series_title, :blog_id => blog.id, :blog_title => blog.title, :published => post.published_at}
+        end
+      end
+    end
+
+    @series = @series.sort_by {|k,v| v[:published]}.last(10).reverse
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
+      format.atom { render :layout => false, :content_type=>"application/xml" }
+      format.rss { redirect_to blog_posts_path(:format => :atom), :status => :moved_permanently }
     end
   end
 

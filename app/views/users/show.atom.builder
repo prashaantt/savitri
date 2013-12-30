@@ -1,21 +1,12 @@
 unless @feedsrc.empty?
-  atom_feed :language => 'en-US', :id => request.protocol + request.host_with_port + '/blogs/' + @feedsrc.first.cached_blog.slug do |feed|
+  atom_feed :language => 'en-US', :id => @feed_url do |feed|
 
-    if params[:tag]
-      if params[:tag].starts_with?("@")
-        subtitle = @feedsrc.first.cached_series_title
-        feed.subtitle subtitle
-      else
-        subtitle = params[:tag]
-        feed.subtitle subtitle
-      end
+    unless @feedsrc.first.cached_blog.cached_user.name.blank?
+      title = @feedsrc.first.cached_blog.cached_user.name
+    else
+      title = @feedsrc.first.cached_blog.cached_user.cached_username
     end
-    
-    title = @feedsrc.first.blog.cached_title
-    if subtitle
-      title += " — " + subtitle
-    end
-    feed.title title
+    feed.title title + " on " + request.host_with_port
 
     feed.updated @feedsrc.first.updated_at
 

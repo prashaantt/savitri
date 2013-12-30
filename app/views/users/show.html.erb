@@ -1,55 +1,68 @@
 <%- model_class = User -%>
-<div class="page-header">
-</div>
-<div class="content">
-  <div class="row">
-    <div class="span1">&nbsp;</div>
-      <div class="span4">
-        <h3><%= image_tag(@user.photo_url(:thumb).to_s, :height => "100", :width => "100") %>
-        <%=t '.title', :default => @user.name %></h3>
-        <div id="follow_user">
-            <%= render :partial => "shared/follow_user", :locals => {:user => @user} %>
-      </div>
+<% content_for :head do %>
+  <%= auto_discovery_link_tag :atom, @feed_url %>
+  <%= auto_discovery_link_tag :rss,  @feed_url %>
+<% end %>
+<div class="row">
+  <div class="span6 offset3 dynamicspan">
+    <div class="page-header title">
+      <%= image_tag(@user.photo_url(:thumb).to_s, :class => "img-circle") %>
+      <h1><%= @user.name %></h1>
+      <h3><em><%= @user.username %></em></h3>
+      <div style="margin-top: 20px" class="muted">
+        <i class="icon-rss"></i>
+        <%= link_to "Feed", @feed_url, {:class => "muted-anchor"} %>
+        &bull;
+        <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
+        <span id="follow_user"><%= render :partial => "shared/follow_user", :locals => {:user => @user} %></span>
       </div>
     </div>
-    <br/>;
-  <div class="row">
-    <div class="span1">&nbsp;</div>
-    <div class="span3">    
-        <dt>Recent Posts:</dt>
-        <dd>
-          <ol>
-            <% @user.blogs.each do |blog| %>
-            <% blog.posts.each do |post| %>
-              <%= link_to post.title, blog_post_path(blog,post) %>
-              <%= link_to (pluralize post.comments.count, "comment"), blog_post_path(blog,post) %>
-               <br/> 
-               <% end %>
-            <% end %>
-        </dd>
-   </div>
-   <div class="span3">
-      <dt>Recent Comments:</dt>
-      <dd>
-        <ol>
-          <% @user.comments.each do |comment| %>
-             <%= link_to comment.body , blog_post_path(comment.post.blog,comment.post) %> 
-             on <i><%= link_to Post.find(comment.post_id).title, blog_post_path(comment.post.blog,Post.find(comment.post_id)) %> </i>
-             <br/> 
-          <% end %>
-      </dd>
   </div>
-   <div class="span3">    
-        <dt>Latest Notebook Entries</dt>
-        <dd>
-          <ol>
-            <% @user.notebooks.limit(10).each  do |note| %>
-               <%=  note.quote  %>  <i>annotated</i> as <%=  note.annotation  %>
-               <br/> 
-            <% end %>
-        </dd>
-   </div>
 </div>
- </dl>
-</div>
+<div class="row">
+  <div class="span6 offset3">
+    <% unless @series.empty? %>
+      <div>
+        <h5 class="pagination-centered" style="margin-bottom: 30px">RECENT SERIES CONTRIBUTIONS</h5>
+        <% @series.each do |series| %>
+          <h3><%= link_to series[1][:title], blog_posts_path(Blog.find(series[1][:blog_id])) + "/tags/" + series[1][:name] %>
+        <% end %>
+      </div>
+    <% end %>
+    <% unless @user_blogs.empty? %>
+      <div>
+        <h5 class="pagination-centered" style="margin-top: 40px">RECENT POSTS</h5>
+        <% @user_blogs.each do |blog| %>
+          <h2 style="margin-top: 30px;margin-bottom: 30px"><strong><%= link_to blog.title, blog_path(blog) %></strong></h2>
+          <% blog.posts.reject{|post| post.draft}.sort_by{|post| post.published_at}.last(10).reverse.each do |post| %>
+            <h3><%= link_to post.cached_title, blog_post_path(blog, post) %></h3>
+          <% end %>
+        <% end %>
+        </div>
+    <% end %>
+    <% unless @user_comments.empty? %>
+      <div>
+      <h5 class="pagination-centered" style="margin-top: 40px;margin-bottom: 30px">RECENT COMMENTS</h5>
+        <% @user_comments.sort_by{|comment| comment.updated_at}.reverse.first(10).each do |comment| %>
+          <div style="margin-bottom: 30px">
+            <h4 style="margin-bottom: 20px">On <%= link_to Post.find(comment.post_id).cached_title, blog_post_path(comment.cached_post.cached_blog, Post.find(comment.post_id)) + "#comment-#{comment.id}", :class => "underline" %>:</h4>
+            <p class="user-comment"><%= comment.body.length <= 200 ? comment.body : comment.body.first(200) + "..." %></p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <% unless @user_notebooks.empty? %>
+      <div>
+        <h5 class="pagination-centered" style="margin-top: 40px;margin-bottom: 30px">RECENT NOTES</h5>
+        <% @user_notebooks.sort_by{|notebook| notebook.updated_at}.reverse.first(10).each do |note| %>
+          <div style="margin-bottom: 30px">
+            <% quoted_lines = note.quote.split("\n") %>
+            <% quotation_range = quoted_lines.length === 1 ? quoted_lines[0].strip : quoted_lines[0].strip + " ... " + quoted_lines[quoted_lines.length - 1].strip %>
+            <h4 style="margin-bottom: 20px">On <%= link_to quotation_range, note.uri, :class => "underline" %>:</h4>
+            <p class="user-comment"><%= note.annotation %></p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
