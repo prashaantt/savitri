@@ -1,4 +1,4 @@
-
+# encoding: utf-8
 FactoryGirl.define do
   factory :section do |f|
     f.canto_id { Faker::Number.number 2 }

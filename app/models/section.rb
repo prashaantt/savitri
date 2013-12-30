@@ -4,7 +4,7 @@ class Section < ActiveRecord::Base
   has_many :lines, :through => :stanzas
   belongs_to :canto
   validates :canto_id, :no, :name, :presence => true
-  validates :no, :uniqueness => true, :uniqueness => {:scope => :canto_id}
+  validates :no, :uniqueness => {:scope => :canto_id}
 
   def cached_stanzas
   	Rails.cache.fetch([self,"stanzas"]) { stanzas.order('no').to_a }

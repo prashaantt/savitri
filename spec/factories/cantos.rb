@@ -1,4 +1,4 @@
-
+# encoding: utf-8
 FactoryGirl.define do
   factory :canto do |f|
     f.title { Faker::Name.title }

@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'sunspot/rails/spec_helper'
 
 Spec::Runner.configure do |config|

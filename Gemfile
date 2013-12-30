@@ -48,10 +48,11 @@ gem 'best_in_place'
 
 group :development do
   gem 'rack-mini-profiler'
-	gem 'better_errors'
-	gem 'binding_of_caller'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'meta_request'
   gem 'bullet'
+  gem 'rubocop'
 end
 
 #gem 'debugger'
@@ -59,14 +60,16 @@ gem 'slim', '>= 1.1.0'
 # if you require 'sinatra' you get the DSL extended to Object
 gem 'sinatra', '>= 1.3.0', :require => nil
 
+group :test do
+  gem 'guard-rspec'
+  gem 'mock_redis'
+end
+
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'shoulda-matchers', '1.5.4'
-  gem 'rb-fsevent'
-  gem 'guard'
-  gem 'guard-rspec'
+  gem 'rb-fsevent'  
+  gem 'pry-rails'
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'mock_redis'
-  gem 'pry-rails'
 end
