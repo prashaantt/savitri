@@ -43,6 +43,7 @@ class Post < ActiveRecord::Base
   searchable do 
     text :title, :stored => true
     text :content, :stored => true
+    text :series_title, :stored => true
 # --facets below--
     string :category
     string :author
@@ -88,7 +89,7 @@ class Post < ActiveRecord::Base
   end
   
   def posted
-    updated_at.strftime("%B") + ' ' + updated_at.strftime("%Y")
+    published_at.strftime("%B") + ' ' + published_at.strftime("%Y")
   end
 
   def blogname

@@ -68,9 +68,14 @@
 								<% if highlight = hit.highlight(:content) %>
 									<% sanit_html = Sanitize.clean(highlight.format { |fragment| content_tag(:strong, fragment) }.split("\n").join(""), Sanitize::Config::RESTRICTED) %>
 									<p class="snip">...<%= sanit_html.strip.html_safe %>...</p>
-						    <% else %>
-						    	<p class="snip"><%= strip_tags(l.content).first(150).html_safe %></p>
-						    <% end %>					
+						    		<% elsif highlight = hit.highlight(:series_title) %>
+						    		<% base_url = request.protocol + request.host_with_port %>
+								<% tag_base_url = base_url + blog_posts_path(l.blog) + "/tags/" %>
+						    			<% sanit_html = Sanitize.clean(highlight.format { |fragment| content_tag(:strong, fragment) }.split("\n").join(""), Sanitize::Config::RESTRICTED) %>
+									<p class="snip"><i>Series Title: </i><%= link_to sanit_html.strip.html_safe, tag_base_url + series_tag_arr = l.tag_counts.select{|tag| tag.name.start_with?("@")}[0].name, { :title => "View series" } %>
+						    		<% else %>
+						    			<p class="snip"><%= strip_tags(l.content).first(150).html_safe %></p>
+						    		<% end %>					
 							</div>
 						<% end %>
 					</div>
