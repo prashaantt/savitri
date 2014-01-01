@@ -7,14 +7,16 @@
 		Filter by
 	</h5>
 	<% end %>
-	<% unless @search.facet(:category).rows.count == 1 %>
+	<% if  params[:q].split("in:").length != 2 %>
 		<%= render 'category_facet' %>
-	<% else %>
-		<% if @search.facet(:category).rows.any?{|result| result.value == "Lines" }	||
-					@search.facet(:category).rows.any?{|result| result.value == "Sentences" }	%>
+	<% end %>
+	<%# checked for rows count 2. If there is a result in a line it will also appear in a sentence. If it also appears in a post then do not
+	show download. Else valid. %>
+		<% if  @search.facet(:category).rows.count <= 2 && (@search.facet(:category).rows.any?{|result| result.value == "Lines" }	||
+					@search.facet(:category).rows.any?{|result| result.value == "Sentences" }) %>
 			<% @category_enabled = true	%>
 		<% end %>
-	<% end %>
+
 	<% unless @search.facet(:sbook).nil? %>
 		<%= render 'sbook_facet' %>
 	<% end %>
