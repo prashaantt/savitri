@@ -7,7 +7,15 @@
     <h4><% unless @sender.name.blank? %><%= @sender.name %><% else %><%= @sender.username %><% end %> wrote a comment on "<%= link_to @post.title, blog_post_url(@blog, @post, :anchor => "comment-"+@comment.id.to_s) %>" at <%= link_to @blog.title, blog_url(@blog) %>.</h4>
     <p>
       <p>Comment:</p>
-      <%= @comment.body.html_safe %>
+        <div style="padding-left:50px">
+          <% if @comment.body.length > 200 %>
+          <% comment = @comment.body[0..200] + @comment.body[201..-1].match(/([^ ]+)/)[0] + '...' %>
+          <%= comment.gsub(/\r\n?/,'<br/>').html_safe %>
+          <%= link_to " more", blog_post_url(@blog, @post, :anchor => "comment-" + @comment.id.to_s) %>
+          <% else %>
+          <%= @comment.body.gsub(/\r\n?/,"<br/>").html_safe %>
+          <% end %>
+        </div>
     </p>
   </body>
 </html>
