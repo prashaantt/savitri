@@ -16,72 +16,80 @@
 <div class="row">
 	<div class="span2 offset1">
 		<% unless params[:q].blank? %>
-			<%= render 'facet' %>
+		<%= render 'facet' %>
 		<% end %>
 	</div>
 	<div class="span6">
 		<% unless params[:q].blank? %>
-			<% unless @search.total.to_i == 0 %>
-				<h3 class="announce">Showing <%= @search.total %> matches</h3>
-			<% else %>
-				<h3 class="announce">No results found</h3>
-				<p><em>Try searching for something else.</em></p>
-			<% end %>
-			<div class="results">
-				<% @search.each_hit_with_result do |hit,l| %>
-					<% logger.debug { l.inspect }%>
-					<div class="result">
-						<% if l.is_a?(Line) %>
-							<% if highlight = hit.highlight(:line) %>
-								<p class="snip"><%= highlight.format { |fragment| content_tag(:strong, fragment) }.html_safe %>
-						 	<% else %>
-						 		<p class="snip"><%= l.line %>
-						 	<% end %>
-							<span class="ref">
-								<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
-								<%= link_to anchor_t, l.share_url, :class => "pipes" %>
-							</span></p>
-						<% elsif l.is_a?(Book) %>
-							<p class="snip">Book <%= l.no %>: <%= link_to l.name,'read/'+l.no.to_s+'/1/1' %></p>
-						<% elsif l.is_a?(Stanza) %>
-							<% count = 0 %>
-							<% l.lines.each_with_index do |line, index| %>
-								<% (count += 1) %>
-								<% if count == 1 %>
-									<p class="snip"><%= line.line %>
-								<% else %>
-									<%= line.line %>
-								<% end %>
-								<% if count < l.length.to_i %>
-									<br>
-								<% end %>
-							<% end %>
-							<span class="ref">
-								<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
-								<%= link_to anchor_t, share_url(l.no), :class => "pipes", :rel => "nofollow" %>
-							</span></p>
-						<% elsif l.is_a?(Post) %>
-							<div class="result-title">
-								<h2><%= link_to l.title, blog_post_path(l.blog,l) %></h2>
-							</div>
-							<div class="result-text">
-								<% if highlight = hit.highlight(:content) %>
-									<% sanit_html = Sanitize.clean(highlight.format { |fragment| content_tag(:strong, fragment) }.split("\n").join(""), Sanitize::Config::RESTRICTED) %>
-									<p class="snip">...<%= sanit_html.strip.html_safe %>...</p>
-						    		<% elsif highlight = hit.highlight(:series_title) %>
-						    		<% base_url = request.protocol + request.host_with_port %>
-								<% tag_base_url = base_url + blog_posts_path(l.blog) + "/tags/" %>
-						    			<% sanit_html = Sanitize.clean(highlight.format { |fragment| content_tag(:strong, fragment) }.split("\n").join(""), Sanitize::Config::RESTRICTED) %>
-									<p class="snip"><i>Series Title: </i><%= link_to sanit_html.strip.html_safe, tag_base_url + series_tag_arr = l.tag_counts.select{|tag| tag.name.start_with?("@")}[0].name, { :title => "View series" } %>
-						    		<% else %>
-						    			<p class="snip"><%= strip_tags(l.content).first(150).html_safe %></p>
-						    		<% end %>					
-							</div>
+		<% unless @search.total.to_i == 0 %>
+		<h3 class="announce">Showing <%= @search.total %> matches</h3>
+		<% else %>
+		<h3 class="announce">No results found</h3>
+		<p><em>Try searching for something else.</em></p>
+		<% end %>
+		<div class="results">
+			<% @search.each_hit_with_result do |hit,l| %>
+			<div class="result">
+				<% if l.is_a?(Line) %>
+					<% if highlight = hit.highlight(:line) %>
+						<p class="snip"><%= highlight.format { |fragment| content_tag(:strong, fragment) }.html_safe %>
+					<% else %>
+						<p class="snip">
+						<%= l.line %>
+					<% end %>
+						<span class="ref">
+							<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
+							<%= link_to anchor_t, l.share_url, :class => "pipes" %>
+						</span>
+						</p>
+				<% elsif l.is_a?(Book) %>
+					<p class="snip">Book <%= l.no %>: <%= link_to l.name,'read/'+l.no.to_s+'/1/1' %></p>
+					<% elsif l.is_a?(Stanza) %>
+						<% count = 0 %>
+						<% l.lines.each_with_index do |line, index| %>
+						<% (count += 1) %>
+						<% if count == 1 %>
+							<p class="snip"><%= line.line %>
+						<% else %>
+							<%= line.line %>
 						<% end %>
+						<% if count < l.length.to_i %>
+							<br>
+						<% end %>
+					<% end %>
+					<span class="ref">
+						<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
+						<%= link_to anchor_t, share_url(l.no), :class => "pipes", :rel => "nofollow" %>
+					</span></p>
+				<% elsif l.is_a?(Post) %>
+					<div class="result-title">
+						<h2><%= link_to l.title, blog_post_path(l.blog,l) %></h2>
+					</div>
+					<div class="result-text">
+						<% if highlight = hit.highlight(:content) %>
+						<% sanit_html = Sanitize.clean(highlight.format { |fragment| content_tag(:strong, fragment) }.split("\n").join(""), Sanitize::Config::RESTRICTED) %>
+						<p class="snip">...<%= sanit_html.strip.html_safe %>...</p>
+						<% elsif highlight = hit.highlight(:series_title) %>
+						<% base_url = request.protocol + request.host_with_port %>
+						<% tag_base_url = base_url + blog_posts_path(l.blog) + "/tags/" %>
+						<% sanit_html = Sanitize.clean(highlight.format { |fragment| content_tag(:strong, fragment) }.split("\n").join(""), Sanitize::Config::RESTRICTED) %>
+						<p class="snip"><i>Series Title: </i><%= link_to sanit_html.strip.html_safe, tag_base_url + series_tag_arr = l.tag_counts.select{|tag| tag.name.start_with?("@")}[0].name, { :title => "View series" } %>
+							<% else %>
+							<p class="snip"><%= strip_tags(l.content).first(150).html_safe %></p>
+							<% end %>					
+						</div>
+				<% elsif l.is_a?(Page) %>
+					<div class="result-title">
+						<h2><%= link_to l.name, page_path(l) %></h2>
+					</div>
+					<div class="result-text">
+						<p class="snip">...<%= strip_tags(l.content).first(150).html_safe %>...</p>
 					</div>
 				<% end %>
 			</div>
-			<%= paginate @search.results, :param_name => :page %>
+			<% end %>
+		</div>
+		<%= paginate @search.results, :param_name => :page %>
 		<% end %>
-	</div>
-</div>
+	</div><!-- End of Span6-->
+</div><!-- End of Row-->

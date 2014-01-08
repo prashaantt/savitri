@@ -9,6 +9,30 @@ class Page < ActiveRecord::Base
   validates :priority, :numericality => {:only_integer => true}, :unless => Proc.new {|m| m.category != "Menu"}
 
   after_commit :flush_cache
+  before_validation :permalink_update
+
+  searchable do 
+    text :content, :stored => true
+    text :name, :stored => true
+# --facets below--
+    string :category
+    string :type
+    time :published_at do
+     Time.zone.now
+    end
+  end
+
+  def type
+    category
+  end
+
+  def category
+    if !(topparent = self.myparents[-1]).nil?
+      Page.find(topparent).name
+    else
+      name
+    end
+  end
 
   def to_param
   	"#{permalink}"
@@ -49,8 +73,6 @@ class Page < ActiveRecord::Base
   def self.cached_menu_pages
     Rails.cache.fetch([name,"menu-pages"]) {order(:priority).find_all_by_category("Menu")}
   end
-
-  before_validation :permalink_update
   
   private
 
