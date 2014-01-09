@@ -1,23 +1,23 @@
 class Book < ActiveRecord::Base
   attr_accessible :description, :name, :no
   has_many :cantos
-  has_many :stanzas , :through => :cantos
-  has_many :lines, :through => :stanzas
+  has_many :stanzas , through:  :cantos
+  has_many :lines, through:  :stanzas
 
-  validates :no, :name, :uniqueness => true
-  validates :no, :name, :presence=> true
+  validates :no, :name, uniqueness:  true
+  validates :no, :name, presence: true
 
   def to_param
-  	no
+    no
   end
 
-  searchable do 
+  searchable do
     text :name
     text :no
     integer :id
     string :category
     time :published_at do
-     Time.zone.now
+      Time.zone.now
     end
   end
 
@@ -26,20 +26,20 @@ class Book < ActiveRecord::Base
   end
 
   def cached_cantos
-    Rails.cache.fetch([self,"cantos"]) { cantos.order('no').to_a }
+    Rails.cache.fetch([self, 'cantos']) { cantos.order('no').to_a }
   end
 
   def cached_number
-    Rails.cache.fetch([self,"number"]) { no }
+    Rails.cache.fetch([self, 'number']) { no }
   end
 
   def cached_name
-    Rails.cache.fetch([self,"name"]) { name }
+    Rails.cache.fetch([self, 'name']) { name }
   end
 
   def self.cached_all
-    #Rails.cache.fetch([name,"bookall"]) { order('no').to_a }
-    Rails.cache.fetch(["Book","bookall"]) { Book.order('no').to_a }
+    # Rails.cache.fetch([name, 'bookall']) { order('no').to_a }
+    Rails.cache.fetch(['Book', 'bookall']) { Book.order('no').to_a }
   end
 
   # def canto
@@ -51,7 +51,6 @@ class Book < ActiveRecord::Base
   # end
 
   def category
-    self.class.name + "s"
+    self.class.name + 's'
   end
-
 end
