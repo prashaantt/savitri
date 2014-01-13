@@ -9,19 +9,25 @@ class SearchController < ApplicationController
     # 1. Split on spaces. Left side => query , Right side => Operations
     # god awake in:lines book:1 canto:1
     if params[:q].to_s.include?('in:')
-      query = params[:q].split('in:')
-      unless query.length > 2
-        case query[1].downcase
+      pams = params[:q].split('in:')
+      query = params[:q].downcase.split(/\s+/)
+      @condition = query[query.index {|v| v.start_with? "in:" }]
+      filter = @condition.split("in:")
+      @keywords = params[:q].strip.dup
+      @keywords.slice! @condition
+      debugger
+      unless pams.length > 2
+        case filter[1]
         when 'books'
           @search = Sunspot.search Book do
-            fulltext query[0]
+            fulltext @keywords
             order_by(:id, :asc)
             facet(:category)
             paginate page: params[:page], per_page:  20
           end
         when 'sentences'
           @search = Sunspot.search Stanza do
-            fulltext query[0], highlight: :true
+            fulltext @keywords, highlight: :true
             order_by(:id, :asc)
             facet(:category)
             facet(:sbook)
@@ -40,7 +46,7 @@ class SearchController < ApplicationController
           end
         when 'lines'
           @search = Sunspot.search Line do
-            fulltext query[0], highlight: :true
+            fulltext @keywords, highlight: :true
             order_by(:id, :asc)
             facet(:category)
             facet(:section)
@@ -59,7 +65,7 @@ class SearchController < ApplicationController
           end
         when 'posts'
           @search = Sunspot.search Post do
-            fulltext query[0], highlight: true
+            fulltext @keywords, highlight: true
             with(:published_at).less_than Time.now
             facet(:category)
             facet(:posted)
@@ -72,7 +78,7 @@ class SearchController < ApplicationController
           end
         when /[a-z]/
           @search = Sunspot.search Page do
-            fulltext query[0], highlight: true
+            fulltext @keywords, highlight: true
             facet(:category)
             with(:type).equal_to(query[1].downcase.capitalize.to_s)
             paginate page: params[:page], per_page: 30

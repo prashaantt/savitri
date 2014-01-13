@@ -2,13 +2,13 @@
 <% @category_enabled = false %>
 <div class="facets">
 	<% unless (@search.facet(:category).rows.count == 1) || @search.results.count == 0 %>
-		<% if @search.facet(:category).rows[0].value.in? ["Books", "Audio", "Library", "Page", "Presentations", "Themes"] %>
+		<% if @search.facet(:category).rows.any?{|result| result.value.in? ["Books", "Audio", "Library", "Page", "Presentations", "Themes"]}  %>
 		<h5 class="left-filter">
 			Filter by
 		</h5>
 		<% end %>
 	<% end %>
-	<% if  params[:q].split("in:").length != 2 %>
+	<% unless @search.facet(:category).rows.count == 1 %>
 		<%= render 'category_facet' %>
 	<% end %>
 	<%# checked for rows count 2. If there is a result in a line it will also appear in a sentence. If it also appears in a post then do not
