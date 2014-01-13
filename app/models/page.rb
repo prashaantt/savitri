@@ -30,7 +30,7 @@ class Page < ActiveRecord::Base
     if !(topparent = myparents[-1]).nil?
       Page.find(topparent).name
     else
-      name
+      "Library" #name
     end
   end
 
