@@ -61,7 +61,7 @@
         <% end %>
         <label class="label" for="size_later" style="margin-right: 10px; margin-left: 10px">Schedule</label> <br/><br/>
         <div class="controls", id="publishat", style="display:none;" >
-          <%= f.datetime_select :published_at, {:use_short_month=>"true", :start_month => Time.now.month, :end_year=>Time.now.year+3,:order => [:day, :month, :year, :hour, :minute], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
+          <%= f.datetime_select :published_at, {:use_short_month=>"true", :start_month => Time.now.month, :start_year => 2005, :end_year=>Time.now.year+3,:order => [:day, :month, :year, :hour, :minute], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
         </div>
       </div>
     <% end %>
