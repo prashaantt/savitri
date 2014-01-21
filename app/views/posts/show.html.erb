@@ -54,7 +54,7 @@
           :class => 'btn btn-mini btn-danger' %>
           <% end %>
         </span>
-        <h5><% if @post.draft && @post.cached_published_at > Time.zone.now %><span class="label">Scheduled</span><% end %><span class="blog-author"> by <%= link_to @blog.cached_user.cached_username, @blog.cached_user, {:class => "underline"} %> on <%= @post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize @post.cached_comments_count, "comment"), "#comments", {:class => "underline"} %>
+        <h5><% if @post.draft && @post.cached_published_at > Time.zone.now %><span class="label">Scheduled</span><% end %><span class="blog-author"> by <%= link_to @post.cached_author.username, @post.cached_author, {:class => "underline"} %> on <%= @post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize @post.cached_comments_count, "comment"), "#comments", {:class => "underline"} %>
         </span></h5>
       </div>
       <div class="main-content">

@@ -23,4 +23,4 @@ production:
   database: dev
   pool: 10
   username: postgres
-  password: 
+  password:
