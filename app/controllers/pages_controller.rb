@@ -2,11 +2,11 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   before_filter :store_location, :last_page
-  before_filter :authenticate_user!, :except => [:show,:parents]
+  before_filter :authenticate_user!, except: [:show, :parents]
 
   def index
-    @pages = Page.all
-    authorize! :create, @pages 
+    @pages = Page.cached_all
+    authorize! :create, @pages
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @pages }
@@ -42,7 +42,7 @@ class PagesController < ApplicationController
   # GET /pages/1/edit
   def edit
     @page = Page.find(params[:id]) || not_found
-    @page.url = @page.permalink.split("/").last
+    @page.url = @page.permalink.split('/').last
   end
 
   # POST /pages
@@ -50,7 +50,7 @@ class PagesController < ApplicationController
   def create
     @page = Page.new(params[:page])
 
-    if (params[:page][:category] == "Non-Menu")
+    if params[:page][:category] == 'Non-Menu'
       params[:page][:priority] = nil
     else
       params[:page][:parent] = nil
@@ -61,7 +61,7 @@ class PagesController < ApplicationController
         format.html { redirect_to page_path(@page), notice: 'Page was successfully created.' }
         format.json { render json: @page, status: :created, location: @page }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @page.errors, status: :unprocessable_entity }
       end
     end
@@ -71,12 +71,12 @@ class PagesController < ApplicationController
   # PUT /pages/1.json
   def update
     if params[:paths].nil?
-      @page = Page.find(params[:page][:id])  
+      @page = Page.find(params[:page][:id])
     else
       @page = Page.find_by_permalink!(params[:paths])
     end
 
-    if (params[:page][:category] == "Non-Menu")
+    if params[:page][:category] == 'Non-Menu'
       params[:page][:priority] = nil
     else
       params[:page][:parent] = nil
@@ -87,7 +87,7 @@ class PagesController < ApplicationController
         format.html { redirect_to page_path(@page), notice: 'Page was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @page.errors, status: :unprocessable_entity }
       end
     end
