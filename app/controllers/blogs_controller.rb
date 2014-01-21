@@ -54,6 +54,7 @@ class BlogsController < ApplicationController
   end
 
   def edit
+    raise CanCan::AccessDenied.new("Not authorized!", :update, Blog) unless current_user.admin?
     @blog = Blog.cached_find_by_slug(params[:id]) || not_found
     authorize! :edit, @blog
   end
@@ -83,5 +84,32 @@ class BlogsController < ApplicationController
       format.html { redirect_to blogs_path, notice: 'blog was successfully deleted.' }
       format.json { head :no_content }
     end
+  end
+
+  def invite_for_posting
+    @blog = Blog.cached_find_by_slug(params[:id])
+    @users = []
+    @blog.post_access.each do |id|
+      @users << User.find(id)
+      end
+  end
+
+  def send_write_posts_email
+    @blog = Blog.find_by_slug(params[:id])
+    @user = User.find_by_email(params[:blog][:post_access])
+    if @user.nil?
+      flash[:error] = "#{params[:blog][:post_access]} is not yet signed up"
+      redirect_to invite_for_posting_path and return     
+    elsif @blog.post_access.include?@user.id
+      flash[:error] = "#{@user.username} already have access to this blog"
+      redirect_to invite_for_posting_path and return
+    else
+      @blog.post_access.push(@user.id) unless @blog.post_access.include?@user.id
+      authorize! :invite_for_posting, @blog
+      @blog.save!
+      PostAuthorEmailWorker.perform_async(@user.id, current_user.id, @blog.id)
+    end
+    flash[:notice] = "#{@user.username} now can write posts to #{@blog.title}"
+    redirect_to blogs_path
   end
 end

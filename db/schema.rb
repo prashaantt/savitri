@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130812223241) do
+ActiveRecord::Schema.define(:version => 20140116121855) do
 
   create_table "audios", :force => true do |t|
     t.integer  "medium_id"
@@ -32,11 +32,12 @@ ActiveRecord::Schema.define(:version => 20130812223241) do
 
   create_table "blogs", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title",      :null => false
+    t.string   "title",                               :null => false
     t.string   "subtitle"
-    t.string   "slug",       :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "slug",                                :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.string   "post_access", :default => "--- []\n"
   end
 
   create_table "books", :force => true do |t|
@@ -149,6 +150,7 @@ ActiveRecord::Schema.define(:version => 20130812223241) do
     t.string   "series_title"
     t.string   "subtitle"
     t.string   "show_excerpt"
+    t.integer  "author_id"
   end
 
   create_table "roles", :force => true do |t|

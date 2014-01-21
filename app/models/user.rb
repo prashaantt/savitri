@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :email, :name, :username, :role_id, :photo
   has_many :blogs
+  has_many :posts, :foreign_key => :author_id
   has_many :comments
   has_many :notebooks
   has_many :media
@@ -68,7 +69,15 @@ class User < ActiveRecord::Base
 
   def cached_blogs
     Rails.cache.fetch([self, "blogs"]) { blogs.order("id").to_a }
-  end  
+  end
+
+  def cached_blogs_have_post_access
+    Rails.cache.fetch([self, "blogspostaccess"]) { Blog.blogs_have_post_access id}
+  end
+
+  def cached_recent_posts
+    Rails.cache.fetch([self, "posts"]) { posts.published.order('published_at DESC').limit(50).to_a }
+  end
 
   def cached_blogs_count
     Rails.cache.fetch([self, "blogscount"]) { blogs.count }
@@ -82,6 +91,17 @@ class User < ActiveRecord::Base
     Rails.cache.delete([self,"username"])
     Rails.cache.delete([self,"blogs"])
     Rails.cache.delete([self, "blogscount"])
+
+    flush_recent_posts
+    flush_cached_blogs_have_post_access
+  end
+
+  def flush_cached_blogs_have_post_access
+    Rails.cache.delete([self, "blogspostaccess"])
+  end
+
+  def flush_recent_posts
+    Rails.cache.delete([self, "posts"])
   end
 
 end

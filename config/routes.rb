@@ -22,7 +22,10 @@ Savitri::Application.routes.draw do
   
   get "/profile/:id" => "users#show", :as => :profile
 
+  get "blogs/:id/invite_for_posting", to: 'blogs#invite_for_posting', :as => :invite_for_posting
+  post "blogs/:id/send_write_posts_email" => "blogs#send_write_posts_email"
   resources :blogs
+
   resources :uploads
   
   resources :signed_urls, :only => "index"
@@ -50,7 +53,7 @@ Savitri::Application.routes.draw do
   
   get "savitri/index"
   match '/savitri/show' => "savitri#show"
-
+  
   resources :blogs do
    resources :posts, :name_prefix => "blog_"
   end

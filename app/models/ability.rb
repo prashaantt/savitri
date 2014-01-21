@@ -20,6 +20,25 @@ class Ability
         can :manage, :all
     else
         can :read, [Post, Blog, Comment, Notebook, Page, User, Audio]
+        if user.role == "Scholar"
+          can :create, Post do |n|
+            n.blog.post_access.include? user.id
+          end
+          can :update, Post do |n|
+            n.author_id == user.id
+          end
+          can :destroy, Post do |n|
+            n.author_id == user.id
+          end
+
+           can :update, Blog do |b|
+               b.user_id == user.id || (b.post_access.include?user.id)
+           end
+
+           can :invite_for_posting, Blog do |b|
+               b.user_id == user.id
+           end
+        end
         if user.role == "Blogger"
            can :read , Notebook
            can :create, Notebook do |n|
@@ -31,15 +50,27 @@ class Ability
            can :destroy, Notebook do |n|
             n.user_id == user.id
           end
+          can :create, Post do |n|
+            n.blog.post_access.include? user.id
+          end
+          can :update, Post do |n|
+            n.author_id == user.id
+          end
+          can :destroy, Post do |n|
+            n.author_id == user.id
+          end
           # # Blogs
           #  can :read , Blog
           #  can :create, Blog do |b|
           #   b.user_id == user.id
           #   User.find(b.user_id).blogs.count < 1
           #  end
-          #  can :update, Blog do |b|
-          #      b.user_id == user.id 
-          #  end
+           can :update, Blog do |b|
+               b.user_id == user.id || (b.post_access.include?user.id)
+           end
+           can :invite_for_posting, Blog do |b|
+               b.user_id == user.id
+           end
           #  can :destroy, Blog do |b|
           #       b.user_id == user.id 
           #  end

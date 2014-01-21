@@ -49,7 +49,8 @@
         <%= f.text_field :tag_tokens, "data-pre" => @post.tag_list.reject {|tag| tag.start_with?("@")}.map {|tag| {:id => tag, :name => tag } }.to_json, :class => 'text_area span6' %>
       </div>
     </div>
-    <% if current_user.admin? && (act == "new" || (act=="edit" && @post.published_at > Time.zone.now)) %>
+        <% if (current_user.admin? || (@post.cached_blog.post_access.include?current_user.id)) && (act == "new" || (act=="edit" && @post.published_at >
+              Time.zone.now)) %>
       <div class="control-group">
         <%= f.label "Publish ", :class => 'control-label', :style=>"float: left;" %> &nbsp;
         <% unless @post.published_at.nil?  %>
