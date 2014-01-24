@@ -24,17 +24,18 @@
     <% unless @series.empty? %>
       <div>
         <h5 class="pagination-centered" style="margin-bottom: 30px">RECENT SERIES CONTRIBUTIONS</h5>
-        <% @series.each do |series| %>
+        <% @series.take(10).each do |series| %>
           <h3><%= link_to series[1][:title], blog_posts_path(Blog.find(series[1][:blog_id])) + "/tags/" + series[1][:name] %>
         <% end %>
       </div>
     <% end %>
-    <% unless @user_blogs.empty? %>
+    <% unless @user_posts.empty? %>
       <div>
         <h5 class="pagination-centered" style="margin-top: 40px">RECENT POSTS</h5>
-        <% @user_blogs.each do |blog| %>
+        <% @user_posts.group_by(&:blog_id).each do |blog_id,posts| %>
+        <% blog = @user_blogs.find{|b|b.id == blog_id } %>
           <h2 style="margin-top: 30px;margin-bottom: 30px"><strong><%= link_to blog.title, blog_path(blog) %></strong></h2>
-          <% blog.posts.reject{|post| post.draft}.sort_by{|post| post.published_at}.last(10).reverse.each do |post| %>
+          <% posts.take(10).each do |post| %>
             <h3><%= link_to post.cached_title, blog_post_path(blog, post) %></h3>
           <% end %>
         <% end %>
@@ -45,7 +46,8 @@
       <h5 class="pagination-centered" style="margin-top: 40px;margin-bottom: 30px">RECENT COMMENTS</h5>
         <% @user_comments.sort_by{|comment| comment.updated_at}.reverse.first(10).each do |comment| %>
           <div style="margin-bottom: 30px">
-            <h4 style="margin-bottom: 20px">On <%= link_to Post.find(comment.post_id).cached_title, blog_post_path(comment.cached_post.cached_blog, Post.find(comment.post_id)) + "#comment-#{comment.id}", :class => "underline" %>:</h4>
+            <h4 style="margin-bottom: 20px">On <%= link_to Post.find(comment.post_id).cached_title, blog_post_path(comment.cached_post.cached_blog, 
+              Post.find(comment.post_id)) + "#comment-#{comment.id}", :class => "underline" %>:</h4>
             <p class="user-comment"><%= comment.body.length <= 200 ? comment.body : comment.body.first(200) + "..." %></p>
           </div>
         <% end %>
@@ -56,10 +58,12 @@
         <h5 class="pagination-centered" style="margin-top: 40px;margin-bottom: 30px">RECENT NOTES</h5>
         <% @user_notebooks.sort_by{|notebook| notebook.updated_at}.reverse.first(10).each do |note| %>
           <div style="margin-bottom: 30px">
-            <% quoted_lines = note.quote.split("\n") %>
-            <% quotation_range = quoted_lines.length === 1 ? quoted_lines[0].strip : quoted_lines[0].strip + " ... " + quoted_lines[quoted_lines.length - 1].strip %>
-            <h4 style="margin-bottom: 20px">On <%= link_to quotation_range, note.uri, :class => "underline" %>:</h4>
-            <p class="user-comment"><%= note.annotation %></p>
+            <% unless note.quote.blank? %>
+              <% quoted_lines = note.quote.split("\n") %>
+              <% quotation_range = quoted_lines.length === 1 ? quoted_lines[0].strip : quoted_lines[0].strip + " ... " + quoted_lines[quoted_lines.length - 1].strip %>
+              <h4 style="margin-bottom: 20px">On <%= link_to quotation_range, note.uri, :class => "underline" %>:</h4>
+              <p class="user-comment"><%= note.annotation %></p>
+            <% end %>
           </div>
         <% end %>
       </div>

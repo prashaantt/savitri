@@ -84,4 +84,43 @@ class BlogsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def authorized_users
+    @blog = Blog.cached_find_by_slug(params[:id])
+    @users = []
+    @blog.post_access.each do |id|
+      @users << User.find(id)
+    end
+    authorize! :authorized_users, @blog
+  end
+
+  def invite_for_blog
+    @blog = Blog.cached_find_by_slug(params[:id])
+    @user = User.find_by_username(params[:blog][:post_access])
+    @blog.post_access || []
+    if @user.nil?
+      flash[:error] = "#{params[:blog][:post_access]} is not yet signed up"
+      redirect_to authorized_users_path and return
+    elsif @user.role == 'Admin'
+        flash[:error] = "#{@user.username} is admin and already has access to any blog"
+        redirect_to authorized_users_path and return
+    elsif (@blog.post_access.include?@user.id)
+        flash[:error] = "#{@user.username} already has access to this blog"
+        redirect_to authorized_users_path and return
+    else
+      @blog.post_access.push(@user.id)
+      authorize! :invite_for_blog, @blog
+      @blog.save!
+      InviteForBlogWorker.perform_async(@user.id, current_user.id, @blog.id)
+    end
+    flash[:notice] = "#{@user.username} can now write posts to #{@blog.title}"
+    redirect_to authorized_users_path
+  end
+
+  def remove_blog_access
+    blog = Blog.cached_find_by_slug(params[:slug])
+    blog.post_access.delete(params[:user_id].to_i)
+    blog.save!
+    render :nothing => true
+  end
 end

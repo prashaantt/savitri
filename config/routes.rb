@@ -22,7 +22,11 @@ Savitri::Application.routes.draw do
   
   get "/profile/:id" => "users#show", :as => :profile
 
+  get "blogs/:id/authorized_users", to: 'blogs#authorized_users', :as => :authorized_users
+  post "blogs/:id/invite_for_blog" => "blogs#invite_for_blog"
+  get 'blogs/:slug/remove_blog_access/:user_id', to: 'blogs#remove_blog_access', :as => :remove_blog_access
   resources :blogs
+
   resources :uploads
   
   resources :signed_urls, :only => "index"
@@ -50,7 +54,7 @@ Savitri::Application.routes.draw do
   
   get "savitri/index"
   match '/savitri/show' => "savitri#show"
-
+  
   resources :blogs do
    resources :posts, :name_prefix => "blog_"
   end

@@ -93,16 +93,18 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(params[:post])
+    @post = current_user.posts.build(params[:post])
+
     unless params[:post][:series_title].strip.blank?
       series = "@" + params[:post][:series_title].to_url
       series_tag = Tag.find_or_create_by_name(series)
       @post.tag_list.add(series_tag.name)
     end
+
     authorize! :create, @post
 
     @post.update_draft_status(params)
-    
+
     if(params[:size] == "now")
       @post.published_at = Time.zone.now
     end
@@ -152,6 +154,7 @@ class PostsController < ApplicationController
     end
 
     params[:post][:tag_tokens] = params_tags.join(",")
+    params[:post][:author_id] = @post.author_id
 
     authorize! :update, @post
 

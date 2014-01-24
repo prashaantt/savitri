@@ -192,7 +192,7 @@ $ ->
 							post = response[val1]
 							postsdiv=postsdiv.concat("<li class=\"content-indent\"\>")
 							postsdiv=postsdiv.concat("<a href=\""+post.cached_share_url+"\" 
-								class=\"sidebar-links\">"+post.title+"\"")
+								class=\"sidebar-links\">"+post.title)
 
 						recentpostsdiv.append(postsdiv)
 					else

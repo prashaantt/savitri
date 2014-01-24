@@ -1,5 +1,5 @@
 class Blog < ActiveRecord::Base
-  attr_accessible :subtitle, :title, :user_id, :slug
+  attr_accessible :subtitle, :title, :user_id, :slug, :post_access
   validates :title, :presence => true
   validates :slug, :presence => true,
                    :length => { :minimum => 5 }
@@ -9,6 +9,9 @@ class Blog < ActiveRecord::Base
   has_many :comments, :through => :posts
 
   after_commit :flush_cache
+  serialize :post_access
+
+  scope :blogs_have_post_access, ->(user){ where("post_access like ?", "% #{user}\n%") }
 
   def to_param
     "#{slug}"

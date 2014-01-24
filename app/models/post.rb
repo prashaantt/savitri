@@ -1,7 +1,8 @@
 class Post < ActiveRecord::Base
 
   attr_accessible :content, :title, :tag_list, :blog_id, :md_content, :uploads_attributes,
-                  :excerpt, :url, :published_at, :series_title, :subtitle, :show_excerpt, :tag_tokens, :draft
+                  :excerpt, :url, :published_at, :series_title, :subtitle, :show_excerpt, :tag_tokens, :draft,
+                  :author_id
 
   acts_as_taggable
   acts_as_url :title, :scope => :blog_id
@@ -10,6 +11,7 @@ class Post < ActiveRecord::Base
   has_many :comments, :dependent => :destroy, :order => 'comments.created_at'
   has_many :uploads
   has_many :tags
+  belongs_to :user, :foreign_key => :author_id
 
   before_save :trim
   after_commit :flush_cache
@@ -85,7 +87,7 @@ class Post < ActiveRecord::Base
   end
 
   def author
-   blog.user.username
+    user.username
   end
   
   def posted
@@ -166,6 +168,10 @@ class Post < ActiveRecord::Base
     Rails.cache.fetch([self,"share_url"]) { "/blogs/"+blog.slug+"/posts/"+url }
   end
 
+  def cached_author
+    Rails.cache.fetch([self,"author"]) { User.find(author_id) }
+  end
+
   def flush_cache
     Rails.cache.delete([self.class.name,"draftcount"+self.blog_id.to_s])
     Rails.cache.delete([self.class.name,"drafts"+self.blog_id.to_s])
@@ -182,6 +188,8 @@ class Post < ActiveRecord::Base
     Rails.cache.delete([self,"show_excerpt"])
     Rails.cache.delete([self,"share_url"])
     flush_comments_cache
+    User.find(author_id).flush_recent_posts
+    Rails.cache.delete([self,"author"])
   end
 
   private
