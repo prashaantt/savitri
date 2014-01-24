@@ -31,10 +31,11 @@ class UsersController < ApplicationController
     @user_posts = @user.cached_recent_posts
 
     @user_posts.each do |post|
-      s = post.tag_list.select{|s| s.match(/^@/)}[0]
+      series = post.tag_list.select{|tag| tag.match(/^@/)}[0]
       @feedsrc << post
-      unless s.nil?
-        @series[post.id] = {:name => s, :title => post.series_title, :blog_id => post.blog.id, :blog_title => post.blog.title, :published => post.published_at}        
+      unless series.nil?
+        @series[post.id] = { :name => series, :title => post.series_title, :blog_id => post.blog.id, :blog_title => post.blog.title,
+                                       :published => post.published_at }        
       end 
     end
 
