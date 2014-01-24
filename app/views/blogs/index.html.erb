@@ -24,6 +24,9 @@
          <%= link_to 'Delete', blog_path(blog),  :method => :delete,
   :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
   :class => 'btn btn-mini btn-danger' %>
+  <% if can? :authorized_users, blog %>
+          <%= link_to 'Invite user to blog', authorized_users_path(blog), :class => "btn btn-mini btn-info" %>
+  <% end %>
       </div>
       <% end %>
     </section>
