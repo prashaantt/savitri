@@ -108,6 +108,9 @@
         <% if current_user.role == 'Admin' %>
         <li><%= link_to "Manage blogs & media", blogs_path %></li>
         <li class="divider"/>
+        <% elsif can? :create, @blog && current_user.blogs.count > 0  %>
+          <li><%= link_to "Manage blog", blogs_path %></li>
+          <li class="divider"/>
         <% else %>
         <% if can? :create, @blog %>
         <li><%= link_to "Create blog", new_blog_path %></li>

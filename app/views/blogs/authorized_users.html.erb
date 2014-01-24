@@ -1,0 +1,39 @@
+<%- model_class = Blog -%>
+<div class="row">
+  <div class="span6 offset3">
+    <div class="page-header title">
+      <h1><%= link_to @blog.title, @blog %></h1>
+      <h3 class="blog-subtitle"><%= @blog.cached_subtitle %></h3>
+    </div>
+      <h2>Contributors</h2>
+      <table class="table"><tr>
+       <td style='text-align:left'><em>
+      <%= link_to (@blog.cached_user.name.blank? ? @blog.cached_user.username : @blog.cached_user.name), @blog.cached_user,
+      { :class => 'underline' } %> (blog owner) </em>
+      </td>
+      </tr>
+      <% @users.each do |user| %>
+      <tr>
+       <td style='text-align:left'>     <em> <%= link_to (user.name.blank? ? user.username : user.name), user, { :class => 'underline' } %>
+      <%= link_to '×', {:action => 'remove_blog_access' , :slug => @blog.slug, :user_id => user.id}, { title:"Remove author #{(user.name.blank? ? user.username : user.name)}",:id=> user.id, :class => 'close', 
+      :confirm => 'Are you sure?', :remote=>true } %></em>
+      </td>
+      </tr>
+      <% end %>
+      </table>
+      <hr>
+      <%= form_for @blog, url: { action: 'invite_for_blog'}, :method => 'post' do |f| %>
+      Invite user: <%= f.text_field :post_access, { value:nil, required: 'required', maxlength: '255', id: 'user_username',
+                                                                        size: '50', type: 'text' } %>
+      <div>
+        <%= f.submit 'Invite', { :class => 'btn btn-info', style: 'margin-left:12%' } %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")), blogs_path, :class => 'btn' %>
+      </div>
+      <% end %>
+  </div>
+</div>
+<script type="text/javascript">
+    $('.close').bind('ajax:success', function() {
+    $(this).closest('tr').fadeOut();
+  });
+</script>
