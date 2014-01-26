@@ -13,21 +13,21 @@ class SearchController < ApplicationController
       query = params[:q].downcase.split(/\s+/)
       @condition = query[query.index {|v| v.start_with? "in:" }]
       filter = @condition.split("in:")
-      @keywords = params[:q].strip.dup
-      @keywords.slice! @condition
-      debugger
+      keywords = params[:q].strip.dup
+      keywords.slice! @condition
+      keywords.strip
       unless pams.length > 2
         case filter[1]
         when 'books'
           @search = Sunspot.search Book do
-            fulltext @keywords
+            fulltext keywords
             order_by(:id, :asc)
             facet(:category)
             paginate page: params[:page], per_page:  20
           end
         when 'sentences'
           @search = Sunspot.search Stanza do
-            fulltext @keywords, highlight: :true
+            fulltext keywords, highlight: true
             order_by(:id, :asc)
             facet(:category)
             facet(:sbook)
@@ -46,7 +46,7 @@ class SearchController < ApplicationController
           end
         when 'lines'
           @search = Sunspot.search Line do
-            fulltext @keywords, highlight: :true
+            fulltext keywords, highlight: true
             order_by(:id, :asc)
             facet(:category)
             facet(:section)
@@ -65,7 +65,7 @@ class SearchController < ApplicationController
           end
         when 'posts'
           @search = Sunspot.search Post do
-            fulltext @keywords, highlight: true
+            fulltext keywords, highlight: true
             with(:published_at).less_than Time.now
             facet(:category)
             facet(:posted)
@@ -78,7 +78,7 @@ class SearchController < ApplicationController
           end
         when /[a-z]/
           @search = Sunspot.search Page do
-            fulltext @keywords, highlight: true
+            fulltext keywords, highlight: true
             facet(:category)
             with(:type).equal_to(query[1].downcase.capitalize.to_s)
             paginate page: params[:page], per_page: 30
