@@ -22,8 +22,9 @@ Savitri::Application.routes.draw do
   
   get "/profile/:id" => "users#show", :as => :profile
 
-  get "blogs/:id/invite_for_posting", to: 'blogs#invite_for_posting', :as => :invite_for_posting
-  post "blogs/:id/send_write_posts_email" => "blogs#send_write_posts_email"
+  get "blogs/:id/authorized_users", to: 'blogs#authorized_users', :as => :authorized_users
+  post "blogs/:id/invite_for_blog" => "blogs#invite_for_blog"
+  get 'blogs/:slug/remove_blog_access/:user_id', to: 'blogs#remove_blog_access', :as => :remove_blog_access
   resources :blogs
 
   resources :uploads
