@@ -1,4 +1,5 @@
 class Blog < ActiveRecord::Base
+  serialize :post_access, Array
   attr_accessible :subtitle, :title, :user_id, :slug, :post_access
   validates :title, :presence => true
   validates :slug, :presence => true,
@@ -9,7 +10,6 @@ class Blog < ActiveRecord::Base
   has_many :comments, :through => :posts
 
   after_commit :flush_cache
-  serialize :post_access
 
   scope :blogs_have_post_access, ->(user){ where("post_access like ?", "% #{user}\n%") }
 
