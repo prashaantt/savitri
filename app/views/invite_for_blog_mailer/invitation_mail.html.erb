@@ -5,7 +5,7 @@
   </head>
   <body>
     <p>
-      <%= (@sender.name.blank? ? @sender.username : @sender.name) %> has invited you to post at <%= link_to @blog.title, blog_posts_path(@blog) %>.
+      <%= (@sender.name.blank? ? @sender.username : @sender.name) %> has invited you to post at <%= link_to @blog.title, new_blog_post_url(@blog) %>.
     </p>
   </body>
 </html>
