@@ -24,8 +24,8 @@
     <% unless @series.empty? %>
       <div>
         <h5 class="pagination-centered" style="margin-bottom: 30px">RECENT SERIES CONTRIBUTIONS</h5>
-        <% @series.take(10).each do |series| %>
-          <h3><%= link_to series[1][:title], blog_posts_path(Blog.find(series[1][:blog_id])) + "/tags/" + series[1][:name] %>
+        <% @series.values.uniq { |e| e[:name] }.take(10).each do |series| %>
+          <h3><%= link_to series[:title], blog_posts_path(Blog.find(series[:blog_id])) + "/tags/" + series[:name] %>
         <% end %>
       </div>
     <% end %>
