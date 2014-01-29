@@ -52,7 +52,9 @@ class Blog < ActiveRecord::Base
     Rails.cache.delete([self, "subtitle"]) 
     Rails.cache.delete([self, "user"])
     User.find(self.user).flush_cache
-
+    self.posts.each do |post|
+      post.flush_cached_blog
+    end
     flush_dependent_cache
   end
 

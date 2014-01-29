@@ -190,6 +190,10 @@ class Post < ActiveRecord::Base
     User.find(author_id).flush_recent_posts
     Rails.cache.delete([self,"author"])
   end
+  
+  def flush_cached_blog
+    Rails.cache.delete([self,"blog"])
+  end
 
   private
     def trim
