@@ -44,7 +44,7 @@
       <h4 class="post-subtitle"><%= @post.cached_subtitle %></h4>
       <div>
         <span class="pull-right">
-          <% if can? :destroy, @blog %>
+          <% if can? :update, @post %>
           <%= link_to 'Edit', edit_blog_post_path(@blog,@post), :class => 'btn btn-mini btn-warning' %>
           <% end %>
           <% if can? :destroy, @post %>
