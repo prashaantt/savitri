@@ -49,7 +49,7 @@
         <%= f.text_field :tag_tokens, "data-pre" => @post.tag_list.reject {|tag| tag.start_with?("@")}.map {|tag| {:id => tag, :name => tag } }.to_json, :class => 'text_area span6' %>
       </div>
     </div>
-        <% if (current_user.admin? || (can? :update, @post.cached_blog)) && (act == "new" || (act=="edit" && @post.published_at >
+        <% if (current_user.admin? || (can? :update, @post.blog)) && (act == "new" || (act=="edit" && @post.published_at >
               Time.zone.now)) %>
       <div class="control-group">
         <%= f.label "Publish ", :class => 'control-label', :style=>"float: left;" %> &nbsp;
