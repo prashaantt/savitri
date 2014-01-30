@@ -30,6 +30,15 @@ class User < ActiveRecord::Base
   after_initialize :init
   after_commit :follow_admin, :on => :create
   after_commit :flush_cache
+  after_commit :remove_blog_access, :on => :destroy
+
+  def remove_blog_access
+    blogs = Blog.blogs_have_post_access self.id
+    blogs.each do |blog|
+      blog.post_access.delete(self.id)
+      blog.save!
+    end
+  end
 
   def follow_admin
     self.follow(User.find(1))
