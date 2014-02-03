@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   after_initialize :init
   after_commit :follow_admin, :ryd_follow_new_user, on: :create
   after_commit :flush_cache
-  after_commit :remove_blog_access, :on => :destroy
+  after_commit :remove_blog_access, on: :destroy
 
   def remove_blog_access
     blogs = Blog.blogs_have_post_access self.id

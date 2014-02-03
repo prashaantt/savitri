@@ -1,6 +1,6 @@
 <% unless user == current_user %>
 	&bull;
-	<% unless user.name.empty? %>
+	<% unless user.name.blank? %>
 		<% guessed_first_name = user.name.split(" ")[0] %>
 	<% else %>
 		<% guessed_first_name = user.username %>

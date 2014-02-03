@@ -205,7 +205,7 @@ class Post < ActiveRecord::Base
 
     def setup_notifications
       if self.draft?
-        EmailWorker.perform_at(published_at,cached_blog.cached_user.id,id)
+        EmailWorker.perform_at(published_at,author_id,id)
       end
     end
 end
