@@ -3906,7 +3906,7 @@ Post.create!([
   {blog_id: 1, title: "A larger Nature’s great familiar roads", content: "<iframe width=\"640\" height=\"360\" src=\"http://www.youtube.com/embed/FA1MjzOxlJQ?feature=player_embedded\" frameborder=\"0\" allowfullscreen=\"\"></iframe>", md_content: "<iframe width=\"640\" height=\"360\" src=\"http://www.youtube.com/embed/FA1MjzOxlJQ?feature=player_embedded\" frameborder=\"0\" allowfullscreen></iframe>", excerpt: nil, url: "our-own-minds-are-the-justicers-of-doom", published_at: "2013-04-06 23:04:57", draft: false, series_title: nil, subtitle: nil, show_excerpt: nil}
 ])
 Comment.create!([
-  {post_id: 1, user_id: 1, commenter: "NM", body: "Wonderful Blog Post"}
+  {post_id: 1, user_id: 1, body: "Wonderful Blog Post"}
 ])
 Page.create!([
   {name: "Library", permalink: "library", priority: 1, category: "Menu", content: "<p>Library</p>", md_content: "Library", parent: nil, url: "library"},

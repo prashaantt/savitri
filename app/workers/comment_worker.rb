@@ -13,12 +13,9 @@ class CommentWorker
     @users.each do |up|
       @users_followers << up.id
     end
-    @early_commenters = []
-    @post.comments.each do |pc|
-      @early_commenters << pc.user.id
-    end
+    @early_commenters = @post.comments.pluck(:user_id)
     @blog = Blog.find(@post.blog_id)
-    @list_to_send_to = @early_commenters | @users_followers || @post.user.id
+    @list_to_send_to = @early_commenters | @users_followers || @post.author_id
     @list_to_send_to.each do |reciever|
       CommentMailer.comment_notification_email(User.find(reciever), @sender, @blog, @post, @comment).deliver!
     end
