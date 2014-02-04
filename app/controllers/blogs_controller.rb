@@ -26,7 +26,7 @@ class BlogsController < ApplicationController
     blog = Blog.cached_find_by_slug(params[:blog_id])
     @comments = blog.cached_recentcomments
     respond_to do |format|
-      format.json {render :json => @comments.to_json(:only =>[:commenter],:methods=>[:cached_share_url, :cached_post_title])}
+      format.json {render :json => @comments.to_json(:methods=>[:commenter, :cached_share_url, :cached_post_title])}
     end
   end
 
