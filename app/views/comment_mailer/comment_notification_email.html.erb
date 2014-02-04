@@ -11,7 +11,7 @@
           <% if @comment.body.length > 200 %>
           <% comment = @comment.body[0..200] + @comment.body[201..-1].match(/([^ ]+)/)[0] + '...' %>
           <%= comment.gsub(/\r\n?/,'<br/>').html_safe %>
-          <%= link_to " more", blog_post_url(@blog, @post, :anchor => "comment-" + @comment.id.to_s) %>
+          <%= link_to "Read more", blog_post_url(@blog, @post, :anchor => "comment-" + @comment.id.to_s) %>
           <% else %>
           <%= @comment.body.gsub(/\r\n?/,"<br/>").html_safe %>
           <% end %>
