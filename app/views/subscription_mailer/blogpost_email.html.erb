@@ -5,11 +5,7 @@
   </head>
   <body>
     <h4>
-      <% unless @sender.name.blank? %>
-        <%= @sender.name %> 
-      <% else %>
-        <%= @sender.username %> 
-      <% end %>
+      <%= @name %>
       <% if @post.series_title.blank? %>
         wrote a post 
       <% else %>
@@ -25,7 +21,7 @@
       <% stripped_content = strip_tags(post_content) %>
       <% if stripped_content.split(" ").length > 200 %>
         <%= post_content.split(" ").first(200).join(" ").html_safe %>...
-        <p><%= link_to "Read more", blog_post_path(@blog, @post), {:class => "italics underline"} %></p>
+        <p><%= link_to "Read more", blog_post_url(@blog, @post), {:class => "italics underline"} %></p>
       <% else %>
         <%= post_content.split(" ").first(200).join(" ").html_safe %>
       <% end %>

@@ -31,18 +31,30 @@ class User < ActiveRecord::Base
   after_initialize :init
   after_commit :follow_admin, :ryd_follow_new_user, on: :create
   after_commit :flush_cache
-  after_commit :remove_blog_access, :on => :destroy
+  after_commit :remove_blog_access, on: :destroy
+  before_save :flush_cached_comment_user, :flush_cached_post_author,
+                      if: proc { |user| user.name_changed? }
+
+  def flush_cached_comment_user
+    comments.each do |comment|
+      comment.flush_cached_user
+    end
+  end
+
+  def flush_cached_post_author
+    posts.each { |post| post.flush_cached_author }
+  end
 
   def remove_blog_access
-    blogs = Blog.blogs_have_post_access self.id
+    blogs = Blog.blogs_have_post_access id
     blogs.each do |blog|
-      blog.post_access.delete(self.id)
+      blog.post_access.delete(id)
       blog.save!
     end
   end
 
   def follow_admin
-    self.follow(User.find(1))
+    follow(User.find(1))
   end
 
   def ryd_follow_new_user
@@ -104,8 +116,8 @@ class User < ActiveRecord::Base
   end
 
   def flush_cache
-    Rails.cache.delete(['User', self.id])
-    Rails.cache.delete([self.class.name, self.id])
+    Rails.cache.delete(['User', id])
+    Rails.cache.delete([self.class.name, id])
 
     Rails.cache.delete([self, 'name'])
     Rails.cache.delete([self, 'username'])

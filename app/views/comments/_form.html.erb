@@ -1,6 +1,5 @@
 <%= form_for([@post, @post.comments.build], :html => { :class => 'form-horizontal' } ) do |f| %>
   <% commenter = current_user.cached_name.present? ? current_user.cached_name : current_user.cached_username  %>
-  <%= f.hidden_field :commenter, :value => commenter %>
   <%= f.hidden_field :user_id, :value => current_user.id %>
   <div class="control-group comment">
     <div class="controls" style="margin-left: 0px; margin-top: 20px">
