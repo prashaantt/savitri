@@ -26,7 +26,7 @@ class Comment < ActiveRecord::Base
   end
 
   def commenter
-    cached_user.name
+    cached_user.name.presence || cached_user.username
   end
 
   def cached_share_url
