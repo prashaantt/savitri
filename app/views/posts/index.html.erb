@@ -56,6 +56,7 @@
           <span class="muted">&bull;</span>
         <% end %>
         <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
+        <span id="follow_blog"><%= render :partial => "shared/follow_blog", :locals => {:blog => @blog} %></span>
       </div>
     </div>
   </div>
