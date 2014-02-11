@@ -1,6 +1,8 @@
+# encoding: UTF-8
+# routes.
 Savitri::Application.routes.draw do
 
-  match '/ping' => "health#ping"
+  match '/ping' => 'health#ping'
 
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
@@ -15,64 +17,62 @@ Savitri::Application.routes.draw do
 
   get 'lines/range/:id', to: 'lines#range'
   get 'stanzas/range/:id', to: 'stanzas#range'
-  get 'blogs/:blog_id/recentcomments', to: 'blogs#recentcomments', :defaults => {:format => :json}
-  get 'blogs/:blog_id/recentposts', to: 'blogs#recentposts', :defaults => {:format => :json}
+  get 'blogs/:blog_id/recentcomments', to: 'blogs#recentcomments', defaults: { format: :json }
+  get 'blogs/:blog_id/recentposts', to: 'blogs#recentposts', defaults: { format: :json }
 
   devise_for :users
-  
-  get "/profile/:id" => "users#show", :as => :profile
 
-  get "blogs/:id/authorized_users", to: 'blogs#authorized_users', :as => :authorized_users
-  post "blogs/:id/invite_for_blog" => "blogs#invite_for_blog"
-  get 'blogs/:slug/remove_blog_access/:user_id', to: 'blogs#remove_blog_access', :as => :remove_blog_access
+  get '/profile/:id' => 'users#show', as: :profile
+  get 'blogs/:id/authorized_users', to: 'blogs#authorized_users', as: :authorized_users
+  post 'blogs/:id/invite_for_blog' => 'blogs#invite_for_blog'
+  get 'blogs/:slug/remove_blog_access/:user_id', to: 'blogs#remove_blog_access', as: :remove_blog_access
   resources :blogs
 
   resources :uploads
-  
-  resources :signed_urls, :only => "index"
 
-  match "/store/notebooks" => "notebooks#create"
+  resources :signed_urls, only: 'index'
 
-  match "/store/notesu" => "notebooks#update"
-
-  match "/store/notesd" => "notebooks#destroy"
-
-  match "/store/notess" => "notebooks#search"
+  match '/store/notebooks' => 'notebooks#create'
+  match '/store/notesu' => 'notebooks#update'
+  match '/store/notesd' => 'notebooks#destroy'
+  match '/store/notess' => 'notebooks#search'
 
   match 'read/' => 'read#index'
   match 'read/:book_id/:canto_id/:section_id' => 'read#show'
   match 'read/:book_id/:canto_id' => 'read#bookcantoshow'
-  match 'read/:book_id' => 'read#specific', :constraints => {:book_id => /[^\/]+/ }
+  match 'read/:book_id' => 'read#specific', constraints: { book_id: /[^\/]+/ }
 
-  resources :follows, :only => [:create, :destroy]
+  resources :follows, only: [:create, :destroy]
+  match 'follows/blog_id/:blog_id', to: 'follows#follow_blog', as: :follow_blog, via: :post
+  match 'follows/blog_id/:blog_id', to: 'follows#unfollow_blog', as: :unfollow_blog, via: :delete
 
   resources :users do
-    get "/users/sign_out" => "devise/sessions#destroy", :as => :destroy_user_session
+    get '/users/sign_out' => 'devise/sessions#destroy', as: :destroy_user_session
   end
 
-  get 'users/:id/feed', to: 'users#show', :format=> false, :defaults => {:format => :atom}
-  
-  get "savitri/index"
-  match '/savitri/show' => "savitri#show"
-  
+  get 'users/:id/feed', to: 'users#show', format: false, defaults: { format: :atom }
+
+  get 'savitri/index'
+  match '/savitri/show' => 'savitri#show'
+
   resources :blogs do
-   resources :posts, :name_prefix => "blog_"
+    resources :posts, name_prefix: 'blog_'
   end
 
   resources :posts do
-   resources :comments, :name_prefix => "post_"
+    resources :comments, name_prefix: 'post_'
   end
 
   resources :media do
-   resources :audios, :name_prefix => "media_"
+    resources :audios, name_prefix: 'media_'
   end
 
   get 'blogs/:blog_id/tags', to: 'posts#tags'
-  get 'blogs/:blog_id/posts/tags/:tag/feed', to: 'posts#index', as: :tag, :format=> false, :defaults => {:format => :atom}
+  get 'blogs/:blog_id/posts/tags/:tag/feed', to: 'posts#index', as: :tag, format: false, defaults: { format: :atom }
   get 'blogs/:blog_id/posts/tags/:tag' , to: 'posts#index' , as: :tag
   get 'blogs/:blog_id/scheduled-posts/', to: 'posts#scheduled', as: 'scheduled_posts'
-  get 'blogs/:blog_id/feed', to: 'posts#index', :format=> false, :defaults => {:format => :atom}
-  get 'media/:medium_id/feed', to: 'audios#index', :format=> false, :defaults => {:format => :rss}
+  get 'blogs/:blog_id/feed', to: 'posts#index', format: false, defaults: { format: :atom }
+  get 'media/:medium_id/feed', to: 'audios#index', format: false, defaults: { format: :rss }
 
   resources :books
 
@@ -84,7 +84,7 @@ Savitri::Application.routes.draw do
 
   resources :lines
 
-  match '(errors)/:status', to: 'errors#show', constraints: {status: /\d{3}/}
+  match '(errors)/:status', to: 'errors#show', constraints: { status: /\d{3}/ }
 
   resources :pages, except: :show
 
@@ -92,7 +92,7 @@ Savitri::Application.routes.draw do
   put ':id', to: 'pages#update', as: :page
   delete ':id', to: 'pages#destroy', as: :page
 
-  root :to => 'savitri#index', :as => 'savitri'
+  root to: 'savitri#index', as: 'savitri'
 
   get '*paths' => 'pages#show', as: :page
   put '*paths' => 'pages#update', as: :page
