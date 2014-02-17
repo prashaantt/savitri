@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 
   before_filter :store_location, :last_page
-  before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :authenticate_user!, :except => [:show, :index, :archives]
 
   # GET /posts
   # GET /posts.json
@@ -185,6 +185,11 @@ class PostsController < ApplicationController
       format.html { redirect_to blog_posts_path(@post.blog) }
       format.json { head :no_content }
     end
+  end
+
+  def archives
+    @blog  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
+    @blogposts= Post.published.where(:blog_id=>@blog.id).order("posts.published_at DESC")
   end
 
 end
