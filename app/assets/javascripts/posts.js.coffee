@@ -227,7 +227,7 @@ $ ->
 $(document).ready ->
   $("#recentcomments").trigger( "click" )
   $("#recentposts").trigger("click")
-
+  $(".year").click()
 $ ->
   $("#post_tag_tokens").tokenInput "/blogs/light-of-supreme/tags.json",
     crossDomain: false

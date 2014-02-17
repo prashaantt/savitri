@@ -72,6 +72,7 @@ Savitri::Application.routes.draw do
   get 'blogs/:blog_id/posts/tags/:tag' , to: 'posts#index' , as: :tag
   get 'blogs/:blog_id/scheduled-posts/', to: 'posts#scheduled', as: 'scheduled_posts'
   get 'blogs/:blog_id/feed', to: 'posts#index', format: false, defaults: { format: :atom }
+  get 'blogs/:blog_id/archives' , to: 'posts#archives', as: :archives
   get 'media/:medium_id/feed', to: 'audios#index', format: false, defaults: { format: :rss }
 
   resources :books

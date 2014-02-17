@@ -1,0 +1,57 @@
+<%- model_class = Post -%>
+<!-- Main Page Content -->
+<% base_url = request.protocol + request.host_with_port %>
+<% feed_url = base_url + blog_path(@blog) + "/feed" %>
+<% tag_type = "none" %>
+<% content_for :head do %>
+<%= auto_discovery_link_tag :atom, feed_url %>
+<%= auto_discovery_link_tag :rss,  feed_url %>
+<% end %>
+<% pagetitle = 'Archives | ' + @blog.cached_title %>
+<% title pagetitle %>
+<div itemscope itemtype="http://schema.org/Article" class="row">
+  <div class="dynamicspan span6 offset3">
+    <div class="page-header title">
+      <h1 itemprop="name"><%= link_to @blog.cached_title, blog_posts_path %></h1>
+      <h3 class="blog-subtitle"><%= @blog.cached_subtitle %></h3>
+      <div style="margin-top: 20px">
+        <i class="icon-rss muted"></i>
+        <%= link_to "Feed", feed_url, {:class => "muted-anchor"} %>
+        <span class="muted">&bull;</span>
+        <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
+        <span id="follow_blog"><%= render :partial => "shared/follow_blog", :locals => {:blog => @blog} %></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <h2 class='text-center'>Archives</h2>
+  <div class='span6 offset3 right-sidebar'>
+    <% unless @blogposts.length == 0 %>
+    <ol style="margin-left:0px;">
+      <% post_years = @blogposts.group_by { |t| t.published_at.beginning_of_year }.sort.reverse %>
+      <% post_years.each do |year, posts| %>
+      <li class="listi">
+        <label for="f<%= year.strftime("%m%Y") %>"><span class="ltag"><%=h year.strftime("%Y") %> (<%= posts.length %>)</span></label>
+        <input class="year textin" type="checkbox" id="f<%= year.strftime("%m%Y") %>"> 
+        <ol>  
+          <% post_months = posts.group_by {|t| t.published_at.beginning_of_month } %>
+          <% post_months.each do |month, month_posts| %>
+          <li class="subfolder">  
+            <label for="f<%= month_posts.first.published_at %>"><span class="ltag"><%=h month_posts.first.published_at.strftime("%B") %> (<%= month_posts.length %>)</span></label>
+            <input class="textin" type="checkbox" id="f<%= month_posts.first.published_at %>"> 
+            <ol>
+              <% for post in month_posts %>
+              <li class="file sidebar-links"><a href="#"><%=h link_to post.cached_title, blog_post_path(post.cached_blog,post) %></a></li>
+              <% end %>
+            </ol>
+          </li>
+          <% end %>
+        </ol>
+      </li>
+      <% end %>
+      <% end %>
+    </ol>
+  </div>
+</div>
