@@ -10,7 +10,6 @@
       <h1><%= @user.name %></h1>
       <h3><em><%= @user.username %></em></h3>
       <div style="margin-top: 20px" class="muted">
-        <i class="icon-rss"></i>
         <%= link_to "Feed", @feed_url, {:class => "muted-anchor"} %>
         &bull;
         <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>

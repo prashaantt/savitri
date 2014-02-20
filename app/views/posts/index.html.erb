@@ -46,18 +46,16 @@
         <h3 class="blog-subtitle">Filed in “<%= params[:tag] %>”</h3>
       <% end %>
       <div style="margin-top: 20px">
+        <%= link_to 'Archives', archives_path, {class: 'muted'} %>
+        <span class="muted">&bull;</span>
         <% if tag_type === "none" %>
-          <i class="icon-rss muted"></i>
           <%= link_to "Feed", feed_url, {:class => "muted-anchor"} %>
           <span class="muted">&bull;</span>
         <% else %>
-          <i class="icon-rss muted"></i>
           <%= link_to (tag_type === "series" ? "Series Feed" : "Tag Feed"), tag_feed_url, {:class => "muted-anchor"} %>
           <span class="muted">&bull;</span>
         <% end %>
         <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
-        <span class="muted">&bull;</span>
-        <%= link_to 'Archives', archives_path, {class: 'muted'} %>
         <span id="follow_blog"><%= render :partial => "shared/follow_blog", :locals => {:blog => @blog} %></span>
       </div>
     </div>
