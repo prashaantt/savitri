@@ -15,7 +15,6 @@
       <h1 itemprop="name"><%= link_to @blog.cached_title, blog_posts_path %></h1>
       <h3 class="blog-subtitle"><%= @blog.cached_subtitle %></h3>
       <div style="margin-top: 20px">
-        <i class="icon-rss muted"></i>
         <%= link_to "Feed", feed_url, {:class => "muted-anchor"} %>
         <span class="muted">&bull;</span>
         <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>

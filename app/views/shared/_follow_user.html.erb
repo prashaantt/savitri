@@ -1,4 +1,4 @@
-<% unless user == current_user %>
+<% if user_signed_in? && user != current_user %>
 	&bull;
 	<% unless user.name.blank? %>
 		<% guessed_first_name = user.name.split(" ")[0] %>
