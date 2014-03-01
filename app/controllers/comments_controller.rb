@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
   def update
     @comment = Comment.find(params[:id])
     @comment.update_attributes(params[:comment])
-    respond_with @comment
+    respond_with_bip @comment
   end
 
   def destroy
