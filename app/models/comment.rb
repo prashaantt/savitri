@@ -9,6 +9,10 @@ class Comment < ActiveRecord::Base
 
   validates :body, presence: true
 
+  def markdown_body
+    ApplicationController.helpers.markdown_to_html(body)
+  end
+
   def cached_body
     Rails.cache.fetch([self, 'body']) { body }
   end
