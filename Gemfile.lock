@@ -176,6 +176,7 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    redcarpet (3.1.1)
     redis (3.0.3)
     redis-actionpack (3.2.3)
       actionpack (~> 3.2.3)
@@ -294,6 +295,7 @@ DEPENDENCIES
   rack-mini-profiler
   rails (= 3.2.13)
   rails_autolink
+  redcarpet
   redis-rails
   redis-store
   sanitize
