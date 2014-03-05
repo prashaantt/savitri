@@ -4,6 +4,8 @@
 class SubscriptionMailer < ActionMailer::Base
   default from: 'info@savitri.in', reply_to: 'info@savitri.in'
 
+  add_template_helper ApplicationHelper
+
   def blogpost_email(reciever, sender, blog, post)
     @reciever = reciever
     @sender = sender

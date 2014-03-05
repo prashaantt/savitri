@@ -61,11 +61,11 @@
       </div>
       <div class="main-content">
         <% if @post.cached_show_excerpt === "prefix" %>
-          <p><%= @post.cached_excerpt %></p>
+          <p><%= markdown_to_html(@post.cached_excerpt) %></p>
         <% end %>
         <%= @post.cached_content.html_safe.gsub(/\r\n?/,"").html_safe %>
         <% if @post.cached_show_excerpt === "suffix" %>
-          <p><%= @post.cached_excerpt %></p>
+          <p><%= markdown_to_html(@post.cached_excerpt) %></p>
         <% end %>
       </div>
       <% if @post.updated_at > @post.published_at + 20 %>
