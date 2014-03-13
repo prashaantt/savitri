@@ -60,12 +60,17 @@
                   <li class="dropdown-submenu">
                     <%= link_to b.title, blog_posts_path(b) %>
                     <ul class="dropdown-menu">
+                      <li><%= link_to 'Archives', archives_path(b) %></li>
                       <li><%= link_to 'New post', new_blog_post_path(b) %></li>
                       <li><%= link_to 'Scheduled posts', scheduled_posts_path(:blog_id => b.slug) %></li>
                     </ul>
                   </li>
                 <% else %>
-                  <li><%= link_to b.title, blog_posts_path(b) %></li>
+                  <li class="dropdown-submenu"><%= link_to b.title, blog_posts_path(b) %>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to 'Archives', archives_path(b) %></li>
+                    </ul>
+                  </li>
                 <% end %>
                 <% end %>
               </ul>
