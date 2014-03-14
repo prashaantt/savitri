@@ -6,18 +6,14 @@ class CommentMailer < ActionMailer::Base
   add_template_helper ApplicationHelper
 
   def comment_notification_email(reciever, sender, blog, post, comment)
-    @reciever = reciever
-    @comment = comment
-    @sender = sender
-    @blog = blog
+    @reciever, @comment, @sender, @blog = reciever, comment, sender, blog
     @post = post
-    @url  = 'http://savitri.in'
     if @sender.name.blank?
       name = @sender.name
     else
       name = @sender.username
     end
     mail(to: reciever.email, subject: "#{name} wrote a comment on\
-         '#{blog.title}'")
+    '#{blog.title}'")
   end
 end
