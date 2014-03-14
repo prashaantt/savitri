@@ -1,4 +1,7 @@
 require 'new_relic/recipes'
+require 'rvm/capistrano'
+
+set :rvm_ruby_string, 'ruby-1.9.3-p484@global'
 set :user, 'ec2-user'
 set :domain, '54.251.36.74'
 set :application, "savitri"
@@ -11,7 +14,6 @@ role :app, domain                          # This may be the same as your `Web` 
 role :db,  domain, :primary => true # This is where Rails migrations will run
 default_run_options[:shell] = false
 default_run_options[:pty] = true
-
 # miscellaneous options
 set :deploy_via, :remote_cache
 set :scm, 'git'
@@ -29,8 +31,8 @@ end
 after "deploy:update_code", :bundle_install
 	desc "install the necessary prerequisites"
 	task :bundle_install, :roles => :app do
-		run "cd #{release_path} && ~/bin/bundle install"
-		run "cd #{release_path} && ~/bin/rake assets:precompile"
+		run "cd #{release_path} && ~/.rvm/gems/ruby-1.9.3-p484@global/bin/bundle install"
+		run "cd #{release_path} && ~/.rvm/gems/ruby-1.9.3-p484@global/bin/rake assets:precompile"
 		run "ln -nfs #{shared_path}/uploads  #{release_path}/public/uploads"
 		#run "cd #{release_path} && bundle exec unicorn -c #{release_path}/config/unicorn.rb -D -E production -p 3000"
 		#run "cd #{release_path} && rake sunsport:solr:stop"
