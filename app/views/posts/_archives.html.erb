@@ -16,7 +16,7 @@
             <input class="textin" type="checkbox" id="f<%= month_posts.first.published_at %>"> 
             <ol>
               <% for post in month_posts %>
-              <li class="file sidebar-links"><a href="#"><%=h link_to post.cached_title, blog_post_path(post.cached_blog,post) %></a></li>
+              <li class="file sidebar-links"><a href="#"><%=h link_to post.cached_title, blog_post_path(@blog,post) %></a></li>
               <% end %>
             </ol>
           </li>

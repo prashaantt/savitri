@@ -188,8 +188,10 @@ class PostsController < ApplicationController
   end
 
   def archives
-    @blog  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
-    @blogposts= Post.published.where(:blog_id=>@blog.id).order("posts.published_at DESC")
+    @blog = Blog.cached_find_by_slug(params[:blog_id]) || not_found
+    @blogposts = Post.published.where(:blog_id=>@blog.id)
+    .select("id, title, url, published_at")
+    .order("posts.published_at DESC")
   end
 
 end

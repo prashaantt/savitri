@@ -46,8 +46,6 @@
         <h3 class="blog-subtitle">Filed in “<%= params[:tag] %>”</h3>
       <% end %>
       <div style="margin-top: 20px">
-        <%= link_to 'Archives', archives_path, {class: 'muted'} %>
-        <span class="muted">&bull;</span>
         <% if tag_type === "none" %>
           <%= link_to "Feed", feed_url, {:class => "muted-anchor"} %>
           <span class="muted">&bull;</span>

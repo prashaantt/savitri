@@ -1,5 +1,7 @@
 # encoding: UTF-8
 # Application helper.
+require 'redcarpet'
+
 module ApplicationHelper
 
   def title(page_title)
