@@ -20,7 +20,7 @@ test:
 
 production:
   adapter: postgresql
-  database: dev
+  database: savitri
   pool: 10
   username: postgres
   password: 
