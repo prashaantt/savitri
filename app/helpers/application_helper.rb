@@ -69,6 +69,7 @@ module ApplicationHelper
   end
 
   def markdown_to_html(markdown)
-    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(markdown).html_safe
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(safe_links_only: true))
+    .render(markdown).html_safe
   end
 end
