@@ -24,3 +24,10 @@ production:
   pool: 10
   username: postgres
   password: 
+
+staging:
+  adapter: postgresql
+  database: savitri
+  pool: 10
+  username: postgres
+  password: 
