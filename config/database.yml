@@ -18,6 +18,13 @@ test:
   pool: 5
   timeout: 5000
 
+staging:
+  adapter: postgresql
+  database: savitri
+  pool: 10
+  username: postgres
+  password: 
+
 production:
   adapter: postgresql
   database: savitri
