@@ -19,7 +19,7 @@
               <ul class="nav nav-tabs nav-stacked navcanto">
                 <% book.cached_cantos.each do |canto| %>
                   <li id="leftnav" class="dropdown-readsubmenu dropdown-submenu">
-                    <a href="<%= "/read/" + book.cached_number.to_s + "/" + canto.cached_number.to_s + "/1" %>" class="<%= is_active_link params,book.cached_number.to_s,canto.cached_number.to_s %>">
+                    <a href="<%= "/read/" + book.cached_number.to_s + "/" + canto.cached_number.to_s + "/1" %>" class="<%= active_link? params,book.cached_number.to_s,canto.cached_number.to_s %>">
                       <% *title = canto.cached_title.split(/(: )/) %>
                       <% if title.length == 1%>
                         <%= title[0] %>
@@ -31,7 +31,7 @@
                     </a>
                     <ul class="dropdown-menu roundcorner readsubmenutext dd-menu">
                       <% canto.cached_sections.each do |section| %>
-                        <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>">
+                        <li class="<%= active_section? params,section.runningno.to_s,canto.no.to_s %>">
                           <%= link_to 'Section '+ section.cached_runningno.to_s + ' ('+ section.cached_number.to_s + ')',"/read/" + canto.cached_book.cached_number.to_s + "/" + canto.cached_number.to_s + "/" + section.cached_runningno.to_s %>
                         </li>
                       <% end %>
