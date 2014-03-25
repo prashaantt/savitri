@@ -3,16 +3,15 @@
 require 'redcarpet'
 
 module ApplicationHelper
-
   def title(page_title)
     content_for(:title) { ' - ' + page_title }
   end
 
-  def is_active(controller)
+  def active?(controller)
     params[:controller] == controller ? 'active' : 'notactive'
   end
 
-  def is_collapsed(params, bid)
+  def collapsed?(params, bid)
     clas = []
     if params[:book_id].eql? bid
       clas[0] = 'collapsed'
@@ -24,7 +23,7 @@ module ApplicationHelper
     clas
   end
 
-  def is_active_link(params, bid, cid)
+  def active_link?(params, bid, cid)
     claz = ''
     if params[:book_id].eql? bid
       if params[:canto_id].eql? cid
@@ -38,7 +37,7 @@ module ApplicationHelper
     claz
   end
 
-  def is_active_section(params, no, cantono)
+  def active_section?(params, no, cantono)
     ac = ''
     if params[:section_id].eql? no
       if params[:canto_id].eql? cantono
@@ -71,6 +70,9 @@ module ApplicationHelper
   end
 
   def markdown_to_html(markdown)
-    Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(markdown).html_safe
+    @redcarpet ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML
+    .new(safe_links_only: true, filter_html: true, no_images: true,
+         no_styles: true))
+    @redcarpet.render(markdown).html_safe
   end
 end
