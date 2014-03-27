@@ -14,7 +14,7 @@
       titled "<%= link_to @post.title, blog_post_url(@blog, @post) %>" on <%= link_to @blog.title, blog_url(@blog) %>.</h4>
 		<% unless @post.excerpt.blank? %>
       <p>Excerpt:</p>
-    	<p><%= @post.excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
+    	<p><%= markdown_to_html(@post.excerpt) %></p>
       <p><%= link_to "Read more", blog_post_url(@blog, @post) %></p>
     <% else %>
       <% post_content = @post.content.gsub(/\r\n?/, "") %>

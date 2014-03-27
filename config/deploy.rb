@@ -3,15 +3,30 @@ require 'rvm/capistrano'
 
 set :rvm_ruby_string, 'ruby-1.9.3-p484@global'
 set :user, 'ec2-user'
-set :domain, '54.251.36.74'
 set :application, "savitri"
 set :repository, "git@github.com:nishantmodak/savitri.git"
 set :deploy_to, "/home/#{user}/#{application}"
 set :normalize_asset_timestamps, false
 ssh_options[:keys] = '~/Dropbox/savitri/newsavitriserver.pem'
-role :web, domain                          # Your HTTP server, Apache/etc
-role :app, domain                          # This may be the same as your `Web` server
-role :db,  domain, :primary => true # This is where Rails migrations will run
+
+desc 'Production setup'
+task :production do
+  set :domain, '54.251.36.74'
+  role :web, domain                          # Your HTTP server, Apache/etc
+  role :app, domain                          # This may be the same as your `Web` server
+  role :db,  domain, :primary => true # This is where Rails migrations will run
+  after "deploy:update", "newrelic:notice_deployment"
+end
+
+desc 'Staging setup'
+task :staging do
+  set :rails_env, 'staging'
+  set :domain, '54.254.4.92'
+  role :web, domain                          # Your HTTP server, Apache/etc
+  role :app, domain                          # This may be the same as your `Web` server
+  role :db,  domain, :primary => true # This is where Rails migrations will run
+end
+
 default_run_options[:shell] = false
 default_run_options[:pty] = true
 # miscellaneous options
@@ -39,7 +54,6 @@ after "deploy:update_code", :bundle_install
 		#run "cd #{release_path} && rake sunsport:solr:start"
 	end
 
-after "deploy:update", "newrelic:notice_deployment"
 # desc "Zero-downtime restart of Unicorn"
 # task :restart, :except => { :no_release => true } do
 #   run "kill -s USR2 `cat #{shared_path}/pids/unicorn.pid`"
