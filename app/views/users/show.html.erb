@@ -32,7 +32,7 @@
       <div>
         <h5 class="pagination-centered" style="margin-top: 40px">RECENT POSTS</h5>
         <% @user_posts.group_by(&:blog_id).each do |blog_id,posts| %>
-        <% blog = @user_blogs.find{|b|b.id == blog_id } %>
+        <% blog = @blogs.find{|b|b.id == blog_id } %>
           <h2 style="margin-top: 30px;margin-bottom: 30px"><strong><%= link_to blog.title, blog_path(blog) %></strong></h2>
           <% posts.take(10).each do |post| %>
             <h3><%= link_to post.cached_title, blog_post_path(blog, post) %></h3>
