@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
     @feedsrc = []
 
-    @user_blogs = (@user.cached_blogs + @user.cached_blogs_have_post_access).flatten.uniq
+    @blogs = Blog.select('id, title, slug')
     @user_comments = @user.comments
     @user_notebooks = @user.notebooks
     @user_posts = @user.cached_recent_posts
