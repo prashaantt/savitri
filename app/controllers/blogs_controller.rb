@@ -1,7 +1,9 @@
+# encoding: UTF-8
+# BlogsController
 class BlogsController < ApplicationController
-
-  before_filter :store_location
-  before_filter :authenticate_user!, :except => [:show, :recentcomments, :recentposts]
+  before_filter :store_location, except: [:recentcomments, :recentposts]
+  before_filter :authenticate_user!, except:
+                [:show, :recentcomments, :recentposts]
 
   def index
     @blogs = current_user.cached_blogs
@@ -9,14 +11,14 @@ class BlogsController < ApplicationController
   end
 
   def show
-   blog = Blog.cached_find_by_slug(params[:id]) || not_found
-   redirect_to blog_posts_path(blog), status: 301
+    blog = Blog.cached_find_by_slug(params[:id]) || not_found
+    redirect_to blog_posts_path(blog), status: 301
   end
 
- def new
-  @blog = Blog.new(:user_id=>current_user.id)
-  authorize! :create, @blog
-  respond_to do |format|
+  def new
+    @blog = Blog.new(user_id: current_user.id)
+    authorize! :create, @blog
+    respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @blog }
     end
@@ -26,7 +28,10 @@ class BlogsController < ApplicationController
     blog = Blog.cached_find_by_slug(params[:blog_id])
     @comments = blog.cached_recentcomments
     respond_to do |format|
-      format.json {render :json => @comments.to_json(:methods=>[:commenter, :cached_share_url, :cached_post_title])}
+      format.json do
+        render json: @comments.to_json(methods:
+        [:commenter, :cached_share_url, :cached_post_title])
+      end
     end
   end
 
@@ -34,7 +39,10 @@ class BlogsController < ApplicationController
     blog = Blog.cached_find_by_slug(params[:blog_id])
     @posts = blog.cached_recentposts
     respond_to do |format|
-      format.json {render :json => @posts.to_json(:only =>[:title],:methods=>[:cached_share_url])}
+      format.json do
+        render json: @posts.to_json(only: [:title],
+                                    methods: [:cached_share_url])
+      end
     end
   end
 
@@ -43,12 +51,16 @@ class BlogsController < ApplicationController
     authorize! :create, @blog
     respond_to do |format|
       if @blog.save
-        format.html { redirect_to blogs_path, notice: 'blog was successfully created.' }
+        format.html do
+          redirect_to blogs_path, notice: 'blog was successfully created.'
+        end
         format.js
         format.json { render json: @blog, status: :created, location: @blog }
       else
-        format.html { render action: "new" }
-        format.json { render json: @blog.errors, status: :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.json do
+          render json: @blog.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -64,11 +76,15 @@ class BlogsController < ApplicationController
 
     respond_to do |format|
       if @blog.update_attributes(params[:blog])
-        format.html { redirect_to blogs_path, notice: 'blog was successfully updated.' }
+        format.html do
+          redirect_to blogs_path, notice: 'blog was successfully updated.'
+        end
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @blog.errors, status: :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.json do
+          render json: @blog.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -80,7 +96,9 @@ class BlogsController < ApplicationController
     @blog.destroy
 
     respond_to do |format|
-      format.html { redirect_to blogs_path, notice: 'blog was successfully deleted.' }
+      format.html do
+        redirect_to blogs_path, notice: 'blog was successfully deleted.'
+      end
       format.json { head :no_content }
     end
   end
@@ -95,18 +113,19 @@ class BlogsController < ApplicationController
   end
 
   def invite_for_blog
-    @blog = Blog.cached_find_by_slug(params[:id])
-    @user = User.find_by_username(params[:blog][:post_access])
+    p @blog = Blog.cached_find_by_slug(params[:id])
+    p @user = User.find_by_username(params[:blog][:post_access])
     @blog.post_access || []
     if @user.nil?
       flash[:error] = "#{params[:blog][:post_access]} is not yet signed up"
       redirect_to authorized_users_path and return
     elsif @user.role == 'Admin'
-        flash[:error] = "#{@user.username} is admin and already has access to any blog"
-        redirect_to authorized_users_path and return
-    elsif (@blog.post_access.include?@user.id)
-        flash[:error] = "#{@user.username} already has access to this blog"
-        redirect_to authorized_users_path and return
+      flash[:error] = "#{@user.username} is admin and already has access "\
+      "to any blog"
+      redirect_to authorized_users_path and return
+    elsif @blog.post_access.include?@user.id
+      flash[:error] = "#{@user.username} already has access to this blog"
+      redirect_to authorized_users_path and return
     else
       @blog.post_access.push(@user.id)
       authorize! :invite_for_blog, @blog
@@ -121,6 +140,6 @@ class BlogsController < ApplicationController
     blog = Blog.cached_find_by_slug(params[:slug])
     blog.post_access.delete(params[:user_id].to_i)
     blog.save!
-    render :nothing => true
+    render nothing: true
   end
 end
