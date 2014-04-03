@@ -25,12 +25,14 @@ class UsersController < ApplicationController
 
     @feedsrc = []
 
-    @blogs = Blog.select('id, title, slug')
     @user_comments = @user.comments
     @user_notebooks = @user.notebooks
-    @user_posts = @user.cached_recent_posts
-
-    @user_posts.each do |post|
+    user_posts = @user.cached_recent_posts
+    @user_blogs_with_posts = []
+    user_posts.group_by(&:blog_id).each do |blog_id,posts|
+      @user_blogs_with_posts << [Blog.select('id, title, slug').find(blog_id), posts]
+    end
+    user_posts.each do |post|
       series = post.tag_list.select{|tag| tag.match(/^@/)}[0]
       @feedsrc << post
       unless series.nil?
