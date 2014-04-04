@@ -80,7 +80,7 @@ class SearchController < ApplicationController
           @search = Sunspot.search Page do
             fulltext keywords, highlight: true
             facet(:category)
-            with(:type).equal_to(query[1].downcase.capitalize.to_s)
+            with(:type).equal_to(filter[1].downcase.capitalize.to_s)
             paginate page: params[:page], per_page: 30
           end
         end
@@ -96,15 +96,15 @@ class SearchController < ApplicationController
          paginate page: params[:page], per_page: 20
          end
     end
-     if params[:download]
+    if params[:download]
       download
     else
       @search
       respond_to do |format|
-          format.html # index.html.erb
-          format.json { render json: @lines }
-        end
+        format.html # index.html.erb
+        format.json { render json: @lines }
       end
+    end
   end
 
 
