@@ -82,7 +82,11 @@
             <% end %>
           <% end %>
         <% end %>
-        <h2><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %></h2>
+        <h2><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
+            <% if post.featured? %>
+              <i class="icon-star pull-right" style='color: gold;'></i>
+            <% end %>
+        </h2>
         <div>
           <span class="pull-right">
             <% if can? :update, post %>

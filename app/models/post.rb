@@ -2,11 +2,11 @@
 # Comment model.
 class Post < ActiveRecord::Base
   attr_accessible(
-                         :content, :title, :tag_list, :blog_id, :md_content,
-                         :uploads_attributes, :excerpt, :url, :published_at,
-                         :series_title, :subtitle, :show_excerpt, :tag_tokens,
-                         :draft, :author_id
-                         )
+                 :content, :title, :tag_list, :blog_id, :md_content,
+                 :uploads_attributes, :excerpt, :url, :published_at,
+                 :series_title, :subtitle, :show_excerpt, :tag_tokens,
+                 :draft, :author_id, :featured
+                 )
   acts_as_taggable
   acts_as_url :title, scope: :blog_id
 
@@ -24,9 +24,17 @@ class Post < ActiveRecord::Base
     where(draft: false)
   }
 
+  validate :max_featured, if: :featured_changed?
+
   attr_reader :tag_tokens
 
   ## Instance Methods
+  def max_featured
+    if featured == true && Post.where(featured: true).count == 5
+      errors.add(:featured, 'Already 5 posts are featured.')
+    end
+  end
+
   def tag_tokens=(ids)
     tags = ids.split(',')
     finder, r_tags = split_tags(tags)
