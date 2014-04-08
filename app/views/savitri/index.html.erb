@@ -1,5 +1,5 @@
 <div id="banner" class="row">
-  <div class="span4 offset4 btn_align">
+  <div class="span4 offset4 btn_align italics">
     <span class="btn-group controls">
       <button class="btn refresh" id="backBtn"><i class="icon-step-backward muted"></i></button>
       <button class="btn" id="playpause"><i class="icon-pause muted" id="playpauseicon"></i></button>
@@ -12,4 +12,15 @@
       <div id="source" class="reference"></div>
     </div>
   </div>
+<hr/>
+<div class="row span8 offset2">
+  <h1 class='text-center'>Featured Posts</h1>
+  <ul class='lead'>
+    <% @posts.each do |post| %>
+    <li class='featured-post-title'><%= link_to post.title, blog_post_path(post.cached_blog,post) %>
+    </li>
+    <li class='text-right featured-post-author italics'>- <%=link_to post.author,profile_path(post.author_id) %> </li>
+    <% end %>
+  </ul>
+</div>
 </div>

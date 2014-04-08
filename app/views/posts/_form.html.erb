@@ -66,6 +66,12 @@
         </div>
       </div>
     <% end %>
+    <% if current_user.admin? %>
+    <div class="control-group">
+      <%= f.label "Featured ", :class => 'control-label', :style=>"float: left;" %> &nbsp;
+      <%= f.check_box :featured %>
+    </div>
+    <% end %>
   </div>
 </div>
 <div class="row">
