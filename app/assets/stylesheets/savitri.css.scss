@@ -36,6 +36,19 @@
   }
 }
 
+li.featured-post-title { 
+  padding-top: 10px;
+}
+
+li.featured-post-author { 
+  border-bottom: 2px dotted #DDDDDD;
+}
+
+.featured-post-title, .featured-post-author {
+  display: block;
+  line-height:1.2em;
+}
+
 @media (min-width: 980px)  {
   div#banner {
     font-size: 275%;

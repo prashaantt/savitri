@@ -114,6 +114,9 @@ class PostsController < ApplicationController
         format.html { redirect_to blog_post_path(@post.blog,@post), notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
+        if @post.errors[:featured].present?
+          flash.now[:error] = @post.errors[:featured].first
+        end
         format.html { render 'posts/new'}
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
@@ -166,6 +169,9 @@ class PostsController < ApplicationController
         format.html { redirect_to blog_post_path(@post.blog,@post), notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
+        if @post.errors[:featured].present?
+          flash.now[:error] = @post.errors[:featured].first
+        end
         format.html { render action: "edit" }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end

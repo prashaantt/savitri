@@ -1,25 +1,29 @@
+# encoding: UTF-8
+# SavitriController is Home Page
 class SavitriController < ApplicationController
-  
   def index
+    @posts = Post.where(featured: true).published.order('published_at DESC')
+    if @posts.count < 5
+      temp = Post.where(featured: false).published.order('published_at DESC')
+      .limit(5 - @posts.count)
+      @posts += temp
+    end
   end
-  
-  # text4 = "{ \"text\": 
-  #     [\"There is a deeper seeing from within\",
-  #      \"And, when we have left these small purlieus of mind,\",
-  #        \"A greater vision meets us on the heights\",
-  #        \"In the luminous wideness of the Spirit’s gaze.\"
-  #     ], 
-  #     \"source\": \"47.3\" }"
+
   def show
     @sentence = Stanza.random
-    @text = Array.new
+    @text = []
     @sentence.cached_lines.each do |l|
       @text << l.line
     end
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json {render json: {:text => @text, :source => @sentence.section.to_s + "." + @sentence.runningno.to_s}}
+      format.json do
+        render json: { text: @text,
+                       source: @sentence.section.to_s + '.' +
+                               @sentence.runningno.to_s }
+      end
     end
   end
 end

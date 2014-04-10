@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140204064314) do
+ActiveRecord::Schema.define(:version => 20140411080533) do
 
   create_table "audios", :force => true do |t|
     t.integer  "medium_id"
@@ -32,12 +32,12 @@ ActiveRecord::Schema.define(:version => 20140204064314) do
 
   create_table "blogs", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title",                               :null => false
+    t.string   "title",                                 :null => false
     t.string   "subtitle"
-    t.string   "slug",                                :null => false
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
-    t.string   "post_access", :default => "--- []\n"
+    t.string   "slug",                                  :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.string   "post_access", :default => "'--- []\n'"
   end
 
   create_table "books", :force => true do |t|
@@ -137,11 +137,11 @@ ActiveRecord::Schema.define(:version => 20140204064314) do
 
   create_table "posts", :force => true do |t|
     t.integer  "blog_id"
-    t.string   "title",                          :null => false
+    t.string   "title",                           :null => false
     t.text     "content"
     t.text     "md_content"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.text     "excerpt"
     t.string   "url"
     t.datetime "published_at"
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(:version => 20140204064314) do
     t.string   "subtitle"
     t.string   "show_excerpt"
     t.integer  "author_id"
+    t.boolean  "featured",     :default => false
   end
 
   create_table "roles", :force => true do |t|
