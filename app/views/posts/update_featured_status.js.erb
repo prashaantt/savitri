@@ -1,0 +1,7 @@
+if($('#<%=escape_javascript( @post.url )%>').hasClass('icon-star')){
+    $('#<%=escape_javascript( @post.url )%>').removeClass('icon-star')
+    $('#<%=escape_javascript( @post.url )%>').addClass('icon-star-empty')
+ }else{
+    $('#<%=escape_javascript( @post.url )%>').removeClass('icon-star-empty')
+    $('#<%=escape_javascript( @post.url )%>').addClass('icon-star')
+}
