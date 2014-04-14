@@ -74,7 +74,7 @@ Savitri::Application.routes.draw do
   get 'blogs/:blog_id/feed', to: 'posts#index', format: false, defaults: { format: :atom }
   get 'blogs/:blog_id/archives' , to: 'posts#archives', as: :archives
   get 'media/:medium_id/feed', to: 'audios#index', format: false, defaults: { format: :rss }
-
+  get 'blogs/:blog_id/posts/:post_id/update_featured_status', to: 'posts#update_featured_status', as: :update_featured_status
   resources :books
 
   resources :sections
