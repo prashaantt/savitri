@@ -89,7 +89,7 @@ class Post < ActiveRecord::Base
   def delete_if_scheduled
     schedposts = Sidekiq::ScheduledSet.new
     schedposts.select do |sched|
-      sched.delete if sched.args == [cached_blog.cached_user.id, id]
+      sched.delete if sched.args == [author_id, id]
     end
   end
 
