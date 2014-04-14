@@ -1,5 +1,6 @@
 <%- model_class = Post -%>
 <!-- Main Page Content -->
+<div id='flash_error'></div>
 <% @blog = Blog.cached_find_by_slug(params[:blog_id]) %>
 <% base_url = request.protocol + request.host_with_port %>
 <% feed_url = base_url + blog_path(@blog) + "/feed" %>
@@ -83,9 +84,13 @@
           <% end %>
         <% end %>
         <h2><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
-            <% if post.featured? %>
-              <i class="icon-star pull-right" style='color: gold;'></i>
-            <% end %>
+        <% if current_user.nil? or current_user.role != 'Admin'%>
+          <% if post.featured? %>
+            <i class="icon-star pull-right"></i>
+          <% end %>
+        <% else %>
+          <%= link_to '', update_featured_status_path(post.cached_blog,post), id: post.url, :class => toggle_class(post), remote: true %>            
+        <% end %>
         </h2>
         <div>
           <span class="pull-right">

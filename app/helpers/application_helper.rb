@@ -65,4 +65,12 @@ module ApplicationHelper
       end
     end
   end
+
+  def toggle_class(post)
+    if post.featured?
+      'icon-star pull-right'
+    else
+      'icon-star-empty pull-right'
+    end
+  end
 end

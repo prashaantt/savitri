@@ -200,4 +200,21 @@ class PostsController < ApplicationController
     .order("posts.published_at DESC")
   end
 
+  def update_featured_status
+    @post = Post.cached_find_by_url(params[:post_id])
+    @post.featured = (@post.featured == false)? true:false
+
+    authorize! :update_featured_status, @post
+
+    respond_to do |format|
+      if @post.save
+        format.js
+      else
+        if @post.errors[:featured].present?
+          flash.now[:error] = @post.errors[:featured].first
+        end
+        format.js{ render 'cannot_featured', format: 'js'}
+      end
+    end    
+  end
 end
