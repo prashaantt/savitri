@@ -32,12 +32,12 @@ ActiveRecord::Schema.define(:version => 20140411080533) do
 
   create_table "blogs", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title",                                 :null => false
+    t.string   "title",                               :null => false
     t.string   "subtitle"
-    t.string   "slug",                                  :null => false
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
-    t.string   "post_access", :default => "'--- []\n'"
+    t.string   "slug",                                :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.string   "post_access", :default => "--- []\n"
   end
 
   create_table "books", :force => true do |t|

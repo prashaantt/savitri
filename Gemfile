@@ -2,8 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-gem 'pg'
-gem 'sqlite3'
 gem 'bigdecimal'
 gem 'acts-as-taggable-on'
 gem 'devise'
@@ -36,12 +34,12 @@ end
 
 gem 'jquery-rails', '2.1.3'
 
-gem 'unicorn'
 gem 'capistrano'
 
 #gem 'seed_dump'
 gem 'minitest'
 gem 'stringex'
+
 gem 'redis-store'
 gem 'redis-rails'
 gem 'best_in_place'
@@ -59,3 +57,21 @@ gem 'slim', '>= 1.1.0'
 # if you require 'sinatra' you get the DSL extended to Object
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'rvm-capistrano'
+
+group :development do
+  gem 'sqlite3'
+  gem 'pg'
+end
+
+group :production, :staging do
+  gem 'pg'
+end
+
+group :production do
+  gem 'unicorn'
+end
+
+group :staging do
+  gem 'rails_12factor'
+  gem 'thin'
+end

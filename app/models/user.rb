@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
   end
 
   def ryd_follow_new_user
-    User.find_by_email('rydesh@gmail.com').follow(self)
+    User.find_by_email('sagarjunnu@gmail.com').follow(self)
     rescue => ex
       logger.info "Error in User#ryd_follow_new_user #{ex}"
   end
