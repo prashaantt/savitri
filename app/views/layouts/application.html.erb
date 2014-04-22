@@ -115,7 +115,7 @@
         <i class="icon-caret-down"></i>
       </a>
       <ul class="dropdown-menu">
-        <% if current_user.role == 'Admin' %>
+        <% if current_user.admin? %>
         <li><%= link_to "Manage blogs & media", blogs_path %></li>
         <li class="divider"/>
         <% elsif can? :create, @blog && current_user.blogs.count > 0  %>

@@ -119,9 +119,9 @@ class BlogsController < ApplicationController
     if @user.nil?
       flash[:error] = "#{params[:blog][:post_access]} is not yet signed up"
       redirect_to authorized_users_path and return
-    elsif @user.role == 'Admin'
-      flash[:error] = "#{@user.username} is admin and already has access "\
-      "to any blog"
+    elsif @user.admin?
+      flash[:error] = "#{@user.username} is Admin or Head. And already has"\
+      "access to any blog"
       redirect_to authorized_users_path and return
     elsif @blog.post_access.include?@user.id
       flash[:error] = "#{@user.username} already has access to this blog"
