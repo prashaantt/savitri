@@ -30,7 +30,7 @@
       </div>
       <% end %>
     </section>
-    	<% if current_user.role == 'Admin'%>
+    	<% if current_user.admin? %>
         <% if current_user.cached_blogs_count < 3 %>
           <section>
             <p class="muted"><em>You can host up to 3 blogs.</em></p>

@@ -16,7 +16,7 @@ class Ability
     user ||= User.new(:role_id=>4) # guest user (not logged in)
     #@user.role { |role| send(role) }
     
-    if user.role == "Admin"
+    if user.role == "Admin" || user.role == "Head"
        can :manage, :all
     else
         can :read, [Post, Blog, Comment, Notebook, Page, User, Audio]
