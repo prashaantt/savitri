@@ -60,11 +60,15 @@ class Blog < ActiveRecord::Base
     Rails.cache.delete([self.class.name, 'findbyslug' + self.slug])
     Rails.cache.delete([self, 'title'])
     Rails.cache.delete([self, 'subtitle'])
-    Rails.cache.delete([self, 'user'])
+    flush_cached_user
     User.find(user).flush_cache
     posts.each do |post|
       post.flush_cached_blog
     end
     flush_dependent_cache
+  end
+
+  def flush_cached_user
+    Rails.cache.delete([self, 'user'])    
   end
 end

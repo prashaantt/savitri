@@ -76,6 +76,7 @@ class Medium < ActiveRecord::Base
     Rails.cache.delete([self, "summary"])
     Rails.cache.delete([self, "title"])
     Rails.cache.delete([self, "url"])
+    flush_cached_user
     User.find(self.user).flush_cache
 
     flush_dependent_cache
@@ -83,5 +84,9 @@ class Medium < ActiveRecord::Base
 
   def flush_dependent_cache
     Rails.cache.delete([self, "recentaudios"])
+  end
+
+  def flush_cached_user
+    Rails.cache.delete([self, 'user'])
   end
 end
