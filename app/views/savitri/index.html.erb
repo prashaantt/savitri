@@ -1,5 +1,24 @@
+<h1 class='text-center italics' style="font-family:'minion-pro'">Welcome to savitri.in</h1>
+<div class="row" style="margin-top: 45px">
+  <div class="span8 offset2">
+    <h2 class='text-center'>Featured Posts</h2>
+    <ul class='lead'>
+      <% @posts.each do |post| %>
+        <li class="featured-post-title">
+          <h4><%= link_to post.title, blog_post_path(post.cached_blog,post) %></h4>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="span10 offset1">
+  <div style="border:1px dotted #ccc;margin-top:45px;"></div>
+  <h2 class='text-center' style="padding-top:45px">Selections from Savitri</h2>
+  </div>
+</div>
 <div id="banner" class="row">
-  <div class="span4 offset4 btn_align italics">
+  <div class="span4 offset4 btn_align">
     <span class="btn-group controls">
       <button class="btn refresh" id="backBtn"><i class="icon-step-backward muted"></i></button>
       <button class="btn" id="playpause"><i class="icon-pause muted" id="playpauseicon"></i></button>
@@ -7,20 +26,9 @@
       <button class="btn" id="context"><i class="icon-book muted"></i></button>
     </span>
   </div>
-  <div id="text" class="span9 selection dynahomespan" style="float: none;margin: 6% auto">
+  <div id="text" class="span9 selection dynahomespan no-animate">
     <div class="row">
       <div id="source" class="reference"></div>
     </div>
   </div>
-<hr/>
-<div class="row span8 offset2">
-  <h1 class='text-center'>Featured Posts</h1>
-  <ul class='lead'>
-    <% @posts.each do |post| %>
-    <li class='featured-post-title'><%= link_to post.title, blog_post_path(post.cached_blog,post) %>
-    </li>
-    <li class='text-right featured-post-author italics'>- <%=link_to post.author,profile_path(post.author_id) %> </li>
-    <% end %>
-  </ul>
-</div>
 </div>
