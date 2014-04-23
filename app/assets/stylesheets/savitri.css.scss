@@ -1,5 +1,6 @@
 #banner {
   font-size: 275%;
+  margin-top: 15px;
 
   .controls {
     text-align: center;
@@ -34,6 +35,11 @@
   -o-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
   font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
   }
+}
+
+#text {
+  float: none;
+  margin: 6% auto;
 }
 
 li.featured-post-title { 
