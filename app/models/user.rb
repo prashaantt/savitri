@@ -58,7 +58,9 @@ class User < ActiveRecord::Base
   end
 
   def ryd_follow_new_user
-    User.find_by_email('rydesh@gmail.com').follow(self)
+    Role.find(5).users.each do |user|
+      user.follow(self)
+    end
     rescue => ex
       logger.info "Error in User#ryd_follow_new_user #{ex}"
   end
@@ -76,7 +78,8 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    'Admin' == (role?(self))
+    role = role?(self)
+    role == 'Admin' || role == 'Head'
   end
 
   def self.cached_find(id)
