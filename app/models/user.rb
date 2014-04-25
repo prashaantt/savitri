@@ -29,21 +29,9 @@ class User < ActiveRecord::Base
   acts_as_followable
 
   after_initialize :init
-  after_commit :follow_admin, :ryd_follow_new_user, on: :create
-  after_commit :flush_cache
+  after_commit :follow_admin, :scholar_follow_new_user, on: :create
+  after_commit :flush_cache, :flush_dependent_cache
   after_commit :remove_blog_access, on: :destroy
-  before_save :flush_cached_comment_user, :flush_cached_post_author,
-                      if: proc { |user| user.name_changed? }
-
-  def flush_cached_comment_user
-    comments.each do |comment|
-      comment.flush_cached_user
-    end
-  end
-
-  def flush_cached_post_author
-    posts.each { |post| post.flush_cached_author }
-  end
 
   def remove_blog_access
     blogs = Blog.blogs_have_post_access id
@@ -57,8 +45,10 @@ class User < ActiveRecord::Base
     follow(User.find(1))
   end
 
-  def ryd_follow_new_user
-    User.find_by_email('rydesh@gmail.com').follow(self)
+  def scholar_follow_new_user
+    Role.find(2).users.each do |user|
+      user.follow(self)
+    end
     rescue => ex
       logger.info "Error in User#ryd_follow_new_user #{ex}"
   end
@@ -76,7 +66,8 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    'Admin' == (role?(self))
+    role = role?(self)
+    role == 'Admin' || role == 'Scholar'
   end
 
   def self.cached_find(id)
@@ -134,5 +125,23 @@ class User < ActiveRecord::Base
 
   def flush_recent_posts
     Rails.cache.delete([self, 'posts'])
+  end
+
+  def flush_dependent_cache
+    self.blogs.each do |blog|
+      blog.flush_cached_user
+    end
+    
+    self.posts.each do |post|
+      post.flush_cached_author
+    end
+    
+    self.comments.each do |comment|
+      comment.flush_cached_user
+    end
+
+    self.media.each do |medium|
+      medium.flush_cached_user
+    end
   end
 end

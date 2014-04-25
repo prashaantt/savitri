@@ -6,7 +6,7 @@ class Ability
     # ____ Admin ____
     # Overlord + below
     # ____ Scholar ____
-    # Edit Any Comment, User + below
+    # Same as Admin with some extra facilities
     # _____ Blogger _____
     # Registered User, Create, Posts, Comments + below
     # ____ User ____
@@ -16,7 +16,7 @@ class Ability
     user ||= User.new(:role_id=>4) # guest user (not logged in)
     #@user.role { |role| send(role) }
     
-    if user.role == "Admin"
+    if user.role == "Admin" || user.role == "Scholar"
        can :manage, :all
     else
         can :read, [Post, Blog, Comment, Notebook, Page, User, Audio]
