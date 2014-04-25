@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   acts_as_followable
 
   after_initialize :init
-  after_commit :follow_admin, :scholar_follow_new_user, on: :create
+  after_commit :follow_admin, :scholar_follow_new_user,:new_user_follow_scholar, on: :create
   after_commit :flush_cache, :flush_dependent_cache
   after_commit :remove_blog_access, on: :destroy
 
@@ -45,12 +45,20 @@ class User < ActiveRecord::Base
     follow(User.find(1))
   end
 
+  def new_user_follow_scholar
+    Role.find(2).users.each do |user|
+      self.follow(user)
+    end
+    rescue => ex
+      logger.info "Error in User#new_user_follow_scholar #{ex}"    
+  end
+
   def scholar_follow_new_user
     Role.find(2).users.each do |user|
       user.follow(self)
     end
     rescue => ex
-      logger.info "Error in User#ryd_follow_new_user #{ex}"
+      logger.info "Error in User#scholar_follow_new_user #{ex}"
   end
 
   def init
