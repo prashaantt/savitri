@@ -22,14 +22,16 @@
         <section class="snippet">
           <h4 class="post-series span2 visible-desktop post-series-sidebar"><%= post.cached_series_title %></h4>
           <h4 class="post-series hidden-desktop"><%= post.cached_series_title %></h4>
-          <h2><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
-        <% if current_user.nil? or current_user.role != 'Admin'%>
-          <% if post.featured? %>
-            <i class="icon-star pull-right"></i>
-          <% end %>
-        <% else %>
-          <%= link_to '', update_featured_status_path(post.cached_blog,post), id: post.url, :class => toggle_class(post), remote: true %>            
-        <% end %></h2>
+          <h2>
+            <%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
+            <% if current_user.nil? || !current_user.admin? %>
+              <% if post.featured? %>
+                <i class="icon-star pull-right"></i>
+              <% end %>
+            <% else %>
+            <%= link_to '', update_featured_status_path(post.cached_blog,post), id: post.url, :class => toggle_class(post), remote: true %>
+            <% end %>
+          </h2>
           <div>
             <span class="pull-right">
               <% if can? :update, post %>
