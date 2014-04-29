@@ -15,6 +15,6 @@
     </span>
   </div>
   <div id="comment-<%= comment.id %>" class="main-content">
-    <%= best_in_place comment, :body, :type => :textarea, :activator => "#editcomment-#{comment.id}", :classes => 'highlight_on_success controls', :path => post_comment_path(comment.post,comment), :display_with => 'simple_format'  %>
+    <%= best_in_place comment, :body, :type => :textarea, :activator => "#editcomment-#{comment.id}", :classes => 'highlight_on_success controls', :path => post_comment_path(comment.post,comment), :display_as  => :markdown_body %>
   </div>
 </div>

@@ -69,12 +69,16 @@
         </span></h5>
       </div>
       <div class="main-content">
+      <% excerpt = markdown_to_html(@post.cached_excerpt) %>
+      <% if excerpt.blank? %>
+        <% excerpt = @post.cached_excerpt %>
+      <% end %>
         <% if @post.cached_show_excerpt === "prefix" %>
-          <p><%= @post.cached_excerpt %></p>
+          <p><%= excerpt %></p>
         <% end %>
         <%= @post.cached_content.html_safe.gsub(/\r\n?/,"").html_safe %>
         <% if @post.cached_show_excerpt === "suffix" %>
-          <p><%= @post.cached_excerpt %></p>
+          <p><%= excerpt %></p>
         <% end %>
       </div>
       <% if @post.updated_at > @post.published_at + 20 %>
