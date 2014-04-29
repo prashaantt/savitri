@@ -9,19 +9,15 @@ def internet_connection?
   end
 end
 
-p 'Create default user'
-p 'Enter user name'
-name = STDIN.gets.chomp
-p 'Enter valid email id. You will get confirmation email'
+p 'Enter Admin email id'
 email = STDIN.gets.chomp
-p 'Enter password'
+p 'Enter Admin password'
 password = STDIN.gets.chomp
-p 'Enter username'
-username = STDIN.gets.chomp
 
-#http://stackoverflow.com/questions/576799/how-do-i-use-gets-on-a-rake-task
+user = User.new(:name => 'admin', 
+  :email => email, :password => password,:password_confirmation => password, 
+  :username => 'admin', :role_id => 1, :photo => nil)
 
-user = User.new(:name => name, :email => email, :password => password,:password_confirmation => password, :username => username, :role_id => 1, :photo => nil)
 user.skip_confirmation! unless internet_connection?
 user.save
 
