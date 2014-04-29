@@ -40,7 +40,13 @@
             </span>
             <h5><span class="label">Scheduled</span><span class="blog-author"> by <%= link_to post.cached_author.username, post.cached_author, {:class => "underline"} %>  for <%= post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %></span></h5>
             <% unless post.cached_excerpt.blank? %>
-              <p><%= post.cached_excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
+            <% excerpt = markdown_to_html(post.excerpt) %>
+            <p><% if excerpt.blank? %>
+              <%= post.excerpt.gsub(/\r\n?/,"<br>").html_safe %>
+            <% else %>
+              <%= excerpt %>
+            <% end %></p>
+
               <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
             <% else %>
               <% post_content = post.cached_content.gsub(/\r\n?/, "") %>

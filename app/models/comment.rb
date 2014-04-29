@@ -6,8 +6,29 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   attr_accessible :body, :user_id, :post_id
   after_commit :flush_cache
-
   validates :body, presence: true
+  before_validation :markdown_body_validation
+
+  def markdown_body_validation
+    if body.present?
+      md = ApplicationController.helpers.markdown_to_html(body)
+      if md.blank?
+        errors.add(:body, 'comment can\'t be blank')
+        body = ''
+      else
+        body
+      end
+    end
+  end
+
+  def markdown_body
+    md = ApplicationController.helpers.markdown_to_html(body)
+    if md.blank?
+      ApplicationController.helpers.markdown_to_html('```'+body+'```')
+    else
+      md
+    end
+  end
 
   def cached_body
     Rails.cache.fetch([self, 'body']) { body }

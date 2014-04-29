@@ -73,4 +73,10 @@ module ApplicationHelper
       'icon-star-empty pull-right'
     end
   end
+  
+  def markdown_to_html(markdown)
+    rd = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(autolink: true, safe_links_only: true,
+      filter_html: true, no_images: true, no_styles: true, hard_wrap: true))
+    .render(markdown).html_safe
+  end
 end

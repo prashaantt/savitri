@@ -26,6 +26,19 @@ class Post < ActiveRecord::Base
 
   validate :max_featured, if: :featured_changed?
 
+  before_validation :markdown_excerpt
+
+  def markdown_excerpt
+    if excerpt.present?
+      md = ApplicationController.helpers.markdown_to_html(excerpt)
+      if md.blank?
+        errors.add(:excerpt, 'excerpt can\'t be blank')
+      else
+        md
+      end
+    end
+  end
+
   attr_reader :tag_tokens
 
   ## Instance Methods

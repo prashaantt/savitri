@@ -100,7 +100,12 @@
           </span>
           <h5 class="blog-author">by <%= link_to (post.cached_author.name.blank? ? post.cached_author.username : post.cached_author.name), post.cached_author, {:class => "underline"} %> on <%= post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize post.cached_comments_count, "comment") , blog_post_path(post.cached_blog, post) + "#comments", {:class => "underline"} %></h5>
           <% unless post.cached_excerpt.blank? %>
-            <p><%= post.cached_excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
+            <% excerpt = markdown_to_html(post.excerpt) %>
+            <p><% if excerpt.blank? %>
+              <%= post.excerpt %>
+            <% else %>
+              <%= markdown_to_html(post.excerpt) %>
+            <% end %></p>
             <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
           <% else %>
             <% post_content = post.cached_content.gsub(/\r\n?/, "") %>
