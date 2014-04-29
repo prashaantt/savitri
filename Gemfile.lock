@@ -288,6 +288,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   devise_invitable
+  dotenv-deployment
   dotenv-rails
   fog
   jquery-fileupload-rails
