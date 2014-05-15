@@ -1,8 +1,9 @@
+# encoding: UTF-8
+# UsersController
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
-  load_and_authorize_resource
-  
+  load_and_authorize_resource :user, find_by: :find_by_id
   def index
     authorize! :index, @users
     @users = User.all
@@ -15,37 +16,45 @@ class UsersController < ApplicationController
 
   # GET /users/1
   # GET /users/1.json
+
   def show
     @user = User.find(params[:id]) || not_found
+      base_url = request.protocol + request.host_with_port
+      @feed_url = base_url + user_path(params[:id]) + '/feed'
 
-    base_url = request.protocol + request.host_with_port
-    @feed_url = base_url + user_path(params[:id]) + "/feed"
+      @series = {}
 
-    @series = {}
+      @feedsrc = []
 
-    @feedsrc = []
+      @user_comments = @user.comments
+      @user_notebooks = @user.notebooks
+      user_posts = @user.cached_recent_posts
 
-    @user_comments = @user.comments
-    @user_notebooks = @user.notebooks
-    user_posts = @user.cached_recent_posts
-    @user_blogs_with_posts = []
-    user_posts.group_by(&:blog_id).each do |blog_id,posts|
-      @user_blogs_with_posts << [Blog.select('id, title, slug').find(blog_id), posts]
-    end
-    user_posts.each do |post|
-      series = post.tag_list.select{|tag| tag.match(/^@/)}[0]
-      @feedsrc << post
-      unless series.nil?
-        @series[post.id] = { :name => series, :title => post.series_title, :blog_id => post.blog.id, :blog_title => post.blog.title,
-                                       :published => post.published_at }        
-      end 
-    end
+      @user_blogs_with_posts = []
+      user_posts.group_by(&:blog_id).each do |blog_id, posts|
+        @user_blogs_with_posts << [Blog.select('id, title, slug')
+        .find(blog_id), posts]
+      end
+
+      user_posts.each do |post|
+        series = post.tag_list.select { |tag| tag.match(/^@/) }[0]
+        @feedsrc << post
+        unless series.nil?
+          @series[post.id] = { name: series,
+                               title: post.series_title,
+                               blog_id: post.blog.id,
+                               blog_title: post.blog.title,
+                               published: post.published_at }
+        end
+      end
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
-      format.atom { render :layout => false, :content_type=>"application/xml" }
-      format.rss { redirect_to blog_posts_path(:format => :atom), :status => :moved_permanently }
+      format.atom { render layout: false, content_type: 'application/xml' }
+      format.rss do
+        redirect_to blog_posts_path(format: :atom), status: :moved_permanently
+      end
     end
   end
 
@@ -72,11 +81,15 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html do
+          redirect_to @user, notice: 'User was successfully created.'
+        end
         format.json { render json: @user, status: :created, location: @user }
       else
-        format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.json do
+          render json: @user.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -88,11 +101,15 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html do
+          redirect_to @user, notice: 'User was successfully updated.'
+        end
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.json do
+          render json: @user.errors, status: :unprocessable_entity
+        end
       end
     end
   end
