@@ -17,7 +17,12 @@ class PagesController < ApplicationController
   # GET /pages/1.json
   def show
     if params[:paths].nil?
-      @page = Page.find_by_permalink!(params[:id]) || not_found
+      if params.has_key?(:q) && params[:q].start_with?('content')
+        redirect_to '/search/?q='+params[:q].split('/')[2].gsub('-','+')
+        return
+      else
+        @page = Page.find_by_permalink!(params[:id]) || not_found
+      end
     else
       @page = Page.find_by_permalink!(params[:paths]) || not_found
     end
