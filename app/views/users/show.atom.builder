@@ -1,15 +1,9 @@
-unless @feedsrc.empty?
-  atom_feed :language => 'en-US', :id => @feed_url do |feed|
+atom_feed :language => 'en-US', :id => @feed_url do |feed|
+  title = @user.name.blank? ? @user.username : @user.name
+  feed.title title + " on " + request.host_with_port
+  feed.updated @feedsrc.blank? ? @user.updated_at : @feedsrc.first.updated_at
 
-    unless @feedsrc.first.cached_blog.cached_user.name.blank?
-      title = @feedsrc.first.cached_blog.cached_user.name
-    else
-      title = @feedsrc.first.cached_blog.cached_user.cached_username
-    end
-    feed.title title + " on " + request.host_with_port
-
-    feed.updated @feedsrc.first.updated_at
-
+  unless @feedsrc.empty?
     @feedsrc.first(15).each do |post|
       next if post.updated_at.blank?
       @link = request.protocol + request.host_with_port + blog_post_path(post.cached_blog, post)
