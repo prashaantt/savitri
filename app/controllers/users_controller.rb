@@ -18,35 +18,36 @@ class UsersController < ApplicationController
   # GET /users/1.json
 
   def show
+    base_url = request.protocol + request.host_with_port
+    @feed_url = base_url + user_path(params[:id]) + '/feed'
+
     @user = User.find(params[:id]) || not_found
-      base_url = request.protocol + request.host_with_port
-      @feed_url = base_url + user_path(params[:id]) + '/feed'
 
-      @series = {}
+    @series = {}
 
-      @feedsrc = []
+    @feedsrc = []
 
-      @user_comments = @user.comments
-      @user_notebooks = @user.notebooks
-      user_posts = @user.cached_recent_posts
+    @user_comments = @user.comments
+    @user_notebooks = @user.notebooks
+    user_posts = @user.cached_recent_posts
 
-      @user_blogs_with_posts = []
-      user_posts.group_by(&:blog_id).each do |blog_id, posts|
-        @user_blogs_with_posts << [Blog.select('id, title, slug')
-        .find(blog_id), posts]
+    @user_blogs_with_posts = []
+    user_posts.group_by(&:blog_id).each do |blog_id, posts|
+      @user_blogs_with_posts << [Blog.select('id, title, slug')
+      .find(blog_id), posts]
+    end
+
+    user_posts.each do |post|
+      series = post.tag_list.select { |tag| tag.match(/^@/) }[0]
+      @feedsrc << post
+      unless series.nil?
+        @series[post.id] = { name: series,
+                             title: post.series_title,
+                             blog_id: post.blog.id,
+                             blog_title: post.blog.title,
+                             published: post.published_at }
       end
-
-      user_posts.each do |post|
-        series = post.tag_list.select { |tag| tag.match(/^@/) }[0]
-        @feedsrc << post
-        unless series.nil?
-          @series[post.id] = { name: series,
-                               title: post.series_title,
-                               blog_id: post.blog.id,
-                               blog_title: post.blog.title,
-                               published: post.published_at }
-        end
-      end
+    end
 
     respond_to do |format|
       format.html # show.html.erb
