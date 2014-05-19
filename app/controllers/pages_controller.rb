@@ -17,11 +17,16 @@ class PagesController < ApplicationController
   # GET /pages/1.json
   def show
     if params[:paths].nil?
-      if params.has_key?(:q) && params[:q].start_with?('content')
-        redirect_to '/search/?q='+params[:q].split('/')[2].gsub('-','+')
-        return
-      else
-        @page = Page.find_by_permalink!(params[:id]) || not_found
+      @page = Page.find_by_permalink(params[:id])
+      if !@page
+        location = Rewrite.find_by_source(request.fullpath)
+        if location
+          redirect_to location.destination, :status => location.code
+          return
+        else
+          redirect_to '/search/?q='+params[:q].split('/').last.gsub('-','+')
+          return
+        end
       end
     else
       @page = Page.find_by_permalink!(params[:paths]) || not_found

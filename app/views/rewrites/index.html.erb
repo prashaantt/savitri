@@ -1,0 +1,27 @@
+<h1>Listing rewrites</h1>
+
+<table>
+  <tr>
+    <th>Source</th>
+    <th>Destination</th>
+    <th>Code</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @rewrites.each do |rewrite| %>
+  <tr>
+    <td><%= rewrite.source %></td>
+    <td><%= rewrite.destination %></td>
+    <td><%= rewrite.code %></td>
+    <td><%= link_to 'Show', rewrite %></td>
+    <td><%= link_to 'Edit', edit_rewrite_path(rewrite) %></td>
+    <td><%= link_to 'Destroy', rewrite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Rewrite', new_rewrite_path %>
