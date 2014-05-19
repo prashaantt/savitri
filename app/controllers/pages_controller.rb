@@ -29,7 +29,17 @@ class PagesController < ApplicationController
         end
       end
     else
-      @page = Page.find_by_permalink!(params[:paths]) || not_found
+      @page = Page.find_by_permalink(params[:paths])
+      if !@page
+        location = Rewrite.find_by_source(request.fullpath)
+        if location
+          redirect_to location.destination, :status => location.code
+          return
+        else
+          redirect_to '/search/?q='+params[:paths].gsub('/','+')
+          return
+        end
+      end
     end
 
     respond_to do |format|
