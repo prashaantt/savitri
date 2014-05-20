@@ -62,6 +62,7 @@ class PostsController < ApplicationController
   def show
     blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
     @post = Post.cached_find_by_blog_id_and_url(blog_id.id,params[:id]) || not_found
+    @related_posts = Sunspot.more_like_this(@post).results.first(5) rescue nil
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post }
@@ -127,7 +128,7 @@ class PostsController < ApplicationController
   # PUT /posts/1.json
   def update
     @post = Post.cached_find_by_url(params[:id])
-        
+    
     #if not blank
       #if exists and changed: create new and remove existing
       #elsif doesn't exist: create new
