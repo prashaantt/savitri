@@ -7,7 +7,7 @@ task :fsetup do
 
   ["set_env_specific_variables", "set_env_variables",
    "db:drop", "db:create", "db:migrate", 
-   "sunspot:solr:start RAILS_ENV=#{Rails.env}", "setup_user", "db:seed"].each { |cmd| system "rake #{cmd}" }
+   "sunspot:solr:start RAILS_ENV=#{Rails.env}", "db:seed"].each { |cmd| system "rake #{cmd}" }
 
   puts 'Done'
 end
@@ -63,13 +63,3 @@ task :set_env_variables do
       end
   end
 end
-
-# desc "Load data"
-# task :setup_user do
-#   require Rails.root + 'app/models/user.rb'
-#   p 'Enter Admin email-id'
-#   USER_EMAIL = STDIN.gets.chomp
-#   p 'Enter Admin password'
-#   ADMIN_PASS = STDIN.gets.chomp
-#   User.new(:name => 'Admin', :email => USER_EMAIL, :password => ADMIN_PASS,:password_confirmation => ADMIN_PASS, :username => 'admin', :role_id => 1, :photo => nil)
-# end
