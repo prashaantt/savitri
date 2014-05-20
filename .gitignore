@@ -16,3 +16,4 @@
 /solr/data/
 /solr/pids/
 /solr/data/development/
+/.env.*
