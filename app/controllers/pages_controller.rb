@@ -42,6 +42,10 @@ class PagesController < ApplicationController
       end
     end
 
+    if @page.parent.present?
+      @related_pages = Sunspot.more_like_this(@page).results.first(5) rescue nil
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @page }

@@ -57,9 +57,10 @@ class Post < ActiveRecord::Base
   end
 
   searchable do
-    text :title, stored: true
-    text :content, stored: true
-    text :series_title, stored: true
+    text :title, stored: true, more_like_this: true
+    text :content, stored: true, more_like_this: true
+    text :series_title, stored: true, more_like_this: true
+    text :tag_list, stored: true, more_like_this: true
 # --facets below--
     string :category
     string :author

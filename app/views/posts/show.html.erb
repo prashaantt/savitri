@@ -136,6 +136,21 @@
       </ol>
     </div>
     <% end %>
+    <!-- Begin Related Content -->
+    <% if @related_posts.present? && @related_posts.count > 0 %>
+      <div class="right-sidebar" id="related_posts">
+        <label for="relatedposts" class="sidebar-title"><span class="label">Related Content</span></label>
+        <input class="rcin" type="checkbox" id="relatedposts" />
+        <ol id="rpos">
+        <% @related_posts.each do |rpost| %>
+          <li class="content-indent">
+            <%= link_to rpost.title, blog_post_path(rpost.blog, rpost) %>
+          </li>
+        <% end %>
+        </ol>
+      </div>
+    <% end %>
+    <!-- End Related Content -->
   </div>
 </div>
 <!--  SideBar End -->

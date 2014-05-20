@@ -12,8 +12,8 @@ class Page < ActiveRecord::Base
   before_validation :permalink_update
 
   searchable do
-    text :content, stored: :true
-    text :name, stored: :true
+    text :content, stored: :true, more_like_this: true
+    text :name, stored: :true, more_like_this: true
 # --facets below--
     string :category
     string :type
