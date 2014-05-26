@@ -1007,8 +1007,11 @@
             else {
                 // Fixes common pasting errors.
                 text = text.replace(/^http:\/\/(https?|ftp):\/\//, '$1://');
-                if (!/^(?:https?|ftp):\/\//.test(text))
-                    text = 'http://' + text;
+                if (!/^\//.test(text))
+                    if (/^\w+\//.test(text))
+                        text = '/' + text;
+                    else (!/^(?:https?|ftp):\/\//.test(text))
+                        text = 'http://' + text;
             }
 
             $(dialog).modal('hide');
