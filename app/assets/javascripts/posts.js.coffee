@@ -3,6 +3,16 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 #seconds
 $ ->
+  $(".new_post,.edit_post").submit ->
+    text = $("#wmd-input").val()
+    md_text = $("#post_content").text()
+    title = $("#post_title").val()
+    text = text.replace(/\!\[enter image description here\]/, "![" + title + "]")
+    md_text = md_text.replace(/alt="enter image description here"/, "alt=\"" + title + "\"")
+    $("#wmd-input").val text
+    $("#post_content").val md_text
+
+$ ->
 	$("#new-blog-post").click (e) ->
 	  $("#post_content").html($('.wmd-preview').html())
 	  $("#wmd-input").html($('.wmd-input').val())
