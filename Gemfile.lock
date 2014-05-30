@@ -79,6 +79,11 @@ GEM
       actionmailer (~> 3.0)
       devise (>= 2.1.2)
       railties (~> 3.0)
+    dotenv (0.11.1)
+      dotenv-deployment (~> 0.0.2)
+    dotenv-deployment (0.0.2)
+    dotenv-rails (0.11.1)
+      dotenv (= 0.11.1)
     erubis (2.7.0)
     excon (0.21.0)
     execjs (1.4.0)
@@ -283,6 +288,8 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   devise_invitable
+  dotenv-deployment
+  dotenv-rails
   fog
   jquery-fileupload-rails
   jquery-rails (= 2.1.3)

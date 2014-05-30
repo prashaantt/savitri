@@ -70,10 +70,10 @@ Savitri::Application.configure do
   config.action_mailer.default_url_options = { :host => 'savitri.in' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  :address              => "email-smtp.us-east-1.amazonaws.com",
-  :port                 => 587,
-  :user_name            => 'AKIAIJAGW2Y65MTYABAA',
-  :password             => 'Aoz2/HsoIrFVPmnj4d4qlnSri2x6mNcTAWkZngnKBQYL',
+  :address              => ENV['SMTP_SETTINGS_ADDRESS'],
+  :port                 => ENV['SMTP_SETTINGS_PORT'],
+  :user_name            => ENV['SMTP_SETTINGS_USER_NAME'],
+  :password             => ENV['SMTP_SETTINGS_PASSWORD'],
   :authentication       => 'plain',
-  :enable_starttls_auto => true  }
+  :enable_starttls_auto => true }
 end
