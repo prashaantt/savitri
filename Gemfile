@@ -20,7 +20,7 @@ gem 'carrierwave'
 gem 'fog'
 gem 'mini_magick'
 gem 'acts_as_follower'
-gem 'sidekiq', '2.6.0'
+gem 'sidekiq', '2.7.0'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 group :assets do
