@@ -20,7 +20,7 @@ gem 'carrierwave'
 gem 'fog'
 gem 'mini_magick'
 gem 'acts_as_follower'
-gem 'sidekiq', '2.6.0'
+gem 'sidekiq', '2.7.0'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 group :assets do
@@ -37,8 +37,13 @@ end
 gem 'jquery-rails', '2.1.3'
 
 gem 'unicorn'
-gem 'capistrano'
 
+group :development do
+  gem 'capistrano', '~> 3.0', require: false
+  gem 'capistrano-rails',   '~> 1.1', require: false
+  gem 'capistrano-bundler', '~> 1.1', require: false
+  gem 'rvm1-capistrano3', require: false
+end
 #gem 'seed_dump'
 gem 'minitest'
 gem 'stringex'
@@ -58,4 +63,3 @@ end
 gem 'slim', '>= 1.1.0'
 # if you require 'sinatra' you get the DSL extended to Object
 gem 'sinatra', '>= 1.3.0', :require => nil
-gem 'rvm-capistrano'
