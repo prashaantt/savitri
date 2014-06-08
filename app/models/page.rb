@@ -50,9 +50,14 @@ class Page < ActiveRecord::Base
     Rails.cache.fetch([self, 'name']) { name }
   end
 
+  def self.cached_count
+    Rails.cache.fetch(['Pages', 'count']) { Page.count }
+  end
+
   def flush_cache
     Rails.cache.delete(['Pages', 'cachedall'])
     Rails.cache.delete(['Pages', 'menupages'])
+    Rails.cache.delete(['Pages', 'count'])
     Rails.cache.delete([self, 'name'])
   end
 
