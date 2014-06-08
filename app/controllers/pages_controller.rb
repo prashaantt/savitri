@@ -5,7 +5,14 @@ class PagesController < ApplicationController
   before_filter :authenticate_user!, except: [:show, :parents]
 
   def index
-    @pages = Page.cached_all
+    per_page = 10
+    count = Page.cached_count
+    if count < per_page
+      @no_of_pages = (count / per_page)
+    else
+      @no_of_pages = (count / per_page) + (count % per_page)
+    end
+    @pages = Page.order('created_at DESC').limit(per_page).offset(params[:page].to_i * per_page)
     authorize! :create, @pages
     respond_to do |format|
       format.html # index.html.erb
