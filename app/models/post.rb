@@ -66,6 +66,7 @@ class Post < ActiveRecord::Base
     string :author
     string :posted
     string :blogname
+    string :series
     time   :published_at
   end
 
@@ -108,6 +109,14 @@ class Post < ActiveRecord::Base
 
   def blogname
     blog.title
+  end
+
+  def series
+    if self.series_title.blank?
+      'Not in a series'
+    else
+      self.series_title
+    end
   end
 
   def to_param
