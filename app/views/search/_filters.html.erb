@@ -75,7 +75,7 @@
       <% unless params[:blogname].blank? %>
         <% for row in @search.facet(:blogname).rows.each do%>
           <li>
-            <span class="label"><a href="<%= search_path(:blogname => nil, :q => params[:q],:posted => params[:posted],:author=>params[:author]) %>"><i class="icon-remove"></i></a> Blog <%= row.value %></span>
+            <span class="label"><a href="<%= search_path(:blogname => nil, :q => params[:q],:posted => params[:posted], :author=>params[:author], :series => params[:series]) %>"><i class="icon-remove"></i></a> Blog <%= row.value %></span>
           </li>
         <% end %>
       <% end %>
@@ -83,7 +83,7 @@
       <% unless params[:author].blank? %>
         <% for row in @search.facet(:author).rows.each do%>
           <li>
-            <span class="label"><a href="<%= search_path(:author => nil, :q => params[:q],:posted => params[:posted],:blogname=>params[:blogname]) %>"><i class="icon-remove"></i></a> Author <%= row.value %></span>
+            <span class="label"><a href="<%= search_path(:author => nil, :q => params[:q],:posted => params[:posted],:blogname=>params[:blogname], :series => params[:series]) %>"><i class="icon-remove"></i></a> Author <%= row.value %></span>
           </li>
         <% end %>
       <% end %>
@@ -91,7 +91,15 @@
       <% unless params[:posted].blank? %>
         <% for row in @search.facet(:posted).rows.each do%>
           <li>
-            <span class="label"><a href="<%= search_path(:posted => nil, :q => params[:q],:author => params[:author],:blogname=>params[:blogname]) %>"><i class="icon-remove"></i></a> Posted in <%= row.value %></span>
+            <span class="label"><a href="<%= search_path(:posted => nil, :q => params[:q],:author => params[:author],:blogname=>params[:blogname], :series => params[:series]) %>"><i class="icon-remove"></i></a> Posted in <%= row.value %></span>
+          </li>
+        <% end %>
+      <% end %>
+      <!-- Series Filter Selected -->
+      <% unless params[:series].blank? %>
+        <% for row in @search.facet(:series).rows.each do%>
+          <li>
+            <span class="label"><a href="<%= search_path(:series => nil, :q => params[:q],:author => params[:author],:blogname=>params[:blogname], :posted => params[:posted]) %>"><i class="icon-remove"></i></a> Series is <%= row.value %></span>
           </li>
         <% end %>
       <% end %>

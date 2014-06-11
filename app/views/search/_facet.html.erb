@@ -37,6 +37,9 @@
 	<% unless @search.facet(:blogname).nil? %>
 		<%= render 'blogname_facet' %>
 	<% end %>
+	<% unless @search.facet(:series).nil? %>
+		<%= render'series_facet' %>
+	<% end %>
 	<% unless @search.facet(:posted).nil? %>
 		<%= render 'posted_facet' %>
 	<% end %>
