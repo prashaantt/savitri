@@ -71,9 +71,11 @@ class SearchController < ApplicationController
             facet(:posted)
             facet(:author)
             facet(:blogname)
+            facet(:series)
             with(:posted).equal_to(params[:posted]) if params[:posted].present?
             with(:author).equal_to(params[:author]) if params[:author].present?
             with(:blogname).equal_to(params[:blogname]) if params[:blogname].present?
+            with(:series).equal_to(params[:series]) if params[:series].present?
             paginate page: params[:page], per_page: 5
           end
         when /[a-z]/

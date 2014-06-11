@@ -9,7 +9,7 @@
 	</ul>
 	<% links = Hash.new %>
 	<% for n in rows.each %>
-		<% links[n] = search_path(:q => params[:q],:author => params[:author],:posted => n) %>
+		<% links[n] = search_path(:q => params[:q], :author => params[:author], :posted => n, :series => params[:series], :blogname => params[:blogname]) %>
 	<% end %>
 	<%= select_tag "postedofsentence", options_for_select(links.keys.each_with_index.map {|name, index| [name,links[name]]}), :class=>"span2",:onChange=>"window.document.location.href=this.options[this.selectedIndex].value;", :prompt => 'Select Posted'%>
 

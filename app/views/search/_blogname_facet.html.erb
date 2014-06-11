@@ -9,8 +9,8 @@
 	</ul>
 	<% links = Hash.new %>
 	<% for n in rows.each %>
-		<% links[n] = search_path(:blogname=>n,:posted => params[:posted], :q => params[:q],:author => params[:author]) %>
+		<% links[n] = search_path(:blogname=>n,:posted => params[:posted], :q => params[:q],:author => params[:author], :series => params[:series]) %>
 	<% end %>
-	<%= select_tag "author", options_for_select(links.keys.each_with_index.map {|name, index| [name,links[name]]}), :class=>"span2",:onChange=>"window.document.location.href=this.options[this.selectedIndex].value;", :prompt => 'Select Blog'%>
+	<%= select_tag "blogname", options_for_select(links.keys.each_with_index.map {|name, index| [name,links[name]]}), :class=>"span2",:onChange=>"window.document.location.href=this.options[this.selectedIndex].value;", :prompt => 'Select Blog'%>
 
 <% end %>
