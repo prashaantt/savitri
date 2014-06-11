@@ -1,0 +1,16 @@
+<% if  params[:series].blank? %>
+<h5 class="left-filter">Series</h5>
+<% rows = Array.new %>
+  <ul class="facet">
+  <% for row in @search.facet(:series).rows.each do%>
+    <% rows << row.value %>
+  <% end %>
+  <% rows.sort! %>
+  </ul>
+  <% links = Hash.new %>
+  <% for n in rows.each %>
+    <% links[n] = search_path(:posted => params[:posted], :q => params[:q], :series => n, :author => params[:author], :blogname => params[:blogname]) %>
+  <% end %>
+  <%= select_tag "series", options_for_select(links.keys.each_with_index.map {|name, index| [name,links[name]]}), :class=>"span2",:onChange=>"window.document.location.href=this.options[this.selectedIndex].value;", :prompt => 'Select series'%>
+
+<% end %>
