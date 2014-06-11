@@ -73,15 +73,7 @@
             </li>
 
           </li>
-          <li class="dropdown" id="pages"><a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Archives
-            <i class="icon-caret-down"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <% User.cached_find(1).cached_blogs.each do |b| %>
-            <li><%= link_to b.title, archives_path(b) %></li>
-            <% end %>
-          </ul>
-        </li>
+          <li class=""><a href="/archives">Archives</a></li>
           <% @pages = Page.cached_menu %>
           <% unless @pages.count > 1 %>
           <li><%= link_to @pages.first.cached_name, page_path(@pages.first) %></li>

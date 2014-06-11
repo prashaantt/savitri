@@ -3912,7 +3912,8 @@ Page.create!([
   {name: "Library", permalink: "library", priority: 1, category: "Menu", content: "<p>Library</p>", md_content: "Library", parent: nil, url: "library"},
   {name: "Presentations", permalink: "presentations", priority: 2, category: "Menu", content: "<p>Presentations</p>", md_content: "Presentations", parent: nil, url: "presentations"},
   {name: "Audio", permalink: "audio", priority: 3, category: "Menu", content: "<p>Audio</p>", md_content: "Audio", parent: nil, url: "audio"},
-  {name: "Themes", permalink: "themes", priority: 4, category: "Menu", content: "<p>Themes</p>", md_content: "Themes", parent: nil, url: "themes"}
+  {name: "Themes", permalink: "themes", priority: 4, category: "Menu", content: "<p>Themes</p>", md_content: "Themes", parent: nil, url: "themes"},
+  {name: "Archives", permalink: "archives", priority: nil, category: "Non-Menu", content: "<p><a href=\"/blogs/light-of-supreme/archives\">The light of supreme</a></p>\r\n\r\n<p><a href=\"/blogs/parasya-jyotih/archives\">परस्य ज्योतिः</a></p>", md_content: "[The light of supreme][1]\r\n\r\n\r\n[परस्य ज्योतिः][2]\r\n\r\n\r\n  [1]: /blogs/light-of-supreme/archives\r\n  [2]: /blogs/parasya-jyotih/archives", parent: nil, url: "archives"}
 ])
 
 Role.create!([
