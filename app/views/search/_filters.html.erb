@@ -4,15 +4,18 @@
     <ul>
       <li>
         <% if params[:q].to_s.include?("in:") %>
-          <% unless @keywords.blank? %>
-            <% keywords = @keywords.split(" ") %>
+          <% keywords = params[:q].strip %>
+          <% keywords.slice! @condition %>
+          <% keywords.strip %>
+          <% unless keywords.blank? %>
+            <% keywords = keywords.split(" ") %>
             <% keywords.each do |keyword| %>
               <% excludes = keywords.reject{|key| key == keyword}.join(' ') %>
               <span class="label"><a href="<%= search_path(:utf8 => params[:utf8], :q => excludes << " " + @condition) %>"><i class="icon-remove"></i></a><%= keyword %></span>
               <br>
             <% end %>
           <% end %>
-          <span class="label"><a href="<%= search_path(:utf8 => params[:utf8], :q => @keywords) %>"><i class="icon-remove"></i></a><%= @condition %></span>
+          <span class="label"><a href="<%= search_path(:utf8 => params[:utf8], :q => keywords.join(' ')) %>"><i class="icon-remove"></i></a><%= @condition %></span>
           <br>
         <% else %>
           <% keywords = params[:q].to_s.split(" ") %>
