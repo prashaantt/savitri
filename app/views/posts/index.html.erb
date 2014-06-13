@@ -98,7 +98,8 @@
               <%= link_to 'Edit', edit_blog_post_path(post.cached_blog,post), :class => 'btn btn-mini btn-warning' %>
             <% end %>
           </span>
-          <h5 class="blog-author">by <%= link_to (post.cached_author.name.blank? ? post.cached_author.username : post.cached_author.name), post.cached_author, {:class => "underline"} %> on <%= post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize post.cached_comments_count, "comment") , blog_post_path(post.cached_blog, post) + "#comments", {:class => "underline"} %></h5>
+          <% author = post.get_abstracted_author %>
+          <h5 class="blog-author">by <%= link_to (author.name.blank? ? author.username : author.name), author, {:class => "underline"} %> on <%= post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize post.cached_comments_count, "comment") , blog_post_path(post.cached_blog, post) + "#comments", {:class => "underline"} %></h5>
           <% unless post.cached_excerpt.blank? %>
             <p><%= post.cached_excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
             <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>

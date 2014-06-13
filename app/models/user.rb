@@ -41,6 +41,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def give_jr_editor_access
+    change_role("Junior Editor")
+  end
+
+  def give_blogger_access
+    change_role("Blogger")
+  end
+
   def follow_admin
     follow(User.find(1))
   end
@@ -76,6 +84,11 @@ class User < ActiveRecord::Base
   def admin?
     role = role?(self)
     role == 'Admin' || role == 'Scholar'
+  end
+
+  def change_role(role_name)
+    self.role_id = Role.find_by_name(role_name).id
+    self.save  
   end
 
   def self.cached_find(id)
