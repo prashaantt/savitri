@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   has_many :media
   belongs_to :roles
 
+  acts_as_paranoid
+
   validates :username, presence: true, length: { minimum: 2 }
 
   validates :email, presence: true

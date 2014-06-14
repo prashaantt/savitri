@@ -7,6 +7,8 @@ class Comment < ActiveRecord::Base
   attr_accessible :body, :user_id, :post_id
   after_commit :flush_cache
 
+  acts_as_paranoid
+
   validates :body, presence: true
 
   def cached_body

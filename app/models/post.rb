@@ -7,7 +7,10 @@ class Post < ActiveRecord::Base
                  :series_title, :subtitle, :show_excerpt, :tag_tokens,
                  :draft, :author_id, :featured
                  )
+  
   acts_as_taggable
+  acts_as_paranoid
+
   acts_as_url :title, scope: :blog_id
 
   belongs_to :blog
@@ -18,6 +21,7 @@ class Post < ActiveRecord::Base
 
   before_save :trim
   after_commit :flush_cache
+  after_restore :flush_cache
   after_commit :setup_notifications, if: :persisted?
 
   scope :published, proc {

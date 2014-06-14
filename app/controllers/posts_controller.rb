@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
-    @blogposts= Post.published.where(:blog_id=>blog_id.id).order("posts.published_at DESC")
+    @blogposts = Post.published.where(:blog_id=>blog_id.id).order("posts.published_at DESC")
     if params[:tag]
       @tagposts = @blogposts.tagged_with(params[:tag])
       @posts    = @tagposts.page(params[:page]).per(10)
