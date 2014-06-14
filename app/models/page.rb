@@ -11,6 +11,8 @@ class Page < ActiveRecord::Base
   after_commit :flush_cache
   before_validation :permalink_update
 
+  acts_as_paranoid
+
   searchable do
     text :content, stored: :true, more_like_this: true
     text :name, stored: :true, more_like_this: true
