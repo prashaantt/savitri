@@ -14,8 +14,10 @@
               <span class="label"><a href="<%= search_path(:utf8 => params[:utf8], :q => excludes << " " + @condition) %>"><i class="icon-remove"></i></a><%= keyword %></span>
               <br>
             <% end %>
+            <span class="label"><a href="<%= search_path(:utf8 => params[:utf8], :q => keywords.join(' ')) %>"><i class="icon-remove"></i></a><%= @condition %></span>
+          <% else %>
+             <span class="label"><a href="<%= search_path(:utf8 => params[:utf8], :q => keywords) %>"><i class="icon-remove"></i></a><%= @condition %></span>
           <% end %>
-          <span class="label"><a href="<%= search_path(:utf8 => params[:utf8], :q => keywords.join(' ')) %>"><i class="icon-remove"></i></a><%= @condition %></span>
           <br>
         <% else %>
           <% keywords = params[:q].to_s.split(" ") %>
