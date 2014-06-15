@@ -19,6 +19,30 @@
   font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
 }
 
+.right-col {
+  border:none;
+}
+
+.datepicker {
+  margin-left: 6%;
+  border: 1px solid #dddddd;
+  background-color: #FFFFF0;
+  padding-top: 1%;
+}
+
+.center-col {
+  padding: 2%;
+  background-color: #FFFFF0 !important; // ivory
+}
+
+.ui-datepicker-title {
+  margin-right: 2%;
+}
+
+.post-subtitle {
+  padding-bottom: 10px;
+}
+
 .blog-subtitle {
   @extend .italics;
   #color: #999;
