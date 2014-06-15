@@ -1,6 +1,6 @@
 <div class="row">
   <h2 class='text-center'>Archives</h2>
-  <div class='span6 offset3 right-sidebar'>
+  <div class='span9 right-sidebar'>
     <% unless @blogposts.length == 0 %>
     <ol style="margin-left:0px;">
       <% post_years = @blogposts.group_by { |t| t.published_at.beginning_of_year }.sort.reverse %>
