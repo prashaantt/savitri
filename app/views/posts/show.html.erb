@@ -125,7 +125,7 @@
       <!-- Main Blog Content End -->
       <!--  SideBar Begin -->
       <td class="span3 visible-desktop right-col pull-right">
-        <% tag_counts = @post.tag_counts.reject{|tag| tag.name.start_with?("@")} %>
+        <!-- <% tag_counts = @post.tag_counts.reject{|tag| tag.name.start_with?("@")} %>
         <% if tag_counts.length > 0 %>
         <div class="right-sidebar" id="tag_cloud">
           <label for="related-tag" class="sidebar-title"><span class="label">Tags</span></label>
@@ -145,7 +145,7 @@
             </li>
           </ol>
         </div>
-        <% end %>
+        <% end %> -->
         <!-- Begin Related Content -->
         <% if @related_posts.present? && @related_posts.count > 0 %>
           <div class="right-sidebar" id="related_posts">
