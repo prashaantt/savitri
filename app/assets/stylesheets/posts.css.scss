@@ -7,7 +7,7 @@
 }
 
 .italics {
-  font-family: "minion-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "georgia", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
   text-decoration: none;
@@ -21,6 +21,10 @@
 
 .right-col {
   border:none;
+}
+
+.ui-datepicker-calendar {
+  font-size: 80%;
 }
 
 .datepicker {
@@ -50,7 +54,7 @@
 }
 
 .post-series {
-  font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: italic;
   font-weight: 300;
   color: #999999;
@@ -210,7 +214,7 @@ table.table.table-condensed {
 }
 
 .ltag{
-    font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 300;
     font-style: normal;
     list-style: none;
@@ -346,7 +350,7 @@ iframe {
 }
 
 .sidebar-links {
-  font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   font-style: normal;
 }
