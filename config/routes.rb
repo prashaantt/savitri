@@ -76,6 +76,9 @@ Savitri::Application.routes.draw do
   get 'blogs/:blog_id/archives' , to: 'posts#archives', as: :archives
   get 'media/:medium_id/feed', to: 'audios#index', format: false, defaults: { format: :rss }
   get 'blogs/:blog_id/posts/:post_id/update_featured_status', to: 'posts#update_featured_status', as: :update_featured_status
+  get "blogs/:blog_id/:year" => "posts#index", :constraints => { :year => /\d{4}/ }, as: :filter_year
+  get "blogs/:blog_id/:year/:month" => "posts#index", :constraints => { :year => /\d{4}/, :month => /\d{2}/ }, as: :filter_month
+  get "blogs/:blog_id/:year/:month/:day" => "posts#index", :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/ }, as: :filter_day
   resources :books
 
   resources :sections
