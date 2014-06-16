@@ -7,6 +7,8 @@ Savitri::Application.routes.draw do
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
     resources :rewrites
+    match 'dashboard/' => 'dashboard#index'
+    resources :tasks
   end
 
   resources :audios
