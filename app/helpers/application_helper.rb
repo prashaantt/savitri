@@ -62,6 +62,8 @@ module ApplicationHelper
         link_to "Cancel", blog_posts_path, :class => 'btn'
       elsif "Page" == type
         link_to "Cancel", pages_path, :class => 'btn'
+      elsif "Task" == type
+        link_to "Cancel", tasks_path, :class => 'btn'
       end
     end
   end
