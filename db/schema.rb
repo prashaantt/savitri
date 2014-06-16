@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140411080533) do
+ActiveRecord::Schema.define(:version => 20140616122006) do
 
   create_table "audios", :force => true do |t|
     t.integer  "medium_id"
@@ -63,8 +63,11 @@ ActiveRecord::Schema.define(:version => 20140411080533) do
     t.text     "body",       :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "body_html"
+    t.datetime "deleted_at"
   end
 
+  add_index "comments", ["deleted_at"], :name => "index_comments_on_deleted_at"
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
 
   create_table "follows", :force => true do |t|
@@ -99,9 +102,9 @@ ActiveRecord::Schema.define(:version => 20140411080533) do
     t.string   "explicit"
     t.string   "block"
     t.string   "complete"
-    t.string   "url"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.string   "url",        :limit => nil
   end
 
   create_table "notebooks", :force => true do |t|
@@ -131,17 +134,18 @@ ActiveRecord::Schema.define(:version => 20140411080533) do
     t.datetime "updated_at", :null => false
     t.integer  "parent"
     t.string   "url"
+    t.datetime "deleted_at"
   end
 
-  add_index "pages", ["permalink"], :name => "index_pages_on_permalink"
+  add_index "pages", ["deleted_at"], :name => "index_pages_on_deleted_at"
 
   create_table "posts", :force => true do |t|
     t.integer  "blog_id"
     t.string   "title",                           :null => false
     t.text     "content"
-    t.text     "md_content"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
+    t.text     "md_content"
     t.text     "excerpt"
     t.string   "url"
     t.datetime "published_at"
@@ -151,6 +155,32 @@ ActiveRecord::Schema.define(:version => 20140411080533) do
     t.string   "show_excerpt"
     t.integer  "author_id"
     t.boolean  "featured",     :default => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "posts", ["deleted_at"], :name => "index_posts_on_deleted_at"
+
+  create_table "redirect_rules", :force => true do |t|
+    t.string   "source",                                      :null => false
+    t.boolean  "source_is_regex",          :default => false, :null => false
+    t.boolean  "source_is_case_sensitive", :default => false, :null => false
+    t.string   "destination",                                 :null => false
+    t.boolean  "active",                   :default => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+  end
+
+  add_index "redirect_rules", ["active"], :name => "index_redirect_rules_on_active"
+  add_index "redirect_rules", ["source"], :name => "index_redirect_rules_on_source"
+  add_index "redirect_rules", ["source_is_case_sensitive"], :name => "index_redirect_rules_on_source_is_case_sensitive"
+  add_index "redirect_rules", ["source_is_regex"], :name => "index_redirect_rules_on_source_is_regex"
+
+  create_table "rewrites", :force => true do |t|
+    t.text     "source"
+    t.text     "destination"
+    t.integer  "code"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "roles", :force => true do |t|
@@ -193,6 +223,18 @@ ActiveRecord::Schema.define(:version => 20140411080533) do
     t.string "name"
   end
 
+  create_table "tasks", :force => true do |t|
+    t.string   "task"
+    t.string   "proposedby"
+    t.text     "desc"
+    t.date     "sdate"
+    t.date     "edate"
+    t.date     "pdate"
+    t.string   "person"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "uploads", :force => true do |t|
     t.integer  "post_id"
     t.string   "photo"
@@ -228,9 +270,11 @@ ActiveRecord::Schema.define(:version => 20140411080533) do
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.datetime "deleted_at"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
+  add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token", :unique => true
   add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"
