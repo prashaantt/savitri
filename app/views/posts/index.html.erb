@@ -108,7 +108,7 @@
                 <% author = post.get_abstracted_author %>
                 <h5><span class="blog-author">by <%= link_to (author.name.blank? ? author.username : author.name), author, {:class => "underline"} %> on <%= post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %></span></h5>
                 <% unless post.cached_excerpt.blank? %>
-                  <p><%= post.cached_excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
+                  <p class='excerpt'><%= post.cached_excerpt.html_safe %></p>
                   <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
                 <% else %>
                   <% post_content = post.cached_content.gsub(/\r\n?/, "") %>
