@@ -120,6 +120,8 @@ $(window).resize(function() {
   return setSpan($(window).width());
 });
 
+converter = new Markdown.Converter();
+
 
 /*WebFontConfig = {
   google: {

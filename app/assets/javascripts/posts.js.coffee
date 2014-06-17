@@ -3,6 +3,10 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 #seconds
 $ ->
+  $(".excerpt").each ->
+    $(this).html converter.makeHtml($(this).text())
+
+$ ->
   $('.datepicker').datepicker
     inline: true
     startDate: '01/01/2000'
