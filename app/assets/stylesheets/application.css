@@ -13,6 +13,10 @@
  *= require_fonts
  */
 
+ .h6 {
+  font-size: 12px !important;
+ }
+
 .removeicon {
   margin-left: -55px;
   position: absolute;
