@@ -16,96 +16,94 @@
 </div>
 <!-- Main Blog Content -->
 <div class="row">
-  <table border="0" cellpadding="0" cellspacing="0" class="columns" width="100%">
 
-    <nav id="paginator" class="span9">
-      <ul class="pager">
-        <span>Showing <%= @blogposts.count.zero? ? '0' : (((@posts.current_page - 1) * @per_page) + 1 ) %> - <%= @posts.last_page? ? @blogposts.count : @posts.current_page * @per_page %> of <%= @blogposts.count %> posts</span>
-        <li class="previous">
-          <%= link_to_previous_page @posts, "‹ Previous #{@per_page} Posts" %>
-        </li>
-        <li class="next">
-          <%= link_to_next_page @posts, "Next #{@per_page} Posts ›" %>
-        </li>
-    </nav>
+  <nav id="paginator" class="span9">
+    <ul class="pager">
+      <span>Showing <%= @blogposts.count.zero? ? '0' : (((@posts.current_page - 1) * @per_page) + 1 ) %> - <%= @posts.last_page? ? @blogposts.count : @posts.current_page * @per_page %> of <%= @blogposts.count %> posts</span>
+      <li class="previous">
+        <%= link_to_previous_page @posts, "‹ Previous #{@per_page} Posts" %>
+      </li>
+      <li class="next">
+        <%= link_to_next_page @posts, "Next #{@per_page} Posts ›" %>
+      </li>
+    </ul>
+  </nav>
 
-    <tr>
-      <td class="dynamicspan span10 center-col">
-        <% unless @posts.empty? %>
-          <% @posts.each do |post| %>
-            <section class="snippet">
-              <h4 class="post-series visible-desktop"><%= post.cached_series_title %></h4>
-              <h4 class="post-series hidden-desktop"><%= post.cached_series_title %></h4>
-              <h2>
-                <%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
-                <% if current_user.nil? || !current_user.admin? %>
-                  <% if post.featured? %>
-                    <i class="icon-star pull-right"></i>
-                  <% end %>
-                <% else %>
-                <%= link_to '', update_featured_status_path(post.cached_blog,post), id: post.url, :class => toggle_class(post), remote: true %>
+  <div class="dynamicspan span9 center-col">
+    <div class="dayArticles">
+      <% unless @posts.empty? %>
+        <% @posts.each do |post| %>
+          <section class="snippet">
+            <h4 class="post-series visible-desktop"><%= post.cached_series_title %></h4>
+            <h4 class="post-series hidden-desktop"><%= post.cached_series_title %></h4>
+            <h2>
+              <%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
+              <% if current_user.nil? || !current_user.admin? %>
+                <% if post.featured? %>
+                  <i class="icon-star pull-right"></i>
                 <% end %>
-              </h2>
-              <div>
-                <span class="pull-right">
-                  <% if can? :update, post %>
-                    <%= link_to 'Edit', edit_blog_post_path(post.cached_blog,post), :class => 'btn btn-mini btn-warning' %>
-                  <% end %>
-                </span>
-                <h5><span class="label">Scheduled</span><span class="blog-author"> by <%= link_to post.cached_author.username, post.cached_author, {:class => "underline"} %>  for <%= post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %></span></h5>
-                <% unless post.cached_excerpt.blank? %>
-                  <p class='excerpt'><%= post.cached_excerpt.html_safe %></p>
+              <% else %>
+              <%= link_to '', update_featured_status_path(post.cached_blog,post), id: post.url, :class => toggle_class(post), remote: true %>
+              <% end %>
+            </h2>
+            <div>
+              <span class="pull-right">
+                <% if can? :update, post %>
+                  <%= link_to 'Edit', edit_blog_post_path(post.cached_blog,post), :class => 'btn btn-mini btn-warning' %>
+                <% end %>
+              </span>
+              <h5><span class="label">Scheduled</span><span class="blog-author"><%= link_to post.cached_author.username, post.cached_author, {:class => "underline"} %>  for <%= post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %></span></h5>
+              <% unless post.cached_excerpt.blank? %>
+                <p><%= post.cached_excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
+                <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
+              <% else %>
+                <% post_content = post.cached_content.gsub(/\r\n?/, "") %>
+                <% stripped_content = strip_tags(post.cached_content) %>
+                <% if stripped_content.split(" ").length > 200 %>
+                  <%= post_content.split(" ").first(200).join(" ").html_safe %>...
                   <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
                 <% else %>
-                  <% post_content = post.cached_content.gsub(/\r\n?/, "") %>
-                  <% stripped_content = strip_tags(post.cached_content) %>
-                  <% if stripped_content.split(" ").length > 200 %>
-                    <%= post_content.split(" ").first(200).join(" ").html_safe %>...
-                    <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
-                  <% else %>
-                    <%= post_content.split(" ").first(200).join(" ").html_safe %>
-                  <% end %>
+                  <%= post_content.split(" ").first(200).join(" ").html_safe %>
                 <% end %>
-              </div>
-            </section>
-          <% end %>
-        <% else %>
-          <p style="text-align: center; font-size: 1.5em; padding-top: 100px" class="muted"><em>You have no scheduled posts. <a href="<%= new_blog_post_path %>" class="underline">Create one?</a></em></p>
+              <% end %>
+            </div>
+          </section>
         <% end %>
-      </td>
+      <% else %>
+        <p style="text-align: center; font-size: 1.5em; padding-top: 100px" class="muted"><em>You have no scheduled posts. <a href="<%= new_blog_post_path %>" class="underline">Create one?</a></em></p>
+      <% end %>
+    </div>
+  </div>
     <!-- Main Blog Content End -->
     <!--  SideBar Begin -->
-      <td class="right-col pull-right span3 visible-desktop">
-        <% unless @noscheduled %>
-          <% if can? :update, @blog %>
-            <div class="right-sidebar">
-              <div class="btn-grp sidebar-title">
-                <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-
-        <!-- Begin Latest posts -->
-        <div class="archives right-sidebar" id="recent_posts">
-            <label for="recentposts" class="sidebar-title"><span class="label">Recent posts</span></label>
-            <input class="rcin" type="checkbox" id="recentposts" />
-            <ol id="rpos"></ol>
+  <div class="right-col pull-right span3 visible-desktop">
+    <% unless @noscheduled %>
+      <% if can? :update, @blog %>
+        <div class="right-sidebar">
+          <div class="btn-grp sidebar-title">
+            <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
           </div>
         </div>
+      <% end %>
+    <% end %>
 
-        <!-- Begin Latest comments -->
-        <div class="archives right-sidebar" id="recent_comments">
-          <label for="recentcomments" class="sidebar-title"><span class="label">Recent comments</span></label>
-          <input class="rcin" type="checkbox" id="recentcomments" />
-          <ol id="rcom"></ol>
-        </div>
+    <!-- Begin Latest posts -->
+    <div class="archives right-sidebar" id="recent_posts">
+      <label for="recentposts" class="sidebar-title"><span class="label">Recent posts</span></label>
+      <input class="rcin" type="checkbox" id="recentposts" />
+      <ol id="rpos"></ol>
+    </div>
 
-        <div class="visible-desktop datepicker right-sidebar pull">
-        </div>
-      </td>
-    </tr>
-  </table>
+    <!-- Begin Latest comments -->
+    <div class="archives right-sidebar" id="recent_comments">
+      <label for="recentcomments" class="sidebar-title"><span class="label">Recent comments</span></label>
+      <input class="rcin" type="checkbox" id="recentcomments" />
+      <ol id="rcom"></ol>
+    </div>
+
+    <div class="visible-desktop datepicker right-sidebar">
+    </div>
+  </div>
 
   <nav id="paginator" class="span9">
     <ul class="pager">
