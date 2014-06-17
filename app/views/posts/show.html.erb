@@ -76,13 +76,12 @@
       </div>
       <div class="main-content post-content">
         <% if @post.cached_show_excerpt === "prefix" %>
-          <p>Savitri has returned <br/><%= @post.cached_excerpt %></p>
+          <p class='excerpt'><%= @post.cached_excerpt %></p>
         <% end %>
         <%= @post.cached_content.html_safe.gsub(/\r\n?/,"").html_safe %>
         <% if @post.cached_show_excerpt === "suffix" %>
-          <p><%= @post.cached_excerpt %></p>
+          <p class='excerpt'><%= @post.cached_excerpt %></p>
         <% end %>
-<<<<<<< HEAD
       </div>
       <% if @post.updated_at > @post.published_at + 20 %>
       <p class="author muted h6" style="padding-top: 20px">
@@ -133,43 +132,6 @@
           <% tag_cloud tag_counts, %w[m] do |tag, css_class| %>
             <%= link_to tag_path(params[:blog_id], tag.name) do %>
               <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
-=======
-      </td>
-      <!-- Main Blog Content End -->
-      <!--  SideBar Begin -->
-      <td class="span3 visible-desktop right-col pull-right">
-        <!-- <% tag_counts = @post.tag_counts.reject{|tag| tag.name.start_with?("@")} %>
-        <% if tag_counts.length > 0 %>
-        <div class="right-sidebar" id="tag_cloud">
-          <label for="related-tag" class="sidebar-title"><span class="label">Tags</span></label>
-          <input class="arcin" type="checkbox" id="related-tag" /> 
-          <ol>
-            <% count = 0 %>
-            <li class="listi">
-              <% tag_cloud tag_counts, %w[m] do |tag, css_class| %>
-                <%= link_to tag_path(params[:blog_id], tag.name) do %>
-                  <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
-                <% end %>
-                <% unless count == tag_counts.length - 1 %>
-                  <span class="tag-sep">&bull;</span>
-                <% end %>
-                <% count += 1 %>
-              <% end %>
-            </li>
-          </ol>
-        </div>
-        <% end %> -->
-        <!-- Begin Related Content -->
-        <% if @related_posts.present? && @related_posts.count > 0 %>
-          <div class="right-sidebar" id="related_posts">
-            <label for="relatedposts" class="sidebar-title"><span class="label">Related Content</span></label>
-            <input class="rcin" type="checkbox" id="relatedposts" />
-            <ol id="rpos">
-            <% @related_posts.each do |rpost| %>
-              <li class="content-indent">
-                <%= link_to rpost.title, blog_post_path(rpost.blog, rpost) %>
-              </li>
->>>>>>> master
             <% end %>
             <% unless count == tag_counts.length - 1 %>
               <span class="tag-sep">&bull;</span>
