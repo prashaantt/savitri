@@ -77,21 +77,19 @@ $(function(){
 setSpan = function(window_width) {
   if (window_width >= 1200) {
     $("#read").removeClass().addClass("span6").addClass("offset1");
-    $(".comments_textarea").removeClass('span9').addClass('span9');
-    $(".dynamicspan").removeClass('dynamicspan span10 span6').addClass("dynamicspan span10");
+    $(".dynamicspan").removeClass('dynamicspan span10 span6').addClass("dynamicspan span9");
     $(".dynaudiospan").removeClass().addClass("dynaudiospan span6");
   } else if (window_width >= 965 && window_width < 1200) {
     $("#read").removeClass().addClass("span6").addClass("offset3");
-    $(".dynamicspan").removeClass('dynamicspan span10 span6').addClass("dynamicspan span10");
+    $(".dynamicspan").removeClass('dynamicspan span10 span6').addClass("dynamicspan span9");
     $(".dynaudiospan").removeClass().addClass("dynaudiospan span6");
   } else if (window_width > 752 && window_width < 965) {
     $("#read").removeClass().addClass("span10").addClass("offset1");
-    $(".comments_textarea").removeClass('span9').addClass('span12');
-    $(".dynamicspan").removeClass('dynamicspan span10 span6').addClass("dynamicspan span10 offset1");
+    $(".dynamicspan").removeClass('dynamicspan span10 span6').addClass("dynamicspan span9 offset1");
     $(".dynaudiospan").removeClass().addClass("dynaudiospan span10");
   } else {
     $("#read").removeClass().addClass("span6");
-    $(".dynamicspan").removeClass('dynamicspan span10 span6').addClass("dynamicspan span10");
+    $(".dynamicspan").removeClass('dynamicspan span10 span6').addClass("dynamicspan span9");
     $(".dynaudiospan").removeClass().addClass("dynaudiospan span6");
   }
 

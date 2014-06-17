@@ -7,7 +7,7 @@
 }
 
 .italics {
-  font-family: "minion-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: italic;
   font-weight: normal;
   text-decoration: none;
@@ -19,8 +19,26 @@
   font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
 }
 
+.ui-datepicker-month, .ui-datepicker-year {
+  margin-left: 3%
+}
+
+.ui-datepicker-next {
+  float: right;
+}
+
+.archives-menu {
+  border: 1px solid #dddddd;
+  padding: 2% 6% 1% 6%;
+  margin-top: 2%;
+}
+
 .right-col {
   border:none;
+}
+
+.ui-datepicker-calendar {
+  font-size: 80%;
 }
 
 .datepicker {
@@ -31,16 +49,7 @@
 }
 
 .center-col {
-  padding: 2%;
   background-color: #FFFFF0 !important; // ivory
-}
-
-.ui-datepicker-title {
-  margin-right: 2%;
-}
-
-.post-subtitle {
-  padding-bottom: 10px;
 }
 
 .blog-subtitle {
@@ -50,7 +59,7 @@
 }
 
 .post-series {
-  font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: italic;
   font-weight: 300;
   color: #999999;
@@ -66,6 +75,13 @@
 .main-content > audio,
 .main-content > img {
   margin-bottom: 15px !important;
+  text-align: justify;
+}
+
+.post-content {
+  padding-top: 1%;
+  border-top : 1px solid gray;
+  border-bottom: 1px solid gray;
 }
 
 .main-content a {
@@ -79,17 +95,16 @@
 }
 
 .main-content hr {
-  max-width: 190px;
+  // max-width: 190px;
   margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
   border: none;
-  border-top: 4px double #ccc;
+  border-top: 2px solid #ccc;
 }
 
 .author {
   @extend .italics;
-  font-size: 120%;
   #color: #999999;
   color: #9B928B;
 }
@@ -115,9 +130,14 @@
   text-decoration: none;
 }
 
-article {
-  padding-bottom: 20px;
+article, .dayArticles {
+  padding: 2% 6% 1% 6%;
+  border: 1px solid #dddddd;
   border-bottom: 2px dotted #ddd;
+}
+
+.article-post {
+  border-bottom :none;
 }
 
 .snippet {
@@ -138,11 +158,13 @@ article {
 }
 
 .comments {
-  padding-top: 40px;
+  padding: 0% 6% 1% 6%;
+  border: 1px solid #dddddd;
+  border-top: none;
 }
 
 .comment {
-  padding: 19px 0px 20px;
+  padding: 10px 0px 10px;
   border-top: 1px solid #eee;
 }
 
@@ -210,7 +232,7 @@ table.table.table-condensed {
 }
 
 .ltag{
-    font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 300;
     font-style: normal;
     list-style: none;
@@ -346,7 +368,7 @@ iframe {
 }
 
 .sidebar-links {
-  font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   font-style: normal;
 }

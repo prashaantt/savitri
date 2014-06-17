@@ -11,7 +11,7 @@ $ ->
     changeMonth: true
     changeYear: true
     onSelect: (date) ->
-      current_url = window.location.href.replace(/\/\d{4}\/\d{2}\/\d{2}$/, '').replace('/posts', '')
+      current_url = window.location.href.replace(/\/\d{4}\/\d{2}\/\d{2}$/, '').replace(/\/(scheduled-)?posts.*$/, '')
       split_date = date.split('/')
       new_url = current_url + '/' + split_date[2] + '/' + split_date[0] + '/' + split_date[1]
       window.location.href = new_url
@@ -46,6 +46,12 @@ $ ->
   $(document).on 'click', '.ui-datepicker-prev, .ui-datepicker-next', ->
     $('.ui-datepicker-prev').addClass('pull-left')
 
+$ ->
+  if $('li.previous').text().trim() == ""
+    $('#paginator span').addClass('offset1')
+
+  if $('li.next').text().trim() == ""
+    $('#paginator').removeClass('span9').addClass('span8')
 
 $ ->
   $(".new_post,.edit_post").submit ->
