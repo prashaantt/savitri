@@ -6,6 +6,10 @@
   text-align: center;
 }
 
+.quotable blockquote{
+  border-bottom: 1px dotted gray;
+}
+
 .italics {
   font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: italic;
@@ -49,7 +53,7 @@
 
 .center-col {
   background-color: #FFFFF0 !important; // ivory
-  padding-bottom: 20%;
+  padding-bottom: 20px;
 }
 
 .blog-subtitle {
@@ -132,11 +136,12 @@
 
 article, .dayArticles {
   padding: 2% 6% 1% 6%;
-  border: 1px solid #dddddd;
+  padding-bottom: 20px;  
   border-bottom: 2px dotted #ddd;
 }
 
 .article-post {
+  border: 1px solid #dddddd;
   border-bottom :none;
 }
 
