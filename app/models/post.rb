@@ -27,6 +27,15 @@ class Post < ActiveRecord::Base
   scope :published, proc {
     where(draft: false)
   }
+  scope :by_year, ->(year) {
+     where('extract(year from published_at) = ?', year)
+   }
+   scope :by_month, ->(month) {
+     where('extract(month from published_at) = ?', month)
+   }
+   scope :by_day, ->(day) {
+     where('extract(day from published_at) = ?', day)
+   }
 
   validate :max_featured, if: :featured_changed?
 
@@ -36,6 +45,15 @@ class Post < ActiveRecord::Base
   def max_featured
     if featured == true && Post.where(featured: true).count == 5
       errors.add(:featured, 'Already 5 posts are featured.')
+    end
+  end
+
+  # Return author after comparison of roles
+  def get_abstracted_author
+    if user.role == 'Senior Editor'
+      User.cached_find(1)
+    else
+      self.cached_author
     end
   end
 
@@ -243,5 +261,15 @@ class Post < ActiveRecord::Base
 
   def setup_notifications
     EmailWorker.perform_at(published_at, author_id, id) if self.draft?
+  end
+
+  def self.filter(blog_id, params)
+    if params['year'].present?
+      blogposts = Post.published.where(blog_id: blog_id)
+      .by_year(params['year'])
+    end
+    blogposts = blogposts.by_month(params['month']) if params['month'].present?
+    blogposts = blogposts.by_day(params['day']) if params['day'].present?
+    blogposts
   end
 end

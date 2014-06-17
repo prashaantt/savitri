@@ -3920,7 +3920,8 @@ Role.create!([
   {name: "Admin"},
   {name: "Scholar"},
   {name: "Blogger"},
-  {name: "User"}
+  {name: "User"},
+  {name: "Junior Editor"},
 ])
 
 #Moved to End

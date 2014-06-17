@@ -3,6 +3,61 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 #seconds
 $ ->
+  $(".excerpt").each ->
+    $(this).html converter.makeHtml($(this).text())
+
+$ ->
+  $('.datepicker').datepicker
+    inline: true
+    startDate: '01/01/2000'
+    maxDate: new Date()
+    firstDay: 1
+    changeMonth: true
+    changeYear: true
+    onSelect: (date) ->
+      current_url = window.location.href.replace(/\/\d{4}\/\d{2}\/\d{2}$/, '').replace(/\/(archives)|((scheduled-)?posts.*)$/, '')
+      split_date = date.split('/')
+      new_url = current_url + '/' + split_date[2] + '/' + split_date[0] + '/' + split_date[1]
+      window.location.href = new_url
+      return
+
+# onPage load, we need to highlight the selected date. If no particular date exists in the url, highlight todays date
+# If it exists, parse it and navigate to that date on the calendar and highlight
+$ ->
+  if window.location.href.match(/\/\d{4}\/\d{2}\/\d{2}$/) isnt null
+    date = window.location.href.match(/\/\d{4}\/\d{2}\/\d{2}$/)[0]
+    date_split = date.split('/')
+    $("select[data-handler='selectYear']").val(date_split[1]).trigger('change')
+    $("select[data-handler='selectMonth']").val(date_split[2] - 1).trigger('change')
+    if date_split[2][0] is "0"
+      date_split[2] = date_split[2].slice(-1)
+
+    $('*[data-year="' + date_split[1] + '"][data-month="' + (date_split[2] - 1) + '"] a').filter(->
+      ('0' + ($(this).text())).slice(-2) == date_split[3]
+    ).parent().css('background-color', '#f5efdc')   
+
+  else
+    # Max date is current date, rest all disabled. So we traverse disabled boxes. Traversal happens in order of tr,
+    # so its faster to check Check for sibling of the disabled boxes ( previous sibling in this case)
+    today = new Date().getDate().toString()
+    $('.ui-datepicker-calendar .ui-state-disabled').filter ->
+      if $(this).prev().text() == today
+        $(this).prev().css('background-color', '#f5efdc')
+
+# Align the prev link to the left, listen for clicks and keep aligning to the left on clicks to next/prev
+$ ->
+  $('.ui-datepicker-prev').addClass('pull-left')
+  $(document).on 'click', '.ui-datepicker-prev, .ui-datepicker-next', ->
+    $('.ui-datepicker-prev').addClass('pull-left')
+
+$ ->
+  if $('li.previous').text().trim() == ""
+    $('#paginator span').addClass('offset1')
+
+  if $('li.next').text().trim() == ""
+    $('#paginator').removeClass('span9').addClass('span8')
+
+$ ->
   $(".new_post,.edit_post").submit ->
     text = $("#wmd-input").val()
     md_text = $("#post_content").text()

@@ -33,108 +33,112 @@
   <% pagetitle += " | Page " + params[:page] %>
 <% end %>
 <% title pagetitle %>
-<div itemscope itemtype="http://schema.org/Article" class="row">
-  <div class="dynamicspan span6 offset3">
+
+<div class="row">
+  <div class="span10">
     <div class="page-header title">
-      <h1 itemprop="name"><%= link_to @blog.cached_title, blog_posts_path %></h1>
-      <% if tag_type === "none" %>
-        <h3 class="blog-subtitle"><%= @blog.cached_subtitle %></h3>
-      <% elsif tag_type == "series" %>
-        <% unless @posts.empty? %>
-          <h3 class="blog-subtitle">Serialised in “<%= @posts[0].series_title %>”</h3>
-        <% end %>
-      <% else %>
-        <h3 class="blog-subtitle">Filed in “<%= params[:tag] %>”</h3>
-      <% end %>
+      <h1><%= link_to @blog.cached_title, blog_posts_path %></h1>
       <div style="margin-top: 20px">
         <%= link_to 'Archives', archives_path, {class: 'muted'} %>
         <span class="muted">&bull;</span>
-        <% if tag_type === "none" %>
-          <%= link_to "Feed", feed_url, {:class => "muted-anchor"} %>
-          <span class="muted">&bull;</span>
-        <% else %>
-          <%= link_to (tag_type === "series" ? "Series Feed" : "Tag Feed"), tag_feed_url, {:class => "muted-anchor"} %>
-          <span class="muted">&bull;</span>
-        <% end %>
+        <%= link_to "Feed", feed_url, {:class => "muted-anchor"} %>
+        <span class="muted">&bull;</span>
         <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
         <span id="follow_blog"><%= render :partial => "shared/follow_blog", :locals => {:blog => @blog} %></span>
       </div>
     </div>
   </div>
 </div>
-<!-- Main Blog Content -->
-<div class="row">
-  <div class="span6 offset3 dynamicspan">
-    <% @posts.each do |post| %>
-      <section class="snippet">
-        <% unless tag_type === "series" %>
-          <% unless post.cached_series_title.blank? %>
-            <% series_tag_arr = post.tag_counts.select{|tag| tag.name.start_with?("@")} %>
-            <% unless series_tag_arr.empty? %>
-              <% series_tag = series_tag_arr[0].name %>
-            <% end %>
-            <% if series_tag %>
-              <div class="visible-desktop post-series-sidebar span2">
-                <h4 class="post-series"><%= link_to post.cached_series_title, tag_base_url + series_tag, { :title => "View series" } %>&nbsp;<i class='icon-link' style="font-size: 75%"></i></h4>
-              </div>
-            <% else %>
-              <h4 class="post-series span2 visible-desktop post-series-sidebar"><%= post.cached_series_title %></h4>
-              <h4 class="post-series hidden-desktop"><%= post.cached_series_title %></h4>
+
+<div id="content" class="row">  
+  <!-- START CENTER COL -->
+  <!-- Pagination Links -->
+  <nav id="paginator" class="span9">
+    <ul class="pager">
+      <% if params[:tag] %>
+        <span >Showing <%= @tagposts.count.zero? ? '0' : (((@posts.current_page - 1) * @per_page) + 1 ) %> - <%= @posts.last_page? ? @tagposts.count : @posts.current_page * @per_page %> of <%= @tagposts.count %> posts</span>
+      <% else %>
+        <span >Showing <%= @blogposts.count.zero? ? '0' : (((@posts.current_page - 1) * @per_page) + 1 ) %> - <%= @posts.last_page? ? @blogposts.count : @posts.current_page * @per_page %> of <%= @blogposts.count %> posts</span>
+      <% end %>
+      <li class="previous">
+        <%= link_to_previous_page @posts, "‹ Previous #{@per_page} Posts" %>
+      </li>
+      <li class="next">
+        <%= link_to_next_page @posts, "Next #{@per_page} Posts ›" %>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="span9 center-col">
+    <!-- if article.access_denied -->
+    <div id="message_display" class="message" style="display: none;"></div>
+
+    <div class="dayArticles">
+      <% @posts.each do |post| %>
+        <section class="snippet">
+          <% unless tag_type === "series" %>
+            <% unless post.cached_series_title.blank? %>
+              <% series_tag_arr = post.tag_counts.select{|tag| tag.name.start_with?("@")} %>
+              <% unless series_tag_arr.empty? %>
+                <% series_tag = series_tag_arr[0].name %>
+              <% end %>
+              <% if series_tag %>
+                <div class="visible-desktop">
+                  <h6 class="post-series"><%= link_to post.cached_series_title, tag_base_url + series_tag, { :title => "View series" } %></h6>
+                </div>
+              <% else %>
+                <h6 class="post-series visible-desktop"><%= post.cached_series_title %></h6>
+                <h6 class="post-series hidden-desktop"><%= post.cached_series_title %></h6>
+              <% end %>
             <% end %>
           <% end %>
-        <% end %>
-        <h2><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
-        <% if current_user.nil? || !current_user.admin? %>
-          <% if post.featured? %>
-            <i class="icon-star pull-right"></i>
-          <% end %>
-        <% else %>
-          <%= link_to '', update_featured_status_path(post.cached_blog,post), id: post.url, :class => toggle_class(post), remote: true %>      
-        <% end %>
-        </h2>
-        <div>
-          <span class="pull-right">
-            <% if can? :update, post %>
-              <%= link_to 'Edit', edit_blog_post_path(post.cached_blog,post), :class => 'btn btn-mini btn-warning' %>
+          <h3><strong><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
+          <% if current_user.nil? || !current_user.admin? %>
+            <% if post.featured? %>
+              <i class="icon-star pull-right"></i>
             <% end %>
-          </span>
-          <h5 class="blog-author">by <%= link_to (post.cached_author.name.blank? ? post.cached_author.username : post.cached_author.name), post.cached_author, {:class => "underline"} %> on <%= post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %> / <%= link_to (pluralize post.cached_comments_count, "comment") , blog_post_path(post.cached_blog, post) + "#comments", {:class => "underline"} %></h5>
-          <% unless post.cached_excerpt.blank? %>
-            <p><%= post.cached_excerpt.gsub(/\r\n?/,"<br>").html_safe %></p>
-            <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
           <% else %>
-            <% post_content = post.cached_content.gsub(/\r\n?/, "") %>
-            <% stripped_content = strip_tags(post.cached_content) %>
-            <% if stripped_content.split(" ").length > 200 %>
-              <div class="main-content">
-                <%= post_content.split(" ").first(200).join(" ").html_safe %>...
-              </div>
+            <%= link_to '', update_featured_status_path(post.cached_blog,post), id: post.url, :class => toggle_class(post), remote: true %>      
+          <% end %>
+          </strong></h3>
+          <% unless post.cached_subtitle.blank? %>
+            <h6><%= post.cached_subtitle %></h6>
+          <% end %>
+          <div>
+            <span class="pull-right">
+              <% if can? :update, post %>
+                <%= link_to 'Edit', edit_blog_post_path(post.cached_blog,post), :class => 'btn btn-mini btn-warning' %>
+              <% end %>
+            </span>
+            <h6><span class="blog-author"><%= link_to (post.cached_author.name.blank? ? post.cached_author.username : post.cached_author.name), post.cached_author, {:class => "underline"} %> on <%= post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %></span></h6>
+            <% unless post.cached_excerpt.blank? %>
+              <p class='excerpt'><%= post.cached_excerpt.html_safe %></p>
               <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
             <% else %>
-              <div class="main-content">
-                <%= post_content.split(" ").first(200).join(" ").html_safe %>
-              </div>
+              <% post_content = post.cached_content.gsub(/\r\n?/, "") %>
+              <% stripped_content = strip_tags(post.cached_content) %>
+              <% if stripped_content.split(" ").length > 200 %>
+                <div class="main-content">
+                  <%= post_content.split(" ").first(200).join(" ").html_safe %>...
+                </div>
+                <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
+              <% else %>
+                <div class="main-content">
+                  <%= post_content.split(" ").first(200).join(" ").html_safe %>
+                </div>
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
-      </section>
-    <% end %>
-    <nav id="paginator">
-      <ul class="pager">
-        <li class="previous">
-          <%= link_to_previous_page @posts, "‹ Newer" %>
-        </li>
-        <li class="next">
-          <%= link_to_next_page @posts, "Older ›" %>
-        </li>
-    </nav>
+          </div>
+        </section>
+      <% end %>
+    </div>
   </div>
-<!-- Main Blog Content End -->
-<!--  SideBar Begin -->
-  <div class="span3 visible-desktop">
+
+  <!-- START RIGHT COL -->
+  <div class="span3 visible-desktop right-col">
+
     <% if can? :update, @blog %>
       <div class="right-sidebar">
-        <div class="sidebar-title"><span class="label">Manage blog</span></div><br>
         <div class="btn-grp sidebar-title">
           <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
           <% unless Post.cached_draft_count(@blog.id).zero? %>
@@ -144,63 +148,36 @@
         </div>
       </div>
     <% end %>
-    <% if params[:tag] %>
-      <% if @tags.length > 0 %>
-        <div class="right-sidebar" id="tag_cloud">
-          <label for="related-tag" class="sidebar-title"><span class="label">Related tags</span></label>
-          <input class="arcin" type="checkbox" id="related-tag" /> 
-          <ol>
-            <% count = 0 %>
-            <li class="listi">
-            <% tag_cloud @tags, %w[t s m l] do |tag, css_class| %>
-              <%= link_to tag_path(params[:blog_id], tag.name) do %>
-                <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
-              <% end %>
-              <% unless count == @tags.length - 1 %>
-                <span class="tag-sep">&bull;</span>
-              <% end %>
-              <% count += 1 %>
-            <% end %>
-            </li>
-          </ol>
-        </div>
-      <% end %>
-    <% else %>
-      <% if @tags.length > 0 %>
-        <div class="right-sidebar" id="tag_cloud">
-          <label for="top-tag" class="sidebar-title"><span class="label">Top tags</span></label>
-          <input class="arcin" type="checkbox" id="top-tag" /> 
-          <ol>
-            <li class="listi">
-            <% count = 0 %>
-            <li class="listi">
-            <% tag_cloud @tags, %w[t s m l] do |tag, css_class| %>
-              <%= link_to tag_path(params[:blog_id], tag.name) do %>            
-                <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
-              <% end %>
-              <% unless count == @tags.length - 1 %>
-                <span class="tag-sep">&bull;</span>
-              <% end %>
-              <% count += 1 %>
-            <% end %>
-            </li>
-          </ol>
-        </div>
-      <% end %>
-      <!-- Begin Latest comments -->
-      <div class="archives right-sidebar" id="recent_comments">
-        <label for="recentcomments" class="sidebar-title"><span class="label">Recent comments</span></label>
-        <input class="rcin" type="checkbox" id="recentcomments" />
-        <ol id="rcom"></ol>
-      </div><!-- end Latest comments -->
 
-      <!-- Begin Latest posts -->
-      <div class="archives right-sidebar" id="recent_posts">
-        <label for="recentposts" class="sidebar-title"><span class="label">Recent posts</span></label>
-        <input class="rcin" type="checkbox" id="recentposts" />
-        <ol id="rpos"></ol>
-      </div><!-- end Latest posts -->
-    <% end %>
+    <!-- Begin Latest posts -->
+    <div class="archives right-sidebar" id="recent_posts">
+      <label for="recentposts" class="sidebar-title"><span class="label">Recent posts</span></label>
+      <input class="rcin" type="checkbox" id="recentposts" />
+      <ol id="rpos"></ol>
+    </div>
+
+    <!-- Begin Latest comments -->
+    <div class="archives right-sidebar" id="recent_comments">
+      <label for="recentcomments" class="sidebar-title"><span class="label">Recent comments</span></label>
+      <input class="rcin" type="checkbox" id="recentcomments" />
+      <ol id="rcom"></ol>
+    </div>
+
+    <!-- Begin DatePicker -->
+    <div class="visible-desktop datepicker right-sidebar pull">
+    </div>
   </div>
+
+  <!-- Pagination Links -->
+  <nav id="paginator" class="span9">
+    <ul class="pager">
+      <li class="previous">
+        <%= link_to_previous_page @posts, "‹ Previous #{@per_page} Posts" %>
+      </li>
+      <li class="next">
+        <%= link_to_next_page @posts, "Next #{@per_page} Posts ›" %>
+      </li>
+    </ul>
+  </nav>
+
 </div>
-<!-- End Sidebar Content -->

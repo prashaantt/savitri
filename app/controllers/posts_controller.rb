@@ -6,16 +6,21 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
+    @per_page = 20
     blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
-    @blogposts = Post.published.where(:blog_id=>blog_id.id).order("posts.published_at DESC")
+    if params[:year]
+      @blogposts = Post.filter(blog_id.id, params).order("posts.published_at DESC")
+    else
+      @blogposts = Post.published.where(:blog_id => blog_id.id).order("posts.published_at DESC")
+    end
     if params[:tag]
       @tagposts = @blogposts.tagged_with(params[:tag])
-      @posts    = @tagposts.page(params[:page]).per(10)
+      @posts    = @tagposts.page(params[:page]).per(@per_page)
       @feedsrc  = @tagposts
       @tags     = @posts.tag_counts.order('tags_count desc').reject{|tag| tag.name.downcase == params[:tag].downcase || tag.name.start_with?("@")}
       .first(50).sort_by{|tag| tag.name.downcase}
     else
-      @posts    = @blogposts.page(params[:page]).per(10)
+      @posts    = @blogposts.page(params[:page]).per(@per_page)
       @feedsrc  = @blogposts
       @tags     = @blogposts.tag_counts.order('tags_count desc').reject{|tag| tag.name.start_with?("@")}.first(50).sort_by{|tag| tag.name.downcase}
     end
@@ -45,9 +50,10 @@ class PostsController < ApplicationController
   end
 
   def scheduled
+    @per_page = 20
     @blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
     @blogposts = Post.cached_drafts(@blog_id)
-    @posts = @blogposts.page(params[:page]).per(10)
+    @posts = @blogposts.page(params[:page]).per(@per_page)
     if @posts.empty?
       @noscheduled = true;
     end
