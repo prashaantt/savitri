@@ -44,6 +44,15 @@ class Post < ActiveRecord::Base
     end
   end
 
+  # Return author after comparison of roles
+  def get_abstracted_author
+    if user.role == 'Senior Editor'
+      User.cached_find(1)
+    else
+      self.cached_author
+    end
+  end
+
   def tag_tokens=(ids)
     tags = ids.split(',')
     finder, r_tags = split_tags(tags)
