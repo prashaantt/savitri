@@ -52,7 +52,7 @@
                   <%= link_to 'Edit', edit_blog_post_path(post.cached_blog,post), :class => 'btn btn-mini btn-warning' %>
                 <% end %>
               </span>
-              <h5><span class="label">Scheduled</span><span class="blog-author"><%= link_to post.cached_author.username, post.cached_author, {:class => "underline"} %>  for <%= post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %></span></h5>
+              <h5><span class="label">Scheduled</span><span class="blog-author"> <%= link_to post.cached_author.username, post.cached_author, {:class => "underline"} %>  for <%= post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %></span></h5>
               <% unless post.cached_excerpt.blank? %>
                 <p class='excerpt'><%= post.cached_excerpt.html_safe %></p>
                 <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
