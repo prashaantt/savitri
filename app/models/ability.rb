@@ -78,7 +78,7 @@ class Ability
            can :destroy, Comment do |c|
                 c.user_id == user.id
             end
-        elsif user.role == "Senior Editor"
+        elsif user.role == "Junior Editor"
            can :create, Notebook do |n|
             n.user_id == user.id
            end
