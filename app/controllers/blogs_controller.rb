@@ -113,8 +113,8 @@ class BlogsController < ApplicationController
   end
 
   def invite_for_blog
-    p @blog = Blog.cached_find_by_slug(params[:id])
-    p @user = User.find_by_username(params[:blog][:post_access])
+    @blog = Blog.cached_find_by_slug(params[:id])
+    @user = User.find_by_username(params[:blog][:post_access])
     @blog.post_access || []
     if @user.nil?
       flash[:error] = "#{params[:blog][:post_access]} is not yet signed up"
@@ -129,6 +129,9 @@ class BlogsController < ApplicationController
     else
       @blog.post_access.push(@user.id)
       authorize! :invite_for_blog, @blog
+      # User Role changed to Senior Editor. Senior Editor can write new posts on behalf of 'admin' 
+      # but can edit or delete only his posts.
+      @user.give_jr_editor_access
       @blog.save!
       InviteForBlogWorker.perform_async(@user.id, current_user.id, @blog.id)
     end
@@ -139,6 +142,8 @@ class BlogsController < ApplicationController
   def remove_blog_access
     blog = Blog.cached_find_by_slug(params[:slug])
     blog.post_access.delete(params[:user_id].to_i)
+    @user = User.find(params[:user_id].to_i)
+    @user.give_blogger_access
     blog.save!
     render nothing: true
   end

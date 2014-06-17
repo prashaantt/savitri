@@ -78,6 +78,38 @@ class Ability
            can :destroy, Comment do |c|
                 c.user_id == user.id
             end
+        elsif user.role == "Junior Editor"
+           can :create, Notebook do |n|
+            n.user_id == user.id
+           end
+           can :update, Notebook do |n|
+            n.user_id == user.id
+           end
+           can :destroy, Notebook do |n|
+            n.user_id == user.id
+           end
+          can :create, Post do |n|
+            true
+          end
+          can :update, Post do |n|
+            n.author_id == user.id
+          end
+          can :destroy, Post do |n|
+            n.author_id == user.id
+          end
+           can :update, Blog do |b|
+               b.user_id == user.id || (b.post_access.include?user.id)
+           end
+           can :authorized_users, Blog do |b|
+               b.user_id == user.id
+           end
+           can :invite_for_blog, Blog do |b|
+               b.user_id == user.id
+           end
+           can :create, Comment
+           can :update, Comment do |c|
+             c.user_id == user.id
+           end
         end
       end
     #
