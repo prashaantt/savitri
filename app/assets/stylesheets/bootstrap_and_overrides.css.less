@@ -17,7 +17,7 @@
 body,
 .navbar-search .search-query,
 input, button, select {
-  font-family: "verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   background-color: #f5efdc;
@@ -30,30 +30,24 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-weight: 300;
 }
 
 h2 {
-  font-size: 175%;
   line-height: 1.2em;
 }
 
 h3 {
-  font-size: 150%;
   line-height: 1em;
-}
-
-h4 {
-  font-size: 125%;
 }
 
 p,
 textarea {
-  font-family: "georgia", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 125%;
+  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.5em;
+  font-size: 100%;
   word-break: hyphenate;
   margin: 0 0 10px !important;
   text-decoration: none;
@@ -67,8 +61,8 @@ textarea {
 
 .main-content ul,
 .main-content ol {
-  font-family: "georgia", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 125%;
+  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 100%;
   line-height: 1.5em;
   word-break: hyphenate;
   text-decoration: none;
@@ -186,6 +180,14 @@ blockquote {
   padding: 0 0 0 30px;
   margin: 0 0 15px 0px;
   border-left: 0px;
+
+  p {
+    font-size: 14px;
+  }
+}
+
+blockquote.quotable {
+  border-bottom: 1px dotted gray;
 }
 
 /*blockquote p:before {
@@ -200,8 +202,7 @@ blockquote {
 */
 
 blockquote p {
-  margin-bottom: 15px !important;
-  font-size: 17.5px;
+  // margin-bottom: 15px !important;
   font-weight: 300;
   line-height: 1.45;
 }
