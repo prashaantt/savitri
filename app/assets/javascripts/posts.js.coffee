@@ -15,7 +15,7 @@ $ ->
     changeMonth: true
     changeYear: true
     onSelect: (date) ->
-      current_url = window.location.href.replace(/\/\d{4}\/\d{2}\/\d{2}$/, '').replace(/\/(scheduled-)?posts.*$/, '')
+      current_url = window.location.href.replace(/\/\d{4}\/\d{2}\/\d{2}$/, '').replace(/\/(archives)|((scheduled-)?posts.*)$/, '')
       split_date = date.split('/')
       new_url = current_url + '/' + split_date[2] + '/' + split_date[0] + '/' + split_date[1]
       window.location.href = new_url
