@@ -104,45 +104,14 @@
     </article>
     <% unless @post.draft %>
     <section class="comments h6">
-      <h6 id="comments"><%= pluralize(@post.cached_comments_count, "comment") %></h6>
       <%= render @post.cached_comments %>
-      <% if user_signed_in? %>
-      <% if can? :create, Comment %>
-      <%= render "comments/form" %>
-      <% end %>
-      <% else %>
-      <div class="btn-grp" style="text-align: center">
-        <%= link_to "Log in to comment", new_user_session_path, :class => 'btn' %>
-      </div>
-      <% end %>
+      <%= render "comments/disqus" %>
     </section>
     <% end %>
   </div>
   <!-- Main Blog Content End -->
   <!--  SideBar Begin -->
   <div class="span3 visible-desktop right-col">
-    <!-- <% tag_counts = @post.tag_counts.reject{|tag| tag.name.start_with?("@")} %>
-    <% if tag_counts.length > 0 %>
-    <div class="right-sidebar" id="tag_cloud">
-      <label for="related-tag" class="sidebar-title"><span class="label">Tags</span></label>
-      <input class="arcin" type="checkbox" id="related-tag" /> 
-      <ol>
-        <% count = 0 %>
-        <li class="listi">
-          <% tag_cloud tag_counts, %w[m] do |tag, css_class| %>
-            <%= link_to tag_path(params[:blog_id], tag.name) do %>
-              <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
-            <% end %>
-            <% unless count == tag_counts.length - 1 %>
-              <span class="tag-sep">&bull;</span>
-            <% end %>
-            <% count += 1 %>
-          <% end %>
-        </li>
-      </ol>
-    </div>
-    <% end %> -->
-
     <!-- Begin Latest posts -->
     <div class="archives right-sidebar" id="recent_posts">
       <label for="recentposts" class="sidebar-title"><span class="label">Recent posts</span></label>
