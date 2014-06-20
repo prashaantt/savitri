@@ -65,6 +65,26 @@ $ ->
   $('.collapse_comments').click()
 
 $ ->
+  count = undefined
+  count = ->
+    chars = undefined
+    val = undefined
+    words = undefined
+    val = $.trim($("textarea:first").val())
+    words = val.replace(/\s+/g, " ").split(" ").length
+    chars = val.length
+    words = 0  unless chars
+    $("#word_count").html words + " words "
+    if words >= 100
+      $("#word_count").css "color", "red"
+    else
+      $("#word_count").css "color", "#3F2A18"
+    return
+
+  count()
+  $("textarea:first").on "input", count
+
+$ ->
   $(".excerpt").each ->
     $(this).html converter.makeHtml($(this).text())
 
