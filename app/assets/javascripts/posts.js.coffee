@@ -2,6 +2,68 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 #seconds
+
+# Latest Posts
+$ ->
+  $('.collapse_posts').click ->
+    $closest = $(this).closest('.sidebar-heading').next('.collapse')
+    if $closest.hasClass('in')
+      $closest.removeClass('in')
+      $closest.css('display', 'none')
+
+    else
+      $closest.addClass('in')
+      $closest.css('display', 'block')
+      if ($closest.find("li").length == 0)
+        callback = (response) -> 
+          recentpostsdiv = $closest
+          postsdiv = ""
+          if (response.length != 0)
+            $.each response, (val1) -> 
+              post = response[val1]
+              postsdiv=postsdiv.concat("<li class=\"recent-posts-list\"\>")
+              postsdiv=postsdiv.concat("<a href=\""+post.cached_share_url+"\" 
+                class=\"sidebar-links\">"+post.title)
+
+            recentpostsdiv.append(postsdiv)
+          else
+            recentpostsdiv.append("<li><h6><hNo Recent Posts</h6></li>")
+
+        $.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentposts/', callback, 'json'
+
+$ ->
+  $('.collapse_posts').click()
+
+# Latest comments
+$ ->
+  $('.collapse_comments').click ->
+    $closest = $(this).closest('.sidebar-heading').next('.collapse')
+    if $closest.hasClass('in')
+      $closest.removeClass('in')
+      $closest.css('display', 'none')
+
+    else
+      $closest.addClass('in')
+      $closest.css('display', 'block')
+      if ($closest.find("li").length == 0)
+        callback = (response) -> 
+          recentcomdiv = $closest
+          commentsdiv = ""
+          if(response.length != 0)
+            $.each response, (val1) -> 
+              comment = response[val1]
+              commentsdiv=commentsdiv.concat("<li class=\"recent-comments-list\"\>")
+              commentsdiv=commentsdiv.concat("<a href=\""+comment.cached_share_url+"\" 
+                class=\"sidebar-links\">"+comment.commenter+": \""+comment.cached_post_title+"\"")
+            recentcomdiv.append(commentsdiv)
+          else
+            recentcomdiv.append("<li>No Recent Comments</li>")
+
+        $.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentcomments/', callback, 'json'
+
+$ ->
+  $('.collapse_comments').click()
+
 $ ->
   count = undefined
   count = ->
@@ -27,15 +89,16 @@ $ ->
     $(this).html converter.makeHtml($(this).text())
 
 $ ->
+  $('.snippet').last().css('border-bottom', 'none');
+
+$ ->
   $('.datepicker').datepicker
     inline: true
-    startDate: '01/01/2000'
     maxDate: new Date()
-    firstDay: 1
     changeMonth: true
     changeYear: true
     onSelect: (date) ->
-      current_url = window.location.href.replace(/\/\d{4}\/\d{2}\/\d{2}$/, '').replace(/\/(archives|scheduled-posts|posts.*)$/, '')
+      current_url = window.location.href.replace(/\/\d{4}(\/\d{2}\/\d{2})?$/,'').replace(/\/(archives|scheduled-posts|posts.*)$/, '')                                                  
       split_date = date.split('/')
       new_url = current_url + '/' + split_date[2] + '/' + split_date[0] + '/' + split_date[1]
       window.location.href = new_url
@@ -70,12 +133,12 @@ $ ->
   $(document).on 'click', '.ui-datepicker-prev, .ui-datepicker-next', ->
     $('.ui-datepicker-prev').addClass('pull-left')
 
-$ ->
-  if $('li.previous').text().trim() == ""
-    $('#paginator span').addClass('offset1')
+# $ ->
+#   if $('li.previous').text().trim() == ""
+#     $('#paginator span').addClass('offset1')
 
-  if $('li.next').text().trim() == ""
-    $('#paginator').removeClass('span9').addClass('span8')
+  # if $('li.next').text().trim() == ""
+  #   $('#paginator').removeClass('span9').addClass('span8')
 
 $ ->
   $(".new_post,.edit_post").submit ->
