@@ -5,7 +5,7 @@
 <% title @blog.cached_title %>
 
 <div class="row">
-  <div class="span12 dynamicspan">
+  <div class="span12">
     <div class="page-header title">
       <h1><%= link_to @blog.cached_title, blog_posts_path %></h1>
       <div style="margin-top: 20px">
@@ -88,20 +88,24 @@
     <% end %>
 
     <!-- Begin Latest posts -->
-    <div class="archives right-sidebar" id="recent_posts">
-      <label for="recentposts" class="sidebar-title"><span class="label">Recent posts</span></label>
-      <input class="rcin" type="checkbox" id="recentposts" />
-      <ol id="rpos"></ol>
+    <div class="sidebar-menu">
+      <div class="sidebar-heading">
+        <h6><a class="collapse_posts">Recent Posts</a></h6>
+      </div>
+      <div class="collapse recent_posts" id="recent_posts">
+      </div>
     </div>
 
     <!-- Begin Latest comments -->
-    <div class="archives right-sidebar" id="recent_comments">
-      <label for="recentcomments" class="sidebar-title"><span class="label">Recent comments</span></label>
-      <input class="rcin" type="checkbox" id="recentcomments" />
-      <ol id="rcom"></ol>
+    <div class="sidebar-menu">
+      <div class="sidebar-heading">
+        <h6><a class="collapse_comments">Recent Comments</a></h6>
+      </div>
+      <div class="collapse recent_comments" id="recent_comments">
+      </div>
     </div>
 
-    <div class="visible-desktop datepicker right-sidebar">
+    <div class="visible-desktop datepicker">
     </div>
   </div>
 
