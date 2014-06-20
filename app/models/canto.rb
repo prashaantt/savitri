@@ -20,7 +20,7 @@ class Canto < ActiveRecord::Base
   end
 
   def sections_cache_with_runningno(q)
-    Rails.cache.fetch([self, 'runningno' + q.to_s]) { sections.where(runningno: :q).to_a }
+    Rails.cache.fetch([self, 'runningno' + q.to_s]) { sections.where(runningno: q).to_a }
   end
 
   def cached_number
