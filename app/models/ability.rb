@@ -21,6 +21,9 @@ class Ability
     else
         can :read, [Post, Blog, Comment, Notebook, Page, User, Audio]
         if user.role == "Blogger"
+          can :create, Page do |n|
+            Blog.any?{|b| b.post_access.include? user.id}
+          end
            can :read , Notebook
            can :create, Notebook do |n|
             n.user_id == user.id
