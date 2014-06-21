@@ -58,7 +58,7 @@
           <%= radio_button_tag 'size', "now", false, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
           <%= radio_button_tag 'size', "later", @post.published_at > Time.zone.now, :style => "vertical-align: baseline" %>
         <% else %>
-          <%= radio_button_tag 'size', "now", true, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
+          <%= radio_button_tag 'size', "now", false, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
           <%= radio_button_tag 'size', "later", false, :style => "vertical-align: baseline" %>
         <% end %>
         <label class="label" for="size_later" style="margin-right: 10px; margin-left: 10px">Schedule</label> <br/><br/>
