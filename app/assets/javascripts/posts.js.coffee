@@ -91,7 +91,6 @@ $ ->
 $ ->
   $('.md-main-content').html converter.makeHtml($('.md-main-content').text().replace(/#{1,6}(?=[^#])/g, '#####'))
 
-
 $ ->
   $('.snippet').last().css('border-bottom', 'none');
 
