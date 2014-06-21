@@ -151,6 +151,12 @@ $ ->
     $("#post_content").val md_text
 
 $ ->
+  $("#new-blog-post").click ->
+   if !$("#size_now").is(":checked") && !$("#size_later").is(":checked")
+      alert " Please choose Publish time."
+      false
+
+$ ->
 	$("#new-blog-post").click (e) ->
 	  $("#post_content").html($('.wmd-preview').html())
 	  $("#wmd-input").html($('.wmd-input').val())
