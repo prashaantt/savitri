@@ -86,7 +86,11 @@ $ ->
 
 $ ->
   $(".excerpt").each ->
-    $(this).html converter.makeHtml($(this).text())
+    $(this).html converter.makeHtml($(this).text().replace(/#{1,6}(?=[^#])/g, '#####'))
+
+$ ->
+  $('.md-main-content').html converter.makeHtml($('.md-main-content').text().replace(/#{1,6}(?=[^#])/g, '#'))
+
 
 $ ->
   $('.snippet').last().css('border-bottom', 'none');
@@ -152,9 +156,10 @@ $ ->
 
 $ ->
   $("#new-blog-post").click ->
-   if !$("#size_now").is(":checked") && !$("#size_later").is(":checked")
-      alert " Please choose Publish time."
-      false
+    if $(".new_post").length
+      if !$("#size_now").is(":checked") && !$("#size_later").is(":checked")
+        alert " Please choose Publish time."
+        false
 
 $ ->
 	$("#new-blog-post").click (e) ->
