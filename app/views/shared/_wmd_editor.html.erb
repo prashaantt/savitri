@@ -4,7 +4,7 @@
             var help = function () { window.open('http://stackoverflow.com/editing-help'); }
             var editor = new Markdown.Editor(converter);
             converter.hooks.chain("postConversion", function (text) {
-                 return text.replace('<blockquote>','<blockquote class="quotable">');
+                 return text.replace('<blockquote>','<blockquote>');
               });
             editor.hooks.chain("postBlockquoteCreation", function (text) {
               setTimeout(function () {
