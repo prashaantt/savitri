@@ -68,7 +68,7 @@ class SearchController < ApplicationController
           @search = Sunspot.search Post do |context|
             context.fulltext keywords, highlight: true
             context.with(:published_at).less_than Time.now
-            contextfacet(:category)
+            context.facet(:category)
             context.facet(:posted)
             context.facet(:author)
             context.facet(:blogname)
