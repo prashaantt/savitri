@@ -86,10 +86,7 @@ $ ->
 
 $ ->
   $(".excerpt").each ->
-    $(this).html converter.makeHtml($(this).text().replace(/#{1,6}(?=[^#])/g, '#####'))
-
-$ ->
-  $('.md-main-content').html converter.makeHtml($('.md-main-content').text().replace(/#{1,6}(?=[^#])/g, '#####'))
+    $(this).html converter.makeHtml($(this).text())
 
 $ ->
   $('.snippet').last().css('border-bottom', 'none');
