@@ -152,9 +152,10 @@ $ ->
 
 $ ->
   $("#new-blog-post").click ->
-   if !$("#size_now").is(":checked") && !$("#size_later").is(":checked")
-      alert " Please choose Publish time."
-      false
+    if $(".new_post").length
+      if !$("#size_now").is(":checked") && !$("#size_later").is(":checked")
+        alert " Please choose Publish time."
+        false
 
 $ ->
 	$("#new-blog-post").click (e) ->
