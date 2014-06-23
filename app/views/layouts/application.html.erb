@@ -55,7 +55,7 @@
                   <b class="icon-caret-down"></b>
                 </a>
               <ul class="dropdown-menu">
-                <% if user_signed_in? && (current_user.admin? || (can? :update, b)) %>
+                <% if user_signed_in? && (current_user.admin? || (can? :update, Blog)) %>
                   <li class="dropdown-submenu">
                     <a href="/blogs/savitri-cultural/posts">Savitri Cultural</a>
                     <ul class="dropdown-menu">
