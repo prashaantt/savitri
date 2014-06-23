@@ -51,13 +51,13 @@ class PostsController < ApplicationController
 
   def scheduled
     @per_page = 20
-    @blog_id  = Blog.cached_find_by_slug(params[:blog_id]).id
-    @blogposts = Post.cached_drafts(@blog_id)
+    @blog = Blog.cached_find_by_slug(params[:blog_id]) || not_found
+    @blogposts = Post.cached_drafts(@blog.id)
     @posts = @blogposts.page(params[:page]).per(@per_page)
     if @posts.empty?
       @noscheduled = true;
     end
-    authorize! :update, @blog_id
+    authorize! :update, @blog
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @posts }
