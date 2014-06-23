@@ -53,7 +53,7 @@ unless @feedsrc.empty?
         end
         entry.content content, :type => "html"
         entry.author do |author|
-          author.name post.cached_blog.cached_user.cached_username
+          author.name post.cached_author.name
         end
       end
     end
