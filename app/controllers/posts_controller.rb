@@ -57,6 +57,7 @@ class PostsController < ApplicationController
     if @posts.empty?
       @noscheduled = true;
     end
+    authorize! :update, @blog_id
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @posts }
