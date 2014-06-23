@@ -55,41 +55,43 @@
                   <b class="icon-caret-down"></b>
                 </a>
               <ul class="dropdown-menu">
-                <% if user_signed_in? && (current_user.admin? || (can? :update, Blog)) %>
-                  <li class="dropdown-submenu">
-                    <a href="/blogs/savitri-cultural/posts">Savitri Cultural</a>
-                    <ul class="dropdown-menu">
-                      <li><a href="/blogs/savitri-cultural/posts/new">New post</a></li>
-                      <li><a href="/blogs/savitri-cultural/scheduled-posts">Scheduled posts</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown-submenu">
-                    <a href="/blogs/light-of-supreme/posts">The Light of the Supreme</a>
-                    <ul class="dropdown-menu">
-                      <li><a href="/blogs/light-of-supreme/posts/new">New post</a></li>
-                      <li><a href="/blogs/light-of-supreme/scheduled-posts">Scheduled posts</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown-submenu">
-                    <a href="/blogs/parasya-jyotih/posts">परस्य ज्योतिः</a>
-                    <ul class="dropdown-menu">
-                      <li><a href="/blogs/parasya-jyotih/posts/new">New post</a></li>
-                      <li><a href="/blogs/parasya-jyotih/scheduled-posts">Scheduled posts</a></li>
-                    </ul>
-                  </li>
-                <% else %>
-                  <li class="dropdown"><a href="/blogs/savitri-cultural/posts">Savitri Cultural</a>
-                  <li class="dropdown"><a href="/blogs/light-of-supreme/posts">The Light of the Supreme</a>
-                  </li>
-                  <li class="dropdown"><a href="/blogs/parasya-jyotih/posts">परस्य ज्योतिः</a>
-                  </li>
-                  </li>
-                <% end %>
-
+              <% if (can? :update, Blog.cached_find_by_slug('savitri-cultural')) %>
+                <li class="dropdown-submenu">
+                  <a href="/blogs/savitri-cultural/posts">Savitri Cultural</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/blogs/savitri-cultural/posts/new">New post</a></li>
+                    <li><a href="/blogs/savitri-cultural/scheduled-posts">Scheduled posts</a></li>
+                  </ul>
+                </li>
+              <% else %>
+                <li class="dropdown"><a href="/blogs/savitri-cultural/posts">Savitri Cultural</a></li>
+              <% end %>
+              <% if (can? :update, Blog.cached_find_by_slug('light-of-supreme')) %>
+                <li class="dropdown-submenu">
+                  <a href="/blogs/light-of-supreme/posts">The Light of the Supreme</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/blogs/light-of-supreme/posts/new">New post</a></li>
+                    <li><a href="/blogs/light-of-supreme/scheduled-posts">Scheduled posts</a></li>
+                  </ul>
+                </li>
+              <% else %>
+                <li class="dropdown"><a href="/blogs/light-of-supreme/posts">The Light of the Supreme</a></li>
+              <% end %>
+              <% if (can? :update, Blog.cached_find_by_slug('parasya-jyotih')) %>
+                <li class="dropdown-submenu">
+                  <a href="/blogs/parasya-jyotih/posts">परस्य ज्योतिः</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/blogs/parasya-jyotih/posts/new">New post</a></li>
+                    <li><a href="/blogs/parasya-jyotih/scheduled-posts">Scheduled posts</a></li>
+                  </ul>
+                </li>
+              <% else%>
+                <li class="dropdown"><a href="/blogs/parasya-jyotih/posts">परस्य ज्योतिः</a></li>                  
+              <% end %>
               </ul>
             </li>
-
           </li>
+
           <li class=""><a href="/archives">Archives</a></li>
           <% @pages = Page.cached_menu %>
           <% unless @pages.count > 1 %>
