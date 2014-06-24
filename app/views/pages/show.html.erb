@@ -30,6 +30,7 @@
     <p class="author muted" style="padding-top: 20px">
       (Last updated on <%= @page.updated_at.strftime("%b %d %Y at %l:%M %p") %>)
     </p>
+    <%= render "comments/disqus" %>
   </div>
   <div class="span3 visible-desktop">
   <!-- Begin Related Content -->

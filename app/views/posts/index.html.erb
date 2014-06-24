@@ -35,7 +35,7 @@
 <% title pagetitle %>
 
 <div class="row">
-  <div class="span10">
+  <div class="span12">
     <div class="page-header title">
       <h1><%= link_to @blog.cached_title, blog_posts_path %></h1>
       <div style="margin-top: 20px">
@@ -92,7 +92,7 @@
               <% end %>
             <% end %>
           <% end %>
-          <h3><strong><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
+          <h3><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
           <% if current_user.nil? || !current_user.admin? %>
             <% if post.featured? %>
               <i class="icon-star pull-right"></i>
@@ -100,7 +100,7 @@
           <% else %>
             <%= link_to '', update_featured_status_path(post.cached_blog,post), id: post.url, :class => toggle_class(post), remote: true %>      
           <% end %>
-          </strong></h3>
+          </h3>
           <% unless post.cached_subtitle.blank? %>
             <h6><%= post.cached_subtitle %></h6>
           <% end %>
@@ -150,21 +150,26 @@
     <% end %>
 
     <!-- Begin Latest posts -->
-    <div class="archives right-sidebar" id="recent_posts">
-      <label for="recentposts" class="sidebar-title"><span class="label">Recent posts</span></label>
-      <input class="rcin" type="checkbox" id="recentposts" />
-      <ol id="rpos"></ol>
+    <div class="sidebar-menu">
+      <div class="sidebar-heading">
+        <a class="collapse_posts">Recent Posts</a>
+      </div>
+      <div class="collapse recent_posts" id="recent_posts">
+      </div>
     </div>
 
     <!-- Begin Latest comments -->
-    <div class="archives right-sidebar" id="recent_comments">
-      <label for="recentcomments" class="sidebar-title"><span class="label">Recent comments</span></label>
-      <input class="rcin" type="checkbox" id="recentcomments" />
-      <ol id="rcom"></ol>
+    <div class="sidebar-menu">
+      <div class="sidebar-heading">
+        <a class="collapse_comments">Recent Comments</a>
+      </div>
+      <div class="collapse recent_comments" id="recent_comments">
+      </div>
     </div>
 
     <!-- Begin DatePicker -->
-    <div class="visible-desktop datepicker right-sidebar pull">
+    <div class="visible-desktop datepicker">
+      <div class="datepicker-title">Search by Date</div>
     </div>
   </div>
 

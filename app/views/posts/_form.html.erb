@@ -22,7 +22,7 @@
     </div>
     <div class="control-group">
       <%= f.label :excerpt, "Excerpt", :class => "control-label",  style: 'display: inline-block;' %>
-      <%= f.label :excerpt, "Excerpt", :id => 'counter', :class => "pull-right",  style: 'display: inline-block;' %>
+      <label style="display: inline-block;" for="post_excerpt" class="pull-right"><span id='word_count'></span><span>&nbsp;/ 100 words</span></label>
       <div class="controls">
         <%= f.text_area :excerpt, :class => "text_field span6", :style => "resize: none", :rows => "5" %>
       </div>
@@ -58,7 +58,7 @@
           <%= radio_button_tag 'size', "now", false, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
           <%= radio_button_tag 'size', "later", @post.published_at > Time.zone.now, :style => "vertical-align: baseline" %>
         <% else %>
-          <%= radio_button_tag 'size', "now", true, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
+          <%= radio_button_tag 'size', "now", false, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
           <%= radio_button_tag 'size', "later", false, :style => "vertical-align: baseline" %>
         <% end %>
         <label class="label" for="size_later" style="margin-right: 10px; margin-left: 10px">Schedule</label> <br/><br/>

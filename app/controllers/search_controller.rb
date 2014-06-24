@@ -8,6 +8,7 @@ class SearchController < ApplicationController
 
     # 1. Split on spaces. Left side => query , Right side => Operations
     # god awake in:lines book:1 canto:1
+    # https://groups.google.com/forum/#!topic/ruby-sunspot/5xanVMY6ekQ
     if params[:q].to_s.include?('in:')
       pams = params[:q].split('in:')
       query = params[:q].downcase.split(/\s+/)
@@ -19,84 +20,84 @@ class SearchController < ApplicationController
       unless pams.length > 2
         case filter[1]
         when 'books'
-          @search = Sunspot.search Book do
-            fulltext keywords
-            order_by(:id, :asc)
-            facet(:category)
-            paginate page: params[:page], per_page:  20
+          @search = Sunspot.search Book do |context|
+            context.fulltext keywords
+            context.order_by(:id, :asc)
+            context.facet(:category)
+            context.paginate page: params[:page], per_page: @per_page = 20
           end
         when 'sentences'
-          @search = Sunspot.search Stanza do
-            fulltext keywords, highlight: true
-            order_by(:id, :asc)
-            facet(:category)
-            facet(:sbook)
-            facet(:length)
-            facet(:section)
-            facet(:canto)
-            with(:section).equal_to(params[:section]) if params[:section].present?
-            with(:canto).equal_to(params[:canto]) if params[:canto].present?
-            with(:length).equal_to(params[:length]) if params[:length].present?
-            with(:sbook).equal_to(params[:sbook]) if params[:sbook].present?
+          @search = Sunspot.search Stanza do |context|
+            context.fulltext keywords, highlight: true
+            context.order_by(:id, :asc)
+            context.facet(:category)
+            context.facet(:sbook)
+            context.facet(:length)
+            context.facet(:section)
+            context.facet(:canto)
+            context.with(:section).equal_to(params[:section]) if params[:section].present?
+            context.with(:canto).equal_to(params[:canto]) if params[:canto].present?
+            context.with(:length).equal_to(params[:length]) if params[:length].present?
+            context.with(:sbook).equal_to(params[:sbook]) if params[:sbook].present?
             if params[:download]
-              paginate page: 1, per_page: 720
+              context.paginate page: 1, per_page: @per_page = 720
             else
-              paginate page: params[:page], per_page: 5
+              context.paginate page: params[:page], per_page: @per_page = 5
             end
           end
         when 'lines'
-          @search = Sunspot.search Line do
-            fulltext keywords, highlight: true
-            order_by(:id, :asc)
-            facet(:category)
-            facet(:section)
-            facet(:canto)
-            facet(:lbook)
-            facet(:length)
-            with(:section).equal_to(params[:section]) if params[:section].present?
-            with(:canto).equal_to(params[:canto]) if params[:canto].present?
-            with(:length).equal_to(params[:length]) if params[:length].present?
-            with(:lbook).equal_to(params[:lbook]) if params[:lbook].present?
+          @search = Sunspot.search Line do |context|
+            context.fulltext keywords, highlight: true
+            context.order_by(:id, :asc)
+            context.facet(:category)
+            context.facet(:section)
+            context.facet(:canto)
+            context.facet(:lbook)
+            context.facet(:length)
+            context.with(:section).equal_to(params[:section]) if params[:section].present?
+            context.with(:canto).equal_to(params[:canto]) if params[:canto].present?
+            context.with(:length).equal_to(params[:length]) if params[:length].present?
+            context.with(:lbook).equal_to(params[:lbook]) if params[:lbook].present?
             if params[:download]
-              paginate page: 1, per_page: 24_000
+              context.paginate page: 1, per_page: @per_page = 24_000
             else
-              paginate page: params[:page], per_page: 30
+              context.paginate page: params[:page], per_page: @per_page = 30
             end
           end
         when 'posts'
-          @search = Sunspot.search Post do
-            fulltext keywords, highlight: true
-            with(:published_at).less_than Time.now
-            facet(:category)
-            facet(:posted)
-            facet(:author)
-            facet(:blogname)
-            facet(:series)
-            with(:posted).equal_to(params[:posted]) if params[:posted].present?
-            with(:author).equal_to(params[:author]) if params[:author].present?
-            with(:blogname).equal_to(params[:blogname]) if params[:blogname].present?
-            with(:series).equal_to(params[:series]) if params[:series].present?
-            paginate page: params[:page], per_page: 5
+          @search = Sunspot.search Post do |context|
+            context.fulltext keywords, highlight: true
+            context.with(:published_at).less_than Time.now
+            context.facet(:category)
+            context.facet(:posted)
+            context.facet(:author)
+            context.facet(:blogname)
+            context.facet(:series)
+            context.with(:posted).equal_to(params[:posted]) if params[:posted].present?
+            context.with(:author).equal_to(params[:author]) if params[:author].present?
+            context.with(:blogname).equal_to(params[:blogname]) if params[:blogname].present?
+            context.with(:series).equal_to(params[:series]) if params[:series].present?
+            context.paginate page: params[:page], per_page: @per_page = 5
           end
         when /[a-z]/
-          @search = Sunspot.search Page do
-            fulltext keywords, highlight: true
-            facet(:category)
-            with(:type).equal_to(filter[1].downcase.capitalize.to_s)
-            paginate page: params[:page], per_page: 30
+          @search = Sunspot.search Page do |context|
+            context.fulltext keywords, highlight: true
+            context.facet(:category)
+            context.with(:type).equal_to(filter[1].downcase.capitalize.to_s)
+            context.paginate page: params[:page], per_page: @per_page = 30
           end
         end
       end
     else
-      @search  =  Sunspot.search  Line,  Book,  Stanza,  Page,  Post  do
-         fulltext params[:q], highlight: true
-         with(:published_at).less_than Time.now
-         facet(:category)
-         if params[:category].present?
-           with(:category).equal_to(params[:category])
-         end
-         paginate page: params[:page], per_page: 20
-         end
+      @search  =  Sunspot.search  Line,  Book,  Stanza,  Page,  Post  do |context|
+        context.fulltext params[:q], highlight: true
+        context.with(:published_at).less_than Time.now
+        context.facet(:category)
+        if params[:category].present?
+          context.with(:category).equal_to(params[:category])
+        end
+        context.paginate page: params[:page], per_page: @per_page = 20
+      end
     end
     if params[:download]
       download
