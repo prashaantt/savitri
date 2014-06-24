@@ -11,7 +11,7 @@
 <% title @post.cached_title + " | " + @blog.cached_title %>
 
 <div class="row">
-  <div class="span10">
+  <div class="span12">
     <div class="page-header title">
       <h1><%= link_to @blog.cached_title, blog_posts_path %></h1>
       <div style="margin-top: 20px">
@@ -44,7 +44,7 @@
           <h6 class="post-series hidden-desktop"><%= @post.cached_series_title %></h6>
         <% end %>
       <% end %>
-      <h3><strong><a href="#"><%= link_to @post.cached_title,  blog_post_path(@blog,@post) %></a></strong>
+      <h1 class="post-title-header"><a href="#"><%= link_to @post.cached_title,  blog_post_path(@blog,@post) %></a></strong>
       <% if current_user.nil? || !current_user.admin? %>
         <% if @post.featured? %>
             <i class="icon-star pull-right"></i>
@@ -52,7 +52,7 @@
         <% else %>
           <%= link_to '', update_featured_status_path(@post.cached_blog,@post), id: @post.url, :class => toggle_class(@post), remote: true %> 
         <% end %>
-      </h3>
+      </h1>
       <h6><%= @post.cached_subtitle %></h6>
       <div>
         <span class="pull-right">
@@ -78,7 +78,7 @@
         <% if @post.cached_show_excerpt === "prefix" %>
           <p class='excerpt'><%= @post.cached_excerpt %></p>
         <% end %>
-        <div class="quotable"><%= @post.cached_content.html_safe.gsub(/\r\n?/,"").html_safe %></div>
+        <%= @post.cached_content.html_safe.gsub(/\r\n?/,"").html_safe %>
         <% if @post.cached_show_excerpt === "suffix" %>
           <p class='excerpt'><%= @post.cached_excerpt %></p>
         <% end %>
@@ -104,78 +104,40 @@
     </article>
     <% unless @post.draft %>
     <section class="comments h6">
-      <h6 id="comments"><%= pluralize(@post.cached_comments_count, "comment") %></h6>
       <%= render @post.cached_comments %>
-      <% if user_signed_in? %>
-      <% if can? :create, Comment %>
-      <%= render "comments/form" %>
-      <% end %>
-      <% else %>
-      <div class="btn-grp" style="text-align: center">
-        <%= link_to "Log in to comment", new_user_session_path, :class => 'btn' %>
-      </div>
-      <% end %>
+      <%= render "comments/disqus" %>
     </section>
     <% end %>
   </div>
   <!-- Main Blog Content End -->
   <!--  SideBar Begin -->
   <div class="span3 visible-desktop right-col">
-    <!-- <% tag_counts = @post.tag_counts.reject{|tag| tag.name.start_with?("@")} %>
-    <% if tag_counts.length > 0 %>
-    <div class="right-sidebar" id="tag_cloud">
-      <label for="related-tag" class="sidebar-title"><span class="label">Tags</span></label>
-      <input class="arcin" type="checkbox" id="related-tag" /> 
-      <ol>
-        <% count = 0 %>
-        <li class="listi">
-          <% tag_cloud tag_counts, %w[m] do |tag, css_class| %>
-            <%= link_to tag_path(params[:blog_id], tag.name) do %>
-              <span class="sidebar-links <%= css_class %>"><%= tag.name %></span>
-            <% end %>
-            <% unless count == tag_counts.length - 1 %>
-              <span class="tag-sep">&bull;</span>
-            <% end %>
-            <% count += 1 %>
-          <% end %>
-        </li>
-      </ol>
-    </div>
-    <% end %> -->
-
     <!-- Begin Latest posts -->
-    <div class="archives right-sidebar" id="recent_posts">
-      <label for="recentposts" class="sidebar-title"><span class="label">Recent posts</span></label>
-      <input class="rcin" type="checkbox" id="recentposts" />
-      <ol id="rpos"></ol>
+    <!-- Begin Latest posts -->
+    <!-- Begin Latest posts -->
+    <div class="sidebar-menu">
+      <div class="sidebar-heading">
+        <a class="collapse_posts">Recent Posts</a>
+      </div>
+      <div class="collapse recent_posts" id="recent_posts">
+      </div>
     </div>
 
     <!-- Begin Latest comments -->
-    <div class="archives right-sidebar" id="recent_comments">
-      <label for="recentcomments" class="sidebar-title"><span class="label">Recent comments</span></label>
-      <input class="rcin" type="checkbox" id="recentcomments" />
-      <ol id="rcom"></ol>
-    </div>     
-
-    <!-- Begin Related Content -->
-    <% if @related_posts.present? && @related_posts.count > 0 %>
-      <div class="right-sidebar" id="related_posts">
-        <label for="relatedposts" class="sidebar-title"><span class="label">Related Content</span></label>
-        <input class="rcin" type="checkbox" id="relatedposts" />
-        <ol id="rpos">
-        <% @related_posts.each do |rpost| %>
-          <li class="content-indent">
-            <%= link_to rpost.title, blog_post_path(rpost.blog, rpost) %>
-          </li>
-        <% end %>
-        </ol>
+    <div class="sidebar-menu">
+      <div class="sidebar-heading">
+        <a class="collapse_comments">Recent Comments</a>
       </div>
-    <% end %>
-    <!-- End Related Content -->
+      <div class="collapse recent_comments" id="recent_comments">
+      </div>
+    </div>
 
     <!-- Begin DatePicker -->
-    <div class="visible-desktop datepicker right-sidebar">
+    <div class="visible-desktop datepicker">
+      <div class="datepicker-title">Search by Date</div>
     </div>
+  </div>
+    
   </div>
 
   <!--  SideBar End -->  

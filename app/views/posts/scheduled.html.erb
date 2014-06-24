@@ -1,13 +1,12 @@
 <%- model_class = Post -%>
 <!-- Main Page Content -->
 <div id='flash_error'></div>
-<% @blog = Blog.cached_find_by_slug(params[:blog_id]) %>
-<% title @blog.cached_title %>
+<% title @blog.title %>
 
 <div class="row">
-  <div class="span12 dynamicspan">
+  <div class="span12">
     <div class="page-header title">
-      <h1><%= link_to @blog.cached_title, blog_posts_path %></h1>
+      <h1><%= link_to @blog.title, blog_posts_path %></h1>
       <div style="margin-top: 20px">
         <span class="muted">Scheduled posts</span>
       </div>
@@ -87,21 +86,27 @@
       <% end %>
     <% end %>
 
-    <!-- Begin Latest posts -->
-    <div class="archives right-sidebar" id="recent_posts">
-      <label for="recentposts" class="sidebar-title"><span class="label">Recent posts</span></label>
-      <input class="rcin" type="checkbox" id="recentposts" />
-      <ol id="rpos"></ol>
+<!-- Begin Latest posts -->
+    <div class="sidebar-menu">
+      <div class="sidebar-heading">
+        <a class="collapse_posts">Recent Posts</a>
+      </div>
+      <div class="collapse recent_posts" id="recent_posts">
+      </div>
     </div>
 
     <!-- Begin Latest comments -->
-    <div class="archives right-sidebar" id="recent_comments">
-      <label for="recentcomments" class="sidebar-title"><span class="label">Recent comments</span></label>
-      <input class="rcin" type="checkbox" id="recentcomments" />
-      <ol id="rcom"></ol>
+    <div class="sidebar-menu">
+      <div class="sidebar-heading">
+        <a class="collapse_comments">Recent Comments</a>
+      </div>
+      <div class="collapse recent_comments" id="recent_comments">
+      </div>
     </div>
 
-    <div class="visible-desktop datepicker right-sidebar">
+    <!-- Begin DatePicker -->
+    <div class="visible-desktop datepicker">
+      <div class="datepicker-title">Search by Date</div>
     </div>
   </div>
 

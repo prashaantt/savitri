@@ -2,20 +2,94 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 #seconds
+
+# Latest Posts
 $ ->
+  $('.collapse_posts').click ->
+    $closest = $(this).closest('.sidebar-heading').next('.collapse')
+    if $closest.hasClass('in')
+      $closest.removeClass('in')
+      $closest.css('display', 'none')
+
+    else
+      $closest.addClass('in')
+      $closest.css('display', 'block')
+      if ($closest.find("li").length == 0)
+        callback = (response) -> 
+          recentpostsdiv = $closest
+          postsdiv = ""
+          if (response.length != 0)
+            $.each response, (val1) -> 
+              post = response[val1]
+              postsdiv=postsdiv.concat("<li class=\"recent-posts-list\"\>")
+              postsdiv=postsdiv.concat("<a href=\""+post.cached_share_url+"\" 
+                class=\"sidebar-links\">"+post.title)
+
+            recentpostsdiv.append(postsdiv)
+          else
+            recentpostsdiv.append("<li><h6><hNo Recent Posts</h6></li>")
+
+        $.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentposts/', callback, 'json'
+
+$ ->
+  $('.collapse_posts').click()
+
+# Latest comments
+$ ->
+  $('.collapse_comments').click ->
+    $closest = $(this).closest('.sidebar-heading').next('.collapse')
+    if $closest.hasClass('in')
+      $closest.removeClass('in')
+      $closest.css('display', 'none')
+
+    else
+      $closest.addClass('in')
+      $closest.css('display', 'block')
+      if ($closest.find("li").length == 0)
+        callback = (response) -> 
+          recentcomdiv = $closest
+          commentsdiv = ""
+          if(response.length != 0)
+            $.each response, (val1) -> 
+              comment = response[val1]
+              commentsdiv=commentsdiv.concat("<li class=\"recent-comments-list\"\>")
+              commentsdiv=commentsdiv.concat("<a href=\""+comment.cached_share_url+"\" 
+                class=\"sidebar-links\">"+comment.commenter+": \""+comment.cached_post_title+"\"")
+            recentcomdiv.append(commentsdiv)
+          else
+            recentcomdiv.append("<li>No Recent Comments</li>")
+
+        $.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentcomments/', callback, 'json'
+
+$ ->
+  $('.collapse_comments').click()
+
+$ ->
+  count = undefined
   count = ->
-    val = $.trim($("textarea").val())
+    chars = undefined
+    val = undefined
+    words = undefined
+    val = $.trim($("textarea:first").val())
     words = val.replace(/\s+/g, " ").split(" ").length
     chars = val.length
     words = 0  unless chars
-    $("#counter").html words + " words and " + chars + " characters"
+    $("#word_count").html words + " words "
+    if words >= 100
+      $("#word_count").css "color", "red"
+    else
+      $("#word_count").css "color", "#3F2A18"
     return
+
   count()
   $("textarea:first").on "input", count
 
 $ ->
   $(".excerpt").each ->
     $(this).html converter.makeHtml($(this).text())
+
+$ ->
+  $('.snippet').last().css('border-bottom', 'none');
 
 $ ->
   $.ajax
@@ -36,7 +110,6 @@ $ ->
           new_url = current_url + split_date[2] + '/' + split_date[0] + '/' + split_date[1]
           window.location.pathname = new_url
           return
-
 
 # onPage load, we need to highlight the selected date. If no particular date exists in the url, highlight todays date
 # If it exists, parse it and navigate to that date on the calendar and highlight
@@ -67,12 +140,12 @@ $ ->
   $(document).on 'click', '.ui-datepicker-prev, .ui-datepicker-next', ->
     $('.ui-datepicker-prev').addClass('pull-left')
 
-$ ->
-  if $('li.previous').text().trim() == ""
-    $('#paginator span').addClass('offset1')
+# $ ->
+#   if $('li.previous').text().trim() == ""
+#     $('#paginator span').addClass('offset1')
 
-  if $('li.next').text().trim() == ""
-    $('#paginator').removeClass('span9').addClass('span8')
+  # if $('li.next').text().trim() == ""
+  #   $('#paginator').removeClass('span9').addClass('span8')
 
 $ ->
   $(".new_post,.edit_post").submit ->
@@ -83,6 +156,13 @@ $ ->
     md_text = md_text.replace(/alt="enter image description here"/, "alt=\"" + title + "\"")
     $("#wmd-input").val text
     $("#post_content").val md_text
+
+$ ->
+  $("#new-blog-post").click ->
+    if $(".new_post").length
+      if !$("#size_now").is(":checked") && !$("#size_later").is(":checked")
+        alert " Please choose Publish time."
+        false
 
 $ ->
 	$("#new-blog-post").click (e) ->
@@ -245,44 +325,6 @@ $ ->
 					$(closetdiv).append($("<div class=\"span6\"><b><a href=\""+fileloc+"\"
 							>Download Audio <i class=\"icon-download-alt\"></i></a></b><br/></div>"))
 
-	$("#recentcomments").click (event) ->
-		if ($("#rcom").find("li").length == 0)
-				callback = (response) -> 
-					recentcomdiv = $("#rcom")
-					commentsdiv = ""
-					if(response.length != 0)
-						$.each response, (val1) -> 
-							comment = response[val1]
-							commentsdiv=commentsdiv.concat("<li class=\"content-indent\"\>")
-							commentsdiv=commentsdiv.concat("<a href=\""+comment.cached_share_url+"\" 
-								class=\"sidebar-links\">"+comment.commenter+": \""+comment.cached_post_title+"\"")
-						recentcomdiv.append(commentsdiv)
-					else
-						recentcomdiv.append("<li>No Recent Comments</li>")
-
-
-				$.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentcomments/', callback, 'json'
-
-$ ->
-	$("#recentposts").click (event) ->
-		if ($("#rpos").find("li").length == 0)
-				callback = (response) -> 
-					recentpostsdiv = $("#rpos")
-					postsdiv = ""
-					if (response.length != 0)
-						$.each response, (val1) -> 
-							post = response[val1]
-							postsdiv=postsdiv.concat("<li class=\"content-indent\"\>")
-							postsdiv=postsdiv.concat("<a href=\""+post.cached_share_url+"\" 
-								class=\"sidebar-links\">"+post.title)
-
-						recentpostsdiv.append(postsdiv)
-					else
-						recentpostsdiv.append("<li>No Recent Posts</li>")
-
-
-
-				$.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentposts/', callback, 'json'
 
 $ ->
   $('.best_in_place').best_in_place()

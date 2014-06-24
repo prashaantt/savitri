@@ -22,11 +22,12 @@
 	<div class="span6">
 		<% unless params[:q].blank? %>
 		<% unless @search.total.to_i == 0 %>
-		<h3 class="announce">Showing <%= @search.total %> matches</h3>
+		<h5 class="announce">Showing <%= (@search.results.current_page - 1)* @per_page %> - <%= @search.results.last_page? ? @search.total : (@search.results.current_page * @per_page) %> of <%= @search.total %> matches</h5>
 		<% else %>
-		<h3 class="announce">No results found</h3>
+		<h5 class="announce">No results found</h5>
 		<p><em>Try searching for something else.</em></p>
 		<% end %>
+		<%= paginate @search.results, :param_name => :page %>
 		<div class="results">
 			<% @search.each_hit_with_result do |hit,l| %>
 			<div class="result">
@@ -63,7 +64,7 @@
 					</span></p>
 				<% elsif l.is_a?(Post) %>
 					<div class="result-title">
-						<h2><%= link_to l.title, blog_post_path(l.blog,l) %></h2>
+						<h4><%= link_to l.title, blog_post_path(l.blog,l) %></h4>
 					</div>
 					<div class="result-text">
 						<% if highlight = hit.highlight(:content) %>
@@ -80,7 +81,7 @@
 						</div>
 				<% elsif l.is_a?(Page) %>
 					<div class="result-title">
-						<h2><%= link_to l.name, page_path(l) %></h2>
+						<h4><%= link_to l.name, page_path(l) %></h4>
 					</div>
 					<div class="result-text">
 						<p class="snip">...<%= strip_tags(l.content).first(150).html_safe %>...</p>
