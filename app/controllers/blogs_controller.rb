@@ -3,7 +3,7 @@
 class BlogsController < ApplicationController
   before_filter :store_location, except: [:recentcomments, :recentposts]
   before_filter :authenticate_user!, except:
-                [:show, :recentcomments, :recentposts]
+                [:show, :recentcomments, :recentposts, :get_oldest_post_date]
 
   def index
     @blogs = current_user.cached_blogs
@@ -146,5 +146,11 @@ class BlogsController < ApplicationController
     @user.give_blogger_access
     blog.save!
     render nothing: true
+  end
+
+  def get_oldest_post_date
+    @blog = Blog.cached_find_by_slug(params[:blog_id])
+    @date = @blog.cached_oldest_blogpost.published_at.strftime('%Y-%m-%d')
+    render json: { date: @date }
   end
 end
