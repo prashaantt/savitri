@@ -13,7 +13,7 @@ class PagesController < ApplicationController
       @no_of_pages = (count / per_page) + (count % per_page)
     end
     @pages = Page.order('created_at DESC').limit(per_page).offset(params[:page].to_i * per_page)
-    authorize! :create, Page
+    authorize! :create, Page.new
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @pages }
@@ -74,6 +74,7 @@ class PagesController < ApplicationController
   def edit
     @page = Page.find(params[:id]) || not_found
     @page.url = @page.permalink.split('/').last
+    authorize! :edit, @page
   end
 
   # POST /pages
@@ -86,6 +87,8 @@ class PagesController < ApplicationController
     else
       params[:page][:parent] = nil
     end
+
+    authorize! :create, @page
 
     respond_to do |format|
       if @page.save
@@ -113,6 +116,8 @@ class PagesController < ApplicationController
       params[:page][:parent] = nil
     end
 
+    authorize! :update, @page
+
     respond_to do |format|
       if @page.update_attributes(params[:page])
         format.html { redirect_to page_path(@page), notice: 'Page was successfully updated.' }
@@ -129,6 +134,9 @@ class PagesController < ApplicationController
   def destroy
     @page = Page.find(params[:id])
     child = Page.find_by_parent(params[:id])
+
+    authorize! :destroy, @page
+
     if child.nil?
       @page.destroy
       respond_to do |format|
