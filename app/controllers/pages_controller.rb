@@ -13,7 +13,7 @@ class PagesController < ApplicationController
       @no_of_pages = (count / per_page) + (count % per_page)
     end
     @pages = Page.order('created_at DESC').limit(per_page).offset(params[:page].to_i * per_page)
-    authorize! :create, @pages
+    authorize! :create, Page
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @pages }
@@ -63,7 +63,7 @@ class PagesController < ApplicationController
   # GET /pages/new.json
   def new
     @page = Page.new
-
+    authorize! :create, @page
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @page }
