@@ -32,12 +32,11 @@ $ ->
         $.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentposts/', callback, 'json'
 
 $ ->
-  $('.collapse_posts').click()
+  $(".collapse_comments").click ->
+    $closest = undefined
+    $commentDiv = undefined
+    $closest = $(this).closest(".sidebar-heading").next(".collapse")
 
-# Latest comments
-$ ->
-  $('.collapse_comments').click ->
-    $closest = $(this).closest('.sidebar-heading').next('.collapse')
     if $closest.hasClass('in')
       $closest.removeClass('in')
       $closest.css('display', 'none')
@@ -45,23 +44,36 @@ $ ->
     else
       $closest.addClass('in')
       $closest.css('display', 'block')
-      if ($closest.find("li").length == 0)
-        callback = (response) -> 
-          recentcomdiv = $closest
-          commentsdiv = ""
-          if(response.length != 0)
-            $.each response, (val1) -> 
-              comment = response[val1]
-              commentsdiv=commentsdiv.concat("<li class=\"recent-comments-list\"\>")
-              commentsdiv=commentsdiv.concat("<a href=\""+comment.cached_share_url+"\" 
-                class=\"sidebar-links\">"+comment.commenter+": \""+comment.cached_post_title+"\"")
-            recentcomdiv.append(commentsdiv)
-          else
-            recentcomdiv.append("<li>No Recent Comments</li>")
-
-        $.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentcomments/', callback, 'json'
-
+      $closest.css('display', 'block')
+      $commentDiv = $("#recent_comments")
+      $.get "https://disqus.com/api/3.0/forums/listPosts.json?forum=savitri&limit=10&related=thread&api_key=NlGHyHyNqFFp2zcXh0kJvPOJV54hoUTw5os3bS1hefUoshcwvp1Lq8pdR3xu8xML", (res, code) ->
+        html = undefined
+        i = undefined
+        len = undefined
+        post = undefined
+        result = undefined
+        if res.code is 0
+          result = ""
+          i = 0
+          len = res.response.length
+          max_len = 10
+          while i < len
+            post = res.response[i]
+            html = "<li class='recent-comments-list clearfix' style='margin-bottom: 15px'>"
+            html += "<a href='" + post.author.profileUrl + "'><img width='40px' src='" + post.author.avatar.cache + "' class='pull-left' style='margin-right: 5px' title='" + post.author.name + "' alt='" + post.author.name + "'/></a>"
+            html += "<a href='" + post.url + "'>"
+            comment = post.raw_message.split(" ").splice(0, max_len).join(" ") + (if post.raw_message.split(" ").length > max_len then "..." else "")
+            html += "<p class='comment-text'>" + comment + '</p>'
+            html += '</a>'
+            # html += "<a href='" + post.url + "'\"class=\"sidebar-links\">" + 
+            #   post.thread.clean_title.split('|')[0] + "</a>"
+            html += "</li>"
+            result += html
+            i++
+          $commentDiv.append result
+        return
 $ ->
+  $('.collapse_posts').click()
   $('.collapse_comments').click()
 
 $ ->
@@ -75,7 +87,7 @@ $ ->
     chars = val.length
     words = 0  unless chars
     $("#word_count").html words + " words "
-    if words >= 100
+    if words >= 80
       $("#word_count").css "color", "red"
     else
       $("#word_count").css "color", "#3F2A18"
