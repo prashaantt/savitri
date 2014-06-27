@@ -1,7 +1,7 @@
 # encoding: UTF-8
 # BlogsController
 class BlogsController < ApplicationController
-  before_filter :store_location, except: [:recentcomments, :recentposts]
+  before_filter :store_location, except: [:recentcomments, :recentposts, :get_oldest_post_date]
   before_filter :authenticate_user!, except:
                 [:show, :recentcomments, :recentposts, :get_oldest_post_date]
 
