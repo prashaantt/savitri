@@ -1,8 +1,8 @@
 <%- model_class = Blog -%>
 
 <div class="row">
-  <div class="span4 offset4">
-    <div class="page-header">
+  <div class="span12">
+    <div class="page-header title">
       <h1>
         <%=t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
                                  :default => "New #{model_class.model_name.human}") %>
@@ -11,4 +11,10 @@
   </div>
 </div>
 
-<%= render :partial => 'form' %>
+<div class="row">
+  <div class="span8 offset2 center-col">
+    <div class="sp8-content">
+      <%= render :partial => 'form' %>
+    </div>  
+  </div>
+</div>

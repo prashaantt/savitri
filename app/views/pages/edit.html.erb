@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="span6 offset3 page-header title">
+  <div class="span12 page-header title">
     <h1>Edit page</h1>
   </div>
 </div>
@@ -15,8 +15,14 @@
     }
   });
 </script>
-
-<%= render 'form', :is_edit => "true" %>
+  
+<div class="row">
+  <div class="span8 offset2 center-col">
+    <div class="sp8-content">
+      <%= render 'form', :is_edit => "true" %>
+    </div>
+  </div>
+</div>
 
 <%= render 'shared/poemtext' %>
 <%= render 'shared/image_upload' %>

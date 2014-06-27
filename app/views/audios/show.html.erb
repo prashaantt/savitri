@@ -1,6 +1,6 @@
 <% title @medium.title + " | " + @audio.title %>
 <div class="row">
-  <div class="span6 offset3 dynamicspan">
+  <div class="span12">
     <h1 class="page-header title" style="margin-bottom: 20px">
       <%= link_to @medium.title, medium_audios_path %>
       <%= link_to "", request.protocol + request.host_with_port + medium_path(@medium) + "/feed", :class => "icon-music", :title => "Subscribe to podcast", :style => "font-size: 65%" %><br>
@@ -9,8 +9,8 @@
   </div>
 </div>
 <div class="row">
-  <div class="span6 offset3 dynamicspan">
-    <article style="margin-top: 20px">
+  <div class="span8 offset2">
+    <div class="sp8-content" style="margin-top: 20px">
       <h2><%= link_to @audio.title,  medium_audio_path(@medium, @audio) %></h2>
       <div>
         <span class="pull-right">
@@ -55,7 +55,7 @@
           <%= pluralize(@audio.duration["seconds"], "second") if (@audio.duration["seconds"] > 0) %>)
         </p>
       </div>
-    </article>
+    </div>
   </div>
 <!--  SideBar Begin -->
   <div class="span3 visible-desktop">
