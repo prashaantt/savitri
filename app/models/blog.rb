@@ -56,6 +56,12 @@ class Blog < ActiveRecord::Base
     Rails.cache.delete([self, 'recentposts'])
   end
 
+  def cached_oldest_blogpost
+    Rails.cache.fetch([self, 'oldest_post']) do
+      posts.where(draft: false).order('published_at').limit(1).to_a.first
+    end
+  end
+
   def flush_cache
     Rails.cache.delete([self.class.name, 'findbyslug' + self.slug])
     Rails.cache.delete([self, 'title'])
@@ -66,6 +72,11 @@ class Blog < ActiveRecord::Base
       post.flush_cached_blog
     end
     flush_dependent_cache
+    flush_oldest_blogpost
+  end
+
+  def flush_oldest_blogpost
+    Rails.cache.delete([self, 'oldest_post'])
   end
 
   def flush_cached_user

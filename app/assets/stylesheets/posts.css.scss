@@ -11,6 +11,11 @@
   padding: 0% 4% 4% 8%;
 }
 
+.comment-text {
+  text-align: left;
+  margin: 0;
+}
+
 .sidebar-heading {
   padding: 1% 0% 1% 5%;
 }
@@ -18,7 +23,7 @@
 .recent-posts-list, .recent-comments-list {
   font-size: 12px;
   line-height: 15px;
-  padding-bottom: 6%;
+  margin-bottom: 6%;
 }
 
 .sidebar-menu {
@@ -495,4 +500,12 @@ iframe {
 }
 .icon-star-empty{
   text-decoration: none !important
+}
+
+blockquote p {
+  margin-bottom: 15px; 
+}
+
+.dsq-widget-list{
+  margin-left: 0px;
 }

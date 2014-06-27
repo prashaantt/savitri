@@ -237,6 +237,9 @@ class Post < ActiveRecord::Base
     flush_comments_cache
     User.find(author_id).flush_recent_posts
     flush_cached_author
+    if self.published_at <= self.blog.cached_oldest_blogpost.published_at
+      Blog.find(blog_id).flush_oldest_blogpost
+    end
   end
 
   def flush_cached_author
