@@ -1,39 +1,49 @@
-<h1>Listing stanzas</h1>
+<div class="row">
+  <div class="span12 page-header title">
+    <h1>Listing stanzas</h1>
+  </div>
+</div>
 
-<table>
-  <tr>
-    <th>no</th>
-    <th>Section (No)</th>
-    <th>Canto (No) Name</th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="row">
+  <div class="span10 offset1 center-col">
+    <div class="sp12-content">
+      <table>
+        <tr>
+          <th>no</th>
+          <th>Section (No)</th>
+          <th>Canto (No) Name</th>
+          <th></th>
+          <th></th>
+        </tr>
 
-<% @stanzas.each do |stanza| %>
-  <tr>
-    <td><%= stanza.no %></td>
-     <% @section = Section.find(stanza.section_id) %>
-     <td><%= @section.no %></td>
-     <% @canto = Canto.find(@section.canto_id) %>
-    <td>(<%= @canto.no %>)
-      <%= @canto.title %>
-    </td>
-    <td><%= link_to 'Show', stanza %></td>
-    <td>
-    <% if can? :update, stanza %>
-    <%= link_to 'Edit', edit_stanza_path(stanza) %>
-    <% end %>
-    </td>
-    <td>
-    <% if can? :destroy, stanza %>
-      <%= link_to 'Destroy', stanza, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% @stanzas.each do |stanza| %>
+        <tr>
+          <td><%= stanza.no %></td>
+           <% @section = Section.find(stanza.section_id) %>
+           <td><%= @section.no %></td>
+           <% @canto = Canto.find(@section.canto_id) %>
+          <td>(<%= @canto.no %>)
+            <%= @canto.title %>
+          </td>
+          <td><%= link_to 'Show', stanza %></td>
+          <td>
+          <% if can? :update, stanza %>
+          <%= link_to 'Edit', edit_stanza_path(stanza) %>
+          <% end %>
+          </td>
+          <td>
+          <% if can? :destroy, stanza %>
+            <%= link_to 'Destroy', stanza, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+          </td>
+        </tr>
       <% end %>
-    </td>
-  </tr>
-<% end %>
-</table>
+      </table>
 
-<br />
-<% if can? :create, Stanza %>
-<%= link_to 'New Stanza', new_stanza_path %>
-<% end %>
+      <br />
+      <% if can? :create, Stanza %>
+      <%= link_to 'New Stanza', new_stanza_path %>
+      <% end %>
+    </div>
+  </div>
+</div>

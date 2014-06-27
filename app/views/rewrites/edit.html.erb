@@ -1,6 +1,17 @@
-<h1>Editing rewrite</h1>
+<div class="row">
+  <div class="span12 page-header title">
+    <h1>Editing rewrite</h1>
+  </div>
+</div>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @rewrite %> |
-<%= link_to 'Back', rewrites_path %>
+<div class="row">
+  <div class="span8 offset2 center-col">
+    <div class="sp8-content">
+      <%= render 'form' %>
+      <div style="margin: auto; float:none; width: 220px;">
+        <%= link_to 'Show', @rewrite %> |
+        <%= link_to 'Back', rewrites_path %>
+      </div>
+    </div>
+  </div>
+</div>

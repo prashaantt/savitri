@@ -5,7 +5,7 @@
 <% end %>
 <% title @medium.title %>
 <div class="row">
-  <div class="span6 offset3 dynamicspan">
+  <div class="span12">
     <div class="page-header title">
       <h1 itemprop="name"><%= link_to @medium.cached_title, medium_audios_path %></h1>
       <h3 class="blog-subtitle"><%= @medium.cached_subtitle %></h3>
@@ -19,7 +19,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="span6 offset3 dynamicspan">
+  <div class="span8 offset2">
     <% @audios.each do |audio| %>
       <section class="audio-snippet">
         <h2><%= link_to audio.title,  medium_audio_path(@medium, audio) %></h2>

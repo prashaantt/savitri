@@ -1,24 +1,33 @@
-<h1>Listing stanzas</h1>
+<div class="row">
+  <div class="span12 page-header title">
+    <h1>Listing stanzas</h1>
+  </div>
+</div>
 
-<table>
-  <tr>
-    <th>no</th>
-    <th>Section (No)</th>
-    <th>Canto (No) Name</th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="row">
+  <div class="span8 offset2 center-col">
+    <div class="sp8-content">
+      <table>
+        <tr>
+          <th>no</th>
+          <th>Section (No)</th>
+          <th>Canto (No) Name</th>
+          <th></th>
+          <th></th>
+        </tr>
 
-<% @stanzas.each do |stanza| %>
-  <tr>
-    <td><%= stanza.no %></td>
-     <% @section = Section.find(stanza.section_id) %>
-     <td><%= @section.no %></td>
-     <% @canto = Canto.find(@section.canto_id) %>
-    <td>(<%= @canto.no %>)
-      <%= @canto.title %>
-    </td>
-  </tr>
-<% end %>
-</table>
-
+        <% @stanzas.each do |stanza| %>
+          <tr>
+            <td><%= stanza.no %></td>
+             <% @section = Section.find(stanza.section_id) %>
+             <td><%= @section.no %></td>
+             <% @canto = Canto.find(@section.canto_id) %>
+            <td>(<%= @canto.no %>)
+              <%= @canto.title %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

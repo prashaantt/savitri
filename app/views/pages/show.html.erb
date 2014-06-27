@@ -1,6 +1,6 @@
 <% title @page.name %>
 <div class="row">
-  <div class="span6 offset3 page-header title">
+  <div class="span12 page-header title">
     <ul class="breadcrumb" style="background: none;">
       <% myparents = @page.myparents %>
         <% myparents.reverse.each_with_index do |p, index| %>
@@ -22,32 +22,34 @@
   </div>
   </div>
 </div>
+
 <div class="row">
-  <div class="span6 offset3" role="content">
-    <article class="main-content">
-      <%= @page.content.html_safe.gsub(/\r\n?/,"").html_safe %> 
-    </article>
-    <p class="author muted" style="padding-top: 20px">
-      (Last updated on <%= @page.updated_at.strftime("%b %d %Y at %l:%M %p") %>)
-    </p>
-    <%= render "comments/disqus" %>
-  </div>
-  <div class="span3 visible-desktop">
-  <!-- Begin Related Content -->
-    <% if @related_pages.present? && @related_pages.count > 0 %>
-      <div class="right-sidebar" id="related_pages">
-        <label for="relatedpages" class="sidebar-title"><span class="label">Related Content</span></label>
-        <input class="rcin" type="checkbox" id="relatedpages" />
-        <ol id="rpos">
-        <% @related_pages.each do |rpage| %>
-          <li class="content-indent">
-            <%= link_to rpage.name, page_path(rpage) %>
-          </li>
-        <% end %>
-        </ol>
+  <div class="span8 offset2 center-col" role="content">
+    <div class="sp8-content">
+      <div class="main-content page_headers">
+        <%= @page.content.html_safe.gsub(/\r\n?/,"").html_safe %>
+        <p class="author muted" style="padding-top: 20px">
+          (Last updated on <%= @page.updated_at.strftime("%b %d %Y at %l:%M %p") %>)
+        </p>
       </div>
-    <% end %>
-    <!-- End Related Content -->
+      <%= render "comments/disqus" %>
+    </div>
+  </div>
+
+  <div class="span3 visible-desktop right-col">
+    <div class="sidebar-menu relatedcontent">
+      <% if @related_pages.present? && @related_pages.count > 0 %>
+        <div class="sidebar-heading">
+          <a class="collapse_related_content">Related Content</a>
+        </div>
+        <div class="collapse related_content" id="related_content">
+          <% @related_pages.each do |rpage| %>
+            <li class="related-content-list">
+              <%= link_to rpage.name, page_path(rpage) %>
+            </li>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

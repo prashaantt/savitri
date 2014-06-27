@@ -29,7 +29,7 @@
 <!-- Main Blog Content -->
 <div class="row">
   <div class="span9 center-col" role="content">
-    <article class="article-post">
+    <div class="sp8-content">
       <% unless @post.cached_series_title.blank? %>
         <% series_tag_arr = @post.tag_counts.select{|tag| tag.name.start_with?("@")} %>
         <% unless series_tag_arr.empty? %>
@@ -101,19 +101,15 @@
         <% end %>
       </div>
       <% end %>
-    </article>
-    <% unless @post.draft %>
-    <section class="comments h6">
-      <%= render @post.cached_comments %>
-      <%= render "comments/disqus" %>
-    </section>
-    <% end %>
+      <% unless @post.draft %>
+        <%= render @post.cached_comments %>
+        <%= render "comments/disqus" %>
+      <% end %>
+    </div>
   </div>
   <!-- Main Blog Content End -->
   <!--  SideBar Begin -->
   <div class="span3 visible-desktop right-col">
-    <!-- Begin Latest posts -->
-    <!-- Begin Latest posts -->
     <!-- Begin Latest posts -->
     <div class="sidebar-menu">
       <div class="sidebar-heading">
@@ -136,9 +132,6 @@
     <div class="visible-desktop datepicker">
       <div class="datepicker-title">Search by Date</div>
     </div>
-  </div>
-    
-  </div>
-
-  <!--  SideBar End -->  
+  </div>   
+   <!--  SideBar End -->  
 </div>
