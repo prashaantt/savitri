@@ -59,7 +59,6 @@ $ ->
           max_len = 10
           while i < len
             post = res.response[i]
-            console.dir post
             html = "<li class='recent-comments-list clearfix' style='margin-bottom: 15px'>"
             html += "<a href='" + post.author.profileUrl + "'><img width='40px' src='" + post.author.avatar.cache + "' class='pull-left' style='margin-right: 5px' title='" + post.author.name + "' alt='" + post.author.name + "'/></a>"
             html += "<a href='" + post.url + "'>"
@@ -88,7 +87,7 @@ $ ->
     chars = val.length
     words = 0  unless chars
     $("#word_count").html words + " words "
-    if words >= 100
+    if words >= 80
       $("#word_count").css "color", "red"
     else
       $("#word_count").css "color", "#3F2A18"
