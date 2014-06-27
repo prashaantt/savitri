@@ -1,8 +1,10 @@
 <%- model_class = Post -%>
 <!-- Main Page Content -->
 <div id='flash_error'></div>
-<% title @blog.title %>
-
+<% @blog = Blog.cached_find_by_slug(params[:blog_id]) %>
+<% title @blog.cached_title
+meta_desc @blog.cached_title
+meta_keywords @blog.cached_title %>
 <div class="row">
   <div class="span12">
     <div class="page-header title">
