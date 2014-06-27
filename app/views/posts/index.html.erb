@@ -32,8 +32,9 @@
 <% if params[:page] %>
   <% pagetitle += " | Page " + params[:page] %>
 <% end %>
-<% title pagetitle %>
-
+<% title pagetitle 
+ meta_desc pagetitle 
+ meta_keywords pagetitle %>
 <div class="row">
   <div class="span12">
     <div class="page-header title">

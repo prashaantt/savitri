@@ -4,6 +4,14 @@ module ApplicationHelper
 		content_for(:title) {" - " +page_title}
 	end
 
+  def meta_desc(metadesc)
+    content_for(:meta_desc) { "Sri Aurobindo's Savitri " + metadesc }
+  end
+
+  def meta_keywords(keywords)
+    content_for(:meta_keywords) { 'Sri Aurobindo, Savitri, ' + keywords}
+  end
+
 	def is_active(controller)
     (params[:controller] == controller) ? "active" : "notactive" 
  	end
