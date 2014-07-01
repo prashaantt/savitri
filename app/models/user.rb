@@ -29,9 +29,17 @@ class User < ActiveRecord::Base
   acts_as_followable
 
   after_initialize :init
-  after_commit :follow_admin, :scholar_follow_new_user,:new_user_follow_scholar, on: :create
+  after_commit :follow_admin, :scholar_follow_new_user,
+               :new_user_follow_scholar, :follow_all_blogs, on: :create
   after_commit :flush_cache, :flush_dependent_cache
   after_commit :remove_blog_access, on: :destroy
+
+  # By default new user will follow all blogs.
+  def follow_all_blogs
+    Blog.find_each do |b|
+      follow(b)
+    end
+  end
 
   def remove_blog_access
     blogs = Blog.blogs_have_post_access id
@@ -42,11 +50,11 @@ class User < ActiveRecord::Base
   end
 
   def give_jr_editor_access
-    change_role("Junior Editor")
+    change_role('Junior Editor')
   end
 
   def give_blogger_access
-    change_role("Blogger")
+    change_role('Blogger')
   end
 
   def follow_admin
@@ -55,10 +63,10 @@ class User < ActiveRecord::Base
 
   def new_user_follow_scholar
     Role.find(2).users.each do |user|
-      self.follow(user)
+      follow(user)
     end
     rescue => ex
-      logger.info "Error in User#new_user_follow_scholar #{ex}"    
+      logger.info "Error in User#new_user_follow_scholar #{ex}"
   end
 
   def scholar_follow_new_user
@@ -88,7 +96,7 @@ class User < ActiveRecord::Base
 
   def change_role(role_name)
     self.role_id = Role.find_by_name(role_name).id
-    self.save  
+    save
   end
 
   def self.cached_find(id)
@@ -149,19 +157,19 @@ class User < ActiveRecord::Base
   end
 
   def flush_dependent_cache
-    self.blogs.each do |blog|
+    blogs.each do |blog|
       blog.flush_cached_user
     end
-    
-    self.posts.each do |post|
+
+    posts.each do |post|
       post.flush_cached_author
     end
-    
-    self.comments.each do |comment|
+
+    comments.each do |comment|
       comment.flush_cached_user
     end
 
-    self.media.each do |medium|
+    media.each do |medium|
       medium.flush_cached_user
     end
   end
