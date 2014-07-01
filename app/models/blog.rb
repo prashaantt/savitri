@@ -12,6 +12,7 @@ class Blog < ActiveRecord::Base
   has_many :comments, through: :posts
 
   after_commit :flush_cache
+  after_create :all_users_follows_blog
 
   scope :blogs_have_post_access, ->(user){ where("post_access like ?", "% #{user}\n%") }
 
@@ -19,6 +20,13 @@ class Blog < ActiveRecord::Base
 
   def to_param
     "#{slug}"
+  end
+
+  # by default all users will follow newly created blog.
+  def all_users_follows_blog
+    User.find_each do |user|
+      user.follow(self)
+    end
   end
 
   def self.cached_find_by_slug(blogid)
