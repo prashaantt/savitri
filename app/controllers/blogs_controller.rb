@@ -153,4 +153,9 @@ class BlogsController < ApplicationController
     @date = @blog.cached_oldest_blogpost.published_at.strftime('%Y-%m-%d')
     render json: { date: @date }
   end
+
+  def unsubscribe_blog
+    @blog = Blog.find(params[:blog_id])
+    @user = User.find(params[:user_id]) if params[:user_id]
+  end
 end
