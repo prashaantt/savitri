@@ -104,24 +104,25 @@ $ ->
   $('.snippet').last().css('border-bottom', 'none');
 
 $ ->
-  $.ajax
-    url: window.location.pathname.match(/([^/]*\/){3}/)[0] + "get_oldest_post_date"
-    type: "get"
-    dataType: "json"
-    success: (result) ->
-      $('.datepicker').datepicker
-        inline: true
-        format: 'yyyy-mm-dd'
-        maxDate: new Date()
-        minDate: new Date(JSON.stringify(result['date']))
-        changeMonth: true
-        changeYear: true
-        onSelect: (date) ->
-          current_url = window.location.pathname.match(/([^/]*\/){3}/)[0]
-          split_date = date.split('/')
-          new_url = current_url + split_date[2] + '/' + split_date[0] + '/' + split_date[1]
-          window.location.pathname = new_url
-          return
+  unless typeof window.get_date is "undefined"
+    $.ajax
+      url: window.location.pathname.match(/([^/]*\/){3}/)[0] + "get_oldest_post_date"
+      type: "get"
+      dataType: "json"
+      success: (result) ->
+        $('.datepicker').datepicker
+          inline: true
+          format: 'yyyy-mm-dd'
+          maxDate: new Date()
+          minDate: new Date(JSON.stringify(result['date']))
+          changeMonth: true
+          changeYear: true
+          onSelect: (date) ->
+            current_url = window.location.pathname.match(/([^/]*\/){3}/)[0]
+            split_date = date.split('/')
+            new_url = current_url + split_date[2] + '/' + split_date[0] + '/' + split_date[1]
+            window.location.pathname = new_url
+            return
 
 # onPage load, we need to highlight the selected date. If no particular date exists in the url, highlight todays date
 # If it exists, parse it and navigate to that date on the calendar and highlight
