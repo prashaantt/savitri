@@ -1,5 +1,8 @@
 <%- model_class = Post -%>
 <!-- Main Page Content -->
+<%= javascript_tag do %>
+  window.get_date = true;
+<% end %>
 <% base_url = request.protocol + request.host_with_port %>
 <% feed_url = base_url + blog_path(@blog) + "/feed" %>
 <% tag_type = "none" %>
