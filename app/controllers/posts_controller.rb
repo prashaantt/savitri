@@ -81,6 +81,7 @@ class PostsController < ApplicationController
   # GET /posts/new.json
   def new
     @post = Post.new(:blog_id=>Blog.cached_find_by_slug(params[:blog_id]).id)
+    @content_writers = @post.list_of_content_generators
     authorize! :new, @post
     respond_to do |format|
       format.html # new.html.erb
@@ -92,6 +93,7 @@ class PostsController < ApplicationController
   def edit
     blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
     @post = Post.cached_find_by_blog_id_and_url(blog_id.id,params[:id])
+    @content_writers = @post.list_of_content_generators
     authorize! :edit, @post
     respond_to do |format|
       format.html # edit.html.erb

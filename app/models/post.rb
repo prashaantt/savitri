@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
                  :content, :title, :tag_list, :blog_id, :md_content,
                  :uploads_attributes, :excerpt, :url, :published_at,
                  :series_title, :subtitle, :show_excerpt, :tag_tokens,
-                 :draft, :author_id, :featured
+                 :draft, :author_id, :featured, :written_by
                  )
   acts_as_taggable
   acts_as_url :title, scope: :blog_id
@@ -46,7 +46,7 @@ class Post < ActiveRecord::Base
 
   # Return author after comparison of roles
   def get_abstracted_author
-    if user.role == 'Senior Editor'
+    if user.role == 'Junior Editor'
       User.cached_find(1)
     else
       self.cached_author
@@ -219,6 +219,14 @@ class Post < ActiveRecord::Base
     Rails.cache.fetch([self, 'author']) { User.find(author_id) }
   end
 
+  def cached_written_by
+    if self.written_by
+      Rails.cache.fetch([self, 'written_by']) {
+        User.find(written_by)
+      }
+    end
+  end
+
   def flush_cache
     Rails.cache.delete([self.class.name, 'draftcount' + blog_id.to_s])
     Rails.cache.delete([self.class.name, 'drafts' + blog_id.to_s])
@@ -237,9 +245,14 @@ class Post < ActiveRecord::Base
     flush_comments_cache
     User.find(author_id).flush_recent_posts
     flush_cached_author
+    flush_cached_written_by
     if self.published_at <= self.blog.cached_oldest_blogpost.published_at
       Blog.find(blog_id).flush_oldest_blogpost
     end
+  end
+
+  def flush_cached_written_by
+    Rails.cache.delete([self, 'written_by'])
   end
 
   def flush_cached_author
@@ -248,6 +261,12 @@ class Post < ActiveRecord::Base
 
   def flush_cached_blog
     Rails.cache.delete([self, 'blog'])
+  end
+
+  def list_of_content_generators
+    self.blog.content_generators.map do |user|
+      User.cached_find(user)
+    end
   end
 
   private

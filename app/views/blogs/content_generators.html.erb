@@ -1,0 +1,34 @@
+<%- model_class = Blog -%>
+<div class="row">
+  <div class="span6 offset3">
+    <div class="page-header title">
+      <h1><%= link_to @blog.title, @blog %></h1>
+      <h3 class="blog-subtitle"><%= @blog.cached_subtitle %></h3>
+    </div>
+      <h2>List of Content Generators</h2>
+      <table class="table">
+      <% @users.each do |user| %>
+      <tr>
+       <td style='text-align:left'>     <em> <%= link_to (user.name.blank? ? user.username : user.name), user, { :class => 'underline' } %>
+      <%= link_to '×', {:action => 'remove_content_generator' , :slug => @blog.slug, :user_id => user.id}, { title:"Remove content generator #{(user.name.blank? ? user.username : user.name)}",:id=> user.id, :class => 'close', 
+      :confirm => 'Are you sure?', :remote=>true } %></em>
+      </td>
+      </tr>
+      <% end %>
+      </table>
+      <hr>
+      <%= form_for @blog, url: { action: 'add_new_content_generator'}, :method => 'post' do |f| %>
+      Add user: <%= f.text_field :content_generators, { value:nil, required: 'required', maxlength: '255', id: 'user_username',
+                                                                        size: '50', type: 'text', placeholder: 'username' } %>
+      <div>
+        <%= f.submit 'Add', { :class => 'btn btn-info', style: 'margin-left:12%' } %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")), blogs_path, :class => 'btn' %>
+      </div>
+      <% end %>
+  </div>
+</div>
+<script type="text/javascript">
+    $('.close').bind('ajax:success', function() {
+    $(this).closest('tr').fadeOut();
+  });
+</script>

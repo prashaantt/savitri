@@ -3,7 +3,9 @@
 
 class Blog < ActiveRecord::Base
   serialize :post_access, Array
-  attr_accessible :subtitle, :title, :user_id, :slug, :post_access
+  serialize :content_generators, Array
+  attr_accessible :subtitle, :title, :user_id, :slug, :post_access,
+                  :content_generators
   validates :title, presence: true
   validates :slug, presence: true, length: { minimum: 5 }
 

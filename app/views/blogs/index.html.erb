@@ -27,6 +27,9 @@
   <% if can? :authorized_users, blog %>
           <%= link_to 'Invite user to blog', authorized_users_path(blog), :class => "btn btn-mini btn-info" %>
   <% end %>
+    <% if can? :authorized_users, blog %>
+      <%= link_to 'List of content generators', content_generators_path(blog), :class => "btn btn-mini btn-info" %>
+    <% end %>
       </div>
       <% end %>
     </section>

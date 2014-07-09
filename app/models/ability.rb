@@ -105,13 +105,14 @@ class Ability
            can :authorized_users, Blog do |b|
                b.user_id == user.id
            end
-           can :invite_for_blog, Blog do |b|
+           can :add_new_content_generator, Blog do |b|
                b.user_id == user.id
            end
            can :create, Comment
            can :update, Comment do |c|
              c.user_id == user.id
            end
+           can :read_content_generators_list, Post
         end
       end
     #
