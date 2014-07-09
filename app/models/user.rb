@@ -163,6 +163,7 @@ class User < ActiveRecord::Base
 
     posts.each do |post|
       post.flush_cached_author
+      post.flush_cached_written_by
     end
 
     comments.each do |comment|

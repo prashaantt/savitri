@@ -14,6 +14,17 @@
         <%= f.text_field :title, :class => 'text_field span6' %>
       </div>
     </div>
+    <% if can? :read_content_generators_list, @post %>
+    <div class="control-group">
+      <%= f.label :written_by, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.collection_select(:written_by, @content_writers, :id, :username, prompt: "Please Select") %>
+        <% if current_user.admin? %>
+          &nbsp;&nbsp;<%= link_to 'Add more users to this list?', content_generators_path(@post.blog)%>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
     <div class="control-group">
       <%= f.label :subtitle, :class => 'control-label' %>
       <div class="controls">

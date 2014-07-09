@@ -153,4 +153,39 @@ class BlogsController < ApplicationController
     @date = @blog.cached_oldest_blogpost.published_at.strftime('%Y-%m-%d')
     render json: { date: @date }
   end
+  
+  def content_generators
+    @blog = Blog.cached_find_by_slug(params[:id])
+    @users = @blog.content_generators.map do |id|
+      User.cached_find(id)
+    end
+    authorize! :authorized_users, @blog
+  end
+
+  def add_new_content_generator
+    @blog = Blog.cached_find_by_slug(params[:id])
+    @user = User.find_by_username(params[:blog][:content_generators])
+    @blog.content_generators || []
+    if @user.nil?
+      flash[:error] = "#{params[:blog][:content_generators]} is not yet signed up"
+      redirect_to content_generators_path and return
+    elsif @blog.content_generators.include?@user.id
+      flash[:error] = "#{@user.username} already is already a content generator."
+      redirect_to content_generators_path and return
+    else
+      @blog.content_generators.push(@user.id)
+      authorize! :add_new_content_generator, @blog
+      @blog.save!
+    end
+    flash[:notice] = "#{@user.username} is successfully added to the list of content generators for #{@blog.title}"
+    redirect_to content_generators_path
+  end
+
+  def remove_content_generator
+    blog = Blog.cached_find_by_slug(params[:slug])
+    blog.content_generators.delete(params[:user_id].to_i)
+    @user = User.find(params[:user_id].to_i)
+    blog.save!
+    render nothing: true
+  end
 end

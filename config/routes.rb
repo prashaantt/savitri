@@ -28,8 +28,11 @@ Savitri::Application.routes.draw do
 
   get '/profile/:id' => 'users#show', as: :profile
   get 'blogs/:id/authorized_users', to: 'blogs#authorized_users', as: :authorized_users
+  get 'blogs/:id/content_generators', to: 'blogs#content_generators', as: :content_generators
   post 'blogs/:id/invite_for_blog' => 'blogs#invite_for_blog'
+  post 'blogs/:id/add_new_content_generator' => 'blogs#add_new_content_generator'
   get 'blogs/:slug/remove_blog_access/:user_id', to: 'blogs#remove_blog_access', as: :remove_blog_access
+  get 'blogs/:slug/remove_content_generator/:user_id', to: 'blogs#remove_content_generator', as: :remove_content_generator
   resources :blogs
 
   resources :uploads
