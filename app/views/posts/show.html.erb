@@ -8,7 +8,12 @@
   <%= auto_discovery_link_tag :atom, feed_url %>
   <%= auto_discovery_link_tag :rss,  feed_url %>
 <% end %>
-<% title @post.cached_title + " | " + @blog.cached_title %>
+<%= javascript_tag do %>
+  window.get_date = true;
+<% end %>
+<% title @post.cached_title + " | " + @blog.cached_title
+ meta_desc @post.cached_title + " | " + @blog.cached_title 
+ meta_keywords @post.cached_title + " , " + @blog.cached_title + ', ' + @post.tag_list.join(" , ") %>
 
 <div class="row">
   <div class="span12">

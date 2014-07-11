@@ -1,5 +1,8 @@
 <%- model_class = Post -%>
 <!-- Main Page Content -->
+<%= javascript_tag do %>
+  window.get_date = true;
+<% end %>
 <% base_url = request.protocol + request.host_with_port %>
 <% feed_url = base_url + blog_path(@blog) + "/feed" %>
 <% tag_type = "none" %>
@@ -8,7 +11,9 @@
 <%= auto_discovery_link_tag :rss,  feed_url %>
 <% end %>
 <% pagetitle = 'Archives | ' + @blog.cached_title %>
-<% title pagetitle %>
+<% title pagetitle 
+meta_desc pagetitle
+meta_keywords pagetitle %>
 <div itemscope itemtype="http://schema.org/Article" class="row">
   <div class="span12">
     <div class="page-header title">

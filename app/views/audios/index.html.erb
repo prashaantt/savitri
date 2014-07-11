@@ -3,7 +3,9 @@
   <%= auto_discovery_link_tag :atom, feed_url %>
   <%= auto_discovery_link_tag :rss,  feed_url %>
 <% end %>
-<% title @medium.title %>
+<% title @medium.title 
+meta_desc @medium.title
+meta_keywords @medium.title %>
 <div class="row">
   <div class="span12">
     <div class="page-header title">
