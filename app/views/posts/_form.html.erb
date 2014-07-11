@@ -1,85 +1,83 @@
 <%= form_for @post, :url => urler,:html => {:multipart=>true } do |f| %>
 <div class="row">
-  <div class="span6 offset3">
-    <%= f.hidden_field :blog_id, :class=> 'text_field', :value=> @post.blog_id %>
-    <div class="control-group">
-      <%= f.label :series_title, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :series_title, :class => 'text_field span6' %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :title, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :title, :class => 'text_field span6' %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :subtitle, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :subtitle, :class => 'text_field span6' %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :excerpt, "Excerpt", :class => "control-label",  style: 'display: inline-block;' %>
-      <label style="display: inline-block;" for="post_excerpt" class="pull-right"><span id='word_count'></span><span>&nbsp;/ 80 words</span></label>
-      <div class="controls">
-        <%= f.text_area :excerpt, :class => "text_field span6", :style => "resize: none", :rows => "5" %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :show_excerpt, :class => 'control-label', :style=>"float: left;" %> &nbsp;
-      <%= f.radio_button :show_excerpt, "none", options = {checked: true, :style => "vertical-align: baseline"} %><label class="label" for="post_show_excerpt_none" style="margin-right: 10px; margin-left: 10px">Only on blog index</label>
-      <%= f.radio_button :show_excerpt, "prefix", :style => "vertical-align: baseline" %><label class="label" for="post_show_excerpt_prefix" style="margin-right: 10px; margin-left: 10px">Prefixed to post</label>
-      <%= f.radio_button :show_excerpt, "suffix", :style => "vertical-align: baseline" %><label class="label" for="post_show_excerpt_suffix" style="margin-right: 10px; margin-left: 10px">Suffixed to post</label>
-    </div>
-    <div class="control-group">
-      <%= f.label :content, :class => 'control-label' %>
-      <div class='wmd-panel'>
-        <div class="controls">
-          <div id='wmd-button-bar'><span id="previewbtn" class="btn btn-info pull-right" style="min-width: 46px;">Preview</span></div>
-          <%= f.text_area :md_content, :class=> "span6", :id=>"wmd-input", :style => "resize: none" %>
-          <div id="wmd-preview" class="wmd-preview well well-small main-content" style="display: none; min-height: 490px"></div>
-          <%= f.text_area :content, :style=> "display: none" %>        
-        </div>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :tag_tokens, "Tags", :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :tag_tokens, "data-pre" => @post.tag_list.reject {|tag| tag.start_with?("@")}.map {|tag| {:id => tag, :name => tag } }.to_json, :class => 'text_area span6' %>
-      </div>
-    </div>
-        <% if (current_user.admin? || (can? :update, @post.blog)) && (act == "new" || (act=="edit" && @post.published_at >
-              Time.zone.now)) %>
+  <div class="span8 offset2 center-col">
+    <div class="sp8-content">
+      <%= f.hidden_field :blog_id, :class=> 'text_field', :value=> @post.blog_id %>
       <div class="control-group">
-        <%= f.label "Publish ", :class => 'control-label', :style=>"float: left;" %> &nbsp;
-        <% unless @post.published_at.nil?  %>
-          <%= radio_button_tag 'size', "now", false, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
-          <%= radio_button_tag 'size', "later", @post.published_at > Time.zone.now, :style => "vertical-align: baseline" %>
-        <% else %>
-          <%= radio_button_tag 'size', "now", false, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
-          <%= radio_button_tag 'size', "later", false, :style => "vertical-align: baseline" %>
-        <% end %>
-        <label class="label" for="size_later" style="margin-right: 10px; margin-left: 10px">Schedule</label> <br/><br/>
-        <div class="controls", id="publishat", style="display:none;" >
-          <%= f.datetime_select :published_at, {:use_short_month=>"true", :start_month => Time.now.month, :start_year => 2005, :end_year=>Time.now.year+3,:order => [:day, :month, :year, :hour, :minute], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
+        <%= f.label :series_title, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :series_title, :class => 'text_field sp8-form' %>
         </div>
       </div>
-    <% end %>
-    <% if current_user.admin? %>
-    <div class="control-group">
-      <%= f.label "Featured ", :class => 'control-label', :style=>"float: left;" %> &nbsp;
-      <%= f.check_box :featured %>
-    </div>
-    <% end %>
-  </div>
-</div>
-<div class="row">
-  <div class="span6 offset3">
-    <div class="control-grp" style="text-align: center">
-      <%= f.submit nil, :class => 'btn btn-success', :id=>"new-blog-post" %>
-      <%= cancel_page "Post" %>
+      <div class="control-group">
+        <%= f.label :title, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :title, :class => 'text_field sp8-form' %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :subtitle, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :subtitle, :class => 'text_field sp8-form' %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :excerpt, "Excerpt", :class => "control-label",  style: 'display: inline-block;' %>
+        <label style="display: inline-block;" for="post_excerpt" class="pull-right"><span id='word_count'></span><span>&nbsp;/ 80 words</span></label>
+        <div class="controls">
+          <%= f.text_area :excerpt, :class => "text_field sp8-form", :style => "resize: none", :rows => "5" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :show_excerpt, :class => 'control-label', :style=>"float: left;" %> &nbsp;
+        <%= f.radio_button :show_excerpt, "none", options = {checked: true, :style => "vertical-align: baseline"} %><label class="label" for="post_show_excerpt_none" style="margin-right: 10px; margin-left: 10px">Only on blog index</label>
+        <%= f.radio_button :show_excerpt, "prefix", :style => "vertical-align: baseline" %><label class="label" for="post_show_excerpt_prefix" style="margin-right: 10px; margin-left: 10px">Prefixed to post</label>
+        <%= f.radio_button :show_excerpt, "suffix", :style => "vertical-align: baseline" %><label class="label" for="post_show_excerpt_suffix" style="margin-right: 10px; margin-left: 10px">Suffixed to post</label>
+      </div>
+      <div class="control-group">
+        <%= f.label :content, :class => 'control-label' %>
+        <div class='wmd-panel'>
+          <div class="controls">
+            <div id='wmd-button-bar'><span id="previewbtn" class="btn btn-info pull-right" style="min-width: 46px;">Preview</span></div>
+            <%= f.text_area :md_content, :class=> "sp8-form", :id=>"wmd-input", :style => "resize: none" %>
+            <div id="wmd-preview" class="wmd-preview well well-small main-content" style="display: none; min-height: 490px"></div>
+            <%= f.text_area :content, :style=> "display: none" %>        
+          </div>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :tag_tokens, "Tags", :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :tag_tokens, "data-pre" => @post.tag_list.reject {|tag| tag.start_with?("@")}.map {|tag| {:id => tag, :name => tag } }.to_json, :class => 'text_area sp8-form' %>
+        </div>
+      </div>
+          <% if (current_user.admin? || (can? :update, @post.blog)) && (act == "new" || (act=="edit" && @post.published_at >
+                Time.zone.now)) %>
+        <div class="control-group">
+          <%= f.label "Publish ", :class => 'control-label', :style=>"float: left;" %> &nbsp;
+          <% unless @post.published_at.nil?  %>
+            <%= radio_button_tag 'size', "now", false, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
+            <%= radio_button_tag 'size', "later", @post.published_at > Time.zone.now, :style => "vertical-align: baseline" %>
+          <% else %>
+            <%= radio_button_tag 'size', "now", false, :style => "vertical-align: baseline" %><label class="label" for="size_now" style="margin-right: 10px; margin-left: 10px">Immediately</label> 
+            <%= radio_button_tag 'size', "later", false, :style => "vertical-align: baseline" %>
+          <% end %>
+          <label class="label" for="size_later" style="margin-right: 10px; margin-left: 10px">Schedule</label> <br/><br/>
+          <div class="controls", id="publishat", style="display:none;" >
+            <%= f.datetime_select :published_at, {:use_short_month=>"true", :start_month => Time.now.month, :start_year => 2005, :end_year=>Time.now.year+3,:order => [:day, :month, :year, :hour, :minute], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
+          </div>
+        </div>
+      <% end %>
+      <% if current_user.admin? %>
+        <div class="control-group">
+          <%= f.label "Featured ", :class => 'control-label', :style=>"float: left;" %> &nbsp;
+          <%= f.check_box :featured %>
+        </div>
+      <% end %>
+      <div class="control-grp" style="text-align: center">
+        <%= f.submit nil, :class => 'btn btn-success', :id=>"new-blog-post" %>
+        <%= cancel_page "Post" %>
+      </div>
     </div>
   </div>
 </div>

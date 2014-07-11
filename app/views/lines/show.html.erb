@@ -1,34 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="span8 offset2 center-col">
+    <div class="sp8-content">
+      <p id="notice"><%= notice %></p>
 
-<p>
-  <b>No:</b>
-  <%= @line.no %>
-</p>
+      <p>
+        <b>No:</b>
+        <%= @line.no %>
+      </p>
 
+      <p>
+        <b>Line:</b>
+        <%= @line.line %>
+      </p>
 
-<p>
-  <b>Line:</b>
-  <%= @line.line %>
-</p>
+      <% @stan = Stanza.find(@line.stanza_id) %>
 
-<% @stan = Stanza.find(@line.stanza_id) %>
+      <p>
+        <b>Sentence No:</b>
+        <%= @stan.no %>
+      </p>
 
-<p>
-  <b>Sentence No:</b>
-  <%= @stan.no %>
-</p>
+      <p>
+       	<b>Canto Detail </b>
+      	  <% @canto = Section.find(@stan.section).canto_id %>      
+          <%= Canto.find(@canto).no %>---<%= Canto.find(@canto).title  %>
+        </b>
+      </p>
 
-
- <p>
- 	<b>Canto Detail </b>
-	  <% @canto = Section.find(@stan.section).canto_id %>      
-      <%= Canto.find(@canto).no %>---<%= Canto.find(@canto).title  %>
-    </b>
-</p>
-<% if can? :update, @line %>
-<%= link_to 'Edit', edit_line_path(@line) %> |
-<% end %>
-<%= link_to 'Back', lines_path %> | 
-<% if can? :create, Line %>
-<%= link_to 'New Line', new_line_path %>
-<% end %>
+      <% if can? :update, @line %>
+        <%= link_to 'Edit', edit_line_path(@line) %> |
+      <% end %>
+      <%= link_to 'Back', lines_path %> | 
+      <% if can? :create, Line %>
+        <%= link_to 'New Line', new_line_path %>
+      <% end %>
+    </div>
+  </div>
+</div>
