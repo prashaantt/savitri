@@ -41,5 +41,5 @@ $ ->
   $('.collapse_related_content').click()
 
 $ ->
-  if (!$('.collapse_related_content').length && $('.relatedcontent').length)
-    $('.sidebar-menu').hide() #.parent().prev().removeClass('span9').addClass('span8 offset2')
+  if $('.collapse_related_content').length
+    $('.sidebar-menu').parent().prev().removeClass('span8 offset2').addClass('span9')
