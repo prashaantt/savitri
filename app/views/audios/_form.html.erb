@@ -1,6 +1,6 @@
 <%= form_for @audio, :url => p, :html => {:multipart=>true } do |f| %>
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span8 offset2">
     <div class="field">
       <%= f.label :medium_id %><br />
       <%= f.collection_select(:medium_id, Medium.all, :id, :title) %>
@@ -8,49 +8,49 @@
     <div class="control-group">
       <%= f.label :title, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :title, :class => 'text_field span6' %>
+        <%= f.text_field :title, :class => 'text_field sp8-form' %>
       </div>
     </div>
     <div class="control-group">
       <%= f.label :summary, :class => "control-label" %>
       <div class="controls">
-        <%= f.text_area :summary, :class => "text_field span6", :style => "resize: none", :rows => "5" %>
+        <%= f.text_area :summary, :class => "text_field sp8-form", :style => "resize: none", :rows => "5" %>
       </div>
     </div>
     <div class="control-group">
       <%= f.label "Participants", :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :author, :class => 'text_field span6' %>
+        <%= f.text_field :author, :class => 'text_field sp8-form' %>
       </div>
     </div>
     <div class="control-group">
       <%= f.label "Audio URL (upload and copy src from below)", :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :audio_url, :class => 'text_field span6' %>
+        <%= f.text_field :audio_url, :class => 'text_field sp8-form' %>
       </div>
     </div>
     <div class="control-group">
       <%= f.label "Duration (in seconds)", :class => 'control-label' %>
       <div class="controls">
-        <%= f.number_field :seconds, :class => 'text_field span6' %>
+        <%= f.number_field :seconds, :class => 'text_field sp8-form' %>
       </div>
     </div>
     <div class="control-group">
       <%= f.label "File sizes (in bytes)", :class => 'control-label' %>
       <div class="controls">
-        <%= f.number_field :file_size, :class => 'text_field span6' %>
+        <%= f.number_field :file_size, :class => 'text_field sp8-form' %>
       </div>
     </div>
     <div class="control-group">
       <%= f.label :tag_list, "Tags (separated by commas)", :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :tag_list, :class => 'text_area span6' %>
+        <%= f.text_field :tag_list, :class => 'text_area sp8-form' %>
       </div>
     </div>
   </div>
 </div>
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span8 offset2">
     <div class="control-grp" style="text-align: center">
       <%= f.submit nil, :class => 'btn btn-success', :id=>"new-medium-audio" %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")), medium_audios_path, :class => 'btn' %>
