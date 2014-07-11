@@ -5,7 +5,9 @@
   <% @sections = @canto.cached_sections %>
   <% @stanzasblank = false %>
 <% end %>
-<% title @book.name + " | " + @canto.title + " | Section " + @section.no.to_s %>
+<% title @book.name + ' | ' + @canto.title + ' | Section ' + @section.no.to_s
+meta_desc @book.name + ' , ' + @canto.title + ' , Section ' + @section.no.to_s
+meta_keywords @book.name + ' , ' + @canto.title + ' , Section ' + @section.no.to_s %>
 <div class="row" id="read-row">
   <div class="span2 visible-desktop">
     <div class="accordion sidebar" id="accordion2">
