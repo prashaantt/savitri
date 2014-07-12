@@ -6,17 +6,17 @@
 # Latest Posts
 $ ->
   $('.collapse_posts').click ->
-    $closest = $(this).closest('.sidebar-heading').next('.collapse')
-    if $closest.hasClass('in')
-      $closest.removeClass('in')
-      $closest.css('display', 'none')
+    $closest_post = $(this).closest('.sidebar-heading').next('.collapse')
+    if $closest_post.hasClass('in')
+      $closest_post.removeClass('in')
+      $closest_post.css('display', 'none')
 
     else
-      $closest.addClass('in')
-      $closest.css('display', 'block')
-      if ($closest.find("li").length == 0)
+      $closest_post.addClass('in')
+      $closest_post.css('display', 'block')
+      if ($closest_post.find("li").length == 0)
         callback = (response) -> 
-          recentpostsdiv = $closest
+          recentpostsdiv = $closest_post
           postsdiv = ""
           if (response.length != 0)
             $.each response, (val1) -> 
@@ -27,51 +27,54 @@ $ ->
 
             recentpostsdiv.append(postsdiv)
           else
-            recentpostsdiv.append("<li><h6><hNo Recent Posts</h6></li>")
+            recentpostsdiv.append("<li class='recent-posts-list'>No Recent Posts</li>")
 
         $.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentposts/', callback, 'json'
 
 $ ->
   $(".collapse_comments").click ->
-    $closest = undefined
+    $closest_comment = undefined
     $commentDiv = undefined
-    $closest = $(this).closest(".sidebar-heading").next(".collapse")
+    $closest_comment = $(this).closest(".sidebar-heading").next(".collapse")
 
-    if $closest.hasClass('in')
-      $closest.removeClass('in')
-      $closest.css('display', 'none')
+    if $closest_comment.hasClass('in')
+      $closest_comment.removeClass('in')
+      $closest_comment.css('display', 'none')
 
     else
-      $closest.addClass('in')
-      $closest.css('display', 'block')
-      $closest.css('display', 'block')
+      $closest_comment.addClass('in')
+      $closest_comment.css('display', 'block')
+      $closest_comment.css('display', 'block')
       $commentDiv = $("#recent_comments")
-      $.get "https://disqus.com/api/3.0/forums/listPosts.json?forum=savitri&limit=10&related=thread&api_key=NlGHyHyNqFFp2zcXh0kJvPOJV54hoUTw5os3bS1hefUoshcwvp1Lq8pdR3xu8xML", (res, code) ->
-        html = undefined
-        i = undefined
-        len = undefined
-        post = undefined
-        result = undefined
-        if res.code is 0
-          result = ""
-          i = 0
-          len = res.response.length
-          max_len = 10
-          while i < len
-            post = res.response[i]
-            html = "<li class='recent-comments-list clearfix' style='margin-bottom: 15px'>"
-            html += "<a href='" + post.author.profileUrl + "'><img width='40px' src='" + post.author.avatar.cache + "' class='pull-left' style='margin-right: 5px' title='" + post.author.name + "' alt='" + post.author.name + "'/></a>"
-            html += "<a href='" + post.url + "'>"
-            comment = post.raw_message.split(" ").splice(0, max_len).join(" ") + (if post.raw_message.split(" ").length > max_len then "..." else "")
-            html += "<p class='comment-text'>" + comment + '</p>'
-            html += '</a>'
-            # html += "<a href='" + post.url + "'\"class=\"sidebar-links\">" + 
-            #   post.thread.clean_title.split('|')[0] + "</a>"
-            html += "</li>"
-            result += html
-            i++
-          $commentDiv.append result
-        return
+      if ($closest_comment.find("li").length == 0)
+        $.get "https://disqus.com/api/3.0/forums/listPosts.json?forum=savitri&limit=10&related=thread&api_key=NlGHyHyNqFFp2zcXh0kJvPOJV54hoUTw5os3bS1hefUoshcwvp1Lq8pdR3xu8xML", (res, code) ->
+          html = undefined
+          i = undefined
+          len = undefined
+          post = undefined
+          result = undefined
+          if res.code is 0
+            result = ""
+            i = 0
+            len = res.response.length
+            max_len = 10
+            while i < len
+              post = res.response[i]
+              title = post.thread.clean_title
+              html = "<li class='recent-comments-list clearfix' style='margin-bottom: 15px'>"
+              html += "<a href='" + post.thread.link + "'>" +  if title.indexOf('|') is -1  then '<b>' + title.trim() + '</b>' else  ('<b>' + title.substring(0, title.indexOf('|')).trim() + '</b>') + "</a>"
+              html += "<a href='" + post.author.profileUrl + "'><img width='40px' src='" + post.author.avatar.cache + "' class='pull-left' style='margin-right: 5px' title='" + post.author.name + "' alt='" + post.author.name + "'/></a>"
+              html += "<a href='" + post.url + "'>"
+              comment = post.raw_message.split(" ").splice(0, max_len).join(" ") + (if post.raw_message.split(" ").length > max_len then "..." else "")
+              html += "<p class='comment-text'>" + comment + '</p>'
+              html += '</a>'
+              # html += "<a href='" + post.url + "'\"class=\"sidebar-links\">" + 
+              #   post.thread.clean_title.split('|')[0] + "</a>"
+              html += "</li>"
+              result += html
+              i++
+            $commentDiv.append result
+          return
 $ ->
   $('.collapse_posts').click()
   $('.collapse_comments').click()
@@ -178,31 +181,31 @@ $ ->
         false
 
 $ ->
-	$("#new-blog-post").click (e) ->
-	  $("#post_content").html($('.wmd-preview').html())
-	  $("#wmd-input").html($('.wmd-input').val())
+  $("#new-blog-post").click (e) ->
+    $("#post_content").html($('.wmd-preview').html())
+    $("#wmd-input").html($('.wmd-input').val())
 
-	$("#previewbtn").on "click", ->
-	  if $("#wmd-input").is(":visible")
-	    $("#wmd-input").hide()
-	    $("#wmd-preview").show()
-	    $(".btn-toolbar button").each ->
-	      unless $(this).attr("disabled")
-	        $(this).addClass "disabled"
-	        $(this).attr "disabled", "disabled"
+  $("#previewbtn").on "click", ->
+    if $("#wmd-input").is(":visible")
+      $("#wmd-input").hide()
+      $("#wmd-preview").show()
+      $(".btn-toolbar button").each ->
+        unless $(this).attr("disabled")
+          $(this).addClass "disabled"
+          $(this).attr "disabled", "disabled"
 
-	    $(this).removeClass("btn-info").addClass "btn-warning"
-	    $(this).text "Edit"
-	  else
-	    $("#wmd-preview").hide()
-	    $("#wmd-input").show()
-	    $(".btn-toolbar button").each ->
-	      if $(this).hasClass("disabled")
-	        $(this).removeAttr "disabled"
-	        $(this).removeClass "disabled"
+      $(this).removeClass("btn-info").addClass "btn-warning"
+      $(this).text "Edit"
+    else
+      $("#wmd-preview").hide()
+      $("#wmd-input").show()
+      $(".btn-toolbar button").each ->
+        if $(this).hasClass("disabled")
+          $(this).removeAttr "disabled"
+          $(this).removeClass "disabled"
 
-	    $(this).text "Preview"
-	    $(this).removeClass("btn-warning").addClass "btn-info"
+      $(this).text "Preview"
+      $(this).removeClass("btn-warning").addClass "btn-info"
 
 isValidRange = (ranges) ->
   valid = 0;
@@ -312,31 +315,31 @@ $ ->
         $("#myModal").modal "hide"
 
 $ ->
-	$("#size_later").click ->
-  	$("#publishat").css("display","inline")
+  $("#size_later").click ->
+    $("#publishat").css("display","inline")
   if($("#size_later").is(":checked"))
-  	$("#publishat").css("display","inline")
+    $("#publishat").css("display","inline")
 
 $ ->
-	$("#size_now").click ->
-  	$("#publishat").css("display","none")
-  	now = new Date()
-  	$("#post_published_at_3i").val(now.getDate())
-  	$("#post_published_at_2i").val(now.getMonth()+1)
-  	$("#post_published_at_1i").val(now.getFullYear())
-  	$("#post_published_at_4i").val(now.getHours())
-  	$("#post_published_at_5i").val(now.getMinutes())
+  $("#size_now").click ->
+    $("#publishat").css("display","none")
+    now = new Date()
+    $("#post_published_at_3i").val(now.getDate())
+    $("#post_published_at_2i").val(now.getMonth()+1)
+    $("#post_published_at_1i").val(now.getFullYear())
+    $("#post_published_at_4i").val(now.getHours())
+    $("#post_published_at_5i").val(now.getMinutes())
 
 $ ->
-	if ( $.browser.mozilla == true )
-		if ( window.location.pathname.search(/posts/)!=-1 )
-				audiofiles = $("audio")
-				audiofiles.each ->
-					audiodiv = $(this).find(">:first-child")
-					fileloc = audiodiv.attr('src')
-					closetdiv = $(this).parent()
-					$(closetdiv).append($("<div class=\"span6\"><b><a href=\""+fileloc+"\"
-							>Download Audio <i class=\"icon-download-alt\"></i></a></b><br/></div>"))
+  if ( $.browser.mozilla == true )
+    if ( window.location.pathname.search(/posts/)!=-1 )
+        audiofiles = $("audio")
+        audiofiles.each ->
+          audiodiv = $(this).find(">:first-child")
+          fileloc = audiodiv.attr('src')
+          closetdiv = $(this).parent()
+          $(closetdiv).append($("<div class=\"span6\"><b><a href=\""+fileloc+"\"
+              >Download Audio <i class=\"icon-download-alt\"></i></a></b><br/></div>"))
 
 
 $ ->
