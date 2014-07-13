@@ -1,1 +1,6 @@
-$("#follow_blog").html("<%= raw escape_javascript(render :partial => 'shared/follow_blog', :locals => {:blog => @blog}) %>")
+if( $('#follow_blog').length ) {
+  $("#follow_blog").html("<%= raw escape_javascript(render :partial => 'shared/follow_blog', :locals => {:blog => @blog}) %>")
+}
+else if( $('#unsubscribe_blog').length ) {
+  $("#unsubscribe_blog").html("<%= raw escape_javascript(render :partial => 'shared/unsubscribe_blog', :locals => {:blog => @blog}) %>")
+}

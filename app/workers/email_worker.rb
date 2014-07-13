@@ -21,7 +21,8 @@ class EmailWorker
           u.invited_by_id.nil? || !u.invitation_accepted_at.nil?
         end
         @users.flatten.uniq.each do |reciever|
-          SubscriptionMailer.blogpost_email(reciever, @sender, @blog, @post)
+          @reciever = reciever
+          SubscriptionMailer.blogpost_email(@reciever, @sender, @blog, @post)
           .deliver
         end
       end
