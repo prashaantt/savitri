@@ -27,12 +27,8 @@
       <% end %>
     <% end %>
     <div style="width:94%;margin:0 auto;min-width:220px;max-width:650px;text-align:left;font-family:arial;color:#ccc;font-size:11px;line-height:14px;">
-    <% if @reciever.following? @blog %>
-      <%= link_to "Unsubscribe", unsubscribe_blog_url(blog_id: @blog.id), :class => 'muted' %> from <%= @blog.title %><br/>
-    <% elsif @reciever.following? @sender %>
-      <%= link_to "Unsubscribe", unsubscribe_blog_url(blog_id: @blog.id, user_id: @sender.id), :class => 'muted' %> from <%= @blog.title %><br/>
-    <% end %>      
-      Add info@savitri.in to your address book to receive all emails for <%= @blog.title %>
+      <%= link_to "Unsubscribe", unsubscribe_blog_url(blog_id: @blog.slug, post_id: @post.url), :class => 'muted' %> from <%= @blog.title %><br/>
+      Add info@savitri.in to your address book to receive all emails for Savitri
     </div>
   </body>
 </html>
