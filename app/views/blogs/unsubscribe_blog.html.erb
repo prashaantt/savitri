@@ -9,9 +9,12 @@
     You are about to unsubscribe from <em style='text-decoration: underline;'><%= link_to @blog.title, blog_posts_path(@blog) %></em>.
     <%= button_to "Confirm!", unfollow_blog_path(blog_id: @blog.id), :method => :delete, :remote => true, class: 'btn btn-warning' %>
     <%= button_to "Cancel", savitri_path, class: 'btn'%>
-  <% else %>
+  <% elsif current_user.following? @user %>
     <div>You are not following <em style='text-decoration: underline;'><%= link_to @blog.title, blog_posts_path(@blog) %></em>. <br/>
     You are getting these emails because you are following <em style='text-decoration: underline;'><%= link_to @user.username, @user %></em>.</div>
+  <% else %>
+    <div>You have already unsubscribed for <em style='text-decoration: underline;'><%= link_to @blog.title, blog_posts_path(@blog) %></em>. <br/>
+    Also you are not following <em style='text-decoration: underline;'><%= link_to @user.username, @user %></em>.</div>
   <% end %>
 </span>
 </div>

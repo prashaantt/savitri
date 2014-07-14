@@ -155,7 +155,8 @@ class BlogsController < ApplicationController
   end
 
   def unsubscribe_blog
-    @blog = Blog.find(params[:blog_id])
-    @user = User.find(params[:user_id]) if params[:user_id]
+    @blog = Blog.cached_find_by_slug(params[:blog_id]) || not_found
+    @post = Post.where(blog_id:@blog.id).where(url:params[:post_id]).first || not_found
+    @user = @post.cached_author
   end
 end
