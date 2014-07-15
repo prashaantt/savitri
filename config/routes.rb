@@ -52,6 +52,7 @@ Savitri::Application.routes.draw do
   resources :follows, only: [:create, :destroy]
   match 'follows/blog_id/:blog_id', to: 'follows#follow_blog', as: :follow_blog, via: :post
   match 'follows/blog_id/:blog_id', to: 'follows#unfollow_blog', as: :unfollow_blog, via: :delete
+  match 'unsubscribe_blog/:blog_id/:post_id', to: 'blogs#unsubscribe_blog', as: :unsubscribe_blog, via: :get
 
   resources :users do
     get '/users/sign_out' => 'devise/sessions#destroy', as: :destroy_user_session

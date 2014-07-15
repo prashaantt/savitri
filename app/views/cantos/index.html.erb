@@ -1,50 +1,59 @@
 <%- model_class = Canto -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+<div class="row">
+  <div class="page-header title">
+    <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  </div>
 </div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:no) %></th>
-      <th><%= model_class.human_attribute_name(:title) %></th>
-      <th>Book Id</th>
-      <th>Book Name</th>
-      <th><%= model_class.human_attribute_name(:description) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @cantos.each do |canto| %>
-      <tr>
-        <td><%= link_to canto.id, canto_path(canto) %></td>
-        <td><%= canto.no %></td>
-        <td><%= canto.title %></td>
-        <% @bk = Book.find(canto.book_id) %>
-        <td><%= @bk.no %></td>
-        <td><%= link_to  @bk.name , book_path(@bk) %></td>
-        <td><%= canto.description %></td>
-        <td><%=l canto.created_at %></td>
-        <td>
-          <% if can? :update, canto %>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_canto_path(canto), :class => 'btn btn-mini' %>
+
+<div class="row">
+  <div class="center-col">
+    <div class="sp12-content">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th><%= model_class.human_attribute_name(:id) %></th>
+            <th><%= model_class.human_attribute_name(:no) %></th>
+            <th><%= model_class.human_attribute_name(:title) %></th>
+            <th>Book Id</th>
+            <th>Book Name</th>
+            <th><%= model_class.human_attribute_name(:description) %></th>
+            <th><%= model_class.human_attribute_name(:created_at) %></th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @cantos.each do |canto| %>
+            <tr>
+              <td><%= link_to canto.id, canto_path(canto) %></td>
+              <td><%= canto.no %></td>
+              <td><%= canto.title %></td>
+              <% @bk = Book.find(canto.book_id) %>
+              <td><%= @bk.no %></td>
+              <td><%= link_to  @bk.name , book_path(@bk) %></td>
+              <td><%= canto.description %></td>
+              <td><%=l canto.created_at %></td>
+              <td>
+                <% if can? :update, canto %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_canto_path(canto), :class => 'btn btn-mini' %>
+                <% end %>
+                <% if can? :destroy, canto %>
+                <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                            canto_path(canto),
+                            :method => :delete,
+                            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                            :class => 'btn btn-mini btn-danger' %>
+                <% end %>
+              </td>
+            </tr>
           <% end %>
-          <% if can? :destroy, canto %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      canto_path(canto),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<% if can? :create, Canto %>
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_canto_path,
-            :class => 'btn btn-primary' %>
-<% end %>
+        </tbody>
+      </table>
+      <% if can? :create, Canto %>
+      <%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_canto_path,
+                  :class => 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,25 +1,29 @@
 <%= form_for(@stanza) do |f| %>
-  <% if @stanza.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@stanza.errors.count, "error") %> prohibited this stanza from being saved:</h2>
+  <div style="margin: auto; float:none; width: 220px;">
+    <% if @stanza.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@stanza.errors.count, "error") %> prohibited this stanza from being saved:</h2>
 
-      <ul>
-      <% @stanza.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% @stanza.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :no %>
+      <%= f.number_field :no , :value => Stanza.maximum("no")+1 %>
+    </div><br />
+    
+    <div class="field">
+      <%= f.label :section_id %>
+      <%= f.collection_select(:section_id, Section.all, :id, :no) %>
+    </div><br />
+
+    <div class="actions">
+      <%= f.submit %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :no %><br />
-    <%= f.number_field :no , :value => Stanza.maximum("no")+1 %>
-  </div>
-  <div class="field">
-    <%= f.label :section_id %><br/>
-    <%= f.collection_select(:section_id, Section.all, :id, :no) %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
   </div>
 <% end %>

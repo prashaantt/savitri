@@ -24,3 +24,22 @@ $ ->
     else
        $("#page-priority").show()
        $("#parent").hide()
+
+# Related Content
+$ ->
+  $('.collapse_related_content').click ->
+    $closest = $(this).closest('.sidebar-heading').next('.collapse')
+    if $closest.hasClass('in')
+      $closest.removeClass('in')
+      $closest.css('display', 'none')
+
+    else
+      $closest.addClass('in')
+      $closest.css('display', 'block')
+
+$ ->
+  $('.collapse_related_content').click()
+
+$ ->
+  if $('.collapse_related_content').length
+    $('.sidebar-menu').parent().prev().removeClass('span8 offset2').addClass('span9')

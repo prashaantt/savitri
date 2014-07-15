@@ -48,3 +48,18 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.sp8-content {
+  border: 1px solid #dddddd;
+  padding: 2% 4% 2% 4%;
+}
+
+.sp12-content {
+  border: 1px solid #dddddd;
+  padding: 2% 2% 2% 2%;
+}
+
+.sp8-form {
+  width: 98%
+}
+

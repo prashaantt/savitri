@@ -1,9 +1,15 @@
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span12">
     <div class="page-header title">
-<h1>Editing task</h1>
-</div>
-</div>
+      <h1>Editing task</h1>
+    </div>
+  </div>
 </div>
 
-<%= render :partial => 'form', :locals => { :act => "edit" } %>
+<div class="row">
+  <div class="span8 offset2 center-col">
+    <div class="sp8-content">
+      <%= render :partial => 'form', :locals => { :act => "edit" } %>
+    </div>
+  </div>
+</div>

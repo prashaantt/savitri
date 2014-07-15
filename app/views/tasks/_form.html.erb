@@ -1,59 +1,51 @@
 <%= form_for(@task) do |f| %>
-<div class="row">
-  <div class="span6 offset3">
-    <% if @task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
-      <ul>
-        <% @task.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-    <% end %>
+  <% if @task.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+    <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
 
-    <div class="control-group">
-      <%= f.label :task , :class => 'control-label' %><br />
-      <div class="controls">
-      <%= f.text_field :task, :class => 'text_field span6' %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :desc , "Task Description", :class => 'control-label' %><br />
-      <%= f.text_area :desc, :class => 'text_field span6' %>
-    </div>
-    <% if act == "new" %>
-    <div class="control-group">
-      <%= f.label :pdate, "Date Task Proposed" , :class => 'control-label', :style => "float:left; padding-top:2%;" %> &nbsp;
-      <%= f.date_select :pdate, {:use_short_month=>"true", :start_month => Time.now.month, :start_year => 2005, :end_year=>Time.now.year+3,:order => [:day, :month, :year], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
-    </div>
-    <div class="control-group">
-      <%= f.label :proposedby, "Proposed By", :class => "control-label" , :style => "float:left; padding-top:2%;"%> &nbsp;
-      <%= f.text_field :proposedby, :readonly => "true", :value => current_user.name, :style => "width:100px" %>
-    </div>
-    <% end %>
-    <% if act == "edit" %>
-    <div class="control-group">
-      <%= f.label :sdate, "Start Date" , :class => 'control-label' %><br />
-      <%= f.date_select :sdate, {:use_short_month=>"true", :start_month => Time.now.month, :start_year => 2005, :end_year=>Time.now.year+3,:order => [:day, :month, :year], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
-    </div>
-    <div class="control-group">
-      <%= f.label :edate, "End Date" , :class => 'control-label' %><br />
-      <%= f.date_select :edate, {:use_short_month=>"true", :start_month => Time.now.month, :start_year => 2005, :end_year=>Time.now.year+3,:order => [:day, :month, :year], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
-    </div>
-    <div class="control-group">
-      <%= f.label :person , "Assigned To", :class => 'control-label' %><br />
-      <%= f.text_field :person %>
-    </div>
-    <% end %>
-  </div>
-</div>
-<div class="row">
-  <div class="span6 offset3">
-    <div class="actions">
-      <%= f.submit nil, :class => 'btn btn-success'%>
-      <%= cancel_page "Task" %>
+  <div class="control-group">
+    <%= f.label :task , :class => 'control-label' %>
+    <div class="controls">
+    <%= f.text_field :task, :class => 'text_field sp8-form' %>
     </div>
   </div>
-</div>
+  <div class="control-group">
+    <%= f.label :desc , "Task Description", :class => 'control-label' %>
+    <%= f.text_area :desc, :class => 'text_field sp8-form' %>
+  </div>
+  <% if act == "new" %>
+  <div class="control-group">
+    <%= f.label :pdate, "Date Task Proposed" , :class => 'control-label', :style => "float:left; padding-top:2%;" %> &nbsp;
+    <%= f.date_select :pdate, {:use_short_month=>"true", :start_month => Time.now.month, :start_year => 2005, :end_year=>Time.now.year+3,:order => [:day, :month, :year], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
+  </div>
+  <div class="control-group">
+    <%= f.label :proposedby, "Proposed By", :class => "control-label" , :style => "float:left; padding-top:2%;"%> &nbsp;
+    <%= f.text_field :proposedby, :readonly => "true", :value => current_user.name, :style => "width:100px" %>
+  </div>
+  <% end %>
+  <% if act == "edit" %>
+  <div class="control-group">
+    <%= f.label :sdate, "Start Date" , :class => 'control-label' %><br />
+    <%= f.date_select :sdate, {:use_short_month=>"true", :start_month => Time.now.month, :start_year => 2005, :end_year=>Time.now.year+3,:order => [:day, :month, :year], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
+  </div>
+  <div class="control-group">
+    <%= f.label :edate, "End Date" , :class => 'control-label' %><br />
+    <%= f.date_select :edate, {:use_short_month=>"true", :start_month => Time.now.month, :start_year => 2005, :end_year=>Time.now.year+3,:order => [:day, :month, :year], :datetime_separator => "&nbsp;at&nbsp;&nbsp;"}, {:class=>"span1"} %>
+  </div>
+  <div class="control-group">
+    <%= f.label :person , "Assigned To", :class => 'control-label' %><br />
+    <%= f.text_field :person %>
+  </div>
+  <% end %>
+  <div class="actions">
+    <%= f.submit nil, :class => 'btn btn-success'%>
+    <%= cancel_page "Task" %>
+  </div>
 <% end %>

@@ -2,7 +2,7 @@
 # Send emails to the followers of post author.
 
 class SubscriptionMailer < ActionMailer::Base
-  default from: 'info@savitri.in', reply_to: 'info@savitri.in'
+  default from: 'Savitri <info@savitri.in>', reply_to: 'info@savitri.in'
 
   def blogpost_email(reciever, sender, blog, post)
     @reciever = reciever
