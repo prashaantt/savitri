@@ -1,3 +1,29 @@
 // Place all the styles related to the pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.page_headers {
+  h2, h1 {
+    font-size: 24.5px;
+  }
+
+  h3, h4, h5, h6 {
+    font-size: 14px;
+  }
+}
+
+.collapse_related_content {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.related_content {
+  list-style: none;
+  padding: 0% 4% 4% 8%;
+}
+
+.related-content-list {
+  font-size: 12px;
+  line-height: 15px;
+  padding-bottom: 6%;
+}

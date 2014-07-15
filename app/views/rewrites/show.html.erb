@@ -1,20 +1,26 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="span8 offset2 center-col">
+    <div class="sp8-content">
+      <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Source:</b>
-  <%= @rewrite.source %>
-</p>
+      <p>
+        <b>Source:</b>
+        <%= @rewrite.source %>
+      </p>
 
-<p>
-  <b>Destination:</b>
-  <%= @rewrite.destination %>
-</p>
+      <p>
+        <b>Destination:</b>
+        <%= @rewrite.destination %>
+      </p>
 
-<p>
-  <b>Code:</b>
-  <%= @rewrite.code %>
-</p>
+      <p>
+        <b>Code:</b>
+        <%= @rewrite.code %>
+      </p>
 
-
-<%= link_to 'Edit', edit_rewrite_path(@rewrite) %> |
-<%= link_to 'Back', rewrites_path %>
+      <%= link_to 'Edit', edit_rewrite_path(@rewrite) %> |
+      <%= link_to 'Back', rewrites_path %>
+      
+    </div>
+  </div>
+</div>

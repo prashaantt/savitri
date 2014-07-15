@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span12">
     <div class="page-header title">
       <h1>
         <%= @task.task %>
@@ -8,40 +8,41 @@
     </div>
   </div>
 </div>
+
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span8 offset2 center-col">
+    <div class="sp8-content">
 
-<p>
-  <b>Description:</b>
-  <%= @task.desc %>
-</p>
+      <p>
+        <b>Description:</b>
+        <%= @task.desc %>
+      </p>
 
-<p>
-  <b>Proposed date:</b>
-  <%= @task.pdate %>
-</p>
+      <p>
+        <b>Proposed date:</b>
+        <%= @task.pdate %>
+      </p>
 
 
-<p>
-  <b>Start date:</b>
-  <%= @task.sdate %>
-</p>
+      <p>
+        <b>Start date:</b>
+        <%= @task.sdate %>
+      </p>
 
-<p>
-  <b>End date:</b>
-  <%= @task.edate %>
-</p>
+      <p>
+        <b>End date:</b>
+        <%= @task.edate %>
+      </p>
 
-<p>
-  <b>Task Assigned To:</b>
-  <%= @task.person %>
-</p>
-</div>
-</div>
-<br/>
-<div class="row">
-  <div class="span6 offset3">
-<%= link_to 'Edit', edit_task_path(@task) , :class => 'btn btn-warning'%>
-<%= link_to 'Back', tasks_path, :class => 'btn' %>
-</div>
+      <p>
+        <b>Task Assigned To:</b>
+        <%= @task.person %>
+      </p>
+
+      <br/>
+      <%= link_to 'Edit', edit_task_path(@task) , :class => 'btn btn-warning'%>
+      <%= link_to 'Back', tasks_path, :class => 'btn' %>
+      
+    </div>
+  </div>
 </div>

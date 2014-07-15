@@ -1,38 +1,47 @@
+<div class="row">
+  <div class="page-header title">
+    <h1>Listing lines</h1>
+  </div>
+</div>
 
-<h1>Listing lines</h1>
+<div class="row">
+  <div class="span10 offset1 center-col">
+    <div class="sp12-content" align="center">
+      <table>
+        <tr>
+          <th>Line</th>
+          <th>No</th>
+          <th>Stanza No</th>
+          <th>Canto (No) Name</th>
+          <th></th>
+        </tr>
 
-<table>
-  <tr>
-    <th>Line</th>
-    <th>No</th>
-    <th>Stanza No</th>
-    <th>Canto (No) Name</th>
-    <th></th>
-  </tr>
+        <% @lines.each do |line| %>
+          <tr>
+            <td><%= line.line %></td>
+            <td><%= line.no %></td>
+            <% @stan= Stanza.find(line.stanza_id) %>
+            <td><%= @stan.no %></td>
+            <td>
+              <% @canto = Section.find(@stan.section).canto_id %>
+              (<%= Canto.find(@canto).no %>)<%= Canto.find(@canto).title  %>
+            </td>
+            <!--TODO FIll In to show canto Id -->
+            <td><%= link_to 'Show', line %></td>
+            <% if can? :update, line %>
+            <td><%= link_to 'Edit', edit_line_path(line) %></td>
+            <% end %>
+            <% if can? :destroy, line %>
+            <td><%= link_to 'Destroy', line, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
 
-<% @lines.each do |line| %>
-  <tr>
-    <td><%= line.line %></td>
-    <td><%= line.no %></td>
-    <% @stan= Stanza.find(line.stanza_id) %>
-    <td><%= @stan.no %></td>
-    <td>
-      <% @canto = Section.find(@stan.section).canto_id %>
-      (<%= Canto.find(@canto).no %>)<%= Canto.find(@canto).title  %>
-    </td>
-    <!--TODO FIll In to show canto Id -->
-    <td><%= link_to 'Show', line %></td>
-    <% if can? :update, line %>
-    <td><%= link_to 'Edit', edit_line_path(line) %></td>
-    <% end %>
-    <% if can? :destroy, line %>
-    <td><%= link_to 'Destroy', line, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <% end %>
-  </tr>
-<% end %>
-</table>
-
-<br />
-<% if can? :create, Line %>
-<%= link_to 'New Line', new_line_path %>
-<% end %>
+      <br />
+      <% if can? :create, Line %>
+        <%= link_to 'New Line', new_line_path %>
+      <% end %>
+    </div>
+  </div>
+</div>

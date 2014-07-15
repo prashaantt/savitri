@@ -1,27 +1,33 @@
-<h1>Listing rewrites</h1>
+<div class="row">
+  <div class="span12 page-header title">
+    <h1>Listing rewrites</h1>
+  </div>
+</div>
 
-<table>
-  <tr>
-    <th>Source</th>
-    <th>Destination</th>
-    <th>Code</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="row">
+  <table>
+    <tr>
+      <th>Source</th>
+      <th>Destination</th>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
 
-<% @rewrites.each do |rewrite| %>
-  <tr>
-    <td><%= rewrite.source %></td>
-    <td><%= rewrite.destination %></td>
-    <td><%= rewrite.code %></td>
-    <td><%= link_to 'Show', rewrite %></td>
-    <td><%= link_to 'Edit', edit_rewrite_path(rewrite) %></td>
-    <td><%= link_to 'Destroy', rewrite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+    <% @rewrites.each do |rewrite| %>
+      <tr>
+        <td><%= rewrite.source %></td>
+        <td><%= rewrite.destination %></td>
+        <td><%= rewrite.code %></td>
+        <td><%= link_to 'Show', rewrite %></td>
+        <td><%= link_to 'Edit', edit_rewrite_path(rewrite) %></td>
+        <td><%= link_to 'Destroy', rewrite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </table>
 
-<br />
+  <br />
 
-<%= link_to 'New Rewrite', new_rewrite_path %>
+  <%= link_to 'New Rewrite', new_rewrite_path %>
+</div>

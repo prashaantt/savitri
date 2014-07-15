@@ -22,7 +22,7 @@
 	<div class="span6">
 		<% unless params[:q].blank? %>
 		<% unless @search.total.to_i == 0 %>
-		<h5 class="announce">Showing <%= (@search.results.current_page - 1)* @per_page %> - <%= @search.results.last_page? ? @search.total : (@search.results.current_page * @per_page) %> of <%= @search.total %> matches</h5>
+		<h5 class="announce">Showing <%= ((@search.results.current_page - 1)* @per_page) + 1 %> - <%= @search.results.last_page? ? @search.total : (@search.results.current_page * @per_page) %> of <%= @search.total %> matches</h5>
 		<% else %>
 		<h5 class="announce">No results found</h5>
 		<p><em>Try searching for something else.</em></p>
