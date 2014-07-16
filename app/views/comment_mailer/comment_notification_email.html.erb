@@ -4,18 +4,19 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h4><% unless @sender.name.blank? %><%= @sender.name %><% else %><%= @sender.username %><% end %> wrote a comment on "<%= link_to @post.title, blog_post_url(@blog, @post, :anchor => "comment-"+@comment.id.to_s) %>" at <%= link_to @blog.title, blog_url(@blog) %>.</h4>
+    <h4><% unless @sender.name.blank? %><%= @sender.name %><% else %><%= @sender.username %><% end %> wrote a comment on "<%= link_to @post.title, @url %>" at <%= link_to @blog.title, blog_url(@blog) %>.</h4>
     <p>
-      <p>Comment:</p>
-        <div style="padding-left:50px">
-          <% if @comment.body.length > 200 %>
-          <% comment = @comment.body[0..200] + @comment.body[201..-1].match(/([^ ]+)/)[0] + '...' %>
-          <%= comment.gsub(/\r\n?/,'<br/>').html_safe %>
-          <%= link_to "Read more", blog_post_url(@blog, @post, :anchor => "comment-" + @comment.id.to_s) %>
-          <% else %>
-          <%= @comment.body.gsub(/\r\n?/,"<br/>").html_safe %>
-          <% end %>
-        </div>
+      <% if @comment.length > 200 %>
+        <% comment = @comment[0..200] + @comment[201..-1].match(/([^ ]+)/)[0] + '...' %>
+        <%= comment.gsub(/\r\n?/,'<br/>').html_safe %>
+        <%= link_to "Read more", @url %>
+      <% else %>
+        <%= @comment.gsub(/\r\n?/,"<br/>").html_safe %>
+      <% end %>
     </p>
+    <div style="width:94%;margin:0 auto;min-width:220px;max-width:650px;text-align:left;font-family:arial;color:#ccc;font-size:11px;line-height:14px;">
+      <%= link_to "Unsubscribe", unsubscribe_blog_url(blog_id: @blog.slug, post_id: @post.url), :class => 'muted' %> from <%= @blog.title %><br/>
+      Add info@savitri.in to your address book to receive all emails for Savitri
+    </div>
   </body>
 </html>

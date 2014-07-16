@@ -8,10 +8,8 @@ class CommentsController < ApplicationController
   load_and_authorize_resource
 
   def create
-    @post = Post.cached_find_by_url(params[:post_id])
-    @comment = @post.comments.create(params[:comment])
-    CommentWorker.perform_async(@comment.user_id, @comment.id)
-    redirect_to blog_post_path(@post.blog, @post)
+    CommentWorker.perform_async(current_user.id, params)
+    render nothing: true
   end
 
   def update

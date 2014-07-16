@@ -1,14 +1,14 @@
 class CommentMailer < ActionMailer::Base
-  default :from => "info@savitri.in",
+  default :from => "Savitri <info@savitri.in>",
           :reply_to => "info@savitri.in"
 
-  def comment_notification_email(reciever, sender, blog, post, comment)
+  def comment_notification_email(reciever, sender, blog, post, comment, url)
     @reciever = reciever
     @comment = comment
     @sender = sender
     @blog = blog
     @post = post 
-    @url  = "http://savitri.in"
+    @url  = url
     if @sender.name.blank?
       name = @sender.name 
     else
