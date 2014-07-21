@@ -4,11 +4,11 @@
 class CommentsController < ApplicationController
   respond_to :html, :json
 
-  before_filter :authenticate_user!
-  load_and_authorize_resource
+  before_filter :authenticate_user!, :except => [:create]
+  load_and_authorize_resource :except => [:create]
 
   def create
-    CommentWorker.perform_async(current_user.id, params)
+    CommentWorker.perform_async(current_user, params)
     render nothing: true
   end
 
