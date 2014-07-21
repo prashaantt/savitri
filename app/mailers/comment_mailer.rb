@@ -9,11 +9,6 @@ class CommentMailer < ActionMailer::Base
     @blog = blog
     @post = post 
     @url  = url
-    if @sender.name.blank?
-      name = @sender.name 
-    else
-      name = @sender.username
-  	end
-    mail(:to => reciever.email, :subject => "#{name} wrote a comment on '#{blog.title}'")
+    mail(:to => reciever.email, :subject => "#{@sender} wrote a comment on '#{blog.title}'")
   end
 end
