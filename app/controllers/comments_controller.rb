@@ -29,7 +29,11 @@ class CommentsController < ApplicationController
 
   def notify
     current_user_id = current_user.id rescue nil
-    CommentWorker.perform_async(current_user_id, params)
+    puts "REMOTE_HOST: "
+    puts request.remote_host
+    puts "CURRENT_HOST: "
+    puts request.host
+    #CommentWorker.perform_async(current_user_id, params)
     render nothing: true
   end
 end
