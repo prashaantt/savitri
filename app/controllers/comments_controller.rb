@@ -4,12 +4,14 @@
 class CommentsController < ApplicationController
   respond_to :html, :json
 
-  before_filter :authenticate_user!, :except => [:create]
-  load_and_authorize_resource :except => [:create]
+  before_filter :authenticate_user!, :except => [:notify]
+  load_and_authorize_resource :except => [:notify]
 
   def create
-    CommentWorker.perform_async(current_user, params)
-    render nothing: true
+    @post = Post.cached_find_by_url(params[:post_id])
+    @comment = @post.comments.create(params[:comment])
+    CommentWorker.perform_async(@comment.user_id, @comment.id)
+    redirect_to blog_post_path(@post.blog, @post)
   end
 
   def update
@@ -23,5 +25,11 @@ class CommentsController < ApplicationController
     @comment = @post.comments.find(params[:id])
     @comment.destroy
     redirect_to blog_post_path(@post.blog, @post)
+  end
+
+  def notify
+    current_user_id = current_user.id rescue nil
+    CommentWorker.perform_async(current_user_id, params)
+    render nothing: true
   end
 end

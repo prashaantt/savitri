@@ -23,7 +23,6 @@ Savitri::Application.routes.draw do
   get 'blogs/:blog_id/recentcomments', to: 'blogs#recentcomments', defaults: { format: :json }
   get 'blogs/:blog_id/recentposts', to: 'blogs#recentposts', defaults: { format: :json }
   get 'blogs/:blog_id/get_oldest_post_date', to: 'blogs#get_oldest_post_date', defaults: { format: :json }
-
   devise_for :users
 
   get '/profile/:id' => 'users#show', as: :profile
@@ -67,6 +66,8 @@ Savitri::Application.routes.draw do
   resources :posts do
     resources :comments, name_prefix: 'post_'
   end
+
+  post '/posts/:post_id/comments/notify', to: 'comments#notify', as: :comments_notify
 
   resources :media do
     resources :audios, name_prefix: 'media_'
