@@ -47,7 +47,7 @@ $ ->
       $closest_comment.css('display', 'block')
       $commentDiv = $("#recent_comments")
       if ($closest_comment.find("li").length == 0)
-        $.get "https://disqus.com/api/3.0/forums/listPosts.json?forum=#{DISQUS_FORUM}&limit=10&related=thread&api_key=#{DISQUS_PUBLIC_KEY}", (res, code) ->
+        $.get "https://disqus.com/api/3.0/forums/listPosts.json?forum="+window.forum+"&limit=10&related=thread&api_key="+window.disqus_public_key, (res, code) ->
           html = undefined
           i = undefined
           len = undefined

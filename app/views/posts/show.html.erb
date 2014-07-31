@@ -10,6 +10,8 @@
 <% end %>
 <%= javascript_tag do %>
   window.get_date = true;
+  window.forum = "<%=j DISQUS_FORUM %>";
+  window.disqus_public_key = "<%=j DISQUS_PUBLIC_KEY %>";
 <% end %>
 <% title @post.cached_title + " | " + @blog.cached_title
  meta_desc @post.cached_title + " | " + @blog.cached_title 
