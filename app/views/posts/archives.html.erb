@@ -2,6 +2,8 @@
 <!-- Main Page Content -->
 <%= javascript_tag do %>
   window.get_date = true;
+  window.forum = "<%=j DISQUS_FORUM %>";
+  window.disqus_public_key = "<%=j DISQUS_PUBLIC_KEY %>";
 <% end %>
 <% base_url = request.protocol + request.host_with_port %>
 <% feed_url = base_url + blog_path(@blog) + "/feed" %>
