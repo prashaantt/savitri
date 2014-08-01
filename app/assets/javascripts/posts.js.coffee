@@ -32,6 +32,37 @@ $ ->
         $.get '/blogs/'+ window.location.pathname.split("/")[2] + '/recentposts/', callback, 'json'
 
 $ ->
+  urlArray = []
+  $(".count-comments").each ->
+    url = $(this).attr("data-disqus-url")
+    urlArray.push "link:" + url
+    return
+
+  $.ajax
+    type: "GET"
+    url: "https://disqus.com/api/3.0/threads/set.jsonp"
+    data: # URL method
+      api_key: window.disqus_public_key
+      forum: window.forum
+      thread: urlArray
+
+    cache: false
+    dataType: "jsonp"
+    success: (result) ->
+      for i of result.response
+        countText = " comments"
+        count = result.response[i].posts
+        countText = " comment"  if count is 1
+        $("span[data-disqus-url=\"" + result.response[i].link + "\"]").html count + countText
+      $(".count-comments").each ->
+        $(this).html "0 comments"  unless $(this).text()
+        return
+
+      return
+
+  return
+
+$ ->
   $(".collapse_comments").click ->
     $closest_comment = undefined
     $commentDiv = undefined
