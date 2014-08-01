@@ -124,7 +124,7 @@
               <% else %>
                 <p class='excerpt'><%= post.cached_excerpt.html_safe.split(" ").first(80).join(" ") %></p>
               <% end %>
-              <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
+              <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em> | <span class="count-comments" data-disqus-url="<%=blog_post_url(post.cached_blog,post)%>"></span></p>
               <% else %>
                 <% post_content = post.cached_content.gsub(/\r\n?/, "") %>
                 <% stripped_content = strip_tags(post.cached_content) %>
@@ -132,11 +132,12 @@
                   <div class="main-content">
                     <%= post_content.split(" ").first(200).join(" ").html_safe %>...
                   </div>
-                  <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
+                  <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em> | <span class="count-comments" data-disqus-url="<%=blog_post_url(post.cached_blog,post)%>"></span></p>
                 <% else %>
                   <div class="main-content">
                     <%= post_content.split(" ").first(200).join(" ").html_safe %>
                   </div>
+                  <span class="count-comments" data-disqus-url="<%=blog_post_url(post.cached_blog,post)%>"></span>
                 <% end %>
               <% end %>
             </div>
