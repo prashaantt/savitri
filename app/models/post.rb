@@ -23,16 +23,6 @@ class Post < ActiveRecord::Base
   scope :published, proc {
     where(draft: false)
   }
-  scope :by_year, ->(year) {
-     where('extract(year from published_at) = ?', year)
-   }
-   scope :by_month, ->(month) {
-     where('extract(month from published_at) = ?', month)
-   }
-   scope :by_day, ->(day) {
-     where('extract(day from published_at) = ?', day)
-   }
-
   validate :max_featured, if: :featured_changed?
 
   attr_reader :tag_tokens
@@ -263,12 +253,17 @@ class Post < ActiveRecord::Base
   end
 
   def self.filter(blog_id, params)
-    if params['year'].present?
-      blogposts = Post.published.where(blog_id: blog_id)
-      .by_year(params['year'])
+    blogposts = []
+    if params['day'].present?
+      date = Time.zone.parse("#{params['year']}-#{params['month']}-#{params['day']}")
+      blogposts = Post.published.where(blog_id: blog_id).where(published_at: date..date+1.day)
+    elsif params['month']
+      date = Time.zone.parse("#{params['year']}-#{params['month']}-01")
+      blogposts = Post.published.where(blog_id: blog_id).where(published_at: date..date+1.month)
+    elsif params['year']
+      date = Time.zone.parse("#{params['year']}-01-01")
+      blogposts = Post.published.where(blog_id: blog_id).where(published_at: date..date+1.year)
     end
-    blogposts = blogposts.by_month(params['month']) if params['month'].present?
-    blogposts = blogposts.by_day(params['day']) if params['day'].present?
     blogposts
   end
 end

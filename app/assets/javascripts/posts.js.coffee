@@ -155,10 +155,10 @@ $ ->
             new_url = current_url + split_date[2] + '/' + split_date[0] + '/' + split_date[1]
             window.location.pathname = new_url
             return
-
+      complete: setDate
 # onPage load, we need to highlight the selected date. If no particular date exists in the url, highlight todays date
 # If it exists, parse it and navigate to that date on the calendar and highlight
-$ ->
+setDate = ->
   if window.location.href.match(/\/\d{4}\/\d{2}\/\d{2}$/) isnt null
     date = window.location.href.match(/\/\d{4}\/\d{2}\/\d{2}$/)[0]
     date_split = date.split('/')
