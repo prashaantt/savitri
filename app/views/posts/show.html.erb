@@ -51,7 +51,9 @@
           <h6 class="post-series hidden-desktop"><%= @post.cached_series_title %></h6>
         <% end %>
       <% end %>
-      <h1 class="post-title-header"><a href="#"><%= link_to @post.cached_title,  blog_post_path(@blog,@post) %></a></strong>
+      <h1 class="post-title-header">
+        <%= "#{@post.number}." if @post.number.present? %>
+        <a href="#"><%= link_to @post.cached_title,  blog_post_path(@blog,@post) %></a></strong>
       <% if current_user.nil? || !current_user.admin? %>
         <% if @post.featured? %>
             <i class="icon-star pull-right"></i>
