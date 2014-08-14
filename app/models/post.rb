@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
                  :content, :title, :tag_list, :blog_id, :md_content,
                  :uploads_attributes, :excerpt, :url, :published_at,
                  :series_title, :subtitle, :show_excerpt, :tag_tokens,
-                 :draft, :author_id, :featured
+                 :draft, :author_id, :featured, :number
                  )
   acts_as_taggable
   acts_as_url :title, scope: :blog_id
@@ -24,6 +24,7 @@ class Post < ActiveRecord::Base
     where(draft: false)
   }
   validate :max_featured, if: :featured_changed?
+  validates :number, uniqueness: { scope: :blog_id }, if: :number_changed?
 
   attr_reader :tag_tokens
 
@@ -238,6 +239,24 @@ class Post < ActiveRecord::Base
 
   def flush_cached_blog
     Rails.cache.delete([self, 'blog'])
+  end
+
+  def assign_post_number!
+    tries = 0
+    begin
+      # Find Max post number in a certain blog
+      number = Post.where(blog_id: blog_id).maximum(:number)
+      # if self is first post for a blog then assign number 1 else max + 1
+      number = number.nil? ? 1 : (number + 1)
+      # update_column method skips validations as well as callbacks
+      self.update_column(:number, number)
+      # Manually calling validation method to check uniquness of a number
+      raise "#{self.errors.messages}" unless self.valid?
+    rescue => e
+      tries += 1
+      logger.info "#{e}\nRetrying...#{tries}"
+      retry if tries <= 3
+    end
   end
 
   private
