@@ -11,10 +11,12 @@ class EmailWorker
     end
     @users.unshift @sender unless @sender.username == 'admin'
     @post = Post.find_by_id(post)
-    unless @post.nil? # If Post has not been deleted by the time of publishing.
+    unless @post.nil?
+     # If Post has not been deleted by the time of publishing.
       # Check to do not send email multiple times for same post.
       if @post.draft == true
         @post.publish!
+        @post.assign_post_number!
         @blog = Blog.find(@post.blog_id)
         @users << @blog.user_followers.select do |u|
           # if invited user then check if invitation accepted

@@ -98,7 +98,7 @@
               <% end %>
             <% end %>
           <% end %>
-          <h3><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
+          <h3><%= "#{post.number}." if post.number.present? %> <%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
           <% if current_user.nil? || !current_user.admin? %>
             <% if post.featured? %>
               <i class="icon-star pull-right"></i>
