@@ -98,7 +98,7 @@
               <% end %>
             <% end %>
           <% end %>
-          <h3><%= "#{post.number}." if post.number.present? %> <%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
+          <h3><%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
           <% if current_user.nil? || !current_user.admin? %>
             <% if post.featured? %>
               <i class="icon-star pull-right"></i>
@@ -116,7 +116,7 @@
                 <%= link_to 'Edit', edit_blog_post_path(post.cached_blog,post), :class => 'btn btn-mini btn-warning' %>
               <% end %>
             </span>
-            <h6><span class="blog-author"><%= link_to (post.cached_author.name.blank? ? post.cached_author.username : post.cached_author.name), post.cached_author, {:class => "underline"} %> on <%= post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %></span></h6>
+            <h6><span class="blog-author"><%= "##{post.number}" if post.number.present? %> <%= link_to (post.cached_author.name.blank? ? post.cached_author.username : post.cached_author.name), post.cached_author, {:class => "underline"} %> on <%= post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %></span></h6>
             <div class="format-headers">
             <% unless post.cached_excerpt.blank? %>
               <% if post.cached_excerpt.split(" ").length > 80 %>
