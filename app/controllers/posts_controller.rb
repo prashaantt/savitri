@@ -9,9 +9,9 @@ class PostsController < ApplicationController
     @per_page = 20
     blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
     if params[:year]
-       @blogposts = Post.filter(blog_id.id,params).order("posts.published_at DESC")
+       @blogposts = Post.filter(blog_id.id,params).order("posts.number DESC")
      else
-       @blogposts = Post.published.where(:blog_id=>blog_id.id).order("posts.published_at DESC")
+       @blogposts = Post.published.where(:blog_id=>blog_id.id).order("posts.number DESC")
      end
     if params[:tag]
       @tagposts = @blogposts.tagged_with(params[:tag])
