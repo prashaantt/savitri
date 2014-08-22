@@ -25,7 +25,6 @@ class Post < ActiveRecord::Base
   }
   validate :max_featured, if: :featured_changed?
   validates :number, uniqueness: { scope: :blog_id }, if: :number_changed?
-
   attr_reader :tag_tokens
 
   ## Instance Methods
@@ -255,7 +254,7 @@ class Post < ActiveRecord::Base
     rescue => e
       tries += 1
       logger.info "#{e}\nRetrying...#{tries}"
-      retry if tries <= 3
+      retry if tries <= 10
     end
   end
 

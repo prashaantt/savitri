@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140807092958) do
+ActiveRecord::Schema.define(:version => 20140822072743) do
 
   create_table "audios", :force => true do |t|
     t.integer  "medium_id"
@@ -32,13 +32,12 @@ ActiveRecord::Schema.define(:version => 20140807092958) do
 
   create_table "blogs", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title",                                      :null => false
+    t.string   "title",                               :null => false
     t.string   "subtitle"
-    t.string   "slug",                                       :null => false
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
-    t.string   "post_access",        :default => "--- []\n"
-    t.string   "content_generators", :default => "{}"
+    t.string   "slug",                                :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.string   "post_access", :default => "--- []\n"
   end
 
   create_table "books", :force => true do |t|
@@ -152,9 +151,10 @@ ActiveRecord::Schema.define(:version => 20140807092958) do
     t.string   "show_excerpt"
     t.integer  "author_id"
     t.boolean  "featured",     :default => false
-    t.integer  "written_by"
     t.integer  "number"
   end
+
+  add_index "posts", ["blog_id", "number"], :name => "index_posts_on_blog_id_and_number", :unique => true
 
   create_table "rewrites", :force => true do |t|
     t.text     "source"
