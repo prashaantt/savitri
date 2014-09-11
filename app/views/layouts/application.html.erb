@@ -142,6 +142,10 @@
         <li class="divider"/>
         <% end %>
         <% end %>
+        <% if (can? :read, Authentication) %>
+        <li><%= link_to "Share", authentications_path %></li>
+        <li class="divider"/>
+        <% end %>
         <li><%= link_to "Account settings", edit_user_registration_path %> </li>
         <li class="divider"/>
         <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>

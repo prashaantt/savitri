@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140822072743) do
+ActiveRecord::Schema.define(:version => 20140909133845) do
 
   create_table "audios", :force => true do |t|
     t.integer  "medium_id"
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(:version => 20140822072743) do
     t.string   "block"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+  end
+
+  create_table "authentications", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "name"
+    t.string   "oauth_token"
+    t.string   "oauth_secret"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "blogs", :force => true do |t|
@@ -63,8 +74,10 @@ ActiveRecord::Schema.define(:version => 20140822072743) do
     t.text     "body",       :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.datetime "deleted_at"
   end
 
+  add_index "comments", ["deleted_at"], :name => "index_comments_on_deleted_at"
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
 
   create_table "follows", :force => true do |t|
@@ -131,8 +144,10 @@ ActiveRecord::Schema.define(:version => 20140822072743) do
     t.datetime "updated_at", :null => false
     t.integer  "parent"
     t.string   "url"
+    t.datetime "deleted_at"
   end
 
+  add_index "pages", ["deleted_at"], :name => "index_pages_on_deleted_at"
   add_index "pages", ["permalink"], :name => "index_pages_on_permalink"
 
   create_table "posts", :force => true do |t|
@@ -151,10 +166,12 @@ ActiveRecord::Schema.define(:version => 20140822072743) do
     t.string   "show_excerpt"
     t.integer  "author_id"
     t.boolean  "featured",     :default => false
+    t.datetime "deleted_at"
     t.integer  "number"
   end
 
   add_index "posts", ["blog_id", "number"], :name => "index_posts_on_blog_id_and_number", :unique => true
+  add_index "posts", ["deleted_at"], :name => "index_posts_on_deleted_at"
 
   create_table "rewrites", :force => true do |t|
     t.text     "source"
@@ -251,9 +268,11 @@ ActiveRecord::Schema.define(:version => 20140822072743) do
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.datetime "deleted_at"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
+  add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token", :unique => true
   add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"

@@ -20,7 +20,7 @@ set :scm, 'git'
 set :branch, 'master'
 set :scm_verbose, true
 set :use_sudo, false
-set :shared_children, shared_children + %w{solr}
+set :shared_children, shared_children + %w{solr .env.*}
 # Define all the tasks that need to be running manually after Capistrano is finished.
 namespace :deploy do
 	task :bundle_install, :roles => :app do

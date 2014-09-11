@@ -1,9 +1,9 @@
 # encoding: UTF-8
 # routes.
 Savitri::Application.routes.draw do
+  resources :authentications
 
   match '/ping' => 'health#ping'
-
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
     resources :rewrites
@@ -58,6 +58,8 @@ Savitri::Application.routes.draw do
 
   get 'savitri/index'
   match '/savitri/show' => 'savitri#show'
+  match '/auth/:provider/callback', to: 'authentications#create'
+  match '/auth/failure', to: 'authentications#index'
 
   resources :blogs do
     resources :posts, name_prefix: 'blog_'
@@ -106,5 +108,4 @@ Savitri::Application.routes.draw do
 
   get '*paths' => 'pages#show', as: :page
   put '*paths' => 'pages#update', as: :page
-
 end
