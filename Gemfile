@@ -59,3 +59,8 @@ gem 'slim', '>= 1.1.0'
 # if you require 'sinatra' you get the DSL extended to Object
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'rvm-capistrano'
+gem 'omniauth-twitter'
+gem 'twitter'
+gem "authbuttons-rails"
+gem "dotenv"
+gem "dotenv-deployment"

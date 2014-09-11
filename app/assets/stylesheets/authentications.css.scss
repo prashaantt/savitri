@@ -1,0 +1,31 @@
+// Place all the styles related to the authentications controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+h1.authentication_header{
+  margin-bottom: 2.5%;
+}
+.authentication {
+  width: auto;
+  float: left;
+  border-style: solid;
+  border: solid 1px #999;
+  padding: 0.5% 1%;
+  border-radius: 8px;
+  position: relative;
+  margin: 1%; 
+}
+
+.authentication .remove {
+  text-decoration: none;
+  color: #333;
+  padding: 2px 4px;
+  font-size: 80%;
+}
+
+.authentication .remove:hover {
+  text-decoration: none;
+  color: #CCC;
+  background-color: #777;
+  border-radius: 6px;
+}
