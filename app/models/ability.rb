@@ -19,7 +19,10 @@ class Ability
        can :manage, :all
     else
         can :read, [Post, Blog, Comment, Notebook, Page, User, Audio]
-        if user.role == "Blogger"
+          if Blog.any?{|b| b.post_access.include? user.id}
+            can [:read,:create,:destroy], Authentication
+          end
+        if user.role == "Blogger"    
           can :manage, Page do |n|
             Blog.any?{|b| b.post_access.include? user.id}
           end

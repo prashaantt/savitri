@@ -2,6 +2,7 @@
 # EmailWorker is for sending emails to followers of poster.
 class EmailWorker
   include Sidekiq::Worker
+  include Rails.application.routes.url_helpers
 
   def perform(user_id, post)
     @sender = User.find(user_id)
@@ -27,6 +28,26 @@ class EmailWorker
           .deliver
         end
       end
+    end
+    share_to_social_sites(@sender,@post)
+  end
+
+  def share_to_social_sites(sender, post)
+    begin
+      sender.authentications.each do |social_account|
+        case social_account.provider
+        when 'twitter'
+          tweet_message = ''
+          if post.title.length > 100
+            tweet_message = "#{post.title[0..99]}... #{Rails.application.routes.url_helpers.blog_post_url(post.blog, post, host: 'savitri.in')} #Savitri"
+          else
+            tweet_message = "#{post.title} #{Rails.application.routes.url_helpers.blog_post_url(post.blog, post, host: 'savitri.in')} #Savitri"
+          end
+          social_account.tweet(tweet_message)
+        end
+      end
+    rescue Exception => e
+      logger.info "#{e}\n #{sender.username} #{post.url}"
     end
   end
 end

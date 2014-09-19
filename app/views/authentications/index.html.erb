@@ -1,0 +1,16 @@
+<% title "Sharing Settings" %>
+<h1 class="authentication_header"><center>Sharing Settings</center></h1>
+<h4><em>Connect your blog to popular social networking sites and automatically share new posts with your friends.</em></h4>
+<%= link_to "#{image_tag('twitter_64.png')}Twitter".html_safe, '/auth/twitter', class: 'input-xlarge' %>
+<%= link_to "#{@authentications['twitter'] ? 'Add New' : 'Connect'}", '/auth/twitter', class: 'btn offset1' %>
+<br/><br/>
+<% if @authentications['twitter'] %>
+<div><em>You are connected as:</em></div>
+  <% @authentications['twitter'].each do |authentication| %>
+    <div class="authentication">
+      <%= image_tag "#{authentication.provider}_32.png" %>
+      <%= authentication.name %>
+      <%= link_to "X", authentication, confirm: "Are you sure you want to remove #{authentication.name}", :method => :delete, :class => "remove" %>
+    </div>
+  <% end %>
+<% end %>
