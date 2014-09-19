@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :notebooks
   has_many :media
+  has_many :authentications
   belongs_to :roles
 
   validates :username, presence: true, length: { minimum: 2 }
