@@ -9,7 +9,7 @@
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
-
+config/database.yml
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp
@@ -17,3 +17,5 @@
 /solr/pids/
 /solr/data/development/
 /.env.*
+!.env.example
+dump.rdb
