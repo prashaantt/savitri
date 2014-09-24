@@ -120,9 +120,9 @@
             <div class="format-headers">
             <% unless post.cached_excerpt.blank? %>
               <% if post.cached_excerpt.split(" ").length > 80 %>
-               <p class='excerpt'><%= post.cached_excerpt.html_safe.split(" ").first(80).join(" ") %>...</p>
+               <p class='excerpt'><%= post.cached_excerpt.html_safe.split(/ /).first(80).join(" ") %>...</p>
               <% else %>
-                <p class='excerpt'><%= post.cached_excerpt.html_safe.split(" ").first(80).join(" ") %></p>
+                <p class='excerpt'><%= post.cached_excerpt.html_safe.split(/ /).first(80).join(" ") %></p>
               <% end %>
               <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em> | <span class="count-comments" data-disqus-url="<%=blog_post_url(post.cached_blog,post)%>"></span></p>
               <% else %>
