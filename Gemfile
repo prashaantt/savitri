@@ -64,3 +64,5 @@ gem 'twitter'
 gem "authbuttons-rails"
 gem "dotenv"
 gem "dotenv-deployment"
+gem 'sitemap_generator'
+gem 'clockwork'
