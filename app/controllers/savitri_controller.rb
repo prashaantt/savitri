@@ -2,12 +2,8 @@
 # SavitriController is Home Page
 class SavitriController < ApplicationController
   def index
-    @posts = Post.where(featured: true).published.order('published_at DESC')
-    if @posts.count < 5
-      temp = Post.where(featured: false).published.order('published_at DESC')
-      .limit(5 - @posts.count)
-      @posts += temp
-    end
+    @sentences = Stanza.find(:all).sample(10)
+    @selections = @sentences.collect{|c| c.cached_lines.map(&:line).join('<br/>').html_safe}
   end
 
   def show
