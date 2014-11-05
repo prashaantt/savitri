@@ -134,3 +134,128 @@ converter = new Markdown.Converter();
   timeout: 2000 // Set the timeout to two seconds
 };
 */
+$(document).ready(function(){
+  screen_width = $( window ).width()
+  screen_height = $( window ).height()
+  width = screen_width * 0.17254313578394598
+  height = screen_height * 0.26136363636363635
+  wh = (width >= height)? width:height
+  $('div.centered').height(wh)
+  $('div.centered').width(wh)
+})
+$(window).load(function() {
+  screen_width = $( window ).width()
+  screen_height = $( window ).height()
+  if (window.location.origin == window.location.href.replace(/\/$/,'')) {
+    $( ".alert" ).remove();
+    $( "div.top" ).removeClass('container top');
+    $( "body" ).css('background-color','#C4AF96');
+    $( ".volume_button" ).click(function() {
+      document.getElementById('player').muted=!document.getElementById('player').muted
+      $( this ).children().toggleClass( "icon-volume-up icon-volume-off" )
+    });
+    $( ".down_arrow" ).click(function() {
+      if ($('.icon-double-angle-down').is(':visible')) {
+        $('html, body').animate({scrollTop: screen_height}, 'slow');
+      } else{
+        $('html, body').animate({scrollTop: 0}, 'slow');
+      };
+       $( this ).children().toggle()
+    });
+  };
+  $('div.symboldiv').css({'min-height': screen_height})
+  mother_symbol_images = []
+  aurobindo_symbol = $('div.centered img')[0]
+  centeredImagePostion = {
+                           left:(screen_width/2) - (aurobindo_symbol.width/2), //aurobindo_symbol.offsetLeft,
+                           top:(screen_height/2) - (aurobindo_symbol.height/2),//aurobindo_symbol.offsetTop,
+                           right:(screen_width/2) + (aurobindo_symbol.width/2),//aurobindo_symbol.offsetLeft + 358,
+                           bottom:(screen_height/2) + (aurobindo_symbol.height/2) //aurobindo_symbol.offsetTop + 333,
+                         }
+  h = -2
+  function getNewPosition(){
+    x = Math.floor(Math.random () * (screen_width - (aurobindo_symbol.width/2)))
+    if (h==-2) {
+      h = 2
+    } else{
+      h = -2
+    };
+    y = Math.floor(Math.random () * (screen_height*h - (aurobindo_symbol.height/2)))
+    return [x,y]
+  }
+  newPosition = [0,0]
+  dimensions = dimensionOfImage()
+  function dimensionOfImage(){
+    size = Math.floor(Math.random() * 8) + 3
+    width = height = Math.floor(screen_width * size / 100)
+    return [width,height]
+  }
+  drawImage();
+  // $('.carousel').carousel({
+  //   interval: 5000
+  // })
+  mother_symbol_images.push({
+                              left:newPosition[0],
+                              top:newPosition[1],
+                              right:newPosition[0] + dimensions[0],
+                              bottom:newPosition[1]+dimensions[1]
+                            })
+  function drawImage(){
+    var img = $('<img class="mother_symbol">');
+    img.attr('src', 'assets/Mother\'s Symbol Large.png');
+    img.css({
+      "left": (newPosition[0]) + "px",
+      "top": (newPosition[1]) + "px",
+      "width": (dimensions[0]) + "px",
+      "height": (dimensions[1]) + "px",
+      "display": "none",
+      "position": "absolute"
+    });
+    // img.css('opacity', 1)
+    img.appendTo('.symboldiv')
+  }
+    $('div.main').css('border-bottom', '2px dotted gainsboro')
+    $('.container').css({"display":"block"});
+    $('button.volume_button').css("display","block");
+    $('#selections').css("height", (screen_height) + "px");
+    $('#myCarousel').css("margin-top", "25%");
+    for (var i = 1; i <= 2000; i++) {
+      newPosition = getNewPosition()
+      dimensions = dimensionOfImage()
+      newImagePostion = {
+                          left:newPosition[0], 
+                          top:newPosition[1],
+                          right:(newPosition[0] + dimensions[0]),
+                          bottom:(newPosition[1] + dimensions[1])
+                        }
+      total_symbols = mother_symbol_images.length
+      count = 0
+      $.each(mother_symbol_images, function( index, value ) {
+        if(intersectRect(value,newImagePostion)){
+          return false
+        }
+        else{
+          count += 1
+         }
+        if(total_symbols == count){
+          if(intersectRect(centeredImagePostion,newImagePostion)) {
+          }
+          else{
+            drawImage()
+            mother_symbol_images.push(newImagePostion)
+          };
+          return false
+          }
+      });
+      if($('img').length == 250 || i == 2000){
+        mother_symbols = $('img.mother_symbol').fadeIn(5000)
+        return false;
+      }
+    };
+    function intersectRect(r1, r2) {
+      return !((r2.left - 20) > r1.right || 
+      (r2.right + 20) < r1.left || 
+      (r2.top - 20) > r1.bottom ||
+      (r2.bottom + 20) < r1.top);
+    }
+});
