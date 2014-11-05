@@ -1,34 +1,47 @@
-<h1 class='text-center italics' style="font-family:'Verdana'">Welcome to savitri.in</h1>
-<div class="row" style="margin-top: 45px">
-  <div class="span8 offset2">
-    <h2 class='text-center'>Featured Posts</h2>
-    <ul class='lead'>
-      <% @posts.each do |post| %>
-        <li class="featured-post-title">
-          <h4><%= link_to post.title, blog_post_path(post.cached_blog,post) %></h4>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="span10 offset1">
-  <div style="border:1px dotted #ccc;margin-top:45px;"></div>
-  <h2 class='text-center' style="padding-top:45px">Selections from Savitri</h2>
-  </div>
-</div>
-<div id="banner" class="row">
-  <div class="span4 offset4 btn_align">
-    <span class="btn-group controls">
-      <button class="btn refresh" id="backBtn"><i class="icon-step-backward muted"></i></button>
-      <!-- <button class="btn" id="playpause"><i class="icon-pause muted" id="playpauseicon"></i></button> -->
-      <button class="btn refresh" id="nextBtn"><i class="icon-forward muted"></i></button>
-      <button class="btn" id="context"><i class="icon-book muted"></i></button>
-    </span>
-  </div>
-  <div id="text" class="span9 selection dynahomespan no-animate">
-    <div class="row">
-      <div id="source" class="reference"></div>
+<a class="down_arrow">
+  <i class="icon-double-angle-down icon-3x growShrink"></i>
+  <i  style="display: none" class="icon-double-angle-up icon-3x growShrink"></i>
+</a>
+<div class="visible-desktop">
+  <button class='volume_button'>
+    <i id='test' class="icon-volume-up icon-2x"></i>
+  </button>
+  <div class="main">
+    <div class="centered">
+      <%= image_tag "Sri Aurobindo's Symbol Large.png" %>
+      <%= image_tag('savitri_handwriting_of_aurobindo.png', style: 'padding-top:40px;') %>
+    </div>
+    <div class='symboldiv'>
     </div>
   </div>
 </div>
+<div class="container" style="display:none;" id="selections">
+<div class="visible-phone visible-tablet" id="mobile-center-images">
+  <%= image_tag "Sri Aurobindo's Symbol Large.png", style: 'width:35%;' %>
+  <%= image_tag "Mother's Symbol Large.png", style: 'width:35%;' %>
+  <%= image_tag "savitri_handwriting_of_aurobindo.png", style: 'height:-10%;width:60%;padding-top:40px;' %>
+</div>
+<h1 class="text-center" style="padding:5%;">Selections from Savitri</h1>
+<div id="myCarousel" class="carousel slide" data-interval="false">
+  <div class="carousel-inner" id="banner">
+    <div class="active item text-center" id="display">
+      <%= @selections.shift %>
+    </div>  
+    <% @selections.each do |lines| %>
+      <div class="item text-center" id="display">
+        <%=lines%>
+      </div>
+    <% end %>
+  </div>
+    <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
+</div>
+<script>
+  $('.carousel').carousel({
+      interval: false
+  })
+</script>
+<audio id='player' autoplay loop>
+  <source src="<%= asset_path '01_It_was_the_hour_before_the_gods_awake.ogg' %>">
+</audio>
