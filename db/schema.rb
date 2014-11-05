@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140909133845) do
+ActiveRecord::Schema.define(:version => 20141105105457) do
 
   create_table "audios", :force => true do |t|
     t.integer  "medium_id"
@@ -152,22 +152,23 @@ ActiveRecord::Schema.define(:version => 20140909133845) do
 
   create_table "posts", :force => true do |t|
     t.integer  "blog_id"
-    t.string   "title",                           :null => false
+    t.string   "title",                                   :null => false
     t.text     "content"
     t.text     "md_content"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.text     "excerpt"
     t.string   "url"
     t.datetime "published_at"
-    t.boolean  "draft",        :default => true
+    t.boolean  "draft",           :default => true
     t.string   "series_title"
     t.string   "subtitle"
     t.string   "show_excerpt"
     t.integer  "author_id"
-    t.boolean  "featured",     :default => false
+    t.boolean  "featured",        :default => false
     t.datetime "deleted_at"
     t.integer  "number"
+    t.string   "social_accounts", :default => "--- []\n"
   end
 
   add_index "posts", ["blog_id", "number"], :name => "index_posts_on_blog_id_and_number", :unique => true
@@ -197,11 +198,12 @@ ActiveRecord::Schema.define(:version => 20140909133845) do
   end
 
   create_table "stanzas", :force => true do |t|
-    t.integer  "no",         :null => false
+    t.integer  "no",                            :null => false
     t.integer  "runningno"
     t.integer  "section_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "featured",   :default => false, :null => false
   end
 
   create_table "taggings", :force => true do |t|
