@@ -25,11 +25,12 @@
 <div id="myCarousel" class="carousel slide" data-interval="false">
   <div class="carousel-inner" id="banner">
     <div class="active item text-center" id="display">
-      <%= @selections.shift %>
+      <a href="/read/<%= @selections.first.section_id %>.<%= @selections.first.runningno %>"> <%= @selections.first.cached_lines.map(&:line).join('<br/>').html_safe %></a>
+      <% @selections.shift %>
     </div>  
-    <% @selections.each do |lines| %>
+    <% @selections.each do |stanza| %>
       <div class="item text-center" id="display">
-        <%=lines%>
+        <a href="/read/<%= stanza.section_id %>.<%= stanza.runningno %>"> <%= stanza.cached_lines.map(&:line).join('<br/>').html_safe %></a>
       </div>
     <% end %>
   </div>
