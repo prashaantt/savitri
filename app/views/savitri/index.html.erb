@@ -4,43 +4,50 @@
 </a>
 <div class="visible-desktop">
   <button class='volume_button'>
-    <i id='test' class="icon-volume-up icon-2x"></i>
+    <i class="icon-volume-up icon-2x"></i>
   </button>
-  <div class="main">
+  <div class="main" style="display:none;">
     <div class="centered">
-      <%= image_tag "Sri Aurobindo's Symbol Large.png" %>
-      <%= image_tag('savitri_handwriting_of_aurobindo.png', style: 'padding-top:40px;') %>
+      <div class="row">
+        <%= image_tag "Sri Aurobindo's Symbol Large.png" %>
+      </div>
+      <div class="row">
+        <%= image_tag('savitri_handwriting_of_aurobindo.png', style: 'padding-top:40px;') %>
+      </div>
     </div>
     <div class='symboldiv'>
     </div>
   </div>
 </div>
-<div class="container" style="display:none;" id="selections">
-<div class="visible-phone visible-tablet" id="mobile-center-images">
-  <%= image_tag "Sri Aurobindo's Symbol Large.png", style: 'width:35%;' %>
-  <%= image_tag "Mother's Symbol Large.png", style: 'width:35%;' %>
-  <%= image_tag "savitri_handwriting_of_aurobindo.png", style: 'height:-10%;width:60%;padding-top:40px;' %>
+<div class="visible-phone visible-tablet span12" id="mobile-center-images">
+  <div class="row">
+    <%= image_tag "Sri Aurobindo's Symbol Large.png", style: 'width:35%;' %>
+  </div>
+  <div class="row">
+    <%= image_tag "savitri_handwriting_of_aurobindo.png", style: 'height:-10%;width:35%;padding-top:40px;' %>
+  </div>
 </div>
-<h1 class="text-center" style="padding:5%;">Selections from Savitri</h1>
-<div id="myCarousel" class="carousel slide" data-interval="false">
-  <div class="carousel-inner" id="banner">
-    <div class="active item text-center" id="display">
-      <a href="/read/<%= @selections.first.section_id %>.<%= @selections.first.runningno %>"> <%= @selections.first.cached_lines.map(&:line).join('<br/>').html_safe %></a>
-      <% @selections.shift %>
-    </div>  
-    <% @selections.each do |stanza| %>
+<div class="container" style="display:none;" id="selections">
+  <h1 class="text-center" style="padding:5%;">Selections from Savitri</h1>
+  <div id="myCarousel" class="carousel slide" data-interval="false">
+    <div class="carousel-inner" id="banner">
+      <div class="active item text-center" id="display">
+        <a href="/read/<%= @selections.first.section_id %>.<%= @selections.first.runningno %>"> <%= @selections.first.cached_lines.map(&:line).join('<br/>').html_safe %></a>
+        <% @selections.shift %>
+      </div>  
+      <% @selections.each do |stanza| %>
       <div class="item text-center" id="display">
         <a href="/read/<%= stanza.section_id %>.<%= stanza.runningno %>"> <%= stanza.cached_lines.map(&:line).join('<br/>').html_safe %></a>
       </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
     <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
     <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-</div>
+  </div>
 </div>
 <script>
   $('.carousel').carousel({
-      interval: false
+    interval: false
   })
 </script>
 <audio id='player' autoplay loop>
