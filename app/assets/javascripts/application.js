@@ -135,21 +135,24 @@ converter = new Markdown.Converter();
 };
 */
 $(document).ready(function(){
-  screen_width = $( window ).width()
-  screen_height = $( window ).height()
-  width = screen_width * 0.17254313578394598
-  height = screen_height * 0.26136363636363635
-  wh = (width >= height)? width:height
-  $('div.centered').height(wh)
-  $('div.centered').width(wh)
+  if (window.location.origin == window.location.href.replace(/\/$/,'')) {
+    $( ".alert" ).remove();
+    $( "div.top" ).removeClass('container top');
+    $( "body" ).css('background-color','#C4AF96');
+    screen_width = $( window ).width()
+    screen_height = $( window ).height()
+    width = screen_width * 0.17254313578394598
+    height = screen_height * 0.26136363636363635
+    wh = (width >= height)? width:height
+    $('div.centered').height(wh)
+    $('div.centered').width(wh)
+    $('div.main').css({"display":"block"})
+  }
 })
 $(window).load(function() {
   screen_width = $( window ).width()
   screen_height = $( window ).height()
   if (window.location.origin == window.location.href.replace(/\/$/,'')) {
-    $( ".alert" ).remove();
-    $( "div.top" ).removeClass('container top');
-    $( "body" ).css('background-color','#C4AF96');
     $( ".volume_button" ).click(function() {
       document.getElementById('player').muted=!document.getElementById('player').muted
       $( this ).children().toggleClass( "icon-volume-up icon-volume-off" )
@@ -162,6 +165,11 @@ $(window).load(function() {
       };
        $( this ).children().toggle()
     });
+    $('div.main').css('border-bottom', '2px dotted gainsboro')
+    $('div.container').css({"display":"block"});
+    $('button.volume_button').css("display","block");
+    $('#selections').css("height", (screen_height) + "px");
+    $('#myCarousel').css("margin-top", "25%");    
   };
   $('div.symboldiv').css({'min-height': screen_height})
   mother_symbol_images = []
@@ -214,11 +222,6 @@ $(window).load(function() {
     // img.css('opacity', 1)
     img.appendTo('.symboldiv')
   }
-    $('div.main').css('border-bottom', '2px dotted gainsboro')
-    $('.container').css({"display":"block"});
-    $('button.volume_button').css("display","block");
-    $('#selections').css("height", (screen_height) + "px");
-    $('#myCarousel').css("margin-top", "25%");
     for (var i = 1; i <= 2000; i++) {
       newPosition = getNewPosition()
       dimensions = dimensionOfImage()
