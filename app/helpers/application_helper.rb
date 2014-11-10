@@ -83,4 +83,12 @@ module ApplicationHelper
       'icon-star-empty pull-right'
     end
   end
+
+  def background_color
+    if params[:controller] == 'savitri'
+      'brown'
+    else
+      'light-yellow'
+    end
+  end
 end

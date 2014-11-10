@@ -138,7 +138,6 @@ $(document).ready(function(){
   if (window.location.origin == window.location.href.replace(/\/$/,'')) {
     $( ".alert" ).remove();
     $( "div.top" ).removeClass('container top');
-    $( "body" ).css('background-color','#C4AF96');
     screen_width = $( window ).width()
     screen_height = $( window ).height()
     width = screen_width * 0.17254313578394598
