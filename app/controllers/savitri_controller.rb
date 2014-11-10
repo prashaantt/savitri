@@ -2,8 +2,7 @@
 # SavitriController is Home Page
 class SavitriController < ApplicationController
   def index
-    @selections = Stanza.where(featured:true).limit(10)
-    #@selections = @sentences.collect{|c| c.cached_lines.map(&:line).join('<br/>').html_safe}
+    @selections = Stanza.where(featured:true).sample(10)
   end
 
   def show
