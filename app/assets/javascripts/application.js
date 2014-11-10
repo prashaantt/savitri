@@ -165,10 +165,11 @@ $(window).load(function() {
        $( this ).children().toggle()
     });
     $('div.main').css('border-bottom', '2px dotted gainsboro')
-    $('div.container').css({"display":"block"});
+    $('div#selections').css({"display":"table"});
     $('button.volume_button').css("display","block");
     $('#selections').css("height", (screen_height) + "px");
-    $('#myCarousel').css("margin-top", "25%");    
+    $('#myCarousel').css({"display":"table-cell"}); 
+    $('#myCarousel').css({"vertical-align":"middle"});
   };
   $('div.symboldiv').css({'min-height': screen_height})
   mother_symbol_images = []
