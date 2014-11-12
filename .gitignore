@@ -19,3 +19,4 @@ config/database.yml
 /.env.*
 !.env.example
 dump.rdb
+/public/sitemap*
