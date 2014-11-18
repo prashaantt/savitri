@@ -57,38 +57,38 @@
                   <b class="icon-caret-down"></b>
                 </a>
               <ul class="dropdown-menu">
-              <% if (can? :update, Blog.cached_find_by_slug('savitri-cultural')) %>
+              <% if (can? :update, @blog_1) %>
                 <li class="dropdown-submenu">
-                  <a href="/blogs/savitri-cultural/posts">Savitri Cultural</a>
+                  <%= link_to @blog_1.title, blog_posts_path(@blog_1) %>
                   <ul class="dropdown-menu">
-                    <li><a href="/blogs/savitri-cultural/posts/new">New post</a></li>
-                    <li><a href="/blogs/savitri-cultural/scheduled-posts">Scheduled posts</a></li>
+                    <li><%= link_to 'New post', new_blog_post_path(@blog_1) %></li>
+                    <li><%= link_to 'Scheduled posts', scheduled_posts_path(@blog_1) %></li>
                   </ul>
                 </li>
               <% else %>
-                <li class="dropdown"><a href="/blogs/savitri-cultural/posts">Savitri Cultural</a></li>
+                <li class="dropdown"><%= link_to @blog_1.title, blog_posts_path(@blog_1) %></li>
               <% end %>
-              <% if (can? :update, Blog.cached_find_by_slug('light-of-supreme')) %>
+              <% if (can? :update, @blog_2) %>
                 <li class="dropdown-submenu">
-                  <a href="/blogs/light-of-supreme/posts">The Light of the Supreme</a>
+                  <%= link_to @blog_2.title, blog_posts_path(@blog_2) %>
                   <ul class="dropdown-menu">
-                    <li><a href="/blogs/light-of-supreme/posts/new">New post</a></li>
-                    <li><a href="/blogs/light-of-supreme/scheduled-posts">Scheduled posts</a></li>
+                    <li><%= link_to 'New post', new_blog_post_path(@blog_2) %></li>
+                    <li><%= link_to 'Scheduled posts', scheduled_posts_path(@blog_2) %></li>
                   </ul>
                 </li>
               <% else %>
-                <li class="dropdown"><a href="/blogs/light-of-supreme/posts">The Light of the Supreme</a></li>
+                <li class="dropdown"><%= link_to @blog_2.title, blog_posts_path(@blog_2) %></li>
               <% end %>
-              <% if (can? :update, Blog.cached_find_by_slug('parasya-jyotih')) %>
+              <% if (can? :update, @blog_3) %>
                 <li class="dropdown-submenu">
-                  <a href="/blogs/parasya-jyotih/posts">परस्य ज्योतिः</a>
+                  <%= link_to @blog_3.title, blog_posts_path(@blog_3) %>
                   <ul class="dropdown-menu">
-                    <li><a href="/blogs/parasya-jyotih/posts/new">New post</a></li>
-                    <li><a href="/blogs/parasya-jyotih/scheduled-posts">Scheduled posts</a></li>
+                    <li><%= link_to 'New post', new_blog_post_path(@blog_3) %></li>
+                    <li><%= link_to 'Scheduled posts', scheduled_posts_path(@blog_3) %></li>
                   </ul>
                 </li>
-              <% else%>
-                <li class="dropdown"><a href="/blogs/parasya-jyotih/posts">परस्य ज्योतिः</a></li>                  
+              <% else %>
+                <li class="dropdown"><%= link_to @blog_3.title, blog_posts_path(@blog_3) %></li>
               <% end %>
               </ul>
             </li>

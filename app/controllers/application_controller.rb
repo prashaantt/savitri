@@ -2,6 +2,13 @@
 # ApplicationController
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :set_layout_variables
+
+  def set_layout_variables
+    @blog_1 = Blog.cached_find_by_slug('savitri-cultural')
+    @blog_2 = Blog.cached_find_by_slug('light-of-supreme')
+    @blog_3 = Blog.cached_find_by_slug('parasya-jyotih')
+  end
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = 'Access denied!'
