@@ -44,6 +44,47 @@
     <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
   </div>
 </div>
+<div class="container" style="display:none;" id="recent-posts">
+  <div class="row tab-page" style="margin-top: 45px">
+    <div class="span8 offset2">
+      <em><p class="lead text-center">Recent Posts</p></em>
+      <ul class="nav nav-tabs" id="recent-posts-tab">
+        <li class="active"><a href="#<%= @blog_1.slug %>" data-toggle="tab"><%= @blog_1.title %></a></li>
+        <li><a href="#<%= @blog_2.slug %>" data-toggle="tab"><%= @blog_2.title %></a></li>
+        <li><a href="#<%= @blog_3.slug %>" data-toggle="tab"><%= @blog_3.title %></a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="<%= @blog_1.slug %>">
+        <ul>
+          <% @posts_1.each do |post| %>
+            <li>
+              <p><em><%= link_to post.title, blog_post_path(post.cached_blog,post) %></em></p>
+            </li>
+          <% end %>
+        </ul>
+        </div>
+        <div class="tab-pane" id="<%= @blog_2.slug %>">
+        <ul>
+          <% @posts_2.each do |post| %>
+            <li>
+              <p><em><%= link_to post.title, blog_post_path(post.cached_blog,post) %></em></p>
+            </li>
+          <% end %>
+        </ul>  
+        </div>
+        <div class="tab-pane" id="<%= @blog_3.slug %>">
+        <ul>
+          <% @posts_3.each do |post| %>
+            <li>
+              <p><em><%= link_to post.title, blog_post_path(post.cached_blog,post) %></em></p>
+            </li>
+          <% end %>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
   $('.carousel').carousel({
     interval: false

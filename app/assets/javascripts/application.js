@@ -151,18 +151,29 @@ $(document).ready(function(){
 $(window).load(function() {
   screen_width = $( window ).width()
   screen_height = $( window ).height()
-  if (window.location.origin == window.location.href.replace(/\/$/,'')) {
+  if(window.location.origin == window.location.href.replace(/\/$/,'')) {
+    $('#recent-posts-tab a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    })    
     $( ".volume_button" ).click(function() {
       document.getElementById('player').muted=!document.getElementById('player').muted
       $( this ).children().toggleClass( "icon-volume-up icon-volume-off" )
     });
+    div_id = 'selections'
     $( ".down_arrow" ).click(function() {
       if ($('.icon-double-angle-down').is(':visible')) {
-        $('html, body').animate({scrollTop: screen_height}, 'slow');
-      } else{
+        $('html, body').animate({scrollTop: $("#"+div_id).offset().top}, 'slow');
+        if (div_id == 'selections') {
+          div_id = 'recent-posts'
+        } else if(div_id == 'recent-posts'){
+          div_id = 'selections'
+          $( this ).children().toggle()
+        }     
+      }else{
         $('html, body').animate({scrollTop: 0}, 'slow');
+        $( this ).children().toggle()
       };
-       $( this ).children().toggle()
     });
     $('div.main').css('border-bottom', '2px dotted gainsboro')
     $('div#selections').css({"display":"table"});
@@ -170,67 +181,66 @@ $(window).load(function() {
     $('#selections').css("height", (screen_height) + "px");
     $('#myCarousel').css({"display":"table-cell"}); 
     $('#myCarousel').css({"vertical-align":"middle"});
-  };
-  $('div.symboldiv').css({'min-height': screen_height})
-  mother_symbol_images = []
-  aurobindo_symbol = $('div.centered img')[0]
-  centeredImagePostion = {
-                           left:(screen_width/2) - (aurobindo_symbol.width/2), //aurobindo_symbol.offsetLeft,
-                           top:(screen_height/2) - (aurobindo_symbol.height/2),//aurobindo_symbol.offsetTop,
-                           right:(screen_width/2) + (aurobindo_symbol.width/2),//aurobindo_symbol.offsetLeft + 358,
-                           bottom:(screen_height/2) + (aurobindo_symbol.height/2) //aurobindo_symbol.offsetTop + 333,
-                         }
-  h = -2
-  function getNewPosition(){
-    x = Math.floor(Math.random () * (screen_width - (aurobindo_symbol.width/2)))
-    if (h==-2) {
-      h = 2
-    } else{
-      h = -2
-    };
-    y = Math.floor(Math.random () * (screen_height*h - (aurobindo_symbol.height/2)))
-    return [x,y]
-  }
-  newPosition = [0,0]
-  dimensions = dimensionOfImage()
-  function dimensionOfImage(){
-    size = Math.floor(Math.random() * 8) + 3
-    width = height = Math.floor(screen_width * size / 100)
-    return [width,height]
-  }
-  drawImage();
-  // $('.carousel').carousel({
-  //   interval: 5000
-  // })
-  mother_symbol_images.push({
-                              left:newPosition[0],
-                              top:newPosition[1],
-                              right:newPosition[0] + dimensions[0],
-                              bottom:newPosition[1]+dimensions[1]
-                            })
-  function drawImage(){
-    var img = $('<img class="mother_symbol">');
-    img.attr('src', 'assets/Mother\'s Symbol Large.png');
-    img.css({
-      "left": (newPosition[0]) + "px",
-      "top": (newPosition[1]) + "px",
-      "width": (dimensions[0]) + "px",
-      "height": (dimensions[1]) + "px",
-      "display": "none",
-      "position": "absolute"
-    });
-    // img.css('opacity', 1)
-    img.appendTo('.symboldiv')
-  }
+    $('#recent-posts').css({"display":"table"});
+    $('#recent-posts').css("height", (screen_height) + "px");
+    $('.tab-page').css({"display":"table-cell"}); 
+    $('.tab-page').css({"vertical-align":"middle"});
+    $('div.symboldiv').css({'min-height': screen_height})
+    mother_symbol_images = []
+    aurobindo_symbol = $('div.centered img')[0]
+    centeredImagePostion = {
+     left:(screen_width/2) - (aurobindo_symbol.width/2), //aurobindo_symbol.offsetLeft,
+     top:(screen_height/2) - (aurobindo_symbol.height/2),//aurobindo_symbol.offsetTop,
+     right:(screen_width/2) + (aurobindo_symbol.width/2),//aurobindo_symbol.offsetLeft + 358,
+     bottom:(screen_height/2) + (aurobindo_symbol.height/2) //aurobindo_symbol.offsetTop + 333,
+    }
+    h = -2
+    function getNewPosition(){
+      x = Math.floor(Math.random () * (screen_width - (aurobindo_symbol.width/2)))
+      if (h==-2) {
+        h = 2
+      } else{
+        h = -2
+      };
+      y = Math.floor(Math.random () * (screen_height*h - (aurobindo_symbol.height/2)))
+      return [x,y]
+    }
+    newPosition = [0,0]
+    dimensions = dimensionOfImage()
+    function dimensionOfImage(){
+      size = Math.floor(Math.random() * 8) + 3
+      width = height = Math.floor(screen_width * size / 100)
+      return [width,height]
+    }
+    drawImage();
+    mother_symbol_images.push({
+      left:newPosition[0],
+      top:newPosition[1],
+      right:newPosition[0] + dimensions[0],
+      bottom:newPosition[1]+dimensions[1]
+    })
+    function drawImage(){
+      var img = $('<img class="mother_symbol">');
+      img.attr('src', 'assets/Mother\'s Symbol Large.png');
+      img.css({
+        "left": (newPosition[0]) + "px",
+        "top": (newPosition[1]) + "px",
+        "width": (dimensions[0]) + "px",
+        "height": (dimensions[1]) + "px",
+        "display": "none",
+        "position": "absolute"
+      });
+      img.appendTo('.symboldiv')
+    }
     for (var i = 1; i <= 2000; i++) {
       newPosition = getNewPosition()
       dimensions = dimensionOfImage()
       newImagePostion = {
-                          left:newPosition[0], 
-                          top:newPosition[1],
-                          right:(newPosition[0] + dimensions[0]),
-                          bottom:(newPosition[1] + dimensions[1])
-                        }
+        left:newPosition[0], 
+        top:newPosition[1],
+        right:(newPosition[0] + dimensions[0]),
+        bottom:(newPosition[1] + dimensions[1])
+      }
       total_symbols = mother_symbol_images.length
       count = 0
       $.each(mother_symbol_images, function( index, value ) {
@@ -239,7 +249,7 @@ $(window).load(function() {
         }
         else{
           count += 1
-         }
+        }
         if(total_symbols == count){
           if(intersectRect(centeredImagePostion,newImagePostion)) {
           }
@@ -248,7 +258,7 @@ $(window).load(function() {
             mother_symbol_images.push(newImagePostion)
           };
           return false
-          }
+        }
       });
       if($('img').length == 250 || i == 2000){
         mother_symbols = $('img.mother_symbol').fadeIn(5000)
@@ -257,8 +267,9 @@ $(window).load(function() {
     };
     function intersectRect(r1, r2) {
       return !((r2.left - 20) > r1.right || 
-      (r2.right + 20) < r1.left || 
-      (r2.top - 20) > r1.bottom ||
-      (r2.bottom + 20) < r1.top);
+        (r2.right + 20) < r1.left || 
+        (r2.top - 20) > r1.bottom ||
+        (r2.bottom + 20) < r1.top);
     }
+  };
 });

@@ -140,10 +140,18 @@ img.mother_symbol{
   }
 }
 
-#selections{
+#selections, #recent-posts{
   color: white;
 }
-
+#recent-posts{
+  font-size: large;
+}
+#recent-posts > div > div > em > p:first-child{
+  font-size: x-large;
+}
+.tab-content a{
+  color: white;
+}
 #mobile-center-images{
   width:100%;
   text-align:center;
@@ -157,4 +165,5 @@ img.mother_symbol{
 
 .carousel-control{
   margin-top: 6%;
+  font-size: 40px;
 }
