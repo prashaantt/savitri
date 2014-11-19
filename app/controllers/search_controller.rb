@@ -105,7 +105,7 @@ class SearchController < ApplicationController
       @search
       respond_to do |format|
         format.html # index.html.erb
-        format.json { render json: @lines }
+        format.json { render json: (params[:q].present? ? @search.results : { error: 'query can\'t be blank' }) }
       end
     end
   end
