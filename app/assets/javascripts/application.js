@@ -206,13 +206,12 @@ $(window).load(function() {
       return [x,y]
     }
     newPosition = [0,0]
-    dimensions = dimensionOfImage()
     function dimensionOfImage(){
       size = Math.floor(Math.random() * 8) + 3
       width = height = Math.floor(screen_width * size / 100)
       return [width,height]
     }
-    drawImage();
+    dimensions = dimensionOfImage()
     mother_symbol_images.push({
       left:newPosition[0],
       top:newPosition[1],
@@ -231,6 +230,13 @@ $(window).load(function() {
         "position": "absolute"
       });
       img.appendTo('.symboldiv')
+    }
+    drawImage();
+    function intersectRect(r1, r2) {
+      return !((r2.left - 20) > r1.right ||
+        (r2.right + 20) < r1.left ||
+        (r2.top - 20) > r1.bottom ||
+        (r2.bottom + 20) < r1.top);
     }
     for (var i = 1; i <= 2000; i++) {
       newPosition = getNewPosition()
@@ -265,11 +271,5 @@ $(window).load(function() {
         return false;
       }
     };
-    function intersectRect(r1, r2) {
-      return !((r2.left - 20) > r1.right || 
-        (r2.right + 20) < r1.left || 
-        (r2.top - 20) > r1.bottom ||
-        (r2.bottom + 20) < r1.top);
-    }
   };
 });
