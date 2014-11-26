@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141105105457) do
+ActiveRecord::Schema.define(:version => 20141126055154) do
 
   create_table "audios", :force => true do |t|
     t.integer  "medium_id"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20141105105457) do
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
     t.string   "post_access", :default => "--- []\n"
+    t.integer  "position",                            :null => false
   end
 
   create_table "books", :force => true do |t|
@@ -74,10 +75,8 @@ ActiveRecord::Schema.define(:version => 20141105105457) do
     t.text     "body",       :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.datetime "deleted_at"
   end
 
-  add_index "comments", ["deleted_at"], :name => "index_comments_on_deleted_at"
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
 
   create_table "follows", :force => true do |t|
@@ -92,6 +91,20 @@ ActiveRecord::Schema.define(:version => 20141105105457) do
 
   add_index "follows", ["followable_id", "followable_type"], :name => "fk_followables"
   add_index "follows", ["follower_id", "follower_type"], :name => "fk_follows"
+
+  create_table "foo", :id => false, :force => true do |t|
+    t.integer  "id"
+    t.string   "name"
+    t.string   "permalink"
+    t.integer  "priority"
+    t.string   "category"
+    t.text     "content"
+    t.text     "md_content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "parent"
+    t.string   "url"
+  end
 
   create_table "lines", :force => true do |t|
     t.integer  "no",         :null => false
@@ -144,35 +157,47 @@ ActiveRecord::Schema.define(:version => 20141105105457) do
     t.datetime "updated_at", :null => false
     t.integer  "parent"
     t.string   "url"
-    t.datetime "deleted_at"
   end
 
-  add_index "pages", ["deleted_at"], :name => "index_pages_on_deleted_at"
   add_index "pages", ["permalink"], :name => "index_pages_on_permalink"
 
   create_table "posts", :force => true do |t|
     t.integer  "blog_id"
-    t.string   "title",                                   :null => false
+    t.string   "title",                           :null => false
     t.text     "content"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.text     "md_content"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.string   "photos"
     t.text     "excerpt"
     t.string   "url"
     t.datetime "published_at"
-    t.boolean  "draft",           :default => true
+    t.boolean  "draft",        :default => true
     t.string   "series_title"
     t.string   "subtitle"
     t.string   "show_excerpt"
     t.integer  "author_id"
-    t.boolean  "featured",        :default => false
-    t.datetime "deleted_at"
+    t.boolean  "featured",     :default => false
     t.integer  "number"
-    t.string   "social_accounts", :default => "--- []\n"
   end
 
   add_index "posts", ["blog_id", "number"], :name => "index_posts_on_blog_id_and_number", :unique => true
-  add_index "posts", ["deleted_at"], :name => "index_posts_on_deleted_at"
+
+  create_table "redactor_assets", :force => true do |t|
+    t.string   "data_file_name",                  :null => false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.integer  "assetable_id"
+    t.string   "assetable_type",    :limit => 30
+    t.string   "type",              :limit => 30
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "redactor_assets", ["assetable_type", "assetable_id"], :name => "idx_redactor_assetable"
+  add_index "redactor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_redactor_assetable_type"
 
   create_table "rewrites", :force => true do |t|
     t.text     "source"
@@ -270,11 +295,9 @@ ActiveRecord::Schema.define(:version => 20141105105457) do
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
-    t.datetime "deleted_at"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
-  add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token", :unique => true
   add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"

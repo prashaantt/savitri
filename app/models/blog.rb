@@ -3,10 +3,10 @@
 
 class Blog < ActiveRecord::Base
   serialize :post_access, Array
-  attr_accessible :subtitle, :title, :user_id, :slug, :post_access
+  attr_accessible :subtitle, :title, :user_id, :slug, :post_access, :position
   validates :title, presence: true
   validates :slug, presence: true, length: { minimum: 5 }
-
+  validates :position, uniqueness: true
   belongs_to :user
   has_many :posts, dependent: :delete_all
   has_many :comments, through: :posts
@@ -17,6 +17,25 @@ class Blog < ActiveRecord::Base
   scope :blogs_have_post_access, ->(user){ where("post_access like ?", "% #{user}\n%") }
 
   acts_as_followable
+  # Generate the sequence no if not already provided.
+  before_validation(on: :create) do
+    self.position = next_seq unless attribute_present?('position')
+  end
+
+  private
+
+  def next_seq
+    # This returns a PGresult object
+    # [http://rubydoc.info/github/ged/ruby-pg/master/PGresult]
+    result = Blog.connection.execute("SELECT nextval('blogs_position_seq')")
+    result[0]['nextval']
+  end
+
+  public
+
+  def self.cached_all
+    Rails.cache.fetch(%w('Blog', 'blogall')) { Blog.order('position') }
+  end
 
   def to_param
     "#{slug}"
