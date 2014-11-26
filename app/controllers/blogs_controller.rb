@@ -3,11 +3,14 @@
 class BlogsController < ApplicationController
   before_filter :store_location, except: [:recentcomments, :recentposts, :get_oldest_post_date]
   before_filter :authenticate_user!, except:
-                [:show, :recentcomments, :recentposts, :get_oldest_post_date]
+                [:index, :show, :recentcomments, :recentposts, :get_oldest_post_date]
 
   def index
-    @blogs = current_user.cached_blogs
-    authorize! :index, @blogs
+    @blogs = current_user.present? ? current_user.cached_blogs : Blog.cached_all
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @blogs, :only => [:id, :title, :slug] }
+    end 
   end
 
   def show
