@@ -29,7 +29,7 @@ class PostsController < ApplicationController
       format.html # index.html.erb
       format.atom { render :layout => false, :content_type=>"application/xml" }
       format.rss { redirect_to blog_posts_path(:format => :atom), :status => :moved_permanently }
-      format.json { render json: @posts }
+      format.json { render json: @posts, :only => [:id, :title,:url, :published_at], methods: [:author, :excerpt_text] }
     end
   end
 
@@ -73,7 +73,9 @@ class PostsController < ApplicationController
     @related_posts = Sunspot.more_like_this(@post).results.first(5) rescue nil
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @post }
+      format.json { render json: @post,except: [:md_content, :draft, :author_id,
+                    :blog_id, :excerpt, :created_at, :updated_at, :show_excerpt,
+                    :featured, :photos] }
     end
   end
 

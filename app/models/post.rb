@@ -81,6 +81,14 @@ class Post < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 3 }
   validates :content, presence: true
 
+  def excerpt_text
+    if excerpt.present?
+      ActionController::Base.helpers.strip_tags(excerpt).split(" ").first(80).join(" ") + '...'
+    else
+      ActionController::Base.helpers.strip_tags(content).split(" ").first(80).join(" ") + '...'
+    end
+  end
+
   def publish!
     self.draft = false
     self.save!
