@@ -81,12 +81,25 @@ class Post < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 3 }
   validates :content, presence: true
 
-  def excerpt_text
-    if excerpt.present?
-      ActionController::Base.helpers.strip_tags(excerpt).split(" ").first(80).join(" ") + '...'
-    else
-      ActionController::Base.helpers.strip_tags(content).split(" ").first(80).join(" ") + '...'
+  def excerpt_content
+    excerpt = excerpt.present? ? excerpt : content
+    noko = split_and_convert_excerpt_to_html excerpt
+    video_url = noko.search('.//iframe').present? ? noko.search('.//iframe')[0].attributes['src'].value : '' rescue ''
+    audio = noko.search('.//audio').present? ? noko.search('.//audio')[0].children[0].attributes['src'].value : '' rescue ''
+    img = noko.search('.//img').present? ? noko.search('.//img')[0].attributes['src'].value : '' rescue ''
+    noko.search('.//div', './/hr', './/br', './/iframe', './/audio', './/img').remove
+    noko.traverse do |node|
+      node.remove if node.content.blank?
     end
+    noko << '...' if noko.content.present?
+    { audio: audio, img: img, video: video_url, text: "<p>#{noko.to_html}</p>" }
+    rescue => e
+      logger.info "Error in Post#index json #{e}"
+      {}
+  end
+
+  def split_and_convert_excerpt_to_html excerpt
+    Nokogiri::HTML.fragment(excerpt.split(' ').first(80).join(' ')) rescue nil
   end
 
   def publish!
