@@ -29,7 +29,7 @@ class PostsController < ApplicationController
       format.html # index.html.erb
       format.atom { render :layout => false, :content_type=>"application/xml" }
       format.rss { redirect_to blog_posts_path(:format => :atom), :status => :moved_permanently }
-      format.json { render json: @posts, :only => [:id, :title,:url, :published_at], methods: [:author, :excerpt_text] }
+      format.json { render json: @posts, :only => [:id, :title,:url, :published_at], methods: [:author, :excerpt_content] }
     end
   end
 
