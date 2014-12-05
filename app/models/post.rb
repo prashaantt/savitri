@@ -82,24 +82,34 @@ class Post < ActiveRecord::Base
   validates :content, presence: true
 
   def excerpt_content
-    excerpt = excerpt.present? ? excerpt : content
-    noko = split_and_convert_excerpt_to_html excerpt
-    video_url = noko.search('.//iframe').present? ? noko.search('.//iframe')[0].attributes['src'].value : '' rescue ''
+    text = excerpt.present? ? excerpt : content
+    noko = split_and_convert_excerpt_to_html text
+    video_url = get_youtube_url(noko)
     audio = noko.search('.//audio').present? ? noko.search('.//audio')[0].children[0].attributes['src'].value : '' rescue ''
     img = noko.search('.//img').present? ? noko.search('.//img')[0].attributes['src'].value : '' rescue ''
-    noko.search('.//div', './/hr', './/br', './/iframe', './/audio', './/img').remove
+    noko.search('.//div', './/hr', './/iframe', './/audio', './/img',
+                './/h1', './/h2', './/h3', './/h4', './/h5', './/h6').remove
     noko.traverse do |node|
-      node.remove if node.content.blank?
+      node.remove if (node.content.blank? && (node.name != 'br'))
     end
-    noko << '...' if noko.content.present?
-    { audio: audio, img: img, video: video_url, text: "<p>#{noko.to_html}</p>" }
+    { audio: audio, img: img, video: video_url, text: excerpt.present? ? "<p>#{noko.to_html}</p>" : noko.to_html }
     rescue => e
       logger.info "Error in Post#index json #{e}"
       {}
   end
 
   def split_and_convert_excerpt_to_html excerpt
-    Nokogiri::HTML.fragment(excerpt.split(' ').first(80).join(' ')) rescue nil
+    Nokogiri::HTML.fragment(excerpt.split(' ').first(80).join(' ')) rescue ''
+  end
+
+  def get_youtube_url noko
+    if noko.search('.//iframe').present?
+      url = noko.search('.//iframe')[0].attributes['src'].value
+      uri = URI(url)
+      (uri.host == 'www.youtube.com') ? url : '' rescue ''
+    else
+      ''
+    end
   end
 
   def publish!
