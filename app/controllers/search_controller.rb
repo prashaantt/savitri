@@ -125,14 +125,14 @@ class SearchController < ApplicationController
       @search.each_hit_with_result do |hit,l|
         if l.is_a?(Line)
           anchor_t = l.section.to_s + '.' + l.runningno.to_s
-          @file << l.line + '  ||' +'['+anchor_t+']'+'('+l.share_url+')'+"||\n\n"
-        elsif l.is_a?(Stanza) 
+          @file << l.line + '  ||' +'['+anchor_t+']'+'(http://'+request.env["HTTP_HOST"]+l.share_url+')'+"||\n\n"
+        elsif l.is_a?(Stanza)
           l.lines.each_with_index do |line, index|
            @file << line.line
            @file << "\n\n" unless index == l.lines.count - 1
          end
          anchor_t = l.section.to_s + "." + l.runningno.to_s
-         @file << '  ||' + '['+anchor_t+']' + '('+share_url(l.no)+')' + "||\n\n"
+         @file << '  ||' + '['+anchor_t+']' + '(http://'+request.env["HTTP_HOST"]+share_url(l.no)+')' + "||\n\n"
        end
      end
      send_data @file, filename: 'results-' + query.tr('=', '_').tr(' ', '_').tr(':', '_') + '.txt', type: 'text/plain'
