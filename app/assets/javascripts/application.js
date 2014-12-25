@@ -152,6 +152,7 @@ $(window).load(function() {
   screen_width = $( window ).width()
   screen_height = $( window ).height()
   if(window.location.origin == window.location.href.replace(/\/$/,'')) {
+    $( "div#recent-posts li" ).first().addClass('active')
     $('#recent-posts-tab a').click(function (e) {
       e.preventDefault();
       $(this).tab('show');

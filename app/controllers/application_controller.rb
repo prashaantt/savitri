@@ -5,9 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_layout_variables
 
   def set_layout_variables
-    @blog_1 = Blog.cached_find_by_slug('savitri-cultural')
-    @blog_2 = Blog.cached_find_by_slug('light-of-supreme')
-    @blog_3 = Blog.cached_find_by_slug('parasya-jyotih')
+    @blogs = Blog.cached_all
   end
 
   rescue_from CanCan::AccessDenied do |exception|
