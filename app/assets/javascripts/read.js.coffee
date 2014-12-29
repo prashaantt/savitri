@@ -13,12 +13,12 @@ $ ->
         search: "/notess"
 
       annotationData:
-        uri: window.location.pathname
+        uri: window.location.pathname + window.location.search
         prefix: "/"
 
       loadFromSearch:
         limit: 20
-        uri: window.location.pathname
+        uri: window.location.pathname + window.location.search
 
 $ ->
   ind=window.location.pathname.split('/')
@@ -43,7 +43,7 @@ $ ->
     $("#" + hashvalue).animate
       backgroundColor: defaultBGColor
     , 3000
- 
+
 $ ->
   # Show or hide the sticky footer button
   $(window).scroll ->
@@ -52,7 +52,7 @@ $ ->
     else
       $(".go-top").fadeOut 200
 
-  
+
   # Animate the scroll to top
   $(".go-top").click (event) ->
     event.preventDefault()

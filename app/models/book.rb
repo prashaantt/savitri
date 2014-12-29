@@ -1,10 +1,11 @@
 class Book < ActiveRecord::Base
-  attr_accessible :description, :name, :no
+  attr_accessible :description, :name, :no, :edition_id
   has_many :cantos
   has_many :stanzas , through:  :cantos
   has_many :lines, through:  :stanzas
-
-  validates :no, :name, uniqueness:  true
+  belongs_to :edition
+  validates :no, uniqueness: {scope: :edition_id}
+  validates :name, uniqueness: {scope: :edition_id}
   validates :no, :name, presence: true
 
   def to_param
@@ -35,11 +36,6 @@ class Book < ActiveRecord::Base
 
   def cached_name
     Rails.cache.fetch([self, 'name']) { name }
-  end
-
-  def self.cached_all
-    # Rails.cache.fetch([name, 'bookall']) { order('no').to_a }
-    Rails.cache.fetch(['Book', 'bookall']) { Book.order('no').to_a }
   end
 
   # def canto
