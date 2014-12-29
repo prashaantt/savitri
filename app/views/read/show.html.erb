@@ -1,4 +1,4 @@
-<% @book = Book.cached_find(params[:book_id]) %>
+<% edition = edition_wise_stanza_url %>
 <% unless @stanzas.blank? %>
   <% @section = Section.cached_find(@stanzas.first.cached_section) %>
   <% @canto = Canto.cached_find(@section.cached_cantoid) %>
@@ -11,7 +11,7 @@ meta_keywords @book.name + ' , ' + @canto.title + ' , Section ' + @section.no.to
 <div class="row" id="read-row">
   <div class="span2 visible-desktop">
     <div class="accordion sidebar" id="accordion2">
-      <% Book.cached_all.each do |book| %>
+      <% @edition.cached_books.each do |book| %>
         <div class="accordion-group">
           <div class="accordion-heading">
             <a class="accordion-toggle collapsed navbook navfx" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= book.cached_number %>" id="bk1"><%= book.cached_name %></a>
@@ -34,12 +34,12 @@ meta_keywords @book.name + ' , ' + @canto.title + ' , Section ' + @section.no.to
                     <ul class="dropdown-menu roundcorner readsubmenutext dd-menu">
                       <% canto.cached_sections.each do |section| %>
                         <li class="<%= is_active_section params,section.runningno.to_s,canto.no.to_s %>">
-                          <%= link_to 'Section '+ section.cached_runningno.to_s + ' ('+ section.cached_number.to_s + ')',"/read/" + canto.cached_book.cached_number.to_s + "/" + canto.cached_number.to_s + "/" + section.cached_runningno.to_s %>
+                          <%= link_to 'Section '+ section.cached_runningno.to_s + ' ('+ section.cached_number.to_s + ')',"/read/" + canto.cached_book.cached_number.to_s + "/" + canto.cached_number.to_s + "/" + section.cached_runningno.to_s + "#{edition}" %>
                         </li>
                       <% end %>
                     </ul>
                   </li>
-                <% end %> 
+                <% end %>
               </ul>
             </div>
           </div>
@@ -49,6 +49,7 @@ meta_keywords @book.name + ' , ' + @canto.title + ' , Section ' + @section.no.to
   </div>
     <!-- '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1] -->
   <div class="span6 offset1" id="read">
+    <center><h3 style="padding-bottom:40px;"><em><%= "#{@edition.name} Edition (#{@edition.year})" %></em></h3></center>
     <div id="cantos">
       <% unless @stanzasblank %>
         <div class="page-header visible-desktop">
@@ -64,9 +65,9 @@ meta_keywords @book.name + ' , ' + @canto.title + ' , Section ' + @section.no.to
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu sectionlist size dd-menu">
-                <% Book.cached_all.each do |book| %>
+                <% @edition.cached_books.each do |book| %>
                   <li>
-                    <%= link_to 'Book ' + book.cached_number.to_s + ': ' + book.cached_name.to_s, '/read/' + book.cached_number.to_s + '/'+ book.cached_cantos.first.cached_number.to_s + '/1', :class=>"tag" %>
+                    <%= link_to 'Book ' + book.cached_number.to_s + ': ' + book.cached_name.to_s, '/read/' + book.cached_number.to_s + '/'+ book.cached_cantos.first.cached_number.to_s + '/1' + "#{edition}", :class=>"tag" %>
                   </li>
                 <% end %>
                   <!-- dropdown menu links -->
@@ -88,7 +89,7 @@ meta_keywords @book.name + ' , ' + @canto.title + ' , Section ' + @section.no.to
                     <% else %>
                         <% canto_title = title[2] %>
                     <% end %>
-                    <%= link_to 'Canto ' + canto.cached_number.to_s + ': '+ canto_title, '/read/' + params[:book_id].to_s + '/' + canto.cached_number.to_s + '/1', :class=> "tag" %>
+                    <%= link_to 'Canto ' + canto.cached_number.to_s + ': '+ canto_title, '/read/' + params[:book_id].to_s + '/' + canto.cached_number.to_s + '/1' + "#{edition}", :class=> "tag" %>
                   </li>
                   <!-- dropdown menu links -->
                 <% end %>
@@ -113,7 +114,7 @@ meta_keywords @book.name + ' , ' + @canto.title + ' , Section ' + @section.no.to
                 <a class="dropdown-toggle hidden-desktop" id="dropsection" role="button" data-toggle="dropdown" data-target="#" href="#">
                   <span class="sectionlbl" style="display:none">Section</span>
                   <%= params[:section_id] + " (" + @section.cached_number.to_s + ")" %>
-               
+
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu sectionlist dd-menu" role="menu" aria-labelledby="dropsection">

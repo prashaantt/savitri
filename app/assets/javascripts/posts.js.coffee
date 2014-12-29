@@ -15,14 +15,14 @@ $ ->
       $closest_post.addClass('in')
       $closest_post.css('display', 'block')
       if ($closest_post.find("li").length == 0)
-        callback = (response) -> 
+        callback = (response) ->
           recentpostsdiv = $closest_post
           postsdiv = ""
           if (response.length != 0)
-            $.each response, (val1) -> 
+            $.each response, (val1) ->
               post = response[val1]
               postsdiv=postsdiv.concat("<li class=\"recent-posts-list\"\>")
-              postsdiv=postsdiv.concat("<a href=\""+post.cached_share_url+"\" 
+              postsdiv=postsdiv.concat("<a href=\""+post.cached_share_url+"\"
                 class=\"sidebar-links\">"+post.title)
 
             recentpostsdiv.append(postsdiv)
@@ -169,7 +169,7 @@ setDate = ->
 
     $('*[data-year="' + date_split[1] + '"][data-month="' + (date_split[2] - 1) + '"] a').filter(->
       ('0' + ($(this).text())).slice(-2) == date_split[3]
-    ).parent().css('background-color', '#f5efdc')   
+    ).parent().css('background-color', '#f5efdc')
 
   else
     # Max date is current date, rest all disabled. So we traverse disabled boxes. Traversal happens in order of tr,
@@ -244,7 +244,7 @@ isValidRange = (ranges) ->
     unless range[0].match(/^\d+\.\d+$/)
       valid = 1
       return false
-    
+
     unless typeof range[1] == "undefined"
       unless range[1].match(/^\d+\.\d+$/)
         valid = 1
@@ -257,7 +257,7 @@ isValidRange = (ranges) ->
       else if (parseInt(range_to[0]) == parseInt(range_from[0]) and parseInt(range_to[1]) < parseInt(range_from[1]))
         valid = 2
         return false
-  
+
   return valid
 
 $ ->
@@ -291,16 +291,16 @@ $ ->
         html = ""
         text = ""
         link = ""
-        $.each response, (index) -> 
+        $.each response, (index) ->
           lastsentence = response[index][response[index].length - 1].no
           html += "<p>"
           $.each response[index], (val, te) ->
             text += "\r\n>" + te.line + "  "
             html += "<br>" + te.line
             if lastsentence == te.no
-              html += " ||" + te.section + "." + te.runningno + "||" + "</p>"
+              html += " ||" + te.section.no + "." + te.runningno + "||" + "</p>"
               linknum = te.stanza_id + 100
-              text += "[||" + te.section + "." + te.runningno + "||][" + linknum + "]\r\n"
+              text += "[||" + te.section.no + "." + te.runningno + "||][" + linknum + "]\r\n"
               link += "[" + linknum + "]: " + rooturl + te.share_url + "\r\n"
           references[range][0] = html
           references[range][1] = text

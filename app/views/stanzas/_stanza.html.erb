@@ -1,11 +1,11 @@
 <p class="stanza" id="p<%= stanza.cached_runningno %>">
   <a name="<%= stanza.cached_runningno %>" class="navstanza"></a>
-  <% stanza.cached_lines.each_with_index do |lin,index| %> 
+  <% stanza.cached_lines.each_with_index do |lin,index| %>
     <span class="line" id="l<%= lin.cached_number %>"><%= lin.cached_line %></span>
     <% if stanza.cached_lines.size - 1 == index %>
       <% section = stanza.cached_section %>
-      <% anchor_t = section.to_s + "." + stanza.cached_runningno.to_s %>
-      <span class="reference" id="r<%= anchor_t %>"><%= link_to anchor_t, share_url(stanza.cached_number), {:class => "muted pipes", :rel => "nofollow"} %></span>
+      <% anchor_t = section.no.to_s + "." + stanza.cached_runningno.to_s %>
+      <span class="reference" id="r<%= anchor_t %>"><%= link_to anchor_t, share_url(stanza), {:class => "muted pipes", :rel => "nofollow"} %></span>
     <% else %>
       <br/>
     <% end %>

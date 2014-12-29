@@ -2,10 +2,12 @@ class Canto < ActiveRecord::Base
   attr_accessible :no, :description, :title, :book_id
   has_many :sections
   has_many :stanzas , through:  :sections
+  has_many :lines , through:  :stanzas
   belongs_to :book
 
-  validates :no, presence: true
-  validates :title, uniqueness: true, presence: true
+  validates :no, :title, presence: true
+  validates :no, uniqueness: {scope: :book_id}
+  validates :title, uniqueness: {scope: :book_id}
 
   def to_param
     no

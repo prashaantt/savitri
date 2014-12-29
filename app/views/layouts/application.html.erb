@@ -36,11 +36,18 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/read/1/1/1" id="brandid">Savitri</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="<%= is_active 'savitri' %>"><a href="/">Home</a></li>
-              <li class="<%= is_active 'read' %> visible-desktop"><a href="/read/1/1/1">Savitri</a></li>
+              <li class="<%= is_active 'read' %> dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Savitri
+                  <i class="icon-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="/read/1/1/1">First Edition (1950-51)</a></li>
+                  <li><a href="/read/1/1/1?edition=1993">Revised Edition (1993)</a></li>
+                </ul>
+              </li>
               <li class="dropdown" id="Resources">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Media Centre
                   <i class="icon-caret-down"></i>
@@ -53,7 +60,7 @@
                 </ul>
               </li>
             <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Journals 
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Journals
                   <b class="icon-caret-down"></b>
                 </a>
               <ul class="dropdown-menu">
@@ -121,7 +128,7 @@
       </a>
     </form>
     <div class="btn-group pull-right">
-      <% if user_signed_in? %> 
+      <% if user_signed_in? %>
       <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="icon-user"></i>
         <%= current_user.username %>
@@ -150,7 +157,7 @@
         <li class="divider"/>
         <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
       </ul>
-      <% else %> 
+      <% else %>
       <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="icon-user"></i>
         Sign in
@@ -160,11 +167,11 @@
         <li> <%= link_to "Sign in", new_user_session_path %></li>
         <li class="divider"></li>
         <li><%= link_to "Sign up", new_user_registration_path %></li>
-           <!-- 
+           <!--
               <li class="divider" />
            Edit to add Login Modal Box
               <li>
-                <a href="#myModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a> 
+                <a href="#myModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
               </li>
             -->
           </ul>

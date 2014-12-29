@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141126055154) do
+ActiveRecord::Schema.define(:version => 20141218083842) do
 
   create_table "audios", :force => true do |t|
     t.integer  "medium_id"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20141126055154) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "edition_id"
   end
 
   create_table "cantos", :force => true do |t|
@@ -75,9 +76,18 @@ ActiveRecord::Schema.define(:version => 20141126055154) do
     t.text     "body",       :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.datetime "deleted_at"
   end
 
+  add_index "comments", ["deleted_at"], :name => "index_comments_on_deleted_at"
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
+
+  create_table "editions", :force => true do |t|
+    t.string   "name"
+    t.integer  "year"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "follows", :force => true do |t|
     t.integer  "followable_id",                      :null => false
@@ -91,20 +101,6 @@ ActiveRecord::Schema.define(:version => 20141126055154) do
 
   add_index "follows", ["followable_id", "followable_type"], :name => "fk_followables"
   add_index "follows", ["follower_id", "follower_type"], :name => "fk_follows"
-
-  create_table "foo", :id => false, :force => true do |t|
-    t.integer  "id"
-    t.string   "name"
-    t.string   "permalink"
-    t.integer  "priority"
-    t.string   "category"
-    t.text     "content"
-    t.text     "md_content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "parent"
-    t.string   "url"
-  end
 
   create_table "lines", :force => true do |t|
     t.integer  "no",         :null => false
@@ -157,8 +153,10 @@ ActiveRecord::Schema.define(:version => 20141126055154) do
     t.datetime "updated_at", :null => false
     t.integer  "parent"
     t.string   "url"
+    t.datetime "deleted_at"
   end
 
+  add_index "pages", ["deleted_at"], :name => "index_pages_on_deleted_at"
   add_index "pages", ["permalink"], :name => "index_pages_on_permalink"
 
   create_table "posts", :force => true do |t|
@@ -178,10 +176,12 @@ ActiveRecord::Schema.define(:version => 20141126055154) do
     t.string   "show_excerpt"
     t.integer  "author_id"
     t.boolean  "featured",     :default => false
+    t.datetime "deleted_at"
     t.integer  "number"
   end
 
   add_index "posts", ["blog_id", "number"], :name => "index_posts_on_blog_id_and_number", :unique => true
+  add_index "posts", ["deleted_at"], :name => "index_posts_on_deleted_at"
 
   create_table "redactor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -295,9 +295,11 @@ ActiveRecord::Schema.define(:version => 20141126055154) do
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.datetime "deleted_at"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
+  add_index "users", ["deleted_at"], :name => "index_users_on_deleted_at"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token", :unique => true
   add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"
