@@ -1,6 +1,11 @@
 # encoding: UTF-8
 # routes.
 Savitri::Application.routes.draw do
+  get "compare(/:book_id/:canto_id/:section_id)", to: 'compare#index'#, constraints: { id: /[^\/]+/ }
+  get 'compare/update_books', :as => 'update_books'
+  get 'compare/update_cantos', :as => 'update_cantos'
+  get 'compare/update_sections', :as => 'update_sections'
+
   resources :authentications
 
   match '/ping' => 'health#ping'

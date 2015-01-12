@@ -14,7 +14,7 @@ class ReadController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.js
-      format.json { render json: @stanzas }
+      format.json { render json: @stanzas, methods: [:cached_lines] }
     end
   end
 
