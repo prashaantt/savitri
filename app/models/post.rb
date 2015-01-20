@@ -163,11 +163,11 @@ class Post < ActiveRecord::Base
   end
 
   def cached_comments
-    Rails.cache.fetch([self, 'comments']) { comments }
+    Rails.cache.fetch([self, 'comments'], expires_in: 10.days) { comments }
   end
 
   def cached_comments_count
-    Rails.cache.fetch([self, 'commentscount']) { comments.count }
+    Rails.cache.fetch([self, 'commentscount'], expires_in: 10.days) { comments.count }
   end
 
   def flush_comments_cache
@@ -177,67 +177,67 @@ class Post < ActiveRecord::Base
   end
 
   def self.cached_draft_count(blogid)
-    Rails.cache.fetch([name, 'draftcount' + blogid.to_s]) do
+    Rails.cache.fetch([name, 'draftcount' + blogid.to_s], expires_in: 10.days) do
       cached_drafts(blogid).count
     end
   end
 
   def self.cached_drafts(blogid)
-    Rails.cache.fetch([name, 'drafts' + blogid.to_s]) do
+    Rails.cache.fetch([name, 'drafts' + blogid.to_s], expires_in: 10.days) do
       where(blog_id: blogid, draft: true).order('posts.published_at DESC')
     end
   end
 
   def self.cached_find_by_url(url)
-    Rails.cache.fetch([name, 'findbyurl' + url]) { find_by_url(url) }
+    Rails.cache.fetch([name, 'findbyurl' + url], expires_in: 10.days) { find_by_url(url) }
   end
 
   def self.cached_find_by_blog_id_and_url(blogid, url)
-    Rails.cache.fetch([name, 'findbyurl' + blogid.to_s + url]) do
+    Rails.cache.fetch([name, 'findbyurl' + blogid.to_s + url], expires_in: 10.days) do
       find_by_blog_id_and_url(blogid, url)
     end
   end
 
   def cached_title
-    Rails.cache.fetch([self, 'title']) { title }
+    Rails.cache.fetch([self, 'title'], expires_in: 10.days) { title }
   end
 
   def cached_blog
-    Rails.cache.fetch([self, 'blog']) { blog }
+    Rails.cache.fetch([self, 'blog'], expires_in: 10.days) { blog }
   end
 
   def cached_excerpt
-    Rails.cache.fetch([self, 'excerpt']) { excerpt }
+    Rails.cache.fetch([self, 'excerpt'], expires_in: 10.days) { excerpt }
   end
 
   def cached_content
-    Rails.cache.fetch([self, 'content']) { content }
+    Rails.cache.fetch([self, 'content'], expires_in: 10.days) { content }
   end
 
   def cached_published_at
-    Rails.cache.fetch([self, 'published_at']) { published_at }
+    Rails.cache.fetch([self, 'published_at'], expires_in: 10.days) { published_at }
   end
 
   def cached_series_title
-    Rails.cache.fetch([self, 'series_title']) { series_title }
+    Rails.cache.fetch([self, 'series_title'], expires_in: 10.days) { series_title }
   end
 
   def cached_subtitle
-    Rails.cache.fetch([self, 'subtitle']) { subtitle }
+    Rails.cache.fetch([self, 'subtitle'], expires_in: 10.days) { subtitle }
   end
 
   def cached_show_excerpt
-    Rails.cache.fetch([self, 'show_excerpt']) { show_excerpt }
+    Rails.cache.fetch([self, 'show_excerpt'], expires_in: 10.days) { show_excerpt }
   end
 
   def cached_share_url
-    Rails.cache.fetch([self, 'share_url']) do
+    Rails.cache.fetch([self, 'share_url'], expires_in: 10.days) do
       '/blogs/' + blog.slug + '/posts/' + url
     end
   end
 
   def cached_author
-    Rails.cache.fetch([self, 'author']) { User.find(author_id) }
+    Rails.cache.fetch([self, 'author'], expires_in: 10.days) { User.find(author_id) }
   end
 
   def flush_cache

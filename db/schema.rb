@@ -161,43 +161,27 @@ ActiveRecord::Schema.define(:version => 20141218083842) do
 
   create_table "posts", :force => true do |t|
     t.integer  "blog_id"
-    t.string   "title",                           :null => false
+    t.string   "title",                                   :null => false
     t.text     "content"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
     t.text     "md_content"
-    t.string   "photos"
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.text     "excerpt"
     t.string   "url"
     t.datetime "published_at"
-    t.boolean  "draft",        :default => true
+    t.boolean  "draft",           :default => true
     t.string   "series_title"
     t.string   "subtitle"
     t.string   "show_excerpt"
     t.integer  "author_id"
-    t.boolean  "featured",     :default => false
+    t.boolean  "featured",        :default => false
     t.datetime "deleted_at"
     t.integer  "number"
+    t.string   "social_accounts", :default => "--- []\n"
   end
 
   add_index "posts", ["blog_id", "number"], :name => "index_posts_on_blog_id_and_number", :unique => true
   add_index "posts", ["deleted_at"], :name => "index_posts_on_deleted_at"
-
-  create_table "redactor_assets", :force => true do |t|
-    t.string   "data_file_name",                  :null => false
-    t.string   "data_content_type"
-    t.integer  "data_file_size"
-    t.integer  "assetable_id"
-    t.string   "assetable_type",    :limit => 30
-    t.string   "type",              :limit => 30
-    t.integer  "width"
-    t.integer  "height"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-  end
-
-  add_index "redactor_assets", ["assetable_type", "assetable_id"], :name => "idx_redactor_assetable"
-  add_index "redactor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_redactor_assetable_type"
 
   create_table "rewrites", :force => true do |t|
     t.text     "source"
