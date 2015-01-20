@@ -6,6 +6,7 @@ class ReadController < ApplicationController
     cantoid=params[:canto_id]
     bookid=params[:book_id]
     @edition = find_edition_by_year params
+    @remaining_editions = Edition.where('id != ?', @edition.id)
     @book = @edition.books.where(no:bookid).try(&:first)
     @canto = Canto.cached_find_by_no_and_bookid(cantoid, @book.id) || not_found
     @sections = @canto.sections_cache_with_runningno(sectionrunningno)
@@ -14,7 +15,8 @@ class ReadController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.js
-      format.json { render json: @stanzas, methods: [:cached_lines] }
+      @stanzasj = [@sections.first.no] + [@sections.first.cached_stanzas]
+      format.json { render json: @stanzasj, methods: [:cached_lines] }
     end
   end
 

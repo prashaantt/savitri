@@ -55,6 +55,7 @@ meta_keywords @book.name + ' , ' + @canto.title + ' , Section ' + @section.no.to
         <div class="page-header visible-desktop">
           <h4>Book <%= @book.cached_number %>: <%= @book.cached_name %></h4>
         </div>
+        <%= collection_select(nil, :edition_id,  @remaining_editions,  :year, :name, {:prompt   => "Compare With"}, {:id => 'editions_select', :style=>'width:25%;', autofocus: :autofocus})%>
         <h3 class="cantono visible-desktop">Canto <%= @canto.cached_number %></h3>
         <div class="page-header hidden-desktop">
           <h4 class="bookcantono">
@@ -149,3 +150,21 @@ meta_keywords @book.name + ' , ' + @canto.title + ' , Section ' + @section.no.to
   </div>
 </div>
 <i href="#" class="icon-chevron-up go-top visible-desktop" style="float:right;"></i>
+<script type="text/javascript">
+  $(document).ready(function(){
+    function redirect(loc) {
+      window.location = loc;
+    }
+    $('#editions_select').change(function() {
+      var arr = location.pathname.split(/\//)
+      var compare_with = $('#editions_select')[0].value
+      var edition_year = '1950'
+      if (window.location.search != ''){
+        edition_year = window.location.search.split("&")[0].match(/\d+/)[0]
+      }
+      var loc = "/compare/" + arr[2] + '/' + arr[3] + '/' + arr[4] + '?edition=' + edition_year + '&with=' + compare_with;
+      loc = location.origin + loc;
+      redirect(loc);
+    });
+  });
+</script>
