@@ -64,43 +64,22 @@
                   <b class="icon-caret-down"></b>
                 </a>
               <ul class="dropdown-menu">
-              <% if (can? :update, @blog_1) %>
+              <% @blogs.each do |blog| %>
+              <% if (can? :update, blog) %>
                 <li class="dropdown-submenu">
-                  <%= link_to @blog_1.title, blog_posts_path(@blog_1) %>
+                  <%= link_to blog.title, blog_posts_path(blog) %>
                   <ul class="dropdown-menu">
-                    <li><%= link_to 'New post', new_blog_post_path(@blog_1) %></li>
-                    <li><%= link_to 'Scheduled posts', scheduled_posts_path(@blog_1) %></li>
+                    <li><%= link_to 'New post', new_blog_post_path(blog) %></li>
+                    <li><%= link_to 'Scheduled posts', scheduled_posts_path(blog) %></li>
                   </ul>
                 </li>
               <% else %>
-                <li class="dropdown"><%= link_to @blog_1.title, blog_posts_path(@blog_1) %></li>
+                <li class="dropdown"><%= link_to blog.title, blog_posts_path(blog) %></li>
               <% end %>
-              <% if (can? :update, @blog_2) %>
-                <li class="dropdown-submenu">
-                  <%= link_to @blog_2.title, blog_posts_path(@blog_2) %>
-                  <ul class="dropdown-menu">
-                    <li><%= link_to 'New post', new_blog_post_path(@blog_2) %></li>
-                    <li><%= link_to 'Scheduled posts', scheduled_posts_path(@blog_2) %></li>
-                  </ul>
-                </li>
-              <% else %>
-                <li class="dropdown"><%= link_to @blog_2.title, blog_posts_path(@blog_2) %></li>
-              <% end %>
-              <% if (can? :update, @blog_3) %>
-                <li class="dropdown-submenu">
-                  <%= link_to @blog_3.title, blog_posts_path(@blog_3) %>
-                  <ul class="dropdown-menu">
-                    <li><%= link_to 'New post', new_blog_post_path(@blog_3) %></li>
-                    <li><%= link_to 'Scheduled posts', scheduled_posts_path(@blog_3) %></li>
-                  </ul>
-                </li>
-              <% else %>
-                <li class="dropdown"><%= link_to @blog_3.title, blog_posts_path(@blog_3) %></li>
               <% end %>
               </ul>
             </li>
           </li>
-
           <li class=""><a href="/archives">Archives</a></li>
           <% @pages = Page.cached_menu %>
           <% unless @pages.count > 1 %>
