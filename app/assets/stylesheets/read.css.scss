@@ -6,7 +6,7 @@
   overflow: visible;
   height:auto !important;
 }
- 
+
 .activeaccordion, .dropdown-menu .active > a,  {
   background: #282828;
   }
@@ -89,7 +89,7 @@
 .pipes:after {
   content: "||";
 }
- 
+
 .roundcorner {
   min-width: 0px;
   border-radius: 0px !important;
@@ -121,7 +121,7 @@
   border: 0px !important;
 }
 
- 
+
 
 @media (min-width: 524px) and (max-width: 554px) {
   .line,
@@ -194,7 +194,7 @@
   }
 }
 
- 
+
 @media (min-width: 410px) and (max-width: 429px) {
   .line,
   .bookcantono,
@@ -209,7 +209,7 @@
   .cantoname {
     font-size: 117%;
   }
-} 
+}
 
 @media (max-width: 409px) {
   .line,
@@ -369,7 +369,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
 
 }
- 
+
 
 .dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-readsubmenu:hover > a {
   text-decoration: none;
@@ -402,7 +402,7 @@
 .btn-group > .btn:first-child {
   margin-left: 0;
   border-radius: 0px;
-  
+
 }
 
 .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {

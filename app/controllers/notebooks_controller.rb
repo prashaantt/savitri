@@ -72,7 +72,7 @@ class NotebooksController < ApplicationController
     @notebook = Notebook.new(params[:notebook])
     #notebook.line - style params
     #logger.debug "#{params[:ranges].first}"
-    
+
     @notebook.annotation = params[:text]
     @notebook.user_id = current_user.id
     @notebook.quote = params[:quote]
@@ -97,7 +97,7 @@ class NotebooksController < ApplicationController
   # PUT /notebooks/1.json
   def update
     @notebook = Notebook.find(params[:id])
-    
+
     respond_to do |format|
       if @notebook.update_attributes(:annotation=>params[:text])
         format.html { redirect_to @notebook, notice: 'Notebook was successfully updated.' }

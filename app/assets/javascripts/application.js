@@ -21,10 +21,8 @@
 
 function showBrand(window_width) {
   if (window_width >= 965) {
-    $("#brandid").hide();
     $("#query").removeClass("span5").addClass("span3");
   } else {
-    $("#brandid").show();
     $("#query").removeClass("span3").addClass("span5");
   }
 };
@@ -108,7 +106,7 @@ setSpan = function(window_width) {
   } else {
     $(".dynahomespan").removeClass("span9").addClass("span12");
   }
-  
+
   if (window_width > 611 && window_width < 768) {
     return $("#read").addClass("read-margins");
   } else {
@@ -156,7 +154,7 @@ $(window).load(function() {
     $('#recent-posts-tab a').click(function (e) {
       e.preventDefault();
       $(this).tab('show');
-    })    
+    })
     $( ".volume_button" ).click(function() {
       document.getElementById('player').muted=!document.getElementById('player').muted
       $( this ).children().toggleClass( "icon-volume-up icon-volume-off" )
@@ -170,7 +168,7 @@ $(window).load(function() {
         } else if(div_id == 'recent-posts'){
           div_id = 'selections'
           $( this ).children().toggle()
-        }     
+        }
       }else{
         $('html, body').animate({scrollTop: 0}, 'slow');
         $( this ).children().toggle()
@@ -180,11 +178,11 @@ $(window).load(function() {
     $('div#selections').css({"display":"table"});
     $('button.volume_button').css("display","block");
     $('#selections').css("height", (screen_height) + "px");
-    $('#myCarousel').css({"display":"table-cell"}); 
+    $('#myCarousel').css({"display":"table-cell"});
     $('#myCarousel').css({"vertical-align":"middle"});
     $('#recent-posts').css({"display":"table"});
     $('#recent-posts').css("height", (screen_height) + "px");
-    $('.tab-page').css({"display":"table-cell"}); 
+    $('.tab-page').css({"display":"table-cell"});
     $('.tab-page').css({"vertical-align":"middle"});
     $('div.symboldiv').css({'min-height': screen_height})
     mother_symbol_images = []
@@ -243,7 +241,7 @@ $(window).load(function() {
       newPosition = getNewPosition()
       dimensions = dimensionOfImage()
       newImagePostion = {
-        left:newPosition[0], 
+        left:newPosition[0],
         top:newPosition[1],
         right:(newPosition[0] + dimensions[0]),
         bottom:(newPosition[1] + dimensions[1])

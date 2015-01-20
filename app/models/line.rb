@@ -2,7 +2,7 @@ class Line < ActiveRecord::Base
   attr_accessible :line, :no, :stanza_id
   belongs_to :stanza
 
-  validates :no, uniqueness: true
+  validates :no, uniqueness: {scope: :stanza_id}
   validates :line, :no, :stanza_id, presence: true
 
   accepts_nested_attributes_for :stanza, allow_destroy: true,
@@ -23,7 +23,7 @@ class Line < ActiveRecord::Base
 #  --facets below--
     string :section
     string :canto
-    string :lbook
+    string :book
     string :length
     string :category
     time :published_at do
@@ -60,26 +60,22 @@ class Line < ActiveRecord::Base
   end
 
   def share_url
-    '/read/' + section.to_s + '.' + stanza.runningno.to_s
+    '/read/' + section.no.to_s + '.' + stanza.runningno.to_s + "?edition=" + stanza.edition_year.to_s
   end
 
   def section
-    Section.find(Stanza.find(stanza_id).section_id).no
+    stanza.section
   end
 
   def canto
-    Canto.find(Section.find_by_no(section).canto_id).no
+    section.canto
   end
 
   def book
-    Section.find_by_no(section).canto.book.no
-  end
-
-  def lbook
-    Section.find_by_no(section).canto.book.no
+    section.canto.book
   end
 
   def length
-    Stanza.find(stanza_id).lines.count
+    stanza.lines.count
   end
 end

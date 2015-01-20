@@ -39,7 +39,7 @@
 						<%= l.line %>
 					<% end %>
 						<span class="ref">
-							<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
+							<% anchor_t = l.section.no.to_s + "." + l.runningno.to_s %>
 							<%= link_to anchor_t, l.share_url, :class => "pipes" %>
 						</span>
 						</p>
@@ -59,8 +59,8 @@
 						<% end %>
 					<% end %>
 					<span class="ref">
-						<% anchor_t = l.section.to_s + "." + l.runningno.to_s %>
-						<%= link_to anchor_t, share_url(l.no), :class => "pipes", :rel => "nofollow" %>
+						<% anchor_t = l.section.no.to_s + "." + l.runningno.to_s %>
+						<%= link_to anchor_t, "#{share_url(l)}", :class => "pipes", :rel => "nofollow" %>
 					</span></p>
 				<% elsif l.is_a?(Post) %>
 					<div class="result-title">
@@ -77,7 +77,7 @@
 						<p class="snip"><i>Series Title: </i><%= link_to sanit_html.strip.html_safe, tag_base_url + series_tag_arr = l.tag_counts.select{|tag| tag.name.start_with?("@")}[0].name, { :title => "View series" } %>
 							<% else %>
 							<p class="snip"><%= strip_tags(l.content).first(150).html_safe %></p>
-							<% end %>					
+							<% end %>
 						</div>
 				<% elsif l.is_a?(Page) %>
 					<div class="result-title">

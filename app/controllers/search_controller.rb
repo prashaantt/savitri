@@ -52,12 +52,12 @@ class SearchController < ApplicationController
             context.facet(:category)
             context.facet(:section)
             context.facet(:canto)
-            context.facet(:lbook)
+            context.facet(:book)
             context.facet(:length)
             context.with(:section).equal_to(params[:section]) if params[:section].present?
             context.with(:canto).equal_to(params[:canto]) if params[:canto].present?
             context.with(:length).equal_to(params[:length]) if params[:length].present?
-            context.with(:lbook).equal_to(params[:lbook]) if params[:lbook].present?
+            context.with(:book).equal_to(params[:book]) if params[:book].present?
             if params[:download]
               context.paginate page: 1, per_page: @per_page = 24_000
             else
@@ -115,7 +115,7 @@ class SearchController < ApplicationController
 
     def download
       query = params[:q].to_s
-      query << ' lbook=' + params[:lbook].to_s if params[:lbook].present?
+      query << ' book=' + params[:book].to_s if params[:book].present?
       query << ' sbook=' + params[:sbook].to_s if params[:sbook].present?
       query << ' canto=' + params[:canto].to_s if params[:canto].present?
       query << ' section=' + params[:section].to_s if params[:section].present?
