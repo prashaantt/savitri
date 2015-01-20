@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
 	def is_active(controller)
-    (params[:controller] == controller) ? "active" : "notactive" 
+    (params[:controller] == controller) ? "active" : "notactive"
  	end
 
   def is_collapsed(params, bid)
@@ -56,10 +56,10 @@ module ApplicationHelper
   	ac
   end
 
-  def share_url(sentence_number)
-    stanza = Stanza.cached_find_by_no(sentence_number)
-    section = Section.cached_find(stanza.cached_section)
-    "/read/"+section.cached_number.to_s+"."+stanza.cached_runningno.to_s
+  def share_url(stanza)
+    section = stanza.cached_section
+    edition = params[:edition] || stanza.edition_year
+    "/read/"+section.cached_number.to_s+"."+stanza.cached_runningno.to_s+"?edition=#{edition}"
   end
 
   def cancel_page (type)

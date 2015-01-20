@@ -4,7 +4,7 @@ class Stanza < ActiveRecord::Base
   belongs_to :section
   #scope :_section, lambda { |q| where(:section_id=>q ) }
 
-  validates :no , :uniqueness => true
+  validates :no , uniqueness: {scope: :section_id}
 
   def to_param
   	no
@@ -14,17 +14,18 @@ class Stanza < ActiveRecord::Base
   #   "Sentence"
   # end
 
-  searchable do 
+  searchable do
     text :share_url, :stored => true
-    text :lines, :stored => true do 
+    text :lines, :stored => true do
       lines.map {|l| l.line}
     end
-#  --facets below--    
+#  --facets below--
     integer :id
     string :category
     string :section
     string :canto
     string :sbook
+    string :edition_year
     string :length
     time :published_at do
      Time.zone.now
@@ -47,7 +48,7 @@ class Stanza < ActiveRecord::Base
   def cached_runningno
     Rails.cache.fetch([self, "runningno"]) { runningno }
   end
-  
+
   def cached_number
     Rails.cache.fetch([self, "no"]) { no }
   end
@@ -66,19 +67,23 @@ class Stanza < ActiveRecord::Base
   end
 
   def section
-    Section.find(self.section_id).no
+    Section.find(self.section_id)
   end
 
   def canto
-    Canto.find(Section.find_by_no(section).canto_id).no
+    section.canto
   end
 
   def sbook
-    Section.find_by_no(section).canto.book.no
+    section.canto.book
+  end
+
+  def edition_year
+    sbook.edition.year
   end
 
   def length
-    Stanza.find(self.no).lines.count.to_s
+    self.lines.count.to_s
   end
 
   # def sentence
@@ -86,7 +91,7 @@ class Stanza < ActiveRecord::Base
   # end
 
   def share_url
-    section.to_s + "." + runningno.to_s
+    section.to_s + "." + runningno.to_s + "?edition=" + edition_year.to_s
   end
 
   def self.random
