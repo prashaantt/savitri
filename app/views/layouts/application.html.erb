@@ -48,17 +48,7 @@
                   <li><a href="/read/1/1/1?edition=1993">Revised Edition (1993)</a></li>
                 </ul>
               </li>
-              <li class="dropdown" id="Resources">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Media Centre
-                  <i class="icon-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a href="/library"><i class="icon-info-sign navicon"></i>Library</a></li>
-                  <li><a href="/presentations"><i class="icon-film navicon"></i>Presentations</a></li>
-                  <li><a href="/audio"><i class="icon-headphones navicon"></i>Audio</a></li>
-                  <li><a href="/themes"><i class="icon-picture navicon"></i>Themes</a></li>
-                </ul>
-              </li>
+              <li class=""><a href="/library">Library</a></li>
             <li class="dropdown">
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">Journals
                   <b class="icon-caret-down"></b>
@@ -81,6 +71,16 @@
             </li>
           </li>
           <li class=""><a href="/archives">Archives</a></li>
+          <li class="dropdown" id="Resources">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Media
+              <i class="icon-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/presentations"><i class="icon-film navicon"></i>Presentations</a></li>
+              <li><a href="/audio"><i class="icon-headphones navicon"></i>Audio</a></li>
+              <li><a href="/themes"><i class="icon-picture navicon"></i>Themes</a></li>
+            </ul>
+          </li>
           <% @pages = Page.cached_menu %>
           <% unless @pages.count > 1 %>
           <li><%= link_to @pages.first.cached_name, page_path(@pages.first) %></li>
