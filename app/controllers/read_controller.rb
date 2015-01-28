@@ -8,7 +8,16 @@ class ReadController < ApplicationController
     @edition = find_edition_by_year params
     @remaining_editions = Edition.where('id != ?', @edition.id)
     @book = @edition.books.where(no:bookid).try(&:first)
-    @canto = Canto.cached_find_by_no_and_bookid(cantoid, @book.id) || not_found
+    @canto = Canto.cached_find_by_no_and_bookid(cantoid, @book.id)
+    if @canto.nil?
+      location = Rewrite.find_by_source(request.fullpath)
+      if location
+        redirect_to location.destination, :status => location.code
+        return
+      else
+        not_found
+      end
+    end
     @sections = @canto.sections_cache_with_runningno(sectionrunningno)
     #@stanzas = Stanza.cached_by_section(@sections.first.id)
     @stanzas = @sections.first.cached_stanzas
