@@ -31,7 +31,7 @@ class PagesController < ApplicationController
           redirect_to location.destination, :status => location.code
           return
         else
-          redirect_to '/search/?q='+params[:q].split('/').last.gsub('-','+')
+          redirect_to '/search/?q='+params[:id].split('/').last.gsub('-','+')
           return
         end
       end
