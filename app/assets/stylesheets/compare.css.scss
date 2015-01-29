@@ -1,9 +1,6 @@
 // Place all the styles related to the Compare controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-[data-behavior~=click-to-compare]{
-  padding: 10px;
-}
 #one{
   border-right: 1px solid #dddddd;
 }
@@ -15,6 +12,12 @@
 }
 
 #loading-image{
-  left: 50%;
-  top: 50%;
+  position: fixed;
+  left: 47%;
+  top: 47%;
+  z-index: 100000000;
+}
+
+#back-button{
+  display: none;
 }
