@@ -1,40 +1,25 @@
 <div class="select-boxes-sidebar">
-<%= collection_select(nil, :edition_id,  @editions,  :year, :name, {:prompt   => "Select a Edition"}, {:id => 'editions_select', autofocus: :autofocus})%>
-<%= collection_select(nil, :book_id, @books, :id, :name, {:prompt   => "Select a Book"}, {:id => 'books_select'})%>
-<%= collection_select(nil, :canto_id, @cantos, :id, :no, {:prompt   => "Select a Canto"}, {:id => 'cantos_select'})%>
-<%= collection_select(nil, :section_id, @sections, :id, :runningno, {:prompt   => "Select a Section"}, {:id => 'sections_select'})%>
+<%= collection_select(nil, :edition_id,  @editions,  :year, :name, {:prompt   => "Select Edition"}, {:id => 'editions_select', autofocus: :autofocus,'data-toggle' => "popover", 'data-placement' => "bottom", 'data-content'=>"Select Edition"})%>
+<%= collection_select(nil, :book_id, @books, :id, :name, {:prompt   => "Select a Book"}, {:id => 'books_select','data-toggle' => "popover", 'data-placement' => "bottom", 'data-content'=>"Select a Book"})%>
+<%= collection_select(nil, :canto_id, @cantos, :id, :no, {:prompt   => "Select a Canto"}, {:id => 'cantos_select','data-toggle' => "popover", 'data-placement' => "bottom", 'data-content'=>"Select a Canto"})%>
+<%= collection_select(nil, :section_id, @sections, :id, :runningno, {:prompt   => "Select a Section"}, {:id => 'sections_select','data-toggle' => "popover", 'data-placement' => "bottom", 'data-content'=>"Select a Section"})%>
 </div>
 <div class="row">
 <div id='one' class="span5">
 </div>
 <div class='merge-button'>
-<button data-behavior='click-to-compare' disabled="disabled" class="img-circle">Merge</button></div>
+<button data-behavior='click-to-compare' class="btn btn-danger">Merge</button>
+<button id='back-button' class="btn btn-inverse"><i class="icon-arrow-left"> Back</i></button></div>
 <div id='other' class="span5">
 </div>
 </div>
 <div id="loading">
   <%=image_tag("ajax-loader.gif", id: 'loading-image', alt: "Loading...")%>
 </div>
-<div id='compare' class="span12"></div>
+<div id='compare' class="span12 offset3"></div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
 <script type="text/javascript">
 $(window).load(function() {
-  $('#one').bind('DOMNodeInserted DOMNodeRemoved', function(oneEvent) {
-      if (oneEvent.type == 'DOMNodeInserted' && $('#other').text().trim() != '') {
-          $('[data-behavior~=click-to-compare]').removeAttr('disabled');
-          $('#compare-with').removeAttr('disabled');
-      } else {
-          $('[data-behavior~=click-to-compare]').attr('disabled','disabled');
-          $('#compare-with').removeAttr('disabled');
-      }
-  });
-  $('#other').bind('DOMNodeInserted DOMNodeRemoved', function(oneEvent) {
-      if (oneEvent.type == 'DOMNodeInserted' && $('#one').text().trim() != '') {
-          $('[data-behavior~=click-to-compare]').removeAttr('disabled');
-      } else {
-          $('[data-behavior~=click-to-compare]').attr('disabled','disabled');
-      }
-  });
   if (window.location.search != '') {
     var arr = window.location.pathname.split(/\//);
     var years = window.location.search.split('&');
@@ -52,7 +37,6 @@ $(window).load(function() {
   };
 })
 $(document).ready(function(){
-  $('#loading').hide();
   function getUnSelectedOptions(){
     str = ''
     $.each($('#editions_select option').not(':selected'), function(index,option) {
@@ -63,43 +47,81 @@ $(document).ready(function(){
   function createOtherSelectBox(){
     $('div#compare-with').remove();
     var other_select_box = '';
-    $('.select-boxes-sidebar').append($.parseHTML( "<center><div id='compare-with'>Compare with<br><select id='other_select' data-behavior='get-other-section' >"+getUnSelectedOptions()+"</select></div></center>"));
+    $('.select-boxes-sidebar').append($.parseHTML( "<div id='compare-with'>Compare with<br><select id='other_select' data-behavior='get-other-section' >"+getUnSelectedOptions()+"</select></div>"));
 
   }
-  $('#editions_select').change(function() {
-    $('#loading-image').show();
-    $.ajax({
-      url: "/compare/update_books",
-      data: {
-        edition_id : $('#editions_select').val()
-      },
-      dataType: "script",
-      complete: $('#loading-image').hide()
-    });
+  function updateUrl(selectedOption,position){
+    s = window.location.pathname.split(/\//)
+    s[position] = selectedOption
+    window.history.pushState('','',s.join('/') + window.location.search)
+    $('#loading-image').hide();
+  }
+  function updateUrlQuery(selectedOption,position){
+    queryString = window.location.search.split('&')
+    queryString[position] = queryString[position].replace(/\d+/,selectedOption)
+    window.history.pushState('','',window.location.pathname + queryString.join('&'))
+    $('#loading-image').hide();
+  }
+  $('#editions_select').change(function(){
+    if ($('#editions_select').val() != ''){
+      createOtherSelectBox();
+      $('#loading-image').show();
+      $.ajax({
+        url: "/compare/update_books",
+        data: {
+          edition_id : $('#editions_select').val()
+        },
+        dataType: "script",
+        complete: updateUrlQuery($('#editions_select').val(),0)
+      });
+    }
   });
-  $('#books_select').change(function() {
-    $.ajax({
-      url: "/compare/update_cantos",
-      data: {
-        book_id : $('#books_select').val()
-      },
-      dataType: "script"
-    });
+  $('#books_select').change(function(){
+    if ($('#books_select').prop("selectedIndex") != 0){
+      $('#loading-image').show();
+      $.ajax({
+        url: "/compare/update_cantos",
+        data: {
+          book_id : $('#books_select').val()
+        },
+        dataType: "script",
+        complete: updateUrl($('#books_select').prop("selectedIndex"),2)
+      });
+    }
   });
-  $('#cantos_select').change(function() {
-    $.ajax({
-      url: "/compare/update_sections",
-      data: {
-        canto_id : $('#cantos_select').val()
-      },
-      dataType: "script"
-    });
+  $('#cantos_select').change(function(){
+    if ($('#cantos_select').prop("selectedIndex") != 0){
+      $('#loading-image').show();
+      $.ajax({
+        url: "/compare/update_sections",
+        data: {
+          canto_id : $('#cantos_select').val()
+        },
+        dataType: "script",
+        complete: updateUrl($('#cantos_select option:selected').text(),3)
+      });
+    }
   });
   $(document).on('click',"[data-behavior~=click-to-compare]",  function(){
-    $('#one').text('')
-    $('#other').text('')
-    showDiff(one,other);
+    $('#loading-image').show();
+    $('#compare').show()
+    $('#one').hide()
+    $('#other').hide()
+    if($('#compare').text() == ''){
+      showDiff(one,other);
+    }
+    $('#loading-image').hide();
+    $('[data-behavior~=click-to-compare]').hide();
+    $('#back-button').show()
   });
+  $('#back-button').click(function(){
+    $('#compare').hide()
+    $('#one').show()
+    $('#other').show('')
+    $('#back-button').hide()
+    $('[data-behavior~=click-to-compare]').show()
+    $('.close').click()
+  })
   function concatSection(section) {
     var str1 = ""
     $.each(section, function(section_id,stanza) {
@@ -141,28 +163,46 @@ $(document).ready(function(){
       $('#'+id).append($.parseHTML( str ));
     });
   }
-  $('#sections_select').change(function() {
+  $('#sections_select').change(function(){
+    updateUrl($('#sections_select').prop("selectedIndex"),4)
+    $('#back-button').click()
     $('#loading-image').show();
-    createOtherSelectBox();
     $('#one').empty()
-    //$('#other').empty()
     $('#compare').empty()
     var year = $('#editions_select')[0].value
-    var loc = "/read/" + $('#books_select').prop("selectedIndex") + '/' + $('#cantos_select').prop("selectedIndex") + '/' + $('#sections_select').prop("selectedIndex") + ".json?edition=" + year
+    var url = window.location.pathname.split('/compare')[1]
+    var loc = "/read" + url + ".json?edition=" + year
     one = $.getValues(loc);
+    if (one !== null){
+      $('#one').append('<h3>'+$('#editions_select option:selected').text()+' Edition</h3>')
+      populateOneEdition(one,'one',year);
+    }
+    else{
+      $('#one').append('<h4> This section does not exists in '+$('#editions_select option:selected').text()+' Edition</h3>')
+    }
     $('#loading-image').hide();
-    populateOneEdition(one,'one',year);
   });
   $(document).on('change',"[data-behavior~=get-other-section]",  function(){
-    $('#loading-image').show();
-    $('#other').empty();
-    $('#compare').empty();
-    var year = $('#other_select')[0].value;
-    loc = "/read/" + $('#books_select').prop("selectedIndex") + '/' + $('#cantos_select').prop("selectedIndex") + '/' + $('#sections_select').prop("selectedIndex") + ".json?edition=" + year
-    other = $.getValues(loc);
-    populateOneEdition(other,'other',year);
-    $('#loading-image').hide();
-    $("[data-behavior='click-to-compare']").css('display','block');
+    if ($('#other_select')[0].value != ''){
+      updateUrlQuery($('#other_select').val(),1)
+      $('#back-button').click()
+      $('#loading-image').show();
+      $('#other').empty();
+      $('#compare').empty();
+      var year = $('#other_select')[0].value;
+      var url = window.location.pathname.split('/compare')[1]
+      var loc = "/read" + url + ".json?edition=" + year
+      other = $.getValues(loc);
+      if (other !== null){
+        $('#other').append('<h3>'+$('#other_select option:selected').text()+' Edition</h3>')
+        populateOneEdition(other,'other',year);
+        $("[data-behavior='click-to-compare']").css('display','block');
+      }
+      else{
+        $('#other').append('<h4> This section does not exists in '+$('#other_select option:selected').text()+' Edition</h3>')
+      }
+      $('#loading-image').hide();
+    }
   });
   function showDiff(one,other){
     var stanza_one = concatSection(one[1]);
@@ -198,9 +238,24 @@ $(document).ready(function(){
       }
       prev = part.value;
     });
-    $('#compare').append($.parseHTML( '<div class="alert"><a class="close" data-dismiss="alert">×</a><span class="alert-success"> There were ' + added + ' additions and </span><span class="alert-error">' + removed + ' deletions.</span></div>' ));
     $('#compare').append(marked(str, {breaks: true}));
+    $('#compare').before($.parseHTML( '<div class="alert" style="color:inherit"><a class="close" data-dismiss="alert">×</a>There were <span class="alert-success">' + added + ' additions and </span><span class="alert-error">' + removed + ' deletions.</span></div>' ));
   }
+  function validateSelectBoxes(){
+    $("select").each(function(){
+      if ($(this).prop("selectedIndex") == 0){
+        $(this).focus();
+        $(this).popover('show')
+        return false;
+      }
+      else{
+        $(this).popover('hide')
+      }
+    });
+  }
+$( document ).ajaxComplete(function() {
+  validateSelectBoxes()
+});  
 });
 </script>
 
