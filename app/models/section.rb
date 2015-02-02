@@ -32,8 +32,8 @@ class Section < ActiveRecord::Base
     Rails.cache.fetch([self, 'no']) { no }
   end
 
-  def self.cached_find_by_no(no)
-    Rails.cache.fetch([name, 'findbynumber' + no.to_s]) { find_by_no(no) }
+  def self.cached_find_by_no(no,year)
+    Rails.cache.fetch([year, 'findbynumber' + no.to_s]) { find_by_no(no) }
   end
 
   def self.cached_find(id)
