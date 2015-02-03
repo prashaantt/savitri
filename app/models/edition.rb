@@ -15,4 +15,7 @@ class Edition < ActiveRecord::Base
     Rails.cache.delete([self, 'bookall'])
   end
 
+  def self.first_editions_last_line
+    Rails.cache.fetch([self, 'first_editions_last_line']) { Edition.first.lines.last.id }
+  end
 end
