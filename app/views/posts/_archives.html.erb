@@ -8,16 +8,16 @@
           <% post_years.each do |year, posts| %>
             <li class="listi">
               <label for="f<%= year.strftime("%m%Y") %>"><span class="ltag"><%=h year.strftime("%Y") %> (<%= posts.length %>)</span></label>
-              <input class="year textin" type="checkbox" id="f<%= year.strftime("%m%Y") %>"> 
-              <ol>  
+              <input class="year textin" type="checkbox" id="f<%= year.strftime("%m%Y") %>">
+              <ol>
                 <% post_months = posts.group_by {|t| t.published_at.beginning_of_month } %>
                 <% post_months.each do |month, month_posts| %>
-                  <li class="subfolder">  
+                  <li class="subfolder">
                     <label for="f<%= month_posts.first.published_at %>"><span class="ltag"><%=h month_posts.first.published_at.strftime("%B") %> (<%= month_posts.length %>)</span></label>
-                    <input class="textin" type="checkbox" id="f<%= month_posts.first.published_at %>"> 
+                    <input class="textin" type="checkbox" id="f<%= month_posts.first.published_at %>">
                     <ol>
                       <% for post in month_posts %>
-                        <li class="file sidebar-links"><a href="#"><%=h link_to post.cached_title, blog_post_path(@blog,post) %></a></li>
+                        <li class="file sidebar-links"><a href="#"><%=h link_to post.title, blog_post_path(@blog,post) %></a></li>
                       <% end %>
                     </ol>
                   </li>
