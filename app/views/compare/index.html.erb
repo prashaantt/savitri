@@ -163,6 +163,9 @@ $(document).ready(function(){
       $('#'+id).append($.parseHTML( str ));
     });
   }
+  function notFound(edition){
+    '<h4> This section does not exists in '+ edition +' Edition</h3>'
+  }
   $('#sections_select').change(function(){
     updateUrl($('#sections_select').prop("selectedIndex"),4)
     $('#back-button').click()
@@ -173,12 +176,12 @@ $(document).ready(function(){
     var url = window.location.pathname.split('/compare')[1]
     var loc = "/read" + url + ".json?edition=" + year
     one = $.getValues(loc);
-    if (one !== null){
-      $('#one').append('<h3>'+$('#editions_select option:selected').text()+' Edition</h3>')
-      populateOneEdition(one,'one',year);
+    if (one['status'] == '404'){
+      $('#one').append(notFound($('#editions_select option:selected').text()))
     }
     else{
-      $('#one').append('<h4> This section does not exists in '+$('#editions_select option:selected').text()+' Edition</h3>')
+      $('#one').append('<h3>'+$('#editions_select option:selected').text()+' Edition</h3>')
+      populateOneEdition(one,'one',year);
     }
     $('#loading-image').hide();
   });
@@ -193,13 +196,13 @@ $(document).ready(function(){
       var url = window.location.pathname.split('/compare')[1]
       var loc = "/read" + url + ".json?edition=" + year
       other = $.getValues(loc);
-      if (other !== null){
+      if (other['status'] == '404'){
+        $('#other').append(notFound($('#other_select option:selected').text()))
+      }
+      else{
         $('#other').append('<h3>'+$('#other_select option:selected').text()+' Edition</h3>')
         populateOneEdition(other,'other',year);
         $("[data-behavior='click-to-compare']").css('display','block');
-      }
-      else{
-        $('#other').append('<h4> This section does not exists in '+$('#other_select option:selected').text()+' Edition</h3>')
       }
       $('#loading-image').hide();
     }
@@ -255,7 +258,7 @@ $(document).ready(function(){
   }
 $( document ).ajaxComplete(function() {
   validateSelectBoxes()
-});  
+});
 });
 </script>
 
