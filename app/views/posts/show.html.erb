@@ -14,7 +14,7 @@
   window.disqus_public_key = "<%=j DISQUS_PUBLIC_KEY %>";
 <% end %>
 <% title @post.cached_title + " | " + @blog.cached_title
- meta_desc @post.cached_title + " | " + @blog.cached_title 
+ meta_desc @post.cached_title + " | " + @blog.cached_title
  meta_keywords @post.cached_title + " , " + @blog.cached_title + ', ' + @post.tag_list.join(" , ") %>
 
 <div class="row">
@@ -36,7 +36,7 @@
 <!-- Main Blog Content -->
 <div class="row">
   <div class="span9 center-col" role="content">
-    <div class="sp8-content">
+    <div class="sp8-content" id="<%=@post.id%>">
       <% unless @post.cached_series_title.blank? %>
         <% series_tag_arr = @post.tag_counts.select{|tag| tag.name.start_with?("@")} %>
         <% unless series_tag_arr.empty? %>
@@ -53,12 +53,12 @@
       <% end %>
       <h1 class="post-title-header">
         <a href="#"><%= link_to @post.cached_title,  blog_post_path(@blog,@post) %></a></strong>
-      <% if current_user.nil? || !current_user.admin? %>
-        <% if @post.featured? %>
+        <% if current_user.nil? || !current_user.admin? %>
+          <% if @post.featured? %>
             <i class="icon-star pull-right"></i>
           <% end %>
-        <% else %>
-          <%= link_to '', update_featured_status_path(@post.cached_blog,@post), id: @post.url, :class => toggle_class(@post), remote: true %> 
+        <% elsif !@post.deleted? %>
+          <%= link_to '', update_featured_status_path(@post.cached_blog,@post), id: @post.url, :class => toggle_class(@post), remote: true %>
         <% end %>
       </h1>
       <h6><%= @post.cached_subtitle %></h6>
@@ -67,7 +67,9 @@
           <% if can? :update, @post %>
           <%= link_to 'Edit', edit_blog_post_path(@blog,@post), :class => 'btn btn-mini btn-warning' %>
           <% end %>
-          <% if can? :destroy, @post %>
+          <% if @post.deleted? %>
+          <%= link_to 'Undelete', undelete_path(@post.cached_blog,@post), :class => 'btn btn-mini btn-warning', :method => :put, remote: true, data: { confirm: "Are you sure?" }%>
+          <% elsif can? :destroy, @post %>
           <%= link_to 'Delete', blog_post_path(@blog,@post),
           :method => :delete,
           :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
@@ -140,6 +142,6 @@
     <div class="visible-desktop datepicker">
       <div class="datepicker-title">Search by Date</div>
     </div>
-  </div>   
-   <!--  SideBar End -->  
+  </div>
+   <!--  SideBar End -->
 </div>

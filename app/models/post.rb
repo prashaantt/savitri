@@ -9,7 +9,7 @@ class Post < ActiveRecord::Base
                  )
   acts_as_taggable
   acts_as_url :title, scope: :blog_id
-
+  acts_as_paranoid
   belongs_to :blog
   has_many :comments, dependent: :destroy, order: 'comments.created_at'
   has_many :uploads
@@ -18,6 +18,8 @@ class Post < ActiveRecord::Base
 
   before_save :trim
   after_commit :flush_cache
+  before_destroy :flush_cache
+  before_restore :flush_cache, :reindex_object
   after_commit :setup_notifications, if: :persisted?
 
   scope :published, proc {
@@ -27,6 +29,9 @@ class Post < ActiveRecord::Base
   validates :number, uniqueness: { scope: :blog_id }, if: :number_changed?
   attr_reader :tag_tokens
 
+  def reindex_object
+    Sunspot.index! [self]
+  end
   ## Instance Methods
   def max_featured
     if featured == true && Post.where(featured: true).count == 5

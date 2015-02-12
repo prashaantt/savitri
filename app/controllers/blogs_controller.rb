@@ -6,11 +6,11 @@ class BlogsController < ApplicationController
                 [:index, :show, :recentcomments, :recentposts, :get_oldest_post_date]
 
   def index
-    @blogs = current_user.present? ? current_user.cached_blogs : Blog.cached_all
+    @user_blogs = current_user.present? ? current_user.cached_blogs : Blog.cached_all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @blogs, :only => [:id, :title, :slug] }
-    end 
+    end
   end
 
   def show
@@ -132,7 +132,7 @@ class BlogsController < ApplicationController
     else
       @blog.post_access.push(@user.id)
       authorize! :invite_for_blog, @blog
-      # User Role changed to Senior Editor. Senior Editor can write new posts on behalf of 'admin' 
+      # User Role changed to Senior Editor. Senior Editor can write new posts on behalf of 'admin'
       # but can edit or delete only his posts.
       @user.give_jr_editor_access
       @blog.save!

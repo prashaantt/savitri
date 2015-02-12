@@ -1,0 +1,125 @@
+<%- model_class = Post -%>
+<!-- Main Page Content -->
+<%= javascript_tag do %>
+  window.get_date = true;
+  window.forum = "<%=j DISQUS_FORUM %>";
+  window.disqus_public_key = "<%=j DISQUS_PUBLIC_KEY %>";
+<% end %>
+<div id='flash_error'></div>
+<% @blog = Blog.cached_find_by_slug(params[:blog_id]) %>
+<% title @blog.cached_title
+meta_desc @blog.cached_title
+meta_keywords @blog.cached_title %>
+<div class="row">
+  <div class="span12">
+    <div class="page-header title">
+      <h1><%= link_to @blog.title, blog_posts_path %></h1>
+      <div style="margin-top: 20px">
+        <span class="muted">Deleted posts</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Main Blog Content -->
+<div class="row">
+
+  <nav id="paginator" class="span9">
+    <ul class="pager">
+      <span>Showing <%= @blogposts.count.zero? ? '0' : (((@posts.current_page - 1) * @per_page) + 1 ) %> - <%= @posts.last_page? ? @blogposts.count : @posts.current_page * @per_page %> of <%= @blogposts.count %> posts</span>
+      <li class="previous">
+        <%= link_to_previous_page @posts, "‹ Previous #{@per_page} Posts" %>
+      </li>
+      <li class="next">
+        <%= link_to_next_page @posts, "Next #{@per_page} Posts ›" %>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="span9 center-col">
+    <div class="sp8-content">
+      <% unless @posts.empty? %>
+        <% @posts.each do |post| %>
+          <section class="snippet" id="<%=post.id%>">
+            <h6 class="post-series visible-desktop"><%= post.cached_series_title %></h6>
+            <h6 class="post-series hidden-desktop"><%= post.cached_series_title %></h6>
+            <h3>
+              <%= link_to post.cached_title,  blog_post_path(post.cached_blog,post) %>
+            </h3>
+            <div>
+              <span class="pull-right">
+                <% if can? :update, post %>
+                  <%= link_to 'Undelete', undelete_path(post.cached_blog,post), :class => 'btn btn-mini btn-warning', :method => :put, remote: true, data: { confirm: "Are you sure?" }%>
+                <% end %>
+              </span>
+              <h5><span class="blog-author"> <%= link_to post.cached_author.username, post.cached_author, {:class => "underline"} %>  for <%= post.published_at.strftime("%a, %b %d %Y at %l:%M %p") %></span></h5>
+              <div class="format-headers">
+                <% unless post.cached_excerpt.blank? %>
+                  <p class='excerpt'><%= post.cached_excerpt.html_safe %></p>
+                  <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
+                <% else %>
+                  <% post_content = post.cached_content.gsub(/\r\n?/, "") %>
+                  <% stripped_content = strip_tags(post.cached_content) %>
+                  <% if stripped_content.split(" ").length > 200 %>
+                    <%= post_content.split(" ").first(200).join(" ").html_safe %>...
+                    <p><em><%= link_to "Read more", blog_post_path(post.cached_blog, post), {:class => "underline"} %></em></p>
+                  <% else %>
+                    <%= post_content.split(" ").first(200).join(" ").html_safe %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </section>
+        <% end %>
+      <% else %>
+        <p style="text-align: center; font-size: 1.5em; padding-top: 100px" class="muted"><em>You have no scheduled posts. <a href="<%= new_blog_post_path %>" class="underline">Create one?</a></em></p>
+      <% end %>
+    </div>
+  </div>
+    <!-- Main Blog Content End -->
+    <!--  SideBar Begin -->
+  <div class="right-col pull-right span3 visible-desktop">
+    <% if @posts.empty? %>
+      <% if can? :update, @blog %>
+        <div class="right-sidebar">
+          <div class="btn-grp sidebar-title">
+            <%= link_to 'New post', new_blog_post_path, :class => 'btn btn-info' %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+<!-- Begin Latest posts -->
+    <div class="sidebar-menu">
+      <div class="sidebar-heading">
+        <a class="collapse_posts">Recent Posts</a>
+      </div>
+      <div class="collapse recent_posts" id="recent_posts">
+      </div>
+    </div>
+
+    <!-- Begin Latest comments -->
+    <div class="sidebar-menu">
+      <div class="sidebar-heading">
+        <a class="collapse_comments">Recent Comments</a>
+      </div>
+      <div class="collapse recent_comments" id="recent_comments">
+      </div>
+    </div>
+
+    <!-- Begin DatePicker -->
+    <div class="visible-desktop datepicker">
+      <div class="datepicker-title">Search by Date</div>
+    </div>
+  </div>
+
+  <nav id="paginator" class="span9">
+    <ul class="pager">
+      <li class="previous">
+        <%= link_to_previous_page @posts, "‹ Previous #{@per_page} Posts" %>
+      </li>
+      <li class="next">
+        <%= link_to_next_page @posts, "Next #{@per_page} Posts ›" %>
+      </li>
+    </ul>
+  </nav>
+</div>

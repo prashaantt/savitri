@@ -64,12 +64,36 @@ class PostsController < ApplicationController
     end
   end
 
+  def deleted
+    @per_page = 20
+    @blog = Blog.cached_find_by_slug(params[:blog_id]) || not_found
+    @blogposts = Post.where(blog_id:@blog.id).only_deleted
+    @posts = @blogposts.page(params[:page]).per(@per_page)
+    authorize! :update, @blog
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @posts }
+    end
+  end
+
+  def undelete
+    @blog = Blog.cached_find_by_slug(params[:blog_id]) || not_found
+    @post = Post.with_deleted.where(blog_id:@blog.id).where(url:params[:post_id])
+    Post.restore(@post.first.id)
+    authorize! :update, @blog
+    respond_to do |format|
+      format.js { render js: 'document.getElementById("'+@post.first.id.to_s+'").remove();',:status => 200 }
+    end
+  end
   # GET /posts/1
   # GET /posts/1.json
   def show
     blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
-    @post = Post.cached_find_by_blog_id_and_url(blog_id.id,params[:id]) || not_found
-    authorize! :new, @post if @post.draft == true
+    @post = Post.cached_find_by_blog_id_and_url(blog_id.id,params[:id])
+    if @post.nil?
+      @post = Post.with_deleted.find_by_blog_id_and_url(blog_id.id,params[:id]) || not_found
+    end
+    authorize! :new, @post if @post.draft? || @post.deleted?
     @related_posts = Sunspot.more_like_this(@post).results.first(5) rescue nil
     respond_to do |format|
       format.html # show.html.erb
@@ -94,6 +118,9 @@ class PostsController < ApplicationController
   def edit
     blog_id  = Blog.cached_find_by_slug(params[:blog_id]) || not_found
     @post = Post.cached_find_by_blog_id_and_url(blog_id.id,params[:id])
+    if @post.nil?
+      @post = Post.with_deleted.find_by_blog_id_and_url(blog_id.id,params[:id]) || not_found
+    end
     authorize! :edit, @post
     respond_to do |format|
       format.html # edit.html.erb
@@ -138,7 +165,10 @@ class PostsController < ApplicationController
   # PUT /posts/1.json
   def update
     @post = Post.cached_find_by_url(params[:id])
-    
+    if @post.nil?
+      @post = Post.with_deleted.find_by_url(params[:id]) || not_found
+      authorize! :update, @post
+    end
     #if not blank
       #if exists and changed: create new and remove existing
       #elsif doesn't exist: create new
@@ -148,7 +178,7 @@ class PostsController < ApplicationController
     old_series_tag = @post.tag_list.select{|tag| tag.include?("@")}[0]
 
     params_tags = params[:post][:tag_tokens].split(",")
-    
+
     if params[:post][:series_title].strip.blank?
       unless old_series_tag.nil?
         params_tags.delete(old_series_tag)
@@ -196,8 +226,8 @@ class PostsController < ApplicationController
     authorize! :destroy, @post
 
     @post.delete_if_scheduled
-    @post.destroy
-    
+    @post.draft? ? @post.really_destroy! : @post.destroy
+
     respond_to do |format|
       format.html { redirect_to blog_posts_path(@post.blog) }
       format.json { head :no_content }
@@ -226,6 +256,6 @@ class PostsController < ApplicationController
         end
         format.js{ render 'cannot_featured', format: 'js'}
       end
-    end    
+    end
   end
 end
