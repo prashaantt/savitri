@@ -67,3 +67,4 @@ gem "dotenv-deployment"
 gem 'sitemap_generator'
 gem 'clockwork'
 gem 'progress_bar'
+gem "paranoia", "~> 1.0"
