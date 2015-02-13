@@ -11,7 +11,7 @@
     <div class="sp8-content">
       <section>
         <h2>Blogs</h2>
-        <% @blogs.each do |blog| %>
+        <% @user_blogs.each do |blog| %>
           <div class="well well-small">
             <h3>
               <%= link_to blog.cached_title, blog_posts_path(blog) %>
@@ -55,7 +55,15 @@
           <h2>Invitations</h2>
           <p class="muted"><em>Invite new users or migrate existing ones.</em></p>
           <%= link_to 'Send invitation', new_user_invitation_path, :class => "btn btn-info" %>
-        </section>        
+        </section>
+        <hr>
+        <section>
+          <h2>Deleted Posts</h2>
+          <p class="muted"><em>Get list of deleted posts</em></p>
+          <%@blogs.each do |blog|%>
+          <%= link_to blog.title, deleted_posts_path(blog), :class => "btn btn-info" %>
+          <%end%>
+        </section>
       <% elsif current_user.cached_blogs_count < 1 %>
         <p class="muted"><em>You can host 1 blog.</em></p>
         <%= link_to 'New blog', new_blog_path, :class => "btn btn-info"  %>

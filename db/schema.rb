@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141218083842) do
+ActiveRecord::Schema.define(:version => 20150211073401) do
 
   create_table "audios", :force => true do |t|
     t.integer  "medium_id"
@@ -161,23 +161,23 @@ ActiveRecord::Schema.define(:version => 20141218083842) do
 
   create_table "posts", :force => true do |t|
     t.integer  "blog_id"
-    t.string   "title",                                   :null => false
+    t.string   "title",                           :null => false
     t.text     "content"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.text     "md_content"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.string   "photos"
     t.text     "excerpt"
     t.string   "url"
     t.datetime "published_at"
-    t.boolean  "draft",           :default => true
+    t.boolean  "draft",        :default => true
     t.string   "series_title"
     t.string   "subtitle"
     t.string   "show_excerpt"
     t.integer  "author_id"
-    t.boolean  "featured",        :default => false
-    t.datetime "deleted_at"
+    t.boolean  "featured",     :default => false
     t.integer  "number"
-    t.string   "social_accounts", :default => "--- []\n"
+    t.datetime "deleted_at"
   end
 
   add_index "posts", ["blog_id", "number"], :name => "index_posts_on_blog_id_and_number", :unique => true
