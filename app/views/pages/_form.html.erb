@@ -24,7 +24,7 @@
   <%= f.hidden_field :id %>
   <div class="field">
     <%= f.label :category %>
-    <%= f.select(:category,[["Non-Menu","Non-Menu"], ["Menu","Menu"]]) %>
+    <%= f.select(:category,["Non-Menu", "Menu"],selected: f.object.attr_category) %>
   </div>
   <div class="field" id="parent">
     <%= f.label :parent %>
@@ -35,7 +35,7 @@
     <% end %>
   </div>
   <div class="field" id="page-priority">
-    <%= f.label :priority %> 
+    <%= f.label :priority %>
     <%= f.text_field :priority, :size => 5  %>
   </div>
   <div class="control-group">
@@ -45,7 +45,7 @@
         <div id='wmd-button-bar'><span id="previewbtn" class="btn btn-info pull-right" style="min-width: 46px;">Preview</span></div>
         <%= f.text_area :md_content, :class=> "sp8-form", :id=>"wmd-input", :style => "resize: none; margin-top: 20px" %>
         <div id="wmd-preview" class="wmd-preview well well-small main-content" style="display: none; min-height: 490px; margin-top: 20px"></div>
-        <%= f.text_area :content, :style=> "display: none" %>        
+        <%= f.text_area :content, :style=> "display: none" %>
       </div>
     </div>
   </div>

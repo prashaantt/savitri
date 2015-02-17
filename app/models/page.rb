@@ -26,6 +26,10 @@ class Page < ActiveRecord::Base
     category
   end
 
+  def attr_category
+    Page.find_by_sql(["SELECT category FROM pages WHERE (id = :id)", {:id => self.id}]).try(:first).try(:attributes).try(:[],'category') || 'Non-Menu'
+  end
+
   def category
     if !(topparent = myparents[-1]).nil?
       Page.find(topparent).name
