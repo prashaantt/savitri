@@ -48,7 +48,6 @@ class SearchController < ApplicationController
         when 'lines'
           @search = Sunspot.search Line do |context|
             context.fulltext keywords, highlight: true
-            context.with(:id).less_than Edition.first_editions_last_line
             context.order_by(:id, :asc)
             context.facet(:category)
             context.facet(:section)
