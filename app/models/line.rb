@@ -16,7 +16,7 @@ class Line < ActiveRecord::Base
   def canto_id
   end
 
-  searchable do
+  searchable :if => :first_edition? do
     text :line, stored: true
      # text :no
     integer :id
@@ -29,6 +29,10 @@ class Line < ActiveRecord::Base
     time :published_at do
       Time.zone.now
     end
+  end
+
+  def first_edition?
+    self.id < Edition.first_editions_last_line_id
   end
 
   def category
