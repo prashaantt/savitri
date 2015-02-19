@@ -49,13 +49,13 @@ meta_keywords @book.name + ' , ' + @canto.title + ' , Section ' + @section.no.to
   </div>
     <!-- '/read/'+bookid.to_s+'/'+cantoid.to_s+'/'+sectionrunningno.to_s+'#'+query[1] -->
   <div class="span6 offset1" id="read">
-    <center><h3 style="padding-bottom:40px;"><em><%= "#{@edition.name} Edition (#{@edition.year})" %></em></h3></center>
+    <center><h3 style="padding-bottom:40px;"><%= "#{@edition.name} Edition (#{@edition.year})" %></h3></center>
     <div id="cantos">
       <% unless @stanzasblank %>
         <div class="page-header visible-desktop">
           <h4>Book <%= @book.cached_number %>: <%= @book.cached_name %></h4>
         </div>
-        <%= collection_select(nil, :edition_id,  @remaining_editions,  :year, :name, {:prompt   => "Compare With"}, {:id => 'editions_select', :style=>'width:25%;', autofocus: :autofocus})%>
+        <%= collection_select(nil, :edition_id,  @remaining_editions,  :year, :name, {:prompt   => "Compare With"}, {:id => 'editions_select', :style=>'width:25%;'})%>
         <h3 class="cantono visible-desktop">Canto <%= @canto.cached_number %></h3>
         <div class="page-header hidden-desktop">
           <h4 class="bookcantono">

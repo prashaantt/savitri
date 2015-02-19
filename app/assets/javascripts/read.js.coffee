@@ -43,19 +43,5 @@ $ ->
     $("#" + hashvalue).animate
       backgroundColor: defaultBGColor
     , 3000
-
-$ ->
-  # Show or hide the sticky footer button
-  $(window).scroll ->
-    if $(this).scrollTop() > 200
-      $(".go-top").fadeIn 200
-    else
-      $(".go-top").fadeOut 200
-
-
-  # Animate the scroll to top
-  $(".go-top").click (event) ->
-    event.preventDefault()
-    $("html, body").animate
-      scrollTop: 0
-    , 300
+  $('.go-top').click ->
+    $('html, body').animate { scrollTop: 0 }, 'slow'

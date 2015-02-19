@@ -33,7 +33,7 @@
       <div class="active item text-center" id="display">
         <a href="/read/<%= @selections.first.section_id %>.<%= @selections.first.runningno %>"> <%= @selections.first.cached_lines.map(&:line).join('<br/>').html_safe %></a>
         <% @selections.shift %>
-      </div>  
+      </div>
       <% @selections.each do |stanza| %>
       <div class="item text-center" id="display">
         <a href="/read/<%= stanza.section_id %>.<%= stanza.runningno %>"> <%= stanza.cached_lines.map(&:line).join('<br/>').html_safe %></a>
@@ -70,7 +70,7 @@
               <p><em><%= link_to post.title, blog_post_path(post.cached_blog,post) %></em></p>
             </li>
           <% end %>
-        </ul>  
+        </ul>
         </div>
         <div class="tab-pane" id="<%= @blogs[2].slug %>">
         <ul>
