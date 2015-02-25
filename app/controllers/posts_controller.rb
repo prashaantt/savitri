@@ -78,11 +78,14 @@ class PostsController < ApplicationController
 
   def undelete
     @blog = Blog.cached_find_by_slug(params[:blog_id]) || not_found
-    @post = Post.with_deleted.where(blog_id:@blog.id).where(url:params[:post_id])
-    Post.restore(@post.first.id)
+    @post = Post.with_deleted.where(blog_id:@blog.id).where(url:params[:post_id]).first
+    if @post.draft && (@post.published_at < Time.zone.now)
+      @post.update_column(:published_at, Time.zone.now)
+    end
+    Post.restore(@post.id)
     authorize! :update, @blog
     respond_to do |format|
-      format.js { render js: 'document.getElementById("'+@post.first.id.to_s+'").remove();',:status => 200 }
+      format.js { render js: 'document.getElementById("'+@post.id.to_s+'").remove();',:status => 200 }
     end
   end
   # GET /posts/1
@@ -202,7 +205,6 @@ class PostsController < ApplicationController
 
     authorize! :update, @post
 
-    @post.delete_if_scheduled
     @post.update_draft_status(params)
 
     respond_to do |format|
@@ -224,9 +226,7 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find_by_url(params[:id])
     authorize! :destroy, @post
-
-    @post.delete_if_scheduled
-    @post.draft? ? @post.really_destroy! : @post.destroy
+    @post.destroy
 
     respond_to do |format|
       format.html { redirect_to blog_posts_path(@post.blog) }

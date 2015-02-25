@@ -77,7 +77,9 @@
           <% end %>
         </span>
         <h5>
-          <% if @post.draft && @post.cached_published_at > Time.zone.now %>
+          <% if @post.deleted? %>
+            <span class="label">Deleted</span>
+          <% elsif @post.draft && @post.cached_published_at > Time.zone.now %>
             <span class="label">Scheduled</span>
           <% end %>
           <span class="blog-author"><%= "##{@post.number}" if @post.number.present? %> <%= link_to (@post.cached_author.name.blank? ? @post.cached_author.username : @post.cached_author.name), @post.cached_author, {:class => "underline"} %> on <%= @post.cached_published_at.strftime("%a, %b %d %Y at %l:%M %p") %>

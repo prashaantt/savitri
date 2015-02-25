@@ -16,11 +16,12 @@ class Post < ActiveRecord::Base
   has_many :tags
   belongs_to :user, foreign_key: :author_id
 
-  before_save :trim
+  before_save :trim, :delete_if_scheduled
   after_commit :flush_cache
-  before_destroy :flush_cache
+  before_destroy :flush_cache, :delete_if_scheduled
   before_restore :flush_cache, :reindex_object
-  after_commit :setup_notifications, if: :persisted?
+  after_restore :setup_notifications
+  after_save :setup_notifications
 
   scope :published, proc {
     where(draft: false)
@@ -118,8 +119,7 @@ class Post < ActiveRecord::Base
   end
 
   def publish!
-    self.draft = false
-    self.save!
+    self.update_column(:draft, false)
   end
 
   def update_draft_status(params)
@@ -129,6 +129,7 @@ class Post < ActiveRecord::Base
       # Backdated posts
       self.created_at = published_at
       self.draft = false
+      self.assign_post_number!
     end
   end
 
@@ -283,8 +284,14 @@ class Post < ActiveRecord::Base
       number = Post.where(blog_id: blog_id).maximum(:number)
       # if self is first post for a blog then assign number 1 else max + 1
       number = number.nil? ? 1 : (number + 1)
-      # update_column method skips validations as well as callbacks
-      self.update_column(:number, number)
+      # If post is back dated then it must be published at the same time.
+      # hence it will be new object. New object cannot be updated directly
+      if self.new_record?
+        self.number = number
+      else
+        # update_column method skips validations as well as callbacks
+        self.update_column(:number, number)
+      end
       # Manually calling validation method to check uniquness of a number
       raise "#{self.errors.messages}" unless self.valid?
     rescue => e
@@ -303,7 +310,9 @@ class Post < ActiveRecord::Base
   end
 
   def setup_notifications
-    EmailWorker.perform_at(published_at, author_id, id) if self.draft?
+    if self.draft? && !self.deleted?
+      EmailWorker.perform_at(published_at, author_id, id)
+    end
   end
 
   def self.filter(blog_id, params)
