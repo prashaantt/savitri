@@ -37,8 +37,8 @@
 <% if params[:page] %>
   <% pagetitle += " | Page " + params[:page] %>
 <% end %>
-<% title pagetitle 
- meta_desc pagetitle 
+<% title pagetitle
+ meta_desc pagetitle
  meta_keywords pagetitle %>
 <div class="row">
   <div class="span12">
@@ -56,7 +56,7 @@
   </div>
 </div>
 
-<div id="content" class="row">  
+<div id="content" class="row">
   <!-- START CENTER COL -->
   <!-- Pagination Links -->
   <nav id="paginator" class="span9">
@@ -104,7 +104,7 @@
               <i class="icon-star pull-right"></i>
             <% end %>
           <% else %>
-            <%= link_to '', update_featured_status_path(post.cached_blog,post), id: post.url, :class => toggle_class(post), remote: true %>      
+            <%= link_to '', update_featured_status_path(post.cached_blog,post), id: post.url, :class => toggle_class(post), remote: true %>
           <% end %>
           </h3>
           <% unless post.cached_subtitle.blank? %>
