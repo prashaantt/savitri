@@ -12,7 +12,7 @@ class Book < ActiveRecord::Base
     no
   end
 
-  searchable do
+  searchable :if => :first_edition? do
     text :name
     text :no
     integer :id
@@ -20,6 +20,10 @@ class Book < ActiveRecord::Base
     time :published_at do
       Time.zone.now
     end
+  end
+
+  def first_edition?
+    Edition.first.books.find_by_id(id) ? true : false
   end
 
   def self.cached_find(id)
