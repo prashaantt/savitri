@@ -150,6 +150,28 @@ $(window).load(function() {
   screen_width = $( window ).width()
   screen_height = $( window ).height()
   if(window.location.origin == window.location.href.replace(/\/$/,'')) {
+    function setVolume(){
+      if(typeof(Storage) !== "undefined") {
+        if(localStorage.volumeState !== undefined){
+          if(localStorage.volumeState == "0"){
+            document.getElementById('player').muted = true
+            $( ".volume_button" ).children().toggleClass( "icon-volume-up icon-volume-off" )
+          }
+        }else{
+          localStorage.setItem("volumeState", '1');
+        }
+      }
+    }
+    setVolume()
+    function setVolumeState(){
+      if(typeof(Storage) !== "undefined") {
+        if($( ".volume_button" ).children().hasClass('icon-volume-up')){
+          localStorage.setItem("volumeState", '1')
+        }else{
+          localStorage.setItem("volumeState", '0')
+        }
+      }
+    }
     $( "div#recent-posts li" ).first().addClass('active')
     $('#recent-posts-tab a').click(function (e) {
       e.preventDefault();
@@ -158,6 +180,7 @@ $(window).load(function() {
     $( ".volume_button" ).click(function() {
       document.getElementById('player').muted=!document.getElementById('player').muted
       $( this ).children().toggleClass( "icon-volume-up icon-volume-off" )
+      setVolumeState()
     });
     div_id = 'selections'
     $( ".down_arrow" ).click(function() {
