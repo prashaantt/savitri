@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     base_url = request.protocol + request.host_with_port
     @feed_url = base_url + user_path(params[:id]) + '/feed'
 
-    @user = User.find(params[:id]) || not_found
+    @user = User.find_by_username(params[:id]) || not_found
 
     @series = {}
 

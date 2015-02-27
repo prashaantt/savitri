@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
   after_commit :flush_cache, :flush_dependent_cache
   after_commit :remove_blog_access, on: :destroy
 
+  def to_param
+    username
+  end
+
   # By default new user will follow all blogs.
   def follow_all_blogs
     Blog.find_each do |b|
