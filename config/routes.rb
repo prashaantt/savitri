@@ -30,7 +30,7 @@ Savitri::Application.routes.draw do
   get 'blogs/:blog_id/get_oldest_post_date', to: 'blogs#get_oldest_post_date', defaults: { format: :json }
   devise_for :users
 
-  get '/profile/:id' => 'users#show', as: :profile
+  get '/profile/:id' => 'users#show', as: :profile, :constraints  => { :id => /[0-z\.]+/ }
   get 'blogs/:id/authorized_users', to: 'blogs#authorized_users', as: :authorized_users
   post 'blogs/:id/invite_for_blog' => 'blogs#invite_for_blog'
   get 'blogs/:slug/remove_blog_access/:user_id', to: 'blogs#remove_blog_access', as: :remove_blog_access
@@ -54,12 +54,11 @@ Savitri::Application.routes.draw do
   match 'follows/blog_id/:blog_id', to: 'follows#follow_blog', as: :follow_blog, via: :post
   match 'follows/blog_id/:blog_id', to: 'follows#unfollow_blog', as: :unfollow_blog, via: :delete
   match 'unsubscribe_blog/:blog_id/:post_id', to: 'blogs#unsubscribe_blog', as: :unsubscribe_blog, via: :get
-
+  get '/users/:id' => 'users#show', :constraints  => { :id => /[0-z\.]+/ }
+  get '/users/:id/feed', to: 'users#show', :constraints  => { :id => /[0-z\.]+/ }, defaults: { format: :atom }
   resources :users do
     get '/users/sign_out' => 'devise/sessions#destroy', as: :destroy_user_session
   end
-
-  get 'users/:id/feed', to: 'users#show', format: false, defaults: { format: :atom }
 
   get 'savitri/index'
   match '/savitri/show' => 'savitri#show'
