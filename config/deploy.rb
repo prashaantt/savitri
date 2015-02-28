@@ -18,6 +18,7 @@ default_run_options[:pty] = true
 set :deploy_via, :remote_cache
 set :scm, 'git'
 set :branch, 'master'
+set :keep_releases, 5
 set :scm_verbose, true
 set :use_sudo, false
 set :shared_children, shared_children + %w{solr config/database.yml .env.production public/sitemap.xml.gz}
@@ -40,6 +41,7 @@ after "deploy:update_code", :bundle_install
 	end
 
 after "deploy:update", "newrelic:notice_deployment"
+after "deploy:update", "deploy:cleanup"
 # desc "Zero-downtime restart of Unicorn"
 # task :restart, :except => { :no_release => true } do
 #   run "kill -s USR2 `cat #{shared_path}/pids/unicorn.pid`"
