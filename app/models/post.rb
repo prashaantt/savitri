@@ -281,7 +281,7 @@ class Post < ActiveRecord::Base
     tries = 0
     begin
       # Find Max post number in a certain blog
-      number = Post.where(blog_id: blog_id).maximum(:number)
+      number = Post.with_deleted.where(blog_id: blog_id).maximum(:number)
       # if self is first post for a blog then assign number 1 else max + 1
       number = number.nil? ? 1 : (number + 1)
       # If post is back dated then it must be published at the same time.
