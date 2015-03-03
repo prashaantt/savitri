@@ -129,7 +129,7 @@ class Post < ActiveRecord::Base
       # Backdated posts
       self.created_at = published_at
       self.draft = false
-      self.assign_post_number!
+      self.assign_post_number! if self.number.nil?
     end
   end
 
