@@ -259,7 +259,7 @@ table.table.table-condensed {
 .panel.callout .button:hover, .panel.callout .button:focus { background: rgba(255, 255, 255, 0.8); }
 .panel.radius { -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; }
 
- 
+
 .listi{
   list-style:none;
   margin-top: 3px;
@@ -288,9 +288,9 @@ table.table.table-condensed {
     text-indent: -13px;
     margin-top: 6px !important;
 }
-    
+
 .textin + ol > li { display: none; margin-left: 0px !important; padding-left: 8px; }
-    
+
 .textin + ol{
     background: url(collapsed.gif) 40px -2px no-repeat;
     background-position: left top;
@@ -303,9 +303,9 @@ table.table.table-condensed {
     background-position: left top;
     padding: 20px 0 13px 12px;
 }
-    
+
 .textin:checked + ol > li {
-    display: block; 
+    display: block;
     margin: 0px 0 0.125em;
 }
 
@@ -322,7 +322,7 @@ textarea {
 }
 
 input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
-  
+
   border-radius: 0;
 }
 
@@ -352,7 +352,7 @@ td, th {
   border-bottom-left-radius: 0px;
 }
 
- 
+
 .table-bordered thead:last-child tr:last-child > th:last-child, .table-bordered tbody:last-child tr:last-child > td:last-child, .table-bordered tbody:last-child tr:last-child > th:last-child, .table-bordered tfoot:last-child tr:last-child > td:last-child, .table-bordered tfoot:last-child tr:last-child > th:last-child {
   border-bottom-right-radius: 0px;
 }
@@ -365,7 +365,7 @@ td, th {
   border-radius: 0px;
 }
 
-iframe {  
+iframe {
   width:100% !important;
   height: normal;
   overflow:hidden;
@@ -431,7 +431,7 @@ iframe {
 }
 
 .rcin + ol > li { display: none; margin-left: 10px !important; padding-left: 8px; }
-    
+
 .rcin + ol{
     background: url(collapsed.gif) 58px 0px no-repeat;
     margin: -42px 0 -10px 0px;
@@ -443,9 +443,9 @@ iframe {
     padding: 20px 0 0px 77px;
     padding-top: 25px;
 }
-    
+
 .rcin:checked + ol > li {
-    display: block; 
+    display: block;
     margin: 0px 0 0.125em;
     padding-top: 8px;
 
@@ -456,7 +456,7 @@ iframe {
 }
 
 .arcin + ol > li { display: none; margin-left: 0px !important; padding-left: 29%; }
-    
+
 .arcin + ol{
     background: url(collapsed.gif) 58px 0px no-repeat;
     margin: -42px 0 -10px 0px;
@@ -468,9 +468,9 @@ iframe {
     padding: 20px 0 13px 12px;
     padding-top: 25px;
 }
-    
+
 .arcin:checked + ol > li {
-    display: block; 
+    display: block;
     margin: 0px 0 0.125em;
     padding-top: 8px;
 }
@@ -494,9 +494,16 @@ iframe {
 }
 
 blockquote p {
-  margin-bottom: 15px; 
+  margin-bottom: 15px;
 }
 
 .dsq-widget-list{
   margin-left: 0px;
+}
+
+.footnotes{
+  font-size: 85% !important;
+  border-top: 1px solid black;
+  padding-top: 15px;
+  margin-top: 25px;
 }
