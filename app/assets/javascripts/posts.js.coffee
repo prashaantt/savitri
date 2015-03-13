@@ -130,7 +130,7 @@ $ ->
 
 $ ->
   $(".excerpt").each ->
-    $(this).html converter.makeHtml($(this).text())
+    $(this).html marked($(this).text())
 
 $ ->
   $('.snippet').last().css('border-bottom', 'none');
@@ -195,7 +195,7 @@ $ ->
 $ ->
   $(".new_post,.edit_post").submit ->
     text = $("#wmd-input").val()
-    md_text = $("#post_content").text()
+    md_text = marked($('#wmd-input').val())
     title = $("#post_title").val()
     text = text.replace(/\!\[enter image description here\]/, "![" + title + "]")
     md_text = md_text.replace(/alt="enter image description here"/, "alt=\"" + title + "\"")
@@ -210,31 +210,32 @@ $ ->
         false
 
 $ ->
-	$("#new-blog-post").click (e) ->
-	  $("#post_content").html($('.wmd-preview').html())
-	  $("#wmd-input").html($('.wmd-input').val())
+  $("#new-blog-post").click (e) ->
+    $("#post_content").html($('#preview').html())
+    $("#wmd-input").html($('.wmd-input').val())
 
-	$("#previewbtn").on "click", ->
-	  if $("#wmd-input").is(":visible")
-	    $("#wmd-input").hide()
-	    $("#wmd-preview").show()
-	    $(".btn-toolbar button").each ->
-	      unless $(this).attr("disabled")
-	        $(this).addClass "disabled"
-	        $(this).attr "disabled", "disabled"
+  $("#previewbtn").on "click", ->
+    if $("#wmd-input").is(":visible")
+      $("#wmd-input").hide()
+      $("#preview").show()
+      $('#preview').html marked($('#wmd-input').val())
+      $(".btn-toolbar button").each ->
+        unless $(this).attr("disabled")
+          $(this).addClass "disabled"
+          $(this).attr "disabled", "disabled"
 
-	    $(this).removeClass("btn-info").addClass "btn-warning"
-	    $(this).text "Edit"
-	  else
-	    $("#wmd-preview").hide()
-	    $("#wmd-input").show()
-	    $(".btn-toolbar button").each ->
-	      if $(this).hasClass("disabled")
-	        $(this).removeAttr "disabled"
-	        $(this).removeClass "disabled"
+      $(this).removeClass("btn-info").addClass "btn-warning"
+      $(this).text "Edit"
+    else
+      $("#preview").hide()
+      $("#wmd-input").show()
+      $(".btn-toolbar button").each ->
+        if $(this).hasClass("disabled")
+          $(this).removeAttr "disabled"
+          $(this).removeClass "disabled"
 
-	    $(this).text "Preview"
-	    $(this).removeClass("btn-warning").addClass "btn-info"
+      $(this).text "Preview"
+      $(this).removeClass("btn-warning").addClass "btn-info"
 
 isValidRange = (ranges) ->
   valid = 0;
@@ -344,31 +345,31 @@ $ ->
         $("#myModal").modal "hide"
 
 $ ->
-	$("#size_later").click ->
-  	$("#publishat").css("display","inline")
+  $("#size_later").click ->
+    $("#publishat").css("display","inline")
   if($("#size_later").is(":checked"))
-  	$("#publishat").css("display","inline")
+    $("#publishat").css("display","inline")
 
 $ ->
-	$("#size_now").click ->
-  	$("#publishat").css("display","none")
-  	now = new Date()
-  	$("#post_published_at_3i").val(now.getDate())
-  	$("#post_published_at_2i").val(now.getMonth()+1)
-  	$("#post_published_at_1i").val(now.getFullYear())
-  	$("#post_published_at_4i").val(now.getHours())
-  	$("#post_published_at_5i").val(now.getMinutes())
+  $("#size_now").click ->
+    $("#publishat").css("display","none")
+    now = new Date()
+    $("#post_published_at_3i").val(now.getDate())
+    $("#post_published_at_2i").val(now.getMonth()+1)
+    $("#post_published_at_1i").val(now.getFullYear())
+    $("#post_published_at_4i").val(now.getHours())
+    $("#post_published_at_5i").val(now.getMinutes())
 
 $ ->
-	if ( $.browser.mozilla == true )
-		if ( window.location.pathname.search(/posts/)!=-1 )
-				audiofiles = $("audio")
-				audiofiles.each ->
-					audiodiv = $(this).find(">:first-child")
-					fileloc = audiodiv.attr('src')
-					closetdiv = $(this).parent()
-					$(closetdiv).append($("<div class=\"span6\"><b><a href=\""+fileloc+"\"
-							>Download Audio <i class=\"icon-download-alt\"></i></a></b><br/></div>"))
+  if ( $.browser.mozilla == true )
+    if ( window.location.pathname.search(/posts/)!=-1 )
+        audiofiles = $("audio")
+        audiofiles.each ->
+          audiodiv = $(this).find(">:first-child")
+          fileloc = audiodiv.attr('src')
+          closetdiv = $(this).parent()
+          $(closetdiv).append($("<div class=\"span6\"><b><a href=\""+fileloc+"\"
+              >Download Audio <i class=\"icon-download-alt\"></i></a></b><br/></div>"))
 
 
 $ ->
