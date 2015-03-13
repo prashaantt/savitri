@@ -120,6 +120,11 @@ $(window).resize(function() {
 
 converter = new Markdown.Converter();
 
+marked.setOptions({
+  footnotes: true,
+  breaks: true
+})
+
 
 /*WebFontConfig = {
   google: {
