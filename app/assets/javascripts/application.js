@@ -119,6 +119,16 @@ $(window).resize(function() {
 });
 
 converter = new Markdown.Converter();
+var renderer = new marked.Renderer();
+
+renderer.image = function (href, title, text) {
+  var out = '<img class= "imgcenter" src="' + href + '" alt="' + text + '"';
+  if (title) {
+    out += ' title="' + title + '"';
+  }
+  out += this.options.xhtml ? '/>' : '>';
+  return out;
+}
 
 marked.setOptions({
   footnotes: true,

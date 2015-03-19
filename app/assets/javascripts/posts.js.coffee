@@ -130,7 +130,7 @@ $ ->
 
 $ ->
   $(".excerpt").each ->
-    $(this).html marked($(this).text())
+    $(this).html marked($(this).text(), { renderer: renderer })
 
 $ ->
   $('.snippet').last().css('border-bottom', 'none');
@@ -195,7 +195,7 @@ $ ->
 $ ->
   $(".new_post,.edit_post").submit ->
     text = $("#wmd-input").val()
-    md_text = marked($('#wmd-input').val())
+    md_text = marked($('#wmd-input').val(), { renderer: renderer })
     title = $("#post_title").val()
     text = text.replace(/\!\[enter image description here\]/, "![" + title + "]")
     md_text = md_text.replace(/alt="enter image description here"/, "alt=\"" + title + "\"")
@@ -218,7 +218,7 @@ $ ->
     if $("#wmd-input").is(":visible")
       $("#wmd-input").hide()
       $("#preview").show()
-      $('#preview').html marked($('#wmd-input').val())
+      $('#preview').html marked($('#wmd-input').val(), { renderer: renderer })
       $(".btn-toolbar button").each ->
         unless $(this).attr("disabled")
           $(this).addClass "disabled"

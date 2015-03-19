@@ -4,7 +4,7 @@
 $ ->
   $(".new_page,.edit_page").submit ->
     text = $("#wmd-input").val()
-    md_text = marked($('#wmd-input').val())
+    md_text = marked($('#wmd-input').val(), { renderer: renderer })
     name = $("#page_name").val()
     text = text.replace(/\!\[enter image description here\]/, "![" + name + "]")
     md_text = md_text.replace(/alt="enter image description here"/, "alt=\"" + name + "\"")
