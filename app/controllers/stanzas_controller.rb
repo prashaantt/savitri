@@ -2,7 +2,7 @@ class StanzasController < ApplicationController
   # GET /stanzas
   # GET /stanzas.json
   before_filter :authenticate_user!, :except => [:range]
-  
+
   def index
     @stanzas = Stanza.order(:no)
 
@@ -17,7 +17,7 @@ class StanzasController < ApplicationController
   def range
     #@lines = Line.where(:no=> params[:id])
     line_range = params[:id].split("-")
-    @stanzas = Stanza.where(:section_id=>line_range[0]..line_range[2],:runningno=>line_range[1]..line_range[3])
+    @stanzas = Stanza.where(:section_id=>line_range[0]..line_range[2],:runningno=>line_range[1]..line_range[3]).order('no')
     lines = Array.new
     @stanzas.each {|s| lines << s.cached_lines }
     respond_to do |format|
