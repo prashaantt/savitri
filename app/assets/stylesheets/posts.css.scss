@@ -508,3 +508,11 @@ blockquote p {
   padding-top: 15px;
   margin-top: 25px;
 }
+
+.footnote-ref{
+  display: block;
+  float: left;
+  height: 42px; /*same height as header*/
+  margin-top: -42px; /*same height as header*/
+  visibility: hidden;
+}

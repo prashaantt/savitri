@@ -130,6 +130,12 @@ renderer.image = function (href, title, text) {
   return out;
 }
 
+renderer.footnoteref = function (key, count) {
+  var out = '<span class="footnote-ref" id="fnref' + escape(key) + '"></span>' + '<sup>';
+  out += '<a href="#fn' + escape(key) + '">' + count + '</a></sup>';
+  return out;
+}
+
 marked.setOptions({
   footnotes: true,
   breaks: true
