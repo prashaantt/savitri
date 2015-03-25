@@ -1,37 +1,26 @@
+<div id="loading">
+  <%=image_tag("Mother\'s Symbol Large.png", id: 'loading-image', class: 'mother_symbol', alt: "Loading...", width: '5%')%>
+</div>
+<%= javascript_tag do %>
+  $('#loading-image').css('display', 'none');
+  window.blog_url = "<%=j @blog.slug %>";
+<% end %>
 <div class="row">
-  <div class='span9'>
-    <div class='archives-menu center-col'>
-      <h2 class='text-center'>Archives</h2>
-      <% unless @blogposts.length == 0 %>
-        <ol style="margin-left:0px;">
-          <% post_years = @blogposts.group_by { |t| t.published_at.beginning_of_year }.sort.reverse %>
-          <% post_years.each do |year, posts| %>
-            <li class="listi">
-              <label for="f<%= year.strftime("%m%Y") %>"><span class="ltag"><%=h year.strftime("%Y") %> (<%= posts.length %>)</span></label>
-              <input class="year textin" type="checkbox" id="f<%= year.strftime("%m%Y") %>">
-              <ol>
-                <% post_months = posts.group_by {|t| t.published_at.beginning_of_month } %>
-                <% post_months.each do |month, month_posts| %>
-                  <li class="subfolder">
-                    <label for="f<%= month_posts.first.published_at %>"><span class="ltag"><%=h month_posts.first.published_at.strftime("%B") %> (<%= month_posts.length %>)</span></label>
-                    <input class="textin" type="checkbox" id="f<%= month_posts.first.published_at %>">
-                    <ol>
-                      <% for post in month_posts %>
-                        <li class="file sidebar-links"><a href="#"><%=h link_to post.title, blog_post_path(@blog,post) %></a></li>
-                      <% end %>
-                    </ol>
-                  </li>
-                <% end %>
-              </ol>
-            </li>
-          <% end %>
-        </ol>
+  <div class="span9 center-col">
+    <h2 class='text-center'>Archives</h2>
+    <% unless @blogposts.length == 0 %>
+    <ol class='archives-menu' style='margin-left:0px;'>
+    <% @blogposts.each do |year, count| %>
+      <li class="listi">
+        <label for="f<%= year %>"  onclick="month_wise_post_count(<%=year%>);"><span class="ltag"><%=h year %> (<%= count %>)</span></label>
+        <input class="year textin" type="checkbox" id="f<%= year %>">
+        <ol id='<%=year%>'></ol>
+      </li>
       <% end %>
-    </div>
+    </ol>
+    <% end %>
   </div>
-
   <div class="span3 visible-desktop right-col">
-
     <!-- Begin Latest comments -->
     <div class="sidebar-menu">
       <div class="sidebar-heading">
@@ -40,11 +29,9 @@
       <div class="collapse recent_comments" id="recent_comments">
       </div>
     </div>
-
     <!-- Begin DatePicker -->
     <div class="visible-desktop datepicker">
       <div class="datepicker-title">Search by Date</div>
     </div>
-
   </div>
 </div>
