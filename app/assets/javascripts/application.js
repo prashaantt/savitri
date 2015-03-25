@@ -316,3 +316,64 @@ $(window).load(function() {
     };
   };
 });
+
+function month_wise_post_count(year) {
+
+  var callback = createSubTree;
+  if($('#'+year).text() == ""){
+    $('#loading-image').show();
+    $.ajax({
+        url: '/blogs/'+window.blog_url+'/archives/'+year,
+        dataType: "jsonp",
+        complete: function(data) {
+          callback(data,year);
+          $('#loading-image').hide();
+        }
+      });
+  }
+
+  function createSubTree(data,year){
+    var months = {
+    '1' : 'January',
+    '2' : 'February',
+    '3' : 'March',
+    '4' : 'April',
+    '5' : 'May',
+    '6' : 'Jun',
+    '7' : 'July',
+    '8' : 'August',
+    '9' : 'September',
+    '10' : 'October',
+    '11' : 'November',
+    '12' : 'December',
+    }
+    $.each($.parseJSON(data.responseText), function(key, value) {
+      var li = "<li class='subfolder'><label for='f"+year+key+"' onclick='months_posts("+year+","+key+");'><span class='ltag'>"+months[key]+" ("+value+")</span></label><input class='textin' type='checkbox' id='f"+year+key+"'><ol id='l"+year+key+"'></ol></li>";
+      var new_item = $(li).hide();
+      $('#'+year).append(new_item);
+      new_item.show('normal');
+    });
+  }
+}
+function months_posts(year,month){
+  var callback = createSubTreeLinks;
+  if($('#l'+year+month).text() == ""){
+    $('#loading-image').show();
+    $.ajax({
+        url: '/blogs/'+window.blog_url+'/archives/'+year+'/'+month,
+        dataType: "jsonp",
+        complete: function(data) {
+          callback(data,year,month);
+            $('#loading-image').hide();
+        }
+      });
+  }
+  function createSubTreeLinks(data,year,month){
+    $.each($.parseJSON(data.responseText), function(key, value) {
+      var li = "<li class='file sidebar-links'><a href='posts/"+value.url+"'>"+value.title+"</a></li>";
+      var new_item = $(li).hide();
+      $('#l'+year+month).append(new_item);
+      new_item.show('normal');
+    });
+  }
+}
