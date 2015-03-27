@@ -87,6 +87,8 @@ Savitri::Application.routes.draw do
   put 'blogs/:blog_id/posts/:post_id/undelete', to: 'posts#undelete', as: 'undelete'
   get 'blogs/:blog_id/feed', to: 'posts#index', format: false, defaults: { format: :atom }
   get 'blogs/:blog_id/archives' , to: 'posts#archives', as: :archives
+  get 'blogs/:blog_id/archives/:year' , to: 'posts#month_wise_post_count', as: :month_wise_post_count
+  get 'blogs/:blog_id/archives/:year/:month' , to: 'posts#months_posts', as: :months_posts
   get 'media/:medium_id/feed', to: 'audios#index', format: false, defaults: { format: :rss }
   get 'blogs/:blog_id/posts/:post_id/update_featured_status', to: 'posts#update_featured_status', as: :update_featured_status
   get "blogs/:blog_id/:year" => "posts#index", :constraints => { :year => /\d{4}/ }, as: :filter_year

@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 
   before_filter :store_location, :last_page
-  before_filter :authenticate_user!, :except => [:show, :index, :archives]
+  before_filter :authenticate_user!, :except => [:show, :index, :archives, :month_wise_post_count, :months_posts]
 
   # GET /posts
   # GET /posts.json
@@ -236,9 +236,27 @@ class PostsController < ApplicationController
 
   def archives
     @blog = Blog.cached_find_by_slug(params[:blog_id]) || not_found
-    @blogposts = Post.published.where(:blog_id=>@blog.id)
-    .select("id, title, url, published_at")
-    .order("posts.published_at DESC")
+    @blogposts = Hash[Post.published.where(:blog_id=>@blog.id).group("DATE_PART('year', published_at)").count.sort.reverse]
+    respond_to do |format|
+      format.html
+      format.json { render json: @blogposts }
+    end
+  end
+
+  def month_wise_post_count
+    @blog = Blog.cached_find_by_slug(params[:blog_id]) || not_found
+    @blogposts = Post.published.where(:blog_id=>@blog.id).where('extract(year  from published_at) = ?', params[:year]).group("DATE_PART('month', published_at)").count
+    respond_to do |format|
+      format.json { render json: @blogposts }
+    end
+  end
+
+  def months_posts
+    @blog = Blog.cached_find_by_slug(params[:blog_id]) || not_found
+    @blogposts = Post.published.where(:blog_id=>@blog.id).where('extract(year  from published_at) = ?', params[:year]).where('extract(month from published_at) = ?', params[:month]).select('id, title, url, published_at').order('published_at')
+    respond_to do |format|
+      format.json { render json: @blogposts, except: [:id, :published_at] }
+    end  
   end
 
   def update_featured_status
