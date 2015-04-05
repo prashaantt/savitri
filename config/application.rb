@@ -24,7 +24,7 @@ module Savitri
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
     # Activate observers that should always be running.
-    # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
+      config.active_record.observers = :line_sweeper
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
@@ -43,7 +43,7 @@ module Savitri
 
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
-    
+
     config.assets.initialize_on_precompile = false
     # Use SQL instead of Active Record's schema dumper when creating the database.
     # This is necessary if your schema can't be completely dumped by the schema dumper,

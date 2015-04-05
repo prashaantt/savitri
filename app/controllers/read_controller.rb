@@ -1,4 +1,5 @@
 class ReadController < ApplicationController
+  caches_action :show, :cache_path => Proc.new { |c| c.params }, :layout => false, :if => Proc.new { |c| !c.request.format.json? }
 
   def show
     #:book_id/:canto_id/:section_id
