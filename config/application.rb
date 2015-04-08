@@ -9,7 +9,11 @@ if defined?(Bundler)
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
-
+config = YAML.load(File.read(File.expand_path('../application.yml',__FILE__)))
+config.merge! config.fetch(Rails.env, {})
+config.each do |key, value|
+  ENV[key] = value.to_s unless value.kind_of? Hash
+end
 module Savitri
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

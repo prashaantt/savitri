@@ -62,8 +62,6 @@ gem 'rvm-capistrano'
 gem 'omniauth-twitter'
 gem 'twitter'
 gem "authbuttons-rails"
-gem "dotenv"
-gem "dotenv-deployment"
 gem 'sitemap_generator'
 gem 'clockwork'
 gem 'progress_bar'
