@@ -119,7 +119,8 @@ class Post < ActiveRecord::Base
   end
 
   def publish!
-    self.update_column(:draft, false)
+    self.draft = false
+    self.save!
   end
 
   def update_draft_status(params)
