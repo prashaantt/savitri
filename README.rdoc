@@ -1,8 +1,33 @@
-Savitri Web.
+# Savitri Developer Install Guide
 
-v1.0
--Read Savitri.
--User Registrations.
--User Roles
--Each User's blogging platform with a rich text editor.
--Admin interface for lines,cantos,stanzas,books.
+This guide is aimed at advanced Rails developers who have installed their own Rails apps before.
+
+## First Steps
+
+1. Install and configure PostgreSQL 9.1+.
+  1. Run `postgres -V` to see if you already have it.
+  1. Make sure that the server's messages language is English; this is [required](https://github.com/rails/rails/blob/3006c59bc7a50c925f6b744447f1d94533a64241/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb#L1140) by the ActiveRecord Postgres adapter.
+2. Install and configure Redis 2+.
+  1. Run `redis-server -v` to see if you already have it.
+3. Install ImageMagick
+4. Install rvm with Ruby 1.9.3-p484 and Bundler.
+5. Clone the project and bundle.
+6. create config/application.yml from config/application.ym.sample and add all keys.
+   To generate secret token you can use ```rake secret```
+
+## Before you start Rails
+
+1. `bundle install`
+2. `bundle exec rake sunspot:solr:start`
+3. `bundle exec rake db:create db:migrate`
+4. `bundle exec admin:create`
+5. `bundle exec db:seed`
+4. `bundle exec rails server`
+
+## Solr indexing and troubleshooting
+1. Run rake task `bundle exec rake sunspot:solr:index` to index your data in solr.
+   It will take time for indexing as database is huge.
+2. If any errors while indexing try to remove all index, stop solr and reindex again.
+   [SO answer](http://stackoverflow.com/questions/13340859/cant-reindex-sunspot-solr-error-rsolrerrorhttp-500-internal-server-er)
+
+You should now be able to connect to rails on [http://localhost:3000](http://localhost:3000) - try it out!
