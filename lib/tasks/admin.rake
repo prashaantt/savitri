@@ -7,7 +7,8 @@ task "admin:create" => :environment do
   password = ask("Password: ")
   password_confirmation = ask("Confirm password: ")
   u = User.new(name: name, username: username, email: email, password: password,
-  	           password_confirmation: password_confirmation, role_id: 1, 
-  	           confirmed_at: Time.zone.now)
+  	           password_confirmation: password_confirmation, role_id: 1)
+  u.skip_confirmation!
+  u.confirmed_at = Time.zone.now
   u.save
 end
