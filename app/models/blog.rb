@@ -107,6 +107,6 @@ class Blog < ActiveRecord::Base
   end
 
   def flush_cached_user
-    Rails.cache.delete([self, 'user'])    
+    Rails.cache.delete([self, 'user'])
   end
 end
