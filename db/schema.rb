@@ -159,9 +159,9 @@ ActiveRecord::Schema.define(:version => 20150211073401) do
     t.integer  "blog_id"
     t.string   "title",                           :null => false
     t.text     "content"
-    t.text     "md_content"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
+    t.text     "md_content"
     t.text     "excerpt"
     t.string   "url"
     t.datetime "published_at"
@@ -171,8 +171,8 @@ ActiveRecord::Schema.define(:version => 20150211073401) do
     t.string   "show_excerpt"
     t.integer  "author_id"
     t.boolean  "featured",     :default => false
-    t.integer  "number"
     t.datetime "deleted_at"
+    t.integer  "number"
   end
 
   add_index "posts", ["blog_id", "number"], :name => "index_posts_on_blog_id_and_number", :unique => true

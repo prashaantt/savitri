@@ -102,7 +102,7 @@ class PostsController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @post,except: [:md_content, :draft, :author_id,
                     :blog_id, :excerpt, :created_at, :updated_at, :show_excerpt,
-                    :featured, :photos] }
+                    :featured] }
     end
   end
 
