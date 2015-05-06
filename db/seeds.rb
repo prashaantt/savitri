@@ -74,10 +74,10 @@ begin
 
   info = YAML::load(IO.read("config/application.yml"))
   config   = Rails.configuration.database_configuration
-  cmd = "psql #{info['DATABASE_NAME']} < db/lines.pg"
+  cmd = "psql --u #{info['DATABASE_USERNAME']} -d #{info['DATABASE_NAME']} < db/lines.pg"
   result = system cmd
   raise RuntimeError, drop_and_exit if result.nil? || (result.equal? false)
-  cmd = "psql #{info['DATABASE_NAME']} < db/stanzas.pg"
+  cmd = "psql --u #{info['DATABASE_USERNAME']} -d #{info['DATABASE_NAME']} < db/stanzas.pg"
   result = system cmd
   raise RuntimeError, drop_and_exit if result.nil? || (result.equal? false)
 
