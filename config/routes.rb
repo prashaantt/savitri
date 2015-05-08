@@ -1,6 +1,9 @@
 # encoding: UTF-8
 # routes.
 Savitri::Application.routes.draw do
+  resources :commentaries
+
+
   get "compare(/:book_id/:canto_id/:section_id)", to: 'compare#index'#, constraints: { id: /[^\/]+/ }
   get 'compare/update_books', :as => 'update_books'
   get 'compare/update_cantos', :as => 'update_cantos'
@@ -96,7 +99,11 @@ Savitri::Application.routes.draw do
   get "blogs/:blog_id/:year/:month/:day" => "posts#index", :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/ }, as: :filter_day
   resources :books
 
-  resources :sections
+  resources :sections do
+    member do
+      get 'commentaries'
+    end
+  end
 
   resources :cantos
 

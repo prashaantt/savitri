@@ -1,0 +1,36 @@
+<%= form_for(@commentary) do |f| %>
+<div class="row">
+  <div class="span8 offset2 center-col">
+    <div class="sp8-content">
+      <% if @commentary.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@commentary.errors.count, "error") %> prohibited this commentary from being saved:</h2>
+
+          <ul>
+          <% @commentary.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="field">
+        <%= f.label :range, :class => 'pull-left' %>
+        <%= f.text_field :range, :class => 'text_field sp8-form', placeholder: 'Enter references as (1.39,1.43-1.46,2.1-2.4,2.10,2.23)', required: 'required' %>
+      </div>
+      <div class="field">
+        <%= f.label :aurobindo, 'Shri Aurobindo', :class => 'pull-left' %>
+        <%= f.text_area :aurobindo, :class => 'text_field sp8-form'  %>
+      </div>
+
+      <div class="field">
+        <%= f.label :mother, 'The Mother', :class => 'pull-left'  %>
+        <%= f.text_area :mother, :class => 'text_field sp8-form'  %>
+      </div>
+      <div class="control-grp" style="text-align: center">
+        <%= f.submit nil, :class => 'btn btn-success', :id=>"new-page" %>
+        <%= link_to "Cancel", commentaries_path, :class => 'btn'%>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

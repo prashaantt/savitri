@@ -377,3 +377,54 @@ function months_posts(year,month){
     });
   }
 }
+
+$(document).ready(function(){
+  if ( window.location.pathname == '/read/1/1/1' && (window.location.search == '' || window.location.search == '?edition=1950')) {
+    $.ajax({
+      url: '/sections/'+$('.reference')[0].id.match(/\d+/)[0]+'/commentaries.json',
+      dataType: 'jsonp',
+      complete: function(data){
+        $.each($.parseJSON(data.responseText), function(key, value) {
+          if(value.data){
+          $.each(value.data, function(k, v) {
+            if(k == 'mother' && v!= ''){
+              v = marked(v, { renderer: renderer })
+              str = ''
+              $(v).removeAttr('id').each(function(i, j) {
+                if (j.outerHTML !== undefined) str += j.outerHTML
+              })
+              $('<span class="pull-right" id="m'+ value.data.start_stanza +'">\
+                <i class="icon-circle" data-html=true data-placement="left"\
+                data-start='+ value.data.start_stanza +' data-end='+
+                value.data.end_stanza +' data-original-title="The Mother"\
+                data-content="'+ str +'"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span> ')
+              .insertAfter('#p'+value.data.start_stanza +' .reference a')
+            }else if(k == 'aurobindo' && v!= ''){
+              v = marked(v, { renderer: renderer })
+              str = ''
+              $(v).removeAttr('id').each(function(i, j) {
+                if (j.outerHTML !== undefined) str += j.outerHTML
+              })
+              $('<span class="pull-right" id="m'+ value.data.start_stanza +'"><i class="icon-star" data-html=true data-placement="left" data-start='+ value.data.start_stanza +' data-end='+ value.data.end_stanza +' data-original-title="Sri Aurobindo" data-content="' + str + '"</i>&nbsp;&nbsp;&nbsp;&nbsp;<span> ').insertAfter('#p'+value.data.start_stanza +' .reference a')
+            }
+          });
+          }
+          $('.icon-circle').css('color','white');
+        });
+      }
+    })
+  }
+})
+
+$(document).on('mouseover',".icon-circle, .icon-star",  function(){
+  for (var i = $(this).data('start'); i <= $(this).data('end'); i++) {
+    $('#p'+i).addClass("hover_me");
+  };
+  $(this).popover('show',$(this).id)
+})
+$(document).on('mouseout',".icon-circle, .icon-star",  function(){
+  for (var i = $(this).data('start'); i <= $(this).data('end'); i++) {
+    $('#p'+i).removeClass("hover_me");
+  };
+  $(this).popover('hide',$(this).id)
+})

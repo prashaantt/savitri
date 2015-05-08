@@ -12,7 +12,10 @@
  *= require_tree .
  *= require_fonts
  */
-
+.hover_me{
+  background-color: white;
+  display: block;
+}
  .h6 {
   font-size: 12px !important;
  }

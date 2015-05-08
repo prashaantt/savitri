@@ -1,0 +1,34 @@
+<h1>Listing commentaries</h1>
+<nav id="paginator" class="span9">
+  <ul class="pager">
+    <li class="previous">
+      <%= link_to_previous_page @commentaries, "‹ Previous commentaries" %>
+    </li>
+    <li class="next">
+      <%= link_to_next_page @commentaries, "Next commentaries ›" %>
+    </li>
+  </ul>
+</nav>
+<table>
+  <tr>
+    <th>Stanza</th>
+    <th>Shri Aurobindo</th>
+    <th>The Mother</th>
+    <th>Action</th>
+  </tr>
+
+<% @commentaries.each do |commentary| %>
+  <tr>
+    <td><%=commentary.range%></td>
+    <td class="commentary"><%=commentary.data['aurobindo']%></td>
+    <td class="commentary"><%=commentary.data['mother']%></td>
+    <td><%= link_to 'Show', commentary %>
+    <%= link_to 'Edit', edit_commentary_path(commentary) %>
+    <%= link_to 'Destroy', commentary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Commentary', new_commentary_path %>

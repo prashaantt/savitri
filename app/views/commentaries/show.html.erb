@@ -1,0 +1,13 @@
+<table>
+  <tr>
+    <th>Range</th>
+    <th>Shri Aurobindo</th>
+    <th>The Mother</th>
+    <th style='display:none'></th>
+  </tr>
+<td class="span3 commentary"><%= @commentary.range %></td>
+<td class="span3 commentary"><%= @commentary.data['aurobindo'] %></td>
+<td class="span3 commentary"><%= @commentary.data['mother'] %></td>
+</table>
+<%= link_to 'Edit', edit_commentary_path(@commentary) %> |
+<%= link_to 'Back', commentaries_path %>

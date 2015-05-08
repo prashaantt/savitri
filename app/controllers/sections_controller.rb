@@ -1,8 +1,8 @@
 class SectionsController < ApplicationController
 	# GET /sections
   # GET /sections.json
-  load_and_authorize_resource
-  
+  load_and_authorize_resource :except => [:commentaries]
+
   def index
     @sections = Section.order(:no)
 
@@ -82,6 +82,15 @@ class SectionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to sections_url }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /sections/1/commentaries.json
+  def commentaries
+    @section = Section.find(params[:id]).commentaries || not_found
+
+    respond_to do |format|
+      format.json { render json: @section }
     end
   end
 end
