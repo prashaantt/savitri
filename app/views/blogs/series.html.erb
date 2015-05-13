@@ -1,0 +1,33 @@
+<% base_url = request.protocol + request.host_with_port %>
+<% tag_base_url =  base_url + '/blogs/' + @blog.slug + "/posts/tags/" %>
+<% feed_url = base_url + blog_path(@blog) + "/feed" %>
+<div class="row">
+  <div class="span12">
+    <div class="page-header title">
+      <h1><%= link_to @blog.cached_title, blog_posts_path(@blog) %></h1>
+      <div style="margin-top: 20px">
+        <%= link_to 'Archives', archives_path(@blog), {class: 'muted'} %>
+        <span class="muted">&bull;</span>
+        <%= link_to "Feed", feed_url, {class: 'muted'} %>
+        <span id="follow_blog"><%= render :partial => "shared/follow_blog", :locals => {:blog => @blog} %></span>
+      </div>
+    </div>
+  </div>
+</div>
+<%#= render 'shared/header' , :locals => {:blog => @blog}%>
+<div id="content" class="row">
+  <ul class="span6" style="list-style-type: none">
+    <%@left_column.each do |tag|%>
+      <li>
+        <%= link_to "#{tag[0].length <= 50 ? tag[0] : tag[0].first(50) + '...'} (#{tag[1]})", tag_base_url + '@' + tag[0].to_url, { :title => tag[0] } %>
+      </li>
+    <%end%>
+  </ul>
+  <ul class="span6" style="list-style-type: none">
+    <%@right_column.each do |tag|%>
+      <li>
+        <%= link_to "#{tag[0].length <= 50 ? tag[0] : tag[0].first(50) + '...'} (#{tag[1]})", tag_base_url + '@' + tag[0].to_url, { :title => tag[0] } %>
+      </li>
+    <%end%>
+  </ul>
+</div>

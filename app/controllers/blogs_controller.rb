@@ -3,7 +3,7 @@
 class BlogsController < ApplicationController
   before_filter :store_location, except: [:recentcomments, :recentposts, :get_oldest_post_date]
   before_filter :authenticate_user!, except:
-                [:index, :show, :recentcomments, :recentposts, :get_oldest_post_date]
+                [:index, :show, :recentcomments, :recentposts, :get_oldest_post_date, :series]
 
   def index
     @user_blogs = current_user.present? ? current_user.cached_blogs : Blog.cached_all
@@ -161,5 +161,12 @@ class BlogsController < ApplicationController
     @blog = Blog.cached_find_by_slug(params[:blog_id]) || not_found
     @post = Post.where(blog_id:@blog.id).where(url:params[:post_id]).first || not_found
     @user = @post.cached_author
+  end
+
+  def series
+    @blog = Blog.find_by_slug(params[:id])
+    tags = @blog.posts.where(draft: false).where("series_title <> '' ").select('series_title').group('series_title').count.sort_by {|s| s[1]}.reverse
+    @left_column = tags.slice(0, (tags.count/2.0).ceil)
+    @right_column = tags.slice((tags.count/2.0).ceil, tags.count.ceil)
   end
 end

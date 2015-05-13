@@ -66,6 +66,9 @@ Savitri::Application.routes.draw do
   match '/auth/failure', to: 'authentications#index'
 
   resources :blogs do
+    member do
+      get 'series'
+    end
     resources :posts, name_prefix: 'blog_'
   end
 

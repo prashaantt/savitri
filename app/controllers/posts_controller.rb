@@ -256,7 +256,7 @@ class PostsController < ApplicationController
     @blogposts = Post.published.where(:blog_id=>@blog.id).where('extract(year  from published_at) = ?', params[:year]).where('extract(month from published_at) = ?', params[:month]).select('id, title, url, published_at').order('published_at')
     respond_to do |format|
       format.json { render json: @blogposts, except: [:id, :published_at] }
-    end  
+    end
   end
 
   def update_featured_status
