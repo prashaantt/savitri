@@ -302,6 +302,29 @@ class Post < ActiveRecord::Base
     end
   end
 
+  # get next and previous posts depending on scheduled or published posts
+  def next_url
+    self.class.where(blog_id: blog_id, draft: draft)
+      .where("#{sort_by_published_at_or_number} > ?",
+      send(sort_by_published_at_or_number))
+      .order("#{sort_by_published_at_or_number}")
+      .select('url').first.try(:url)
+  end
+
+  def previous_url
+    self.class.where(blog_id: blog_id, draft: draft)
+      .where("#{sort_by_published_at_or_number} < ?",
+      send(sort_by_published_at_or_number))
+      .order("#{sort_by_published_at_or_number}")
+      .select('url').last.try(:url)
+  end
+
+  # if user is viewing individual published post then sort by number
+  # else sort by published_at
+  def sort_by_published_at_or_number
+    self.draft? ? 'published_at' : 'number'
+  end
+
   private
 
   def trim

@@ -32,7 +32,20 @@
     </div>
   </div>
 </div>
-
+<nav class="span9" style="margin-left:0px">
+  <ul class="pager">
+    <% if @previous %>
+    <li class="previous">
+      <%= link_to "‹ Previous Post",  blog_post_path(@blog,@previous)  %>
+    </li>
+    <% end %>
+    <% if @next %>
+    <li class="next">
+      <%= link_to "Next Post ›",  blog_post_path(@blog,@next) %>
+    </li>
+    <% end %>
+  </ul>
+</nav>
 <!-- Main Blog Content -->
 <div class="row">
   <div class="span9 center-col" role="content">
@@ -146,4 +159,18 @@
     </div>
   </div>
    <!--  SideBar End -->
+  <nav class="span9">
+    <ul class="pager">
+      <% if @previous %>
+      <li class="previous">
+        <%= link_to "‹ Previous Post",  blog_post_path(@blog,@previous)  %>
+      </li>
+      <% end %>
+      <%if @next%>
+      <li class="next">
+        <%= link_to "Next Post ›",  blog_post_path(@blog,@next) %>
+      </li>
+      <% end %>
+    </ul>
+  </nav>
 </div>

@@ -96,13 +96,16 @@ class PostsController < ApplicationController
     if @post.nil?
       @post = Post.with_deleted.find_by_blog_id_and_url(blog_id.id,params[:id]) || not_found
     end
+    @next = @post.next_url
+    @previous = @post.previous_url
     authorize! :new, @post if @post.draft? || @post.deleted?
+
     @related_posts = Sunspot.more_like_this(@post).results.first(5) rescue nil
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post,except: [:md_content, :draft, :author_id,
                     :blog_id, :excerpt, :created_at, :updated_at, :show_excerpt,
-                    :featured] }
+                    :featured], methods: [:next_url, :previous_url] }
     end
   end
 
