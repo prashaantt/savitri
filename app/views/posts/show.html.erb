@@ -26,7 +26,7 @@
         <span class="muted">&bull;</span>
         <%= link_to "Feed", feed_url, {:class => "muted-anchor"} %>
         <span class="muted">&bull;</span>
-        <a href="#" value="Subscribe" class="muted-anchor" onclick="(function(){var z=document.createElement('script');z.src='https://www.subtome.com/load.js';document.body.appendChild(z);})()">Subscribe</a>
+        <%= link_to "Series", series_blog_path(@blog), {class: 'muted'} %>
         <span id="follow_blog"><%= render :partial => "shared/follow_blog", :locals => {:blog => @blog} %></span>
       </div>
     </div>
