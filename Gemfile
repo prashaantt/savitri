@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails'#, '3.2.13'
 
 gem 'pg'
 gem 'sqlite3'
@@ -20,19 +20,18 @@ gem 'carrierwave'
 gem 'fog'
 gem 'mini_magick'
 gem 'acts_as_follower'
-gem 'sidekiq', '2.6.0'
+gem 'sidekiq'#, '2.6.0'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+
+  gem 'sass-rails'#,   '~> 3.2.3'
+  gem 'coffee-rails'#, '~> 3.2.1'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', :platforms => :ruby
+  gem 'therubyracer'#, :platforms => :ruby
   gem 'twitter-bootstrap-rails', '2.2.6'
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-fileupload-rails'
   gem 'less-rails'
-end
 
 gem 'jquery-rails', '2.1.3'
 
@@ -46,6 +45,12 @@ gem 'redis-store'
 gem 'redis-rails'
 gem 'best_in_place'
 
+# add these gems to help with the transition:
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+
 group :development do
   gem 'rack-mini-profiler'
 	gem 'better_errors'
@@ -55,9 +60,9 @@ group :development do
 end
 
 #gem 'debugger'
-gem 'slim', '>= 1.1.0'
+gem 'slim'#, '>= 1.1.0'
 # if you require 'sinatra' you get the DSL extended to Object
-gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'sinatra'#, '>= 1.3.0', :require => nil
 gem 'rvm-capistrano', require: false
 gem 'omniauth-twitter'
 gem 'twitter'
