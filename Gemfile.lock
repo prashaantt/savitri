@@ -22,6 +22,10 @@ GEM
       activesupport (= 3.2.13)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
+    activerecord-postgres-hstore (0.7.7)
+      activerecord (>= 3.1)
+      pg-hstore (>= 1.1.5)
+      rake
     activeresource (3.2.13)
       activemodel (= 3.2.13)
       activesupport (= 3.2.13)
@@ -161,6 +165,7 @@ GEM
     paranoia (1.3.4)
       activerecord (~> 3.1)
     pg (0.15.1)
+    pg-hstore (1.2.0)
     polyglot (0.3.3)
     pr_geohash (1.0.0)
     progress_bar (1.0.3)
@@ -300,6 +305,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-postgres-hstore
   acts-as-taggable-on
   acts_as_follower
   authbuttons-rails

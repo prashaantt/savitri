@@ -45,3 +45,12 @@ $ ->
     , 3000
   $('.go-top').click ->
     $('html, body').animate { scrollTop: 0 }, 'slow'
+
+# $(document).ready ->
+#   $.ajax
+#     url: '/sections/' + $('.sectionlbl')[0].nextSibling.nodeValue.trim() + '/commentaries.json'
+#     dataType: 'jsonp'
+#     complete: (data) ->
+#       alert data
+#       return
+#   return
