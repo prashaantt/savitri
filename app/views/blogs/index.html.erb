@@ -64,6 +64,13 @@
           <%= link_to blog.title, deleted_posts_path(blog), :class => "btn btn-info" %>
           <%end%>
         </section>
+        <hr>
+        <section>
+          <h2>Commentaries</h2>
+          <p class="muted"><em>Manage commentaries</em></p>
+          <%= link_to 'Commentaries', commentaries_path, :class => "btn btn-info", title: 'Get list of commentaries' %>
+          <%= link_to 'New Commentary', new_commentary_path, :class => "btn btn-info", title: 'Create new Commentary' %>
+        </section>
       <% elsif current_user.cached_blogs_count < 1 %>
         <p class="muted"><em>You can host 1 blog.</em></p>
         <%= link_to 'New blog', new_blog_path, :class => "btn btn-info"  %>
