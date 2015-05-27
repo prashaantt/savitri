@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
+ruby '2.2.2'
 
-gem 'rails', '3.2.13'
+gem 'rails', '4.2.1'
 
 gem 'pg'
 gem 'sqlite3'
@@ -23,16 +24,16 @@ gem 'acts_as_follower'
 gem 'sidekiq', '2.6.0'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+#group :assets do
+  gem 'sass-rails'#,   '~> 3.2.3'
+  gem 'coffee-rails'#, '~> 3.2.1'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
   gem 'twitter-bootstrap-rails', '2.2.6'
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-fileupload-rails'
   gem 'less-rails'
-end
+#end
 
 gem 'jquery-rails', '2.1.3'
 
@@ -66,4 +67,8 @@ gem 'sitemap_generator'
 gem 'clockwork'
 gem 'progress_bar'
 gem "paranoia", "~> 1.0"
-gem 'activerecord-postgres-hstore'
+#gem 'activerecord-postgres-hstore'
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
