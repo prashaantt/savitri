@@ -348,6 +348,7 @@ function month_wise_post_count(year) {
     '12' : 'December',
     }
     $.each($.parseJSON(data.responseText), function(key, value) {
+      key = Math.round( key );
       var li = "<li class='subfolder'><label for='f"+year+key+"' onclick='months_posts("+year+","+key+");'><span class='ltag'>"+months[key]+" ("+value+")</span></label><input class='textin' type='checkbox' id='f"+year+key+"'><ol id='l"+year+key+"'></ol></li>";
       var new_item = $(li).hide();
       $('#'+year).append(new_item);

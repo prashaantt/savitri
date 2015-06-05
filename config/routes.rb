@@ -1,6 +1,7 @@
 # encoding: UTF-8
 # routes.
-Savitri::Application.routes.draw do
+require 'sidekiq/web'
+Rails.application.routes.draw do
   resources :commentaries
 
 
@@ -11,11 +12,11 @@ Savitri::Application.routes.draw do
 
   resources :authentications
 
-  match '/ping' => 'health#ping'
+  get '/ping' => 'health#ping'
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
     resources :rewrites
-    match 'dashboard/' => 'dashboard#index'
+    get 'dashboard/' => 'dashboard#index'
     resources :tasks
   end
 
@@ -43,20 +44,20 @@ Savitri::Application.routes.draw do
 
   resources :signed_urls, only: 'index'
 
-  match '/store/notebooks' => 'notebooks#create'
-  match '/store/notesu' => 'notebooks#update'
-  match '/store/notesd' => 'notebooks#destroy'
-  match '/store/notess' => 'notebooks#search'
+  post '/store/notebooks' => 'notebooks#create'
+  put '/store/notesu' => 'notebooks#update'
+  delete '/store/notesd' => 'notebooks#destroy'
+  get '/store/notess' => 'notebooks#search'
 
-  match 'read/' => 'read#index'
-  match 'read/:book_id/:canto_id/:section_id' => 'read#show'
-  match 'read/:book_id/:canto_id' => 'read#bookcantoshow'
-  match 'read/:book_id' => 'read#specific', constraints: { book_id: /[^\/]+/ }
+  get 'read/' => 'read#index'
+  get 'read/:book_id/:canto_id/:section_id' => 'read#show'
+  get 'read/:book_id/:canto_id' => 'read#bookcantoshow'
+  get 'read/:book_id' => 'read#specific', constraints: { book_id: /[^\/]+/ }
 
   resources :follows, only: [:create, :destroy]
-  match 'follows/blog_id/:blog_id', to: 'follows#follow_blog', as: :follow_blog, via: :post
-  match 'follows/blog_id/:blog_id', to: 'follows#unfollow_blog', as: :unfollow_blog, via: :delete
-  match 'unsubscribe_blog/:blog_id/:post_id', to: 'blogs#unsubscribe_blog', as: :unsubscribe_blog, via: :get
+  post 'follows/blog_id/:blog_id', to: 'follows#follow_blog', as: :follow_blog
+  delete 'follows/blog_id/:blog_id', to: 'follows#unfollow_blog', as: :unfollow_blog
+  get 'unsubscribe_blog/:blog_id/:post_id', to: 'blogs#unsubscribe_blog', as: :unsubscribe_blog
   get '/users/:id' => 'users#show', :constraints  => { :id => /[0-z\.]+/ }
   get '/users/:id/feed', to: 'users#show', :constraints  => { :id => /[0-z\.]+/ }, defaults: { format: :atom }
   resources :users do
@@ -64,9 +65,9 @@ Savitri::Application.routes.draw do
   end
 
   get 'savitri/index'
-  match '/savitri/show' => 'savitri#show'
-  match '/auth/:provider/callback', to: 'authentications#create'
-  match '/auth/failure', to: 'authentications#index'
+  get '/savitri/show' => 'savitri#show'
+  get '/auth/:provider/callback', to: 'authentications#create'
+  get '/auth/failure', to: 'authentications#index'
 
   resources :blogs do
     member do
@@ -86,7 +87,7 @@ Savitri::Application.routes.draw do
   end
 
   get 'blogs/:blog_id/tags', to: 'posts#tags'
-  get 'blogs/:blog_id/posts/tags/:tag/feed', to: 'posts#index', as: :tag, format: false, defaults: { format: :atom }
+  get 'blogs/:blog_id/posts/tags/:tag/feed', to: 'posts#index', as: :tag_feed, format: false, defaults: { format: :atom }
   get 'blogs/:blog_id/posts/tags/:tag' , to: 'posts#index' , as: :tag
   get 'blogs/:blog_id/scheduled-posts/', to: 'posts#scheduled', as: 'scheduled_posts'
   get 'blogs/:blog_id/deleted-posts/', to: 'posts#deleted', as: 'deleted_posts'
@@ -114,16 +115,16 @@ Savitri::Application.routes.draw do
 
   resources :lines
 
-  match '(errors)/:status', to: 'errors#show', constraints: { status: /\d{3}/ }
+  get '(errors)/:status', to: 'errors#show', constraints: { status: /\d{3}/ }
 
   resources :pages, except: :show
 
-  get ':id', to: 'pages#show', as: :page
-  put ':id', to: 'pages#update', as: :page
-  delete ':id', to: 'pages#destroy', as: :page
+  get ':id', to: 'pages#show', as: :page_show
+  put ':id', to: 'pages#update', as: :page_update
+  delete ':id', to: 'pages#destroy', as: :page_delete
 
   root to: 'savitri#index', as: 'savitri'
 
-  get '*paths' => 'pages#show', as: :page
-  put '*paths' => 'pages#update', as: :page
+  get '*paths' => 'pages#show', as: :page_show1
+  put '*paths' => 'pages#update', as: :page_update1
 end

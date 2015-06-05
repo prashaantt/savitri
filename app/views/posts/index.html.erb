@@ -45,7 +45,7 @@
     <div class="page-header title">
       <h1><%= link_to @blog.cached_title, blog_posts_path %></h1>
       <div style="margin-top: 20px">
-        <%= link_to 'Archives', archives_path, {class: 'muted'} %>
+        <%= link_to 'Archives', archives_path(@blog), {class: 'muted'} %>
         <span class="muted">&bull;</span>
         <%= link_to "Series", series_blog_path(@blog), {class: 'muted'} %>
         <span class="muted">&bull;</span>

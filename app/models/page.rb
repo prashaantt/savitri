@@ -47,7 +47,7 @@ class Page < ActiveRecord::Base
   end
 
   def self.cached_menu
-    Rails.cache.fetch(['Pages', 'menupages']) { order(:priority).find_all_by_category('Menu') }
+    Rails.cache.fetch(['Pages', 'menupages']) { order(:priority).where(category: 'Menu') }
   end
 
   def cached_name

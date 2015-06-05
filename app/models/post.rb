@@ -1,5 +1,6 @@
 # encoding: UTF-8
 # Comment model.
+require 'sidekiq/api'
 class Post < ActiveRecord::Base
   attr_accessible(
                  :content, :title, :tag_list, :blog_id, :md_content,
@@ -11,7 +12,8 @@ class Post < ActiveRecord::Base
   acts_as_url :title, scope: :blog_id
   acts_as_paranoid
   belongs_to :blog
-  has_many :comments, dependent: :destroy, order: 'comments.created_at'
+  #has_many :comments, dependent: :destroy, order: 'comments.created_at'
+  has_many :comments, -> { order('comments.created_at') }, dependent: :destroy
   has_many :uploads
   has_many :tags
   belongs_to :user, foreign_key: :author_id

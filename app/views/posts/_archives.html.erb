@@ -11,6 +11,7 @@
     <% unless @blogposts.length == 0 %>
     <ol class='archives-menu' style='margin-left:0px;'>
     <% @blogposts.each do |year, count| %>
+    <%year = year.to_i%>
       <li class="listi">
         <label for="f<%= year %>"  onclick="month_wise_post_count(<%=year%>);"><span class="ltag"><%=h year %> (<%= count %>)</span></label>
         <input class="year textin" type="checkbox" id="f<%= year %>">

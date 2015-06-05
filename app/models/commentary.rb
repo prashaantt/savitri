@@ -1,8 +1,7 @@
 # encoding: UTF-8
 # Commentary model is kind of annations on read.
 class Commentary < ActiveRecord::Base
-  #attr_accessor :range
-  serialize :data, ActiveRecord::Coders::Hstore
+  store_accessor :data
   attr_accessible :section_id, :range
   belongs_to :section
   validate :range_validations, :data_validations
@@ -39,8 +38,9 @@ class Commentary < ActiveRecord::Base
     if range[0] == range[2]
       self.section_id = range[0]
     end
-    data['start_stanza'] = range[1]
-    data['end_stanza'] = range[3]
+    self.data = {}
+    self.data['start_stanza'] = range[1]
+    self.data['end_stanza'] = range[3]
   end
   %w(mother aurobindo start_stanza end_stanza).each do |key|
     attr_accessible key

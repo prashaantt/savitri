@@ -1,6 +1,10 @@
 @import "twitter/bootstrap/bootstrap";
 @import "twitter/bootstrap/responsive";
 
+// Set the correct sprite paths
+@iconSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings.png");
+@iconWhiteSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings-white.png");
+
 // Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
 // Note: If you use asset_path() here, your compiled bootstrap_and_overrides.css will not
 //       have the proper paths. So for now we use the absolute path.
@@ -12,203 +16,16 @@
 // Font Awesome
 @import "fontawesome";
 
-//custom
+// Glyphicons
+//@import "twitter/bootstrap/sprites.less";
 
-.navbar-search .search-query,
-input, button, select {
-  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #f5efdc;
-  color: #3f2a18;
-}
-
-body{
-  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #3f2a18;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-h2 {
-  line-height: 1.2em;
-}
-
-h3 {
-  line-height: 1.15em;
-}
-
-p,
-textarea {
-  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-align: justify;
-  line-height: 1.5em;  
-}
-
-.main-content ul,
-.main-content ol {
-  font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 100%;
-  line-height: 1.5em;
-  word-break: hyphenate;
-  text-decoration: none;
-  -moz-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -moz-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -webkit-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  -ms-font-feature-settings : 'liga= 1,onum= 1','calt=0';
-  -o-font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-  font-feature-settings : "liga" 1,"onum" 1,"calt" 0;
-}
-
-p#display {
-  font-size: 100%;
-}
-
-ul.nav li.dropdown:hover > ul.dropdown-menu {
-    display: block;
-}
-
-a {
-  color: inherit;
-}
-
-a:hover {
-  color: "#08C";
-}
-
-small {
-  font-size: 100%;
-  -moz-font-feature-settings : 'smcp= 1','calt=0';
-  -moz-font-feature-settings : "smcp" 1,"calt" 0;
-  -webkit-font-feature-settings : "smcp" 1,"calt" 0;
-  -ms-font-feature-settings : 'smcp= 1','calt=0';
-  -o-font-feature-settings : "smcp" 1,"calt" 0;
-  font-feature-settings : "smcp" 1,"calt" 0;
-}
-
-
-/*.pagination ul > li > span {
-  float: left;
-  padding: 4px 12px;
-  line-height: 20px;
-  text-decoration: none;
-  background-color: #ffffff;
-  border: 1px solid #dddddd;
-  border-left-width: 0;
-  font-size: 16px !important;
-  border-radius: 0px !important;
-}*/
-
-.btn {
-  border-radius: 0;
-  background:#fff;  
-}
-
-.btn-primary {
-  color: #ffffff;
-  background: #006dcc !important;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  border-color: #0044cc #0044cc #002a80;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-
-}
-
-.btn-success {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #5bb75b;
-  border-color: #51a351 #51a351 #387038;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-}
-
-.btn-danger {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #da4f49;
-  border-color: #bd362f #bd362f #802420;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-}
-
-.btn-warning {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #faa732;
-  border-color: #f89406 #f89406 #ad6704;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-}
-
-.btn-info {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #49afcd;
-  border-color: #2f96b4 #2f96b4 #1f6377;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-}
-
-.btn-inverse {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #363636;
-  border-color: #222222 #222222 #000000;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-}
-
-.pagination ul > li:last-child > a{
-  border-radius:0;
-}
-
-.pagination ul > li:first-child > a, .pagination ul > li:first-child > span {
-  border-left-width: 1px;
-  border-radius:0px;
-}
-
-blockquote {
-  padding: 0 0 0 30px;
-  margin: 0 0 15px 0px;
-  border-left: 0px;
-
-  p {
-    font-size: 14px;
-  }
-}
-
-/*blockquote p:before {
-  content: '\201c';
-  color: #999;
-  font-size: 52px;
-  margin-left: -32px;
-  padding-left: -14px;
-  position: absolute;
-  margin-top: -13px;
-}
-*/
-
-blockquote p {
-  // margin-bottom: 15px !important;
-  font-weight: 300;
-  line-height: 1.45;
-}
-
-.label,
-.badge {
-  font-weight: normal;
-  background-color: #9B928B;
-}
-
-.page-header {
-  border-bottom: 1px solid #ddd;
-}
-
-.pager li > a {
-  //background-color: #e0e0e0;
-  background-color: #DDD7CC;
-}
-
-.muted {
-  color: #9B928B;
-}
+// Your custom LESS stylesheets goes here
+//
+// Since bootstrap was imported above you have access to its mixins which
+// you may use and inherit here
+//
+// If you'd like to override bootstrap's own variables, you can do so here as well
+// See http://twitter.github.com/bootstrap/customize.html#variables for their names and documentation
+//
+// Example:
+// @linkColor: #ff0000;

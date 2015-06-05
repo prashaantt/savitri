@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'csv'
-require 'YAML'
+#require 'YAML'
 
 def drop_and_exit
   'OOps something went wrong. You may need to drop databse and try again'

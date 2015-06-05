@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    # Define abilities for the passed in user here. 
+    # Define abilities for the passed in user here.
     # ____ Admin ____
     # Overlord + below
     # ____ Scholar ____
@@ -22,7 +22,7 @@ class Ability
           if Blog.any?{|b| b.post_access.include? user.id}
             can [:read,:create,:destroy], Authentication
           end
-        if user.role == "Blogger"    
+        if user.role == "Blogger"
           can :manage, Page do |n|
             Blog.any?{|b| b.post_access.include? user.id}
           end
@@ -62,7 +62,7 @@ class Ability
                b.user_id == user.id
            end
           #  can :destroy, Blog do |b|
-          #       b.user_id == user.id 
+          #       b.user_id == user.id
           #  end
           # # Posts
           #  can :read , Post
@@ -70,10 +70,10 @@ class Ability
           #   p.blog.user_id == user.id
           #  end
           #  can :update, Post do |p|
-          #      p.blog.user_id == user.id 
+          #      p.blog.user_id == user.id
           #  end
           #  can :destroy, Post do |p|
-          #       p.blog.user_id == user.id 
+          #       p.blog.user_id == user.id
           #  end
            # Comments Capabilities of a Blogger
            can :create, Comment
@@ -93,9 +93,7 @@ class Ability
            can :destroy, Notebook do |n|
             n.user_id == user.id
            end
-          can :create, Post do |n|
-            true
-          end
+          can :create, Post
           can :update, Post do |n|
             n.author_id == user.id
           end
@@ -145,17 +143,17 @@ class Ability
 #     can :destroy, Blog do |b|
 #       b.user_id == @user.id
 #     end
-    
+
 #     can :create, Post do |p|
 #       p.blog.user_id = @user.id
 #     end
 #     can :update, Post do |p|
-#       p.blog.user_id == @user.id 
+#       p.blog.user_id == @user.id
 #     end
 #     can :destroy, Post do |p|
-#       p.blog.user_id == @user.id 
+#       p.blog.user_id == @user.id
 #     end
-    
+
 #     # Comments Capabilities of a Blogger
 #     can :create, Comment
 #     can :update, Comment do |c|
@@ -164,6 +162,6 @@ class Ability
 #     can :destroy, Comment do |c|
 #       c.user_id == @user.id
 #     end
-    
+
 #   end
  end

@@ -10,7 +10,7 @@ gem 'acts-as-taggable-on'
 gem 'devise'
 gem 'devise_invitable'
 gem 'simple_form'
-gem 'cancan'
+gem 'cancancan'
 gem 'kaminari'
 gem 'rails_autolink'
 gem 'sanitize'
@@ -21,19 +21,17 @@ gem 'carrierwave'
 gem 'fog'
 gem 'mini_magick'
 gem 'acts_as_follower'
-gem 'sidekiq', '2.6.0'
+gem 'sidekiq'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
-#group :assets do
   gem 'sass-rails'#,   '~> 3.2.3'
   gem 'coffee-rails'#, '~> 3.2.1'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
+  #gem 'less-rails', '2.6.0'
   gem 'twitter-bootstrap-rails', '2.2.6'
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-fileupload-rails'
-  gem 'less-rails'
-#end
 
 gem 'jquery-rails', '2.1.3'
 
@@ -66,7 +64,7 @@ gem "authbuttons-rails"
 gem 'sitemap_generator'
 gem 'clockwork'
 gem 'progress_bar'
-gem "paranoia", "~> 1.0"
+gem "paranoia"
 #gem 'activerecord-postgres-hstore'
 gem 'protected_attributes'
 gem 'rails-observers'

@@ -9,277 +9,293 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150211073401) do
+ActiveRecord::Schema.define(version: 20150602134413) do
 
-  create_table "audios", :force => true do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "hstore"
+
+  create_table "audios", force: :cascade do |t|
     t.integer  "medium_id"
-    t.string   "title"
-    t.string   "audio_url"
+    t.string   "title",           limit: 255
+    t.string   "audio_url",       limit: 255
     t.text     "summary"
-    t.string   "author"
+    t.string   "author",          limit: 255
     t.integer  "seconds"
     t.integer  "file_size"
-    t.string   "url"
-    t.string   "explicit"
+    t.string   "url",             limit: 255
+    t.string   "explicit",        limit: 255
     t.integer  "order"
-    t.string   "closedcaptioned"
-    t.string   "block"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.string   "closedcaptioned", limit: 255
+    t.string   "block",           limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
-  create_table "authentications", :force => true do |t|
+  create_table "authentications", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "name"
-    t.string   "oauth_token"
-    t.string   "oauth_secret"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.string   "provider",     limit: 255
+    t.string   "uid",          limit: 255
+    t.string   "name",         limit: 255
+    t.string   "oauth_token",  limit: 255
+    t.string   "oauth_secret", limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
-  create_table "blogs", :force => true do |t|
+  create_table "blogs", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title",                               :null => false
-    t.string   "subtitle"
-    t.string   "slug",                                :null => false
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
-    t.string   "post_access", :default => "--- []\n"
-    t.integer  "position",                            :null => false
+    t.string   "title",       limit: 255,                                                     null: false
+    t.string   "subtitle",    limit: 255
+    t.string   "slug",        limit: 255,                                                     null: false
+    t.datetime "created_at",                                                                  null: false
+    t.datetime "updated_at",                                                                  null: false
+    t.string   "post_access", limit: 255, default: "--- []\n"
+    t.integer  "position",                default: "nextval('blogs_position_seq'::regclass)", null: false
   end
 
-  create_table "books", :force => true do |t|
-    t.integer  "no",          :null => false
-    t.string   "name"
+  create_table "books", force: :cascade do |t|
+    t.integer  "no",                      null: false
+    t.string   "name",        limit: 255
     t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "edition_id"
   end
 
-  create_table "cantos", :force => true do |t|
-    t.integer  "no",          :null => false
-    t.string   "title"
-    t.string   "description"
+  create_table "cantos", force: :cascade do |t|
+    t.integer  "no",                      null: false
+    t.string   "title",       limit: 255
+    t.string   "description", limit: 255
     t.integer  "book_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
-  create_table "comments", :force => true do |t|
+  create_table "commentaries", force: :cascade do |t|
+    t.integer  "section_id"
+    t.hstore   "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "commentaries", ["data"], name: "commentaries_data", using: :gin
+
+  create_table "comments", force: :cascade do |t|
     t.integer  "post_id"
     t.integer  "user_id"
-    t.text     "body",       :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.text     "body",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
+  add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
 
-  create_table "editions", :force => true do |t|
-    t.string   "name"
+  create_table "editions", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.integer  "year"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "follows", :force => true do |t|
-    t.integer  "followable_id",                      :null => false
-    t.string   "followable_type",                    :null => false
-    t.integer  "follower_id",                        :null => false
-    t.string   "follower_type",                      :null => false
-    t.boolean  "blocked",         :default => false, :null => false
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+  create_table "follows", force: :cascade do |t|
+    t.integer  "followable_id",                               null: false
+    t.string   "followable_type", limit: 255,                 null: false
+    t.integer  "follower_id",                                 null: false
+    t.string   "follower_type",   limit: 255,                 null: false
+    t.boolean  "blocked",                     default: false, null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
-  add_index "follows", ["followable_id", "followable_type"], :name => "fk_followables"
-  add_index "follows", ["follower_id", "follower_type"], :name => "fk_follows"
+  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
+  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows", using: :btree
 
-  create_table "lines", :force => true do |t|
-    t.integer  "no",         :null => false
-    t.string   "line",       :null => false
+  create_table "lines", force: :cascade do |t|
+    t.integer  "no",                     null: false
+    t.string   "line",       limit: 255, null: false
     t.integer  "stanza_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "media", :force => true do |t|
+  create_table "media", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title"
-    t.string   "subtitle"
+    t.string   "title",      limit: 255
+    t.string   "subtitle",   limit: 255
     t.text     "summary"
-    t.string   "image_url"
+    t.string   "image_url",  limit: 255
     t.text     "category"
-    t.string   "language"
-    t.string   "explicit"
-    t.string   "block"
-    t.string   "complete"
-    t.string   "url"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "language",   limit: 255
+    t.string   "explicit",   limit: 255
+    t.string   "block",      limit: 255
+    t.string   "complete",   limit: 255
+    t.string   "url",        limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "notebooks", :force => true do |t|
+  create_table "notebooks", force: :cascade do |t|
     t.text     "line"
     t.text     "quote"
     t.text     "annotation"
-    t.string   "start"
+    t.string   "start",       limit: 255
     t.integer  "startoffset"
-    t.string   "end"
+    t.string   "end",         limit: 255
     t.integer  "endoffset"
-    t.string   "externalurl"
-    t.string   "uri"
+    t.string   "externalurl", limit: 255
+    t.string   "uri",         limit: 255
     t.integer  "line_id"
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
-  create_table "pages", :force => true do |t|
-    t.string   "name"
-    t.string   "permalink"
+  create_table "pages", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "permalink",  limit: 255
     t.integer  "priority"
-    t.string   "category"
+    t.string   "category",   limit: 255
     t.text     "content"
     t.text     "md_content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "parent"
-    t.string   "url"
+    t.string   "url",        limit: 255
   end
 
-  add_index "pages", ["permalink"], :name => "index_pages_on_permalink"
+  add_index "pages", ["permalink"], name: "index_pages_on_permalink", using: :btree
 
-  create_table "posts", :force => true do |t|
+  create_table "posts", force: :cascade do |t|
     t.integer  "blog_id"
-    t.string   "title",                           :null => false
+    t.string   "title",        limit: 255,                 null: false
     t.text     "content"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.text     "md_content"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
     t.text     "excerpt"
-    t.string   "url"
+    t.string   "url",          limit: 255
     t.datetime "published_at"
-    t.boolean  "draft",        :default => true
-    t.string   "series_title"
-    t.string   "subtitle"
-    t.string   "show_excerpt"
+    t.boolean  "draft",                    default: true
+    t.string   "series_title", limit: 255
+    t.string   "subtitle",     limit: 255
+    t.string   "show_excerpt", limit: 255
     t.integer  "author_id"
-    t.boolean  "featured",     :default => false
-    t.integer  "number"
+    t.boolean  "featured",                 default: false
     t.datetime "deleted_at"
+    t.integer  "number"
   end
 
-  add_index "posts", ["blog_id", "number"], :name => "index_posts_on_blog_id_and_number", :unique => true
-  add_index "posts", ["deleted_at"], :name => "index_posts_on_deleted_at"
+  add_index "posts", ["blog_id", "number"], name: "index_posts_on_blog_id_and_number", unique: true, using: :btree
+  add_index "posts", ["deleted_at"], name: "index_posts_on_deleted_at", using: :btree
 
-  create_table "rewrites", :force => true do |t|
+  create_table "rewrites", force: :cascade do |t|
     t.text     "source"
     t.text     "destination"
     t.integer  "code"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  create_table "roles", :force => true do |t|
-    t.string   "name",       :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "roles", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "sections", :force => true do |t|
-    t.integer  "no",         :null => false
-    t.string   "name"
+  create_table "sections", force: :cascade do |t|
+    t.integer  "no",                     null: false
+    t.string   "name",       limit: 255
     t.integer  "canto_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "runningno"
   end
 
-  create_table "stanzas", :force => true do |t|
-    t.integer  "no",                            :null => false
+  create_table "stanzas", force: :cascade do |t|
+    t.integer  "no",                         null: false
     t.integer  "runningno"
     t.integer  "section_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "featured",   :default => false, :null => false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "featured",   default: false, null: false
   end
 
-  create_table "taggings", :force => true do |t|
+  create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
-    t.string   "taggable_type"
+    t.string   "taggable_type", limit: 255
     t.integer  "tagger_id"
-    t.string   "tagger_type"
-    t.string   "context",       :limit => 128
+    t.string   "tagger_type",   limit: 255
+    t.string   "context",       limit: 128
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
-  create_table "tags", :force => true do |t|
-    t.string "name"
+  create_table "tags", force: :cascade do |t|
+    t.string  "name",           limit: 255
+    t.integer "taggings_count",             default: 0
   end
 
-  create_table "tasks", :force => true do |t|
-    t.string   "task"
-    t.string   "proposedby"
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "tasks", force: :cascade do |t|
+    t.string   "task",       limit: 255
+    t.string   "proposedby", limit: 255
     t.text     "desc"
     t.date     "sdate"
     t.date     "edate"
     t.date     "pdate"
-    t.string   "person"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "person",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "uploads", :force => true do |t|
+  create_table "uploads", force: :cascade do |t|
     t.integer  "post_id"
-    t.string   "photo"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "music"
+    t.string   "photo",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "music",      limit: 255
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "name"
-    t.string   "username",                                             :null => false
-    t.string   "email",                                                :null => false
-    t.string   "photo"
+  create_table "users", force: :cascade do |t|
+    t.string   "name",                   limit: 255
+    t.string   "username",               limit: 255,              null: false
+    t.string   "email",                  limit: 255,              null: false
+    t.string   "photo",                  limit: 255
     t.integer  "role_id"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
-    t.string   "encrypted_password",                   :default => ""
-    t.string   "reset_password_token"
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.string   "encrypted_password",     limit: 255, default: ""
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                        :default => 0
+    t.integer  "sign_in_count",                      default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "confirmation_token"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "confirmation_token",     limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
-    t.string   "invitation_token",       :limit => 60
+    t.string   "unconfirmed_email",      limit: 255
+    t.string   "invitation_token",       limit: 60
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
-    t.string   "invited_by_type"
+    t.string   "invited_by_type",        limit: 255
   end
 
-  add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token", :unique => true
-  add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
+  add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

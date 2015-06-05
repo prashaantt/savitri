@@ -37,7 +37,7 @@ class PostsController < ApplicationController
     query = params[:q]
     if query[-1,1] == " "
       #query = query.gsub(" ", "")
-      Tag.find_or_create_by_name(query)
+      Tag.find_or_create_by(name: query)
     end
 
     #Do the search in memory for better performance
@@ -141,7 +141,7 @@ class PostsController < ApplicationController
 
     unless params[:post][:series_title].strip.blank?
       series = "@" + params[:post][:series_title].to_url
-      series_tag = Tag.find_or_create_by_name(series)
+      series_tag = Tag.find_or_create_by(name: series)
       @post.tag_list.add(series_tag.name)
     end
 
@@ -192,11 +192,11 @@ class PostsController < ApplicationController
     else
       new_series_tag = "@" + params[:post][:series_title].to_url
       if old_series_tag.nil?
-        series = Tag.find_or_create_by_name(new_series_tag)
+        series = Tag.find_or_create_by(name: new_series_tag)
         params_tags << series.name
       elsif old_series_tag != new_series_tag
         params_tags.delete(old_series_tag)
-        series = Tag.find_or_create_by_name(new_series_tag)
+        series = Tag.find_or_create_by(name: new_series_tag)
         params_tags << series.name
       else
         params_tags << old_series_tag
