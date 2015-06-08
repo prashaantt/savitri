@@ -379,7 +379,7 @@ function months_posts(year,month){
 }
 
 $(document).ready(function(){
-  if ( window.location.pathname == '/read/1/1/1' && (window.location.search == '' || window.location.search == '?edition=1950')) {
+  if ( document.location.pathname.indexOf("/read/") == 0 && (window.location.search == '' || window.location.search == '?edition=1950')) {
     $.ajax({
       url: '/sections/'+$('.reference')[0].id.match(/\d+/)[0]+'/commentaries.json',
       dataType: 'jsonp',
