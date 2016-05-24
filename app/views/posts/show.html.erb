@@ -87,6 +87,8 @@
           :method => :delete,
           :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
           :class => 'btn btn-mini btn-danger' %>
+          <% else %>
+            <div class="g-plusone" data-size="medium" data-annotation="bubble" ></div>
           <% end %>
         </span>
         <h5>
